@@ -4,7 +4,6 @@
       <router-link to="/">Home</router-link>|
       <router-link to="/about">About</router-link>
     </nav>
-    {{getUsers}}
     <div class="main-container">
       <router-view></router-view>
     </div>
