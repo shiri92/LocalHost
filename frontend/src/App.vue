@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-      <nav class="main-nav">
+  <div id="app" class="flex flex-col">
+      <nav class="main-nav flex justify-center align-center">
         <router-link to="/">Home</router-link>|
         <router-link to="/about">About</router-link>
       </nav>
@@ -20,24 +20,12 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  padding: 0;
+  min-height: 100vh;
 }
-// #nav {
-//   padding: 30px;
-//   
-//   }
-// }
 
 .main-nav {
   background-color: grey;
   padding: 10px;
-  width: 100wh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -53,8 +41,6 @@
 
 .main-footer {
   padding: 10px;
-  width: 100wh;
   background-color: grey;
-  display: flex;
 }
 </style>
