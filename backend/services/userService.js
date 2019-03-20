@@ -15,24 +15,22 @@ async function FillDB() {
     if (res.length === 0) addMany(_createUsers());
 }
 
-function addMany(users) {
-    return mongoService.connect()
-        .then(db => db.collection(USERS_COLLECTION).insert(users))
-        .then(res => {
-            res._id = res.insertedId;
-            return res;
-        })
+async function addMany(users) {
+    let db = await mongoService.connect();
+    let res = await db.collection(USERS_COLLECTION).insert(users);
+    res._id = res.insertedId;
+    return res;
 }
 
-function query() {
-    return mongoService.connect().then(db => db.collection(USERS_COLLECTION).find({}).toArray())
+async function query() {
+    let db = await mongoService.connect();
+    return db.collection(USERS_COLLECTION).find({}).toArray();
 }
 
-function getById(id) {
-    console.log('here');
-    console.log(id);
+async function getById(id) {
     const _id = new ObjectId(id)
-    return mongoService.connect().then(db => db.collection(USERS_COLLECTION).findOne({ _id }))
+    let db = await mongoService.connect();
+    return db.collection(USERS_COLLECTION).findOne({ _id });
 }
 
 
