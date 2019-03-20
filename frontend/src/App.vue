@@ -1,17 +1,30 @@
 <template>
   <div id="app" class="flex flex-col">
-      <nav class="main-nav flex justify-center align-center">
-        <router-link to="/">Home</router-link>|
-        <router-link to="/about">About</router-link>
-      </nav>
-      <div class="main-container">
-        <router-view></router-view>
-      </div>
-      <footer class="main-footer flex justify-center align-center">
-        I'm a footer
-      </footer>
+    <nav class="main-nav flex justify-center align-center">
+      <router-link to="/">Home</router-link>|
+      <router-link to="/about">About</router-link>
+    </nav>
+    {{getUsers}}
+    <div class="main-container">
+      <router-view></router-view>
+    </div>
+    <footer class="main-footer flex justify-center align-center">I'm a footer</footer>
   </div>
 </template>
+
+<script>
+import userService from '@/services/userService.js';
+export default {
+  created() {
+    this.$store.dispatch({ type: 'loadUsers' })
+  },
+  computed: {
+    getUsers() {
+      return this.$store.getters.users;
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
