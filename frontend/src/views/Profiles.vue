@@ -1,10 +1,11 @@
 <template>
   <section class="profiles-page">
     <div class="main-title">Local Hosts</div>
-    
+
     <div class="profiles-container">
-      <profiles-list :profiles="profiles"></profiles-list>
+      <profiles-list :profiles="getUsers"></profiles-list>
     </div>
+    {{getUsers}}
   </section>
 </template>
 
@@ -15,9 +16,12 @@ import ProfilesList from "../components/ProfilesList.vue";
 
 export default {
   name: "Profiles",
+  created() {
+    this.$store.dispatch({ type: 'loadUsers' })
+  },
   computed: {
-    profiles() {
-      return this.$store.getters.users
+    getUsers() {
+      return this.$store.getters.users;
     }
   },
   components: {
@@ -27,14 +31,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .profiles-page {
-        background-color: antiquewhite;
-        .main-title {
-            padding: 10px;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-    }
-
+.profiles-page {
+  background-color: antiquewhite;
+  .main-title {
+    padding: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+}
 </style>
 

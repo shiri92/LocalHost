@@ -1,5 +1,6 @@
 /* ----- DEPENDENCIES -----*/
 import userService from '../services/userService.js';
+import { log } from 'util';
 
 export default {
     state: {
@@ -10,17 +11,17 @@ export default {
         users(state) {
             return state.users;
         },
-        userToDisplay(state) {
+        user(state) {
             return state.currUser;
         }
-        
+
     },
     mutations: {
         setUsers(state, { users }) {
             state.users = users;
         },
-        setUser(state, payload) {
-            state.currUser = payload.user;
+        setUser(state, { user }) {
+            state.currUser = user;
         },
         // addUser(state, { user }) {
         //     state.users.push(user);
@@ -32,9 +33,9 @@ export default {
             context.commit({ type: 'setUsers', users });
         },
         async loadUser(context, { userId }) {
-            let userPayload = await userService.getById(userId)
-            context.commit({ type: 'setUser', user: userPayload.user });
-            return { ...userPayload.user };
+            let user = await userService.getById(userId);
+            context.commit({ type: 'setUser', user });
+            // return { ...userPayload.user };
         },
         // async signup(context, { credentials }) {
         //     return UserService.addUser(credentials);

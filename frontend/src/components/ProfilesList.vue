@@ -6,9 +6,9 @@
     <div class="profile-list-container" v-if="profiles">
       <router-link
         class="profile-list-item"
-        :key="currProfile.info._id"
+        :key="currProfile._id"
         v-for="(currProfile, idx) in profiles"
-        :to="'/profile/' + currProfile.info._id"
+        :to="'/profile/' + currProfile._id"
       >
         <profile-preview :profile="currProfile" :idx="idx+1"></profile-preview>
       </router-link>
@@ -25,7 +25,7 @@ export default {
   props: ["profiles"],
   components: {
     ProfilePreview
-  }
+  },
 };
 </script>
 
