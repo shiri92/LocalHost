@@ -71,7 +71,7 @@
 
 /* Fonts */
 
-@font-face {
+ @font-face {
     font-family: roboto-reg;
     src: url('../fonts/Roboto-Regular.ttf');
 }
@@ -83,7 +83,7 @@
 
 @font-face {
     font-family: concert-one-reg;
-    src: url('../fonts/Concert-One-Regular.ttf');
+    src: url('../fonts/ConcertOne-Regular.ttf');
 }
 
 @font-face {
