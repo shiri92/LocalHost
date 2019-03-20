@@ -64,8 +64,15 @@
 
 <script>
 
+
+
 export default {
   name: 'home',
+  data() {
+    return {
+
+    }
+  },
   components: {
     
   }
@@ -86,6 +93,12 @@ export default {
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
   height: 90vh;
+}
+
+.img-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .bangkok{
