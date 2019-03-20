@@ -1,30 +1,38 @@
+/* ----- DEPENDENCIES -----*/
+import userService from '../services/userService.js';
+
 export default {
     state: {
-        // user: {
-        //     _id: '',
-        //     nickname: '',
-        //     isAdmin: false,
-        // }
+        users: [],
     },
     getters: {
-        // isUserLoggedIn: state => !!state.user._id,
-        // loggedInUser : state => state.user
+        users(state) {
+            return state.users;
+        }
+
     },
     mutations: {
-        // setUser(state, { user }) {
-        //     state.user = user
+        setUsers(state, { users }) {
+            state.users = users
+        },
+        // addUser(state, { user }) {
+        //     state.users.push(user);
         // }
     },
     actions: {
-        // login(context, { user }) {
-        //     return AuthService.login(user)
+        async loadUsers(context) {
+            let users = await userService.query();
+            context.commit({ type: 'setUsers', users });
+        },
+        // async signup(context, { credentials }) {
+        //     return UserService.addUser(credentials);
+        // },
+        // async login(context, { credentials }) {
+        //     return UserService.login(credentials)
         //         .then(user => {
-        //             if (user) {                        
-        //                 context.commit({type: 'setUser', user})
-        //                 localStorage.setItem('loggedInUser', JSON.stringify(user))
-        //             }
-        //             return user
-        //         })
-        // }
+        //             context.commit({ type: 'setUser', user })
+        //             return user;
+        //         });
+        // },
     }
 }

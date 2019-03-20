@@ -14,6 +14,20 @@
   </div>
 </template>
 
+<script>
+import userService from '@/services/userService.js';
+export default {
+  created() {
+    this.$store.dispatch({ type: 'loadUsers' })
+  },
+  computed: {
+    getUsers() {
+      return this.$store.getters.users;
+    }
+  }
+}
+</script>
+
 <style lang="scss">
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
