@@ -43,12 +43,27 @@ const USERS_KEY = 'USERS';
 query();
 
 function query() {
-    if (utilService.loadFromStorage(USERS_KEY))
-        users = utilService.loadFromStorage(USERS_KEY);
-    else
-        users = _createUsers();
+    if (utilService.loadFromStorage(USERS_KEY)) users = utilService.loadFromStorage(USERS_KEY);
+    else users = _createUsers();
     utilService.saveToStorage(USERS_KEY, users);
     return Promise.resolve(users);
+}
+
+function add(user) {
+    users.push(user);
+    utilService.saveToStorage(USERS_KEY, users);
+}
+
+function remove() {
+
+}
+
+function update() {
+
+}
+
+function getById() {
+
 }
 
 function _createUsers() {
