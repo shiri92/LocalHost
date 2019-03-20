@@ -1,10 +1,7 @@
 <template>
-  <li class="single-profile">
-    <div>
-        {{profile.name}}
-        <img :src="profile.imgUrl" alt="">
-        <!-- <img src="/img/profile-images/profile1.png" alt=""> -->
-    </div> 
+  <li class="single-profile flex flex-col space-between">
+        <div><img :src="profile.info.imgUrl" alt=""></div>
+        <div>{{profile.info.firstName}}, {{profile.info.lastName}}</div>  
     
     <!-- <router-link :to="'/profile-app/profile-edit/' + profile._id">
       <button>Edit</button>
@@ -24,14 +21,19 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
     .single-profile {
-        display: flex;
-        flex-direction: column;
-        background-color: cadetblue;
-        padding: 5px;
+        background-color: floralwhite;
         justify-content: space-between;
-        min-width: 100px;
-        min-height: 100px;
+        width: 200px;
+        height: 300px;
+        border-radius: 5px;
+        padding-bottom: 5px;
+    }
+
+    img {
+        width: 100%;
+        height: 240px;
+        border-radius: 5px 5px 0 0;
     }
 </style>

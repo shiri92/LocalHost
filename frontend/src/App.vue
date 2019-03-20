@@ -15,14 +15,7 @@
 <script>
 import userService from '@/services/userService.js';
 export default {
-  created() {
-    this.$store.dispatch({ type: 'loadUsers' })
-  },
-  computed: {
-    getUsers() {
-      return this.$store.getters.users;
-    }
-  }
+
 }
 </script>
 

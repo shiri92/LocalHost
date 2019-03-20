@@ -21,17 +21,16 @@ function addRoutes(app) {
         const query = req.query;
         userService.query(query).then(users => res.json(users))
     })
-    // app.get(`${BASE}/:id`, (req, res) => {
-    //     const userId = req.params.id
-    //     Promise.all([
-    //         userService.getById(userId),
-    //         reviewService.query({ userId })
-    //     ])
-    //         .then(([user, reviews]) => {
-    //             console.log({ user })
-    //             res.json({ user, reviews })
-    //         })
-    // })
+    app.get(`${BASE}/:id`, (req, res) => {
+        const userId = req.params.id
+        console.log(userId);
+
+        userService.getById(userId)
+            .then(user => {
+                console.log(user);
+                return res.json(user)
+            });
+    })
 
     // app.post('/signup', (req, res) => {
     //     const credentials = req.body;

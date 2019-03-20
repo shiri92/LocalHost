@@ -14,16 +14,19 @@ function query() {
     return axios.get(`${BASE_API}`).then(res => res.data);
 }
 
+function getById(id) {
+    return axios.get(`${BASE_API}/${id}`).then(res => {
+        return res.data;
+    })
+}
+
 // function addUser(credentials) {
 //     console.log(credentials);
 //     return axios.post(`${BASE_URL}/user`, credentials)
 //         .then(res => res.data)
 // }
 
-// function getById(id) {
-//     return axios.get(`${BASE_URL}/user/${id}`)
-//         .then(res => res.data)
-// }
+
 
 
 // function login(credentials) {
@@ -35,4 +38,5 @@ function query() {
 
 export default {
     query,
+    getById,
 }
