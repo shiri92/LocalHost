@@ -7,7 +7,7 @@
       <div class="main-container">
         <router-view></router-view>
       </div>
-      <footer class="main-footer">
+      <footer class="main-footer flex justify-center align-center">
         I'm a footer
       </footer>
   </div>
@@ -27,35 +27,34 @@
 }
 // #nav {
 //   padding: 30px;
-//   a {
-//     font-weight: bold;
-//     color: #2c3e50;
-//     &.router-link-exact-active {
-//       color: #42b983;
-//     }
+//   
 //   }
 // }
 
 .main-nav {
   background-color: grey;
-  height: 100px;
+  padding: 10px;
   width: 100wh;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid black;
+  a {
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
 }
 
 .main-container {
-  border: 2px solid black;
   flex-grow: 1;
 }
 
 .main-footer {
-  height: 100px;
+  padding: 10px;
   width: 100wh;
   background-color: grey;
-  border: 2px solid black;
-
+  display: flex;
 }
 </style>
