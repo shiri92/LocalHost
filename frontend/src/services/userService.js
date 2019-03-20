@@ -48,7 +48,7 @@ function query() {
     else
         users = _createUsers();
     utilService.saveToStorage(USERS_KEY, users);
-    return users;
+    return Promise.resolve(users);
 }
 
 function _createUsers() {

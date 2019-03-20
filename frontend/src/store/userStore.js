@@ -16,9 +16,9 @@ export default {
         }
     },
     actions: {
-        loadUsers(context) {
-            let users = userService.query();
-            context.commit({ type: 'setUsers', users })
+        async loadUsers(context) {
+            let users = await userService.query();
+            context.commit({ type: 'setUsers', users });
         }
     }
 }
