@@ -1,6 +1,8 @@
 
 /* ----- DEPENDENCIES -----*/
 const mongoService = require('./mongoService')
+
+import cloudinaryService from './cloudinaryService.js';
 const ObjectId = require('mongodb').ObjectId;
 
 /* ----- CONSTANTS -----*/
@@ -33,8 +35,6 @@ async function getById(id) {
     return db.collection(USERS_COLLECTION).findOne({ _id });
 }
 
-
-
 function _createUsers() {
     let users = [];
     let info1 = {
@@ -45,7 +45,7 @@ function _createUsers() {
         "birthdate": 1553069493,
         "address": {},
         "language": "english",
-        "imgUrl": '/img/profile-images/profile1.png',
+        // "imgUrl": cloudinaryService.saveToCloudinary('/img/profile-images/profile1.png', 'profile_1'),
     };
     let info2 = {
         "username": "puki2",
@@ -55,125 +55,12 @@ function _createUsers() {
         "birthdate": 1553069493,
         "address": {},
         "language": "english",
-        "imgUrl": '/img/profile-images/profile2.png'
+        // "imgUrl": cloudinaryService.saveToCloudinary('/img/profile-images/profile2.png', 'profile_2'),
     };
-    let info3 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Monica",
-        "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile3.png'
-    };
-    let info4 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Chandler",
-        "lastName": "Bing",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile4.png'
-    };
-    let info5 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Ross",
-        "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile5.png'
-    };
-    let info6 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Joey",
-        "lastName": "Tribbiani",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile6.png'
-    };
-    let info7 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Rachel",
-        "lastName": "Green",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile7.png'
-    };
-    let info8 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Chandler",
-        "lastName": "Bing",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile8.png'
-    };
-    let info9 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Ross",
-        "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile9.png'
-    };
-    let info10 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Monica",
-        "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile10.png'
-    };
-    let info11 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Phoebe",
-        "lastName": "Buffay",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile11.png'
-    };
-    let host1 = {
-        "date": {
-            "from": 1553069493,
-            "to": 1553069493
-        },
-        "capacity": 3,
-        "description": "have 3 couches",
-        "guests": [
-            {
-                "guestId": "a2"
-            }
-        ]
-    };
-    let host2 = null;
+    let host1 = null;
     let surf1 = null;
-    let surf2 = { "hosterId": "a2" }
     users.push(_createUser(info1, host1, surf1));
-    users.push(_createUser(info2, host2, surf2));
-    users.push(_createUser(info3, host1, surf1));
-    users.push(_createUser(info4, host2, surf2));
-    users.push(_createUser(info5, host1, surf1));
-    users.push(_createUser(info6, host1, surf1));
-    users.push(_createUser(info7, host1, surf1));
-    users.push(_createUser(info8, host1, surf1));
-    users.push(_createUser(info9, host1, surf1));
-    users.push(_createUser(info10, host1, surf1));
-    users.push(_createUser(info11, host1, surf1));
+    users.push(_createUser(info2, host1, surf1));
     return users;
 }
 
@@ -189,8 +76,6 @@ function _createUser(info, host, surf) {
 //     return mongoService.connect()
 //         .then(db => db.collection(USERS_COLLECTION).findOne({ nickname }))
 // }
-
-
 
 
 // todo  - add user only if nickname is not taken

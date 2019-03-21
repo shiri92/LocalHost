@@ -10,14 +10,14 @@ var axios = Axios.create({
 /* ----- CONSTANTS -----*/
 const BASE_API = process.env.NODE_ENV !== 'development' ? '' : '//localhost:3003/user';
 
-function query() {
-    return axios.get(`${BASE_API}`).then(res => res.data);
+async function query() {
+    let res = await axios.get(`${BASE_API}`);
+    return res.data;
 }
 
-function getById(id) {
-    return axios.get(`${BASE_API}/${id}`).then(res => {
-        return res.data;
-    })
+async function getById(id) {
+    let res = await axios.get(`${BASE_API}/${id}`);
+    return res.data;
 }
 
 // function addUser(credentials) {

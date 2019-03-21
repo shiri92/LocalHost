@@ -1,6 +1,5 @@
 /* ----- DEPENDENCIES -----*/
 import userService from '../services/userService.js';
-import { log } from 'util';
 
 export default {
     state: {
