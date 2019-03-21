@@ -34,6 +34,9 @@ export default {
   background-size: cover;
   height: 70vh;
   padding: 40px;
+  box-shadow: 2px 2px 10px black;
+  position: relative;
+
 }
 
 

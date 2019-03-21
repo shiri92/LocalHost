@@ -1,4 +1,3 @@
-
 /* ----- DEPENDENCIES -----*/
 const cors = require('cors')
 const express = require('express')
@@ -9,6 +8,8 @@ const app = express();
 
 /* ----- ROUTES -----*/
 const addUserRoutes = require('./routes/userRoutes')
+const addCountryRoutes = require('./routes/countryRoutes')
+
 
 /* ----- SERVER -----*/
 
@@ -28,5 +29,7 @@ app.use(session({
 app.get('/', (req, res) => res.send('Hello World!'))
 
 addUserRoutes(app)
+addCountryRoutes(app)
+
 const PORT = process.env.PORT || 3003;
-app.listen(PORT, () => { })
+app.listen(PORT, () => {})
