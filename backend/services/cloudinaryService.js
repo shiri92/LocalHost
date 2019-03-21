@@ -1,9 +1,8 @@
 
-/* ----- DEPENDENCIES -----*/
 const cloudinary = require('cloudinary');
 
-
-// configCloudinary();
+configCloudinary();
+// saveToCloudinary("https://via.placeholder.com/500", "example_1");
 
 function configCloudinary() {
     cloudinary.config(  // niv details
@@ -14,22 +13,22 @@ function configCloudinary() {
         });
 }
 
-function uploadToCloudinary(imgUrl, imgId) {
-    cloudinary.v2.uploader.upload("https://via.placeholder.com/500",
-        { public_id: "example_1" },
-        (error, result) => {
-            console.log(result.public_id)
-            console.log(result.url)
-        });
+function saveToCloudinary(imgUrl, imgId) {
+    return cloudinary.v2.uploader.upload(imgUrl, { public_id: imgId }, function (error, result) {
+        return result;
+    });
+
 }
 
-function getFromCloudinary(imgId) {
-    return cloudinary.image(`${imgId}.jpg`, { type: "fetch" })
-}
-function getFromCloudinary(imgUrl) {
-    return cloudinary.image(imgUrl, { type: "fetch" })
+function loadFromCloudinary(imgUrl) {
+    let img = cloudinary.image(`${imgUrl}`, { type: "fetch" });
+    return Promise.resolve(img);
 }
 
+module.exports = {
+    saveToCloudinary,
+    loadFromCloudinary
+}
 
 
 

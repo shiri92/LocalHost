@@ -1,6 +1,10 @@
 <template>
   <section>
-    <h1>hi {{getCurrUser}}</h1>
+    <h1>hi</h1>
+    <img
+      v-if="getCurrUser"
+      :src="getCurrUser.info.imgUrl"
+    />
   </section>
 </template>
 
