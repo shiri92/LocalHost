@@ -10,6 +10,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+    .my-home {
+        width: 100%;
+        height: 500px;
+        border: 1px solid black;
+    }
 </style>

@@ -7,25 +7,25 @@
     </div>
     <div class="main-desc" v-if="getCurrUser">
       <nav class="profile-nav flex flex-row justify-center">
-        <router-link :to="'/profile/' + getCurrUser._id +'/profile-about'">
-          <div class="nav-item">About</div>
-        </router-link>
-        <router-link :to="'/profile/' + getCurrUser._id +'/profile-myHome'">
-          <div class="nav-item">My Home</div>
-        </router-link>
-        <router-link :to="'/profile/' + getCurrUser._id +'/profile-pictures'">
-          <div class="nav-item">Pictures</div>
-        </router-link>
-        <router-link :to="'/profile/' + getCurrUser._id +'/profile-references'">
-          <div class="nav-item">References</div>
-        </router-link>
+        <a class="nav-item" href="#" v-scroll-to="'#about'">About</a>
+        <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
+        <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
+        <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
       </nav>
-      <router-view></router-view>
+      <profile-about id="about"></profile-about>
+      <profile-myHome id="home"></profile-myHome>
+      <profile-pictures id="pics"></profile-pictures>
+      <profile-references id="ref"></profile-references>
     </div>
   </section>
 </template>
 
 <script>
+import ProfileAbout from "../components/ProfileAbout.vue";
+import ProfileMyHome from "../components/ProfileMyHome.vue";
+import ProfilePictures from "../components/ProfilePictures.vue";
+import ProfileReferences from "../components/ProfileReferences.vue";
+
 export default {
   name: "userDetails",
   created() {
@@ -36,6 +36,15 @@ export default {
     getCurrUser() {
       return this.$store.getters.user;
     }
+  },
+  methods: {
+    
+  },
+  components: {
+    ProfileAbout,
+    ProfileMyHome,
+    ProfilePictures,
+    ProfileReferences
   }
 };
 </script>

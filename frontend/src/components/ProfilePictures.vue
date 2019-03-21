@@ -10,6 +10,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+    .pictures {
+        width: 100%;
+        height: 500px;
+        border: 1px solid black;
+    }
 </style>
+
