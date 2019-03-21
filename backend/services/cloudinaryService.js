@@ -1,8 +1,8 @@
 
 const cloudinary = require('cloudinary');
 
-
 configCloudinary();
+// saveToCloudinary("https://via.placeholder.com/500", "example_1");
 
 function configCloudinary() {
     cloudinary.config(  // niv details
@@ -14,18 +14,20 @@ function configCloudinary() {
 }
 
 function saveToCloudinary(imgUrl, imgId) {
-    cloudinary.v2.uploader.upload(imgUrl, { public_id: imgId }, (error, result) => {
-        return result.url;
+    return cloudinary.v2.uploader.upload(imgUrl, { public_id: imgId }, function (error, result) {
+        return result;
     });
+
 }
 
 function loadFromCloudinary(imgUrl) {
-    return cloudinary.image(`${imgUrl}`, { type: "fetch" })
+    let img = cloudinary.image(`${imgUrl}`, { type: "fetch" });
+    return Promise.resolve(img);
 }
 
-export default {
+module.exports = {
     saveToCloudinary,
-    loadFromCloudinary,
+    loadFromCloudinary
 }
 
 

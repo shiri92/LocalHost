@@ -1,12 +1,11 @@
-
 /* ----- DEPENDENCIES -----*/
-const mongoService = require('./mongoService')
-
-import cloudinaryService from './cloudinaryService.js';
+const mongoService = require('./mongoService');
+const cloudinaryService = require('./cloudinaryService');
 const ObjectId = require('mongodb').ObjectId;
 
 /* ----- CONSTANTS -----*/
-const USERS_COLLECTION = 'users';
+const USERS_COLLECTION = 'users_test';
+
 
 
 FillDB();
@@ -32,11 +31,16 @@ async function query() {
 async function getById(id) {
     const _id = new ObjectId(id)
     let db = await mongoService.connect();
-    return db.collection(USERS_COLLECTION).findOne({ _id });
+    let user = await db.collection(USERS_COLLECTION).findOne({ _id });
+    let img = await cloudinaryService.loadFromCloudinary(user.info.imgUrl);
+    user.img = img;
+    return user;
 }
 
 function _createUsers() {
     let users = [];
+    let host = null;
+    let surf = null;
     let info1 = {
         "username": "puki1",
         "password": "123",
@@ -45,7 +49,7 @@ function _createUsers() {
         "birthdate": 1553069493,
         "address": {},
         "language": "english",
-        // "imgUrl": cloudinaryService.saveToCloudinary('/img/profile-images/profile1.png', 'profile_1'),
+        "imgUrl": 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile1.jpg',
     };
     let info2 = {
         "username": "puki2",
@@ -55,13 +59,98 @@ function _createUsers() {
         "birthdate": 1553069493,
         "address": {},
         "language": "english",
-        // "imgUrl": cloudinaryService.saveToCloudinary('/img/profile-images/profile2.png', 'profile_2'),
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile2.jpg",
     };
-    let host1 = null;
+    let info3 = {
+        "username": "puki2",
+        "password": "123",
+        "firstName": "Ross",
+        "lastName": "Geller",
+        "birthdate": 1553069493,
+        "address": {},
+        "language": "english",
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile3.jpg",
+    };
+    let info4 = {
+        "username": "puki2",
+        "password": "123",
+        "firstName": "Joey",
+        "lastName": "Tribbiani",
+        "birthdate": 1553069493,
+        "address": {},
+        "language": "english",
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile4.jpg",
+    };
+    let info5 = {
+        "username": "puki2",
+        "password": "123",
+        "firstName": "Rachel",
+        "lastName": "Green",
+        "birthdate": 1553069493,
+        "address": {},
+        "language": "english",
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile5.jpg",
+    };
+    let info6 = {
+        "username": "puki2",
+        "password": "123",
+        "firstName": "Chandler",
+        "lastName": "Bing",
+        "birthdate": 1553069493,
+        "address": {},
+        "language": "english",
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile6.jpg",
+    };
+    let info7 = {
+        "username": "puki2",
+        "password": "123",
+        "firstName": "Ross",
+        "lastName": "Geller",
+        "birthdate": 1553069493,
+        "address": {},
+        "language": "english",
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile7.jpg",
+    };
+    let info8 = {
+        "username": "puki2",
+        "password": "123",
+        "firstName": "Monica",
+        "lastName": "Geller",
+        "birthdate": 1553069493,
+        "address": {},
+        "language": "english",
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile8.jpg",
+    };
+    let host1 = {
+        "date": {
+            "from": 1553069493,
+            "to": 1553069493
+        },
+        "capacity": 3,
+        "description": "have 3 couches",
+        "guests": [{
+            "guestId": "a2"
+        }]
+    };
+    let host2 = null;
     let surf1 = null;
     users.push(_createUser(info1, host1, surf1));
-    users.push(_createUser(info2, host1, surf1));
+    users.push(_createUser(info2, host2, surf2));
+    users.push(_createUser(info3, host1, surf1));
+    users.push(_createUser(info4, host2, surf2));
+    users.push(_createUser(info5, host1, surf1));
+    users.push(_createUser(info6, host1, surf1));
+    users.push(_createUser(info7, host1, surf1));
+    users.push(_createUser(info8, host1, surf1));
     return users;
+
+    // console.log(__dirname + '../../frontend/public/img/profile-images/profile1.png')
+    // return cloudinaryService.saveToCloudinary('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile2.jpg', 'profile_1')
+    //     .then(result => {
+    //         info1.imgUrl = result.url;
+    //         users.push(_createUser(info1, host, surf));
+    //         return users;
+    //     })
 }
 
 function _createUser(info, host, surf) {
