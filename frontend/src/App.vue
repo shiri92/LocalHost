@@ -12,9 +12,8 @@
 </template>
 
 <script>
-import MainHeader from '../src/components/MainHeader'
-import MainFooter from '../src/components/MainFooter'
-import userService from '@/services/userService.js';
+import MainHeader from '../src/components/MainHeader';
+import MainFooter from '../src/components/MainFooter';
 
 
 export default {

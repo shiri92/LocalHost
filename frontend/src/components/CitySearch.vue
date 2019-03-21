@@ -1,9 +1,16 @@
 <template>
   <section class="city-search">
 
-    <el-input placeholder="Where do you want to go?" v-model="input">
-      <el-button type="success" slot="append" icon="el-icon-search" plain>Search</el-button>
+    <!-- <div class="search-container flex"> -->
+
+    <el-input @input="search" placeholder="Where do you want to go?" v-model="searchWord">
+    <el-button type="success" slot="append" icon="el-icon-search" plain>Search</el-button>
     </el-input>
+    <!-- </div> -->
+
+    <ul class="clean-list" v-for="country in countries" :key="country">
+      <li v-if="searchWord"><a href="#">{{country}}</a></li>
+    </ul>
 
   </section>
     
@@ -17,7 +24,19 @@ export default {
   },
   data() {
     return{
-      input: ''
+      searchWord: '',
+    }
+  },
+  created(){
+  },
+  computed: {
+    countries() {
+      return this.$store.getters.countries
+    }
+  },
+  methods: {
+    search(){
+      this.$store.dispatch({type: 'loadCountries', searchWord: this.searchWord});
     }
   }
 }
@@ -26,11 +45,18 @@ export default {
 <style scoped lang="scss">
 
 .city-search{
-  min-width: 70%;
-  margin: 0 auto;
+  width: 60%;
+  position: absolute;
+  top: 80%;
+  left: 20vw;
 }
 
-
-
+li{
+  background-color: white;
+  border: 1px solid black;
+  padding: 15px;
+  font-family: lato-reg;
+  text-align: left;
+}
 
 </style>

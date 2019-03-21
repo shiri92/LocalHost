@@ -1,4 +1,3 @@
-
 /* ----- DEPENDENCIES -----*/
 const mongoService = require('./mongoService')
 const ObjectId = require('mongodb').ObjectId;
@@ -154,11 +153,9 @@ function _createUsers() {
         },
         "capacity": 3,
         "description": "have 3 couches",
-        "guests": [
-            {
-                "guestId": "a2"
-            }
-        ]
+        "guests": [{
+            "guestId": "a2"
+        }]
     };
     let host2 = null;
     let surf1 = null;
