@@ -5,7 +5,6 @@
     <div class="profiles-container">
       <profiles-list :profiles="getUsers"></profiles-list>
     </div>
-    {{getUsers}}
   </section>
 </template>
 
