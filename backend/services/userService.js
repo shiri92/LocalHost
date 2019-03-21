@@ -4,7 +4,7 @@ const mongoService = require('./mongoService')
 const ObjectId = require('mongodb').ObjectId;
 
 /* ----- CONSTANTS -----*/
-const USERS_COLLECTION = 'users';
+const USERS_COLLECTION = 'users_test';
 
 
 FillDB();
