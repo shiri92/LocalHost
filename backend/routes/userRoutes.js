@@ -18,8 +18,11 @@ function addRoutes(app) {
 
     // GET USERS
     app.get(BASE, (req, res) => {
-        const query = req.query;
-        userService.query(query).then(users => res.json(users))
+        const { city } = req.query;
+        userService.query(city).then(users => {
+            console.log(users);
+            return res.json(users);
+        })
     })
 
     // GET USER

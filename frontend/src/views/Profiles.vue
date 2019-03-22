@@ -14,7 +14,8 @@ import ProfilesList from "../components/ProfilesList.vue";
 export default {
   name: "Profiles",
   created() {
-    this.$store.dispatch({ type: 'loadUsers' })
+    let { name } = this.$route.params;
+    this.$store.dispatch({ type: 'loadUsers', city: name })
   },
   computed: {
     getUsers() {

@@ -1,5 +1,6 @@
 /* ----- DEPENDENCIES -----*/
 const countryService = require('../services/countryService.js');
+const cityService = require('../services/cityService.js');
 
 /* ----- CONSTANTS -----*/
 const BASE = '/country';
@@ -12,19 +13,19 @@ function addRoutes(app) {
         const { cityName } = req.query;
         countryService.query(cityName)
             .then(countries => {
-                console.log(countries)
-                return res.json(countries)
+                // console.log(countries)
+                return res.json(countries);
             })
     })
 
 
-    app.get(BASE + '/top', (req, res) => {
-        countryService.queryTopDests()
-            .then(topDests => {
-                console.log(topDests)
-                return res.json(topDests)
-            })
-    })
+    // app.get(BASE + '/top', (req, res) => {
+    //     console.log('here');
+    //     cityService.queryTopDests()
+    //         .then(topDests => {
+    //             return res.json(topDests)
+    //         })
+    // })
 
 
 
