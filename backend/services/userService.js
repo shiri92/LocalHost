@@ -132,26 +132,6 @@ function _createUser(info, host, surf) {
     }
 }
 
-// function checkLogin({ nickname }) {
-//     return mongoService.connect()
-//         .then(db => db.collection(USERS_COLLECTION).findOne({ nickname }))
-// }
-
-
-// todo  - add user only if nickname is not taken
-// function addUser(credentials) {
-//     console.log(credentials);
-//     let user = {
-//         nickname: credentials.nickname,
-//         password: credentials.password
-//     }
-//     return mongoService.connect()
-//         .then(db => db.collection(USERS_COLLECTION).insertOne(user))
-//         .then(res => {
-//             user._id = res.insertedId
-//             return user;
-//         })
-// }
 
 module.exports = {
     query,
