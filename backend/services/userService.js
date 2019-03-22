@@ -4,7 +4,7 @@ const cloudinaryService = require('./cloudinaryService');
 const ObjectId = require('mongodb').ObjectId;
 
 /* ----- CONSTANTS -----*/
-const USERS_COLLECTION = 'users_test';
+const USERS_COLLECTION = 'users';
 
 
 FillDB();
