@@ -1,6 +1,8 @@
 <template>
   <div class="home">
 
+    <main-header></main-header>
+
     <why-join></why-join>
 
     <h1>Top Destinations</h1>
@@ -19,6 +21,7 @@
 </template>
 
 <script>
+import MainHeader from '@/components/MainHeader';
 import CitySearch from '../components/CitySearch'
 import WhyJoin from '../components/WhyJoin'
 
@@ -46,6 +49,7 @@ export default {
 
   },
   components: {
+    MainHeader,
     CitySearch,
     WhyJoin
   }
@@ -54,7 +58,6 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  padding-top: 50px;
   padding-bottom: 50px;
   background-color: #e6e6e6;
 }
@@ -74,7 +77,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 1px 1px 10px black;
+  // box-shadow: 1px 1px 10px black;
   background-repeat: no-repeat;    
   background-size: cover;
   background-position: center center;
@@ -139,13 +142,13 @@ export default {
   font-size: 2rem;
   color: white;
   font-weight: bold;
-  text-shadow: #726e6e 3px 5px 2px;
+  // text-shadow: #726e6e 3px 5px 2px;
   width: 100%;
   height: 100%;
-  padding-top: 20px;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
+  // padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 

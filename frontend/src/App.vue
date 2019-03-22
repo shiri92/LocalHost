@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="flex flex-col">
 
-      <main-header></main-header>
 
       <div class="main-container">
         <router-view></router-view>
@@ -12,13 +11,11 @@
 </template>
 
 <script>
-import MainHeader from '../src/components/MainHeader';
 import MainFooter from '../src/components/MainFooter';
 
 
 export default {
   components: {
-    MainHeader,
     MainFooter
   }
   
