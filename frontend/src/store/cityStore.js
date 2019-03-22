@@ -24,7 +24,7 @@ export default {
     },
     actions: {
         async loadCities(context, { searchWord }) {
-            let cities = await cityService.queryCountries(searchWord);
+            let cities = await cityService.queryCities(searchWord);
             context.commit({ type: 'setCities', cities })
         },
         async loadTopDests(context) {

@@ -14,7 +14,7 @@ async function FillDB() {
     let topDests = db.collection(TOP_DESTS_COLLECTION).find({}).toArray();
 
     let resCities = await cities;
-    if (resCities.length === 0) addMany(countriesDB, CITIES_COLLECTION);
+    if (resCities.length === 0) addMany(citiesDB, CITIES_COLLECTION);
 
     let resTopDests = await topDests;
     if (resTopDests.length === 0) addMany(topDestsDB, TOP_DESTS_COLLECTION);
@@ -24,9 +24,10 @@ function addMany(arr, key) {
     return mongoService.connect().then(db => db.collection(key).insert(arr))
 }
 
-async function query() {
+async function query(searchWord) {
+    let queryRegex = { '$regex': searchWord, $options: '-i' };
     let db = await mongoService.connect();
-    return db.collection(CITY_COLLECTION).find({}).toArray();
+    return db.collection(CITIES_COLLECTION).find({ $or: [{ "name": queryRegex }, { "country": queryRegex }] }).toArray();
 }
 
 async function queryTopDests() {

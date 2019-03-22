@@ -10,12 +10,18 @@
     <city-search></city-search>
 
     <div class="cities-gallery grid">
-      <div v-for="dest in topDests" :key="dest._id"
-          :class="'img-container' + ' ' + dest.name"
-          :style="'background-image: url(' + dest.imgUrl + ')'">
-        <div class="city-name" @click="moveToUsers">{{dest.name}}</div>
+      <div
+        v-for="dest in topDests"
+        :key="dest._id"
+        :class="'img-container' + ' ' + dest.name"
+        :style="'background-image: url(' + dest.imgUrl + ')'"
+      >
+        <div
+          class="city-name"
+          @click="moveToUsers"
+        >{{dest.name}}</div>
       </div>
- 
+
     </div>
   </div>
 </template>
@@ -78,7 +84,7 @@ export default {
   justify-content: center;
   cursor: pointer;
   // box-shadow: 1px 1px 10px black;
-  background-repeat: no-repeat;    
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
 }
@@ -92,7 +98,7 @@ export default {
   grid-row: span 2;
 }
 
-.Paris{
+.Paris {
   grid-column: span 2;
   grid-row: span 1;
 }
@@ -107,9 +113,9 @@ export default {
   grid-row: span 1;
 }
 
-.Tokyo{
+.Tokyo {
   grid-column: span 1;
-  grid-row: span 1; 
+  grid-row: span 1;
 }
 
 .Berlin {
@@ -122,7 +128,7 @@ export default {
   grid-row: span 2;
 }
 
-.New-York{
+.New-York {
   grid-column: span 2;
   grid-row: span 1;
 }
@@ -132,7 +138,7 @@ export default {
   grid-row: span 1;
 }
 
-.img-container:last-child{
+.img-container:last-child {
   grid-column: span 1;
   grid-row: span 1;
   background-color: #7ebf50;
