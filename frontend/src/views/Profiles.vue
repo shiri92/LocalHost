@@ -1,15 +1,14 @@
 <template>
   <section class="profiles-page">
     <div class="main-title">Local Hosts</div>
-
     <div class="profiles-container">
       <profiles-list :profiles="getUsers"></profiles-list>
     </div>
   </section>
 </template>
+
 <script>
 import ProfilesList from "../components/ProfilesList.vue";
-
 
 export default {
   name: "Profiles",

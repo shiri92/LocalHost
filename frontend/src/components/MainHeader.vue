@@ -34,7 +34,7 @@ export default {
   // background:url('../../public/img/header.jpg');
   background-repeat: no-repeat;  
   background-size: 100% 100%;
-  height: 94vh;
+  height: 95vh;
   box-shadow: 2px 2px 10px black;
   justify-content: center;
   position: relative;

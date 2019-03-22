@@ -123,8 +123,8 @@ export default {
 
 @media (max-width: 568px) {
     .side-profile {
+        max-width: 97%;
         width: 97%;
-        
     }
 }
 
