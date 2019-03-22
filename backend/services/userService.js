@@ -44,7 +44,7 @@ function _createUsers() {
         "firstName": "Rachel",
         "lastName": "Green",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Thailand", "city": "Bangkok" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile1.png',
     };
@@ -54,7 +54,7 @@ function _createUsers() {
         "firstName": "Jessica",
         "lastName": "Ben David",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Spain", "city": "Madrid" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile2.png'
     };
@@ -64,7 +64,7 @@ function _createUsers() {
         "firstName": "Monica",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Spain", "city": "Madrid" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile3.png'
     };
@@ -74,7 +74,7 @@ function _createUsers() {
         "firstName": "Chandler",
         "lastName": "Bing",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "France", "city": "Paris" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile4.png'
     };
@@ -84,7 +84,7 @@ function _createUsers() {
         "firstName": "Ross",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile5.png'
     };
@@ -94,7 +94,7 @@ function _createUsers() {
         "firstName": "Joey",
         "lastName": "Tribbiani",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile6.png'
     };
@@ -104,7 +104,7 @@ function _createUsers() {
         "firstName": "Rachel",
         "lastName": "Green",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile7.png'
     };
@@ -114,7 +114,7 @@ function _createUsers() {
         "firstName": "Chandler",
         "lastName": "Bing",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "France", "city": "Paris" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile8.png'
     };
@@ -124,7 +124,7 @@ function _createUsers() {
         "firstName": "Ross",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Spain", "city": "Madrid" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile9.png'
     };
@@ -134,7 +134,7 @@ function _createUsers() {
         "firstName": "Monica",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Thailand", "city": "Bangkok" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile10.png'
     };
@@ -144,7 +144,7 @@ function _createUsers() {
         "firstName": "Phoebe",
         "lastName": "Buffay",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Thailand", "city": "Bangkok" },
         "language": "english",
         "imgUrl": '/img/profile-images/profile11.png'
     };

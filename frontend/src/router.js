@@ -19,7 +19,7 @@ export default new Router({
             component: About
         },
         {
-            path: '/profiles',
+            path: '/profiles/:name',
             name: 'profiles',
             component: Profiles
         },
