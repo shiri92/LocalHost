@@ -8,12 +8,31 @@
       <button class="btn"><font-awesome-icon icon="couch" /> Send Request</button>
       <button class="btn"><font-awesome-icon icon="envelope" /></button>
     </div>
-    <div class="main-desc" v-if="getCurrUser">
+    <div
+      class="main-desc"
+      v-if="getCurrUser"
+    >
       <nav class="profile-nav flex flex-row justify-center">
-        <a class="nav-item" href="#" v-scroll-to="'#about'">About</a>
-        <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
-        <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
-        <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
+        <a
+          class="nav-item"
+          href="#"
+          v-scroll-to="'#about'"
+        >About</a>
+        <a
+          class="nav-item"
+          href="#"
+          v-scroll-to="'#home'"
+        >My Home</a>
+        <a
+          class="nav-item"
+          href="#"
+          v-scroll-to="'#pics'"
+        >Pictures</a>
+        <a
+          class="nav-item"
+          href="#"
+          v-scroll-to="'#ref'"
+        >References</a>
       </nav>
       <profile-about id="about"></profile-about>
       <profile-myHome id="home"></profile-myHome>
