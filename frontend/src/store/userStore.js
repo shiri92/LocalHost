@@ -1,6 +1,5 @@
 /* ----- DEPENDENCIES -----*/
 import userService from '../services/userService.js';
-import { log } from 'util';
 
 export default {
     state: {
@@ -23,9 +22,6 @@ export default {
         setUser(state, { user }) {
             state.currUser = user;
         },
-        // addUser(state, { user }) {
-        //     state.users.push(user);
-        // }
     },
     actions: {
         async loadUsers(context) {
@@ -35,7 +31,6 @@ export default {
         async loadUser(context, { userId }) {
             let user = await userService.getById(userId);
             context.commit({ type: 'setUser', user });
-            // return { ...userPayload.user };
         },
         // async signup(context, { credentials }) {
         //     return UserService.addUser(credentials);
