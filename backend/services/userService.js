@@ -44,7 +44,7 @@ function _createUsers() {
         "firstName": "Rachel",
         "lastName": "Green",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Thailand", "city": "Bangkok" },
         "language": "english",
         "imgUrl": 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile1.jpg',
     };
@@ -54,17 +54,37 @@ function _createUsers() {
         "firstName": "Jessica",
         "lastName": "Ben David",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Spain", "city": "Madrid" },
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile2.jpg",
     };
     let info3 = {
         "username": "puki2",
         "password": "123",
+        "firstName": "Monica",
+        "lastName": "Geller",
+        "birthdate": 1553069493,
+        "address": { "country": "Spain", "city": "Madrid" },
+        "language": "english",
+        "imgUrl": '/img/profile-images/profile3.png'
+    };
+    let info4 = {
+        "username": "puki2",
+        "password": "123",
+        "firstName": "Chandler",
+        "lastName": "Bing",
+        "birthdate": 1553069493,
+        "address": { "country": "France", "city": "Paris" },
+        "language": "english",
+        "imgUrl": '/img/profile-images/profile4.png'
+    };
+    let info5 = {
+        "username": "puki2",
+        "password": "123",
         "firstName": "Ross",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile3.jpg",
     };
@@ -74,7 +94,7 @@ function _createUsers() {
         "firstName": "Joey",
         "lastName": "Tribbiani",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile4.jpg",
     };
@@ -84,7 +104,7 @@ function _createUsers() {
         "firstName": "Rachel",
         "lastName": "Green",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile5.jpg",
     };
@@ -94,7 +114,7 @@ function _createUsers() {
         "firstName": "Chandler",
         "lastName": "Bing",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "France", "city": "Paris" },
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile6.jpg",
     };
@@ -104,7 +124,7 @@ function _createUsers() {
         "firstName": "Ross",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Spain", "city": "Madrid" },
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile7.jpg",
     };
@@ -114,7 +134,17 @@ function _createUsers() {
         "firstName": "Monica",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Thailand", "city": "Bangkok" },
+        "language": "english",
+        "imgUrl": '/img/profile-images/profile10.png'
+    };
+    let info11 = {
+        "username": "puki2",
+        "password": "123",
+        "firstName": "Phoebe",
+        "lastName": "Buffay",
+        "birthdate": 1553069493,
+        "address": { "country": "Thailand", "city": "Bangkok" },
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile8.jpg",
     };
