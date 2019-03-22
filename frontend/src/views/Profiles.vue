@@ -14,7 +14,7 @@ import UsersList from "../components/UsersList.vue";
 export default {
   name: "Users",
   created() {
-    this.$store.dispatch({ type: 'loadUsers' })
+    this.$store.dispatch({ type: "loadUsers" });
   },
   computed: {
     getUsers() {

@@ -1,6 +1,6 @@
-
 /* ----- DEPENDENCIES -----*/
-const mongoService = require('./mongoService')
+const mongoService = require('./mongoService');
+const cloudinaryService = require('./cloudinaryService');
 const ObjectId = require('mongodb').ObjectId;
 
 /* ----- CONSTANTS -----*/
@@ -15,27 +15,26 @@ async function FillDB() {
     if (res.length === 0) addMany(_createUsers());
 }
 
-function addMany(users) {
-    return mongoService.connect()
-        .then(db => db.collection(USERS_COLLECTION).insert(users))
-        .then(res => {
-            res._id = res.insertedId;
-            return res;
-        })
+async function addMany(users) {
+    let db = await mongoService.connect();
+    let res = await db.collection(USERS_COLLECTION).insert(users);
+    res._id = res.insertedId;
+    return res;
 }
 
-function query() {
-    return mongoService.connect().then(db => db.collection(USERS_COLLECTION).find({}).toArray())
+async function query() {
+    let db = await mongoService.connect();
+    return db.collection(USERS_COLLECTION).find({}).toArray();
 }
 
-function getById(id) {
-    console.log('here');
-    console.log(id);
+async function getById(id) {
     const _id = new ObjectId(id)
-    return mongoService.connect().then(db => db.collection(USERS_COLLECTION).findOne({ _id }))
+    let db = await mongoService.connect();
+    let user = await db.collection(USERS_COLLECTION).findOne({ _id });
+    let img = await cloudinaryService.loadFromCloudinary(user.info.imgUrl);
+    user.img = img;
+    return user;
 }
-
-
 
 function _createUsers() {
     let users = [];
@@ -45,9 +44,9 @@ function _createUsers() {
         "firstName": "Rachel",
         "lastName": "Green",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Thailand", "city": "Bangkok" },
         "language": "english",
-        "imgUrl": '/img/profile-images/profile1.png',
+        "imgUrl": 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile1.jpg',
     };
     let info2 = {
         "username": "puki2",
@@ -55,9 +54,9 @@ function _createUsers() {
         "firstName": "Jessica",
         "lastName": "Ben David",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Spain", "city": "Madrid" },
         "language": "english",
-        "imgUrl": '/img/profile-images/profile2.png'
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile2.jpg",
     };
     let info3 = {
         "username": "puki2",
@@ -65,9 +64,9 @@ function _createUsers() {
         "firstName": "Monica",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Spain", "city": "Madrid" },
         "language": "english",
-        "imgUrl": '/img/profile-images/profile3.png'
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile3.jpg",
     };
     let info4 = {
         "username": "puki2",
@@ -75,9 +74,9 @@ function _createUsers() {
         "firstName": "Chandler",
         "lastName": "Bing",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "France", "city": "Paris" },
         "language": "english",
-        "imgUrl": '/img/profile-images/profile4.png'
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile4.jpg",
     };
     let info5 = {
         "username": "puki2",
@@ -85,9 +84,9 @@ function _createUsers() {
         "firstName": "Ross",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
-        "imgUrl": '/img/profile-images/profile5.png'
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile5.jpg",
     };
     let info6 = {
         "username": "puki2",
@@ -95,60 +94,11 @@ function _createUsers() {
         "firstName": "Joey",
         "lastName": "Tribbiani",
         "birthdate": 1553069493,
-        "address": {},
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
-        "imgUrl": '/img/profile-images/profile6.png'
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile6.jpg",
     };
-    let info7 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Rachel",
-        "lastName": "Green",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile7.png'
-    };
-    let info8 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Chandler",
-        "lastName": "Bing",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile8.png'
-    };
-    let info9 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Ross",
-        "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile9.png'
-    };
-    let info10 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Monica",
-        "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile10.png'
-    };
-    let info11 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Phoebe",
-        "lastName": "Buffay",
-        "birthdate": 1553069493,
-        "address": {},
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile11.png'
-    };
+
     let host1 = {
         "date": {
             "from": 1553069493,
@@ -156,27 +106,22 @@ function _createUsers() {
         },
         "capacity": 3,
         "description": "have 3 couches",
-        "guests": [
-            {
-                "guestId": "a2"
-            }
-        ]
+        "guests": [{
+            "guestId": "a2"
+        }]
     };
     let host2 = null;
     let surf1 = null;
-    let surf2 = { "hosterId": "a2" }
+    let surf2 = { hosterId: "a2" }
     users.push(_createUser(info1, host1, surf1));
     users.push(_createUser(info2, host2, surf2));
     users.push(_createUser(info3, host1, surf1));
     users.push(_createUser(info4, host2, surf2));
     users.push(_createUser(info5, host1, surf1));
     users.push(_createUser(info6, host1, surf1));
-    users.push(_createUser(info7, host1, surf1));
-    users.push(_createUser(info8, host1, surf1));
-    users.push(_createUser(info9, host1, surf1));
-    users.push(_createUser(info10, host1, surf1));
-    users.push(_createUser(info11, host1, surf1));
     return users;
+
+    //dirname
 }
 
 function _createUser(info, host, surf) {
@@ -187,26 +132,6 @@ function _createUser(info, host, surf) {
     }
 }
 
-// function checkLogin({ nickname }) {
-//     return mongoService.connect()
-//         .then(db => db.collection(USERS_COLLECTION).findOne({ nickname }))
-// }
-
-
-// todo  - add user only if nickname is not taken
-// function addUser(credentials) {
-//     console.log(credentials);
-//     let user = {
-//         nickname: credentials.nickname,
-//         password: credentials.password
-//     }
-//     return mongoService.connect()
-//         .then(db => db.collection(USERS_COLLECTION).insertOne(user))
-//         .then(res => {
-//             user._id = res.insertedId
-//             return user;
-//         })
-// }
 
 module.exports = {
     query,

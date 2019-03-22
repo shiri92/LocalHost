@@ -5,8 +5,13 @@
       <div class="profile-name">{{getCurrUser.info.firstName}}, {{getCurrUser.info.lastName}}</div>
       <div class="profile-language">{{getCurrUser.info.language}}</div>
       <hr>
-      <button class="btn"><font-awesome-icon icon="couch" /> Send Request</button>
-      <button class="btn"><font-awesome-icon icon="envelope" /></button>
+      <button class="btn">
+        <font-awesome-icon icon="couch"/>Send Request
+      </button>
+      <button class="btn">
+        <font-awesome-icon icon="envelope"/>
+      </button>
+      <button class="btn">More <font-awesome-icon icon="sort-down"/></button>
     </div>
     <div class="main-desc" v-if="getCurrUser">
       <nav class="profile-nav flex flex-row justify-center">
@@ -54,9 +59,15 @@ export default {
 .profile-container {
   background-color: antiquewhite;
 }
+@media (max-width: 568px) {
+    .profile-container {
+        flex-direction: column;
+    }
+}
 
 .side-profile {
   width: 30vw;
+  max-width: 350px;
   border: 2px solid black;
   height: 80vh;
   margin: 5px;
@@ -64,6 +75,7 @@ export default {
   padding: 15px;
   .profile-img {
     width: 100%;
+    max-width: 280px;
     height: 40%;
     border-radius: 50%;
   }
@@ -79,12 +91,12 @@ export default {
     text-transform: uppercase;
   }
   hr {
-      margin: 20px;
+    margin: 20px;
   }
   .btn {
     margin: 5px;
-    background-color: #287fb8;
-    border: 1px solid #287fb8;
+    background-color: #67c23a;
+    border: 1px solid #67c23a;
     border-radius: 3px;
     color: #fff;
     cursor: pointer;
@@ -103,6 +115,17 @@ export default {
     -webkit-appearance: none;
     -webkit-font-smoothing: antialiased;
   }
+  .btn:hover {
+    background: #85ce61;
+    border-color: #85ce61;
+  }
+}
+
+@media (max-width: 568px) {
+    .side-profile {
+        max-width: 97%;
+        width: 97%;
+    }
 }
 
 .main-desc {

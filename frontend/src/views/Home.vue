@@ -1,69 +1,26 @@
 <template>
   <div class="home">
 
+    <why-join></why-join>
+
+    <h1>Top Destinations</h1>
+
+    <city-search></city-search>
+
     <div class="cities-gallery grid">
-
-        <div class="img-container bangkok">
-          <!-- <img src="../../public/img/cities/bangkok.jpg"> -->
-          <div class="city-name">Bangkok</div>
-        </div>
-
-        <div class="img-container london">
-          <!-- <img src="../../public/img/cities/london.jpg"> -->
-          <div class="city-name">London</div>
-        </div>
-
-        <div class="img-container paris">
-          <!-- <img src="../../public/img/cities/paris.jpg"> -->
-          <div class="city-name">Paris</div>
-        </div>
-
-        <div class="img-container buenos-aires">
-          <!-- <img src="../../public/img/cities/buenos-aires.jpg"> -->
-          <div class="city-name">Buenos Aires</div>
-        </div>
-
-        <div class="img-container rome">
-          <!-- <img src="../../public/img/cities/rome.jpg"> -->
-          <div class="city-name">Rome</div>
-        </div>
-
-        <div class="img-container tokyo">
-          <!-- <img src="../../public/img/cities/tokyo.jpg"> -->
-          <div class="city-name">Tokyo</div>
-        </div>
-
-        <div class="img-container berlin">
-          <!-- <img src="../../public/img/cities/berlin.jpg"> -->
-          <div class="city-name">Berlin</div>
-        </div>
-
-        <div class="img-container barcelona">
-          <!-- <img src="../../public/img/cities/barcelona.jpg"> -->
-          <div class="city-name">Barcelona</div>
-        </div>
-
-        <div class="img-container new-york">
-          <!-- <img src="../../public/img/cities/new-york.jpg"> -->
-          <div class="city-name">New York</div>
-        </div>
-
-        <div class="img-container rio">
-          <!-- <img src="../../public/img/cities/rio.jpg"> -->
-          <div class="city-name">Rio</div>
-        </div>
-        
-        <div class="img-container coming-soon">
-          <div class="city-name">Coming Soon...</div>
-        </div>
-      
+      <div v-for="dest in topDests" :key="dest._id"
+          :class="'img-container' + ' ' + dest.name"
+          :style="'background-image: url(' + dest.imgUrl + ')'">
+        <div class="city-name" @click="moveToUsers">{{dest.name}}</div>
+      </div>
+ 
     </div>
-    
   </div>
 </template>
 
 <script>
-
+import CitySearch from '../components/CitySearch'
+import WhyJoin from '../components/WhyJoin'
 
 
 export default {
@@ -73,110 +30,123 @@ export default {
 
     }
   },
+  created() {
+    this.$store.dispatch({ type: 'loadTopDests' })
+  },
+  methods: {
+    moveToUsers(ev) {
+      let name = ev.target.innerText;
+      this.$router.push('/profiles/' + name)
+    }
+  },
+  computed: {
+    topDests() {
+      return this.$store.getters.topDests;
+    }
+
+  },
   components: {
-    
+    CitySearch,
+    WhyJoin
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.home {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #e6e6e6;
+}
 
-.home{
+.cities-gallery {
   max-width: 80%;
   margin: 0 auto;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.cities-gallery{
   grid-template-rows: repeat(4, 1fr);
   grid-template-columns: repeat(4, 1fr);
-  grid-gap: 10px;
+  grid-gap: 20px;
   height: 90vh;
+  margin-top: 40px;
 }
 
-.img-container{
+.img-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  cursor: pointer;
+  box-shadow: 1px 1px 10px black;
+  background-repeat: no-repeat;    
+  background-size: cover;
+  background-position: center center;
 }
 
-.bangkok{
-  grid-column: span 1;
-  grid-row: span 2;
-  background-color: rgb(160, 119, 119);
-}
-
-.london{
+.Bangkok {
   grid-column: span 1;
   grid-row: span 1;
-  background-color: rgb(241, 95, 95);
-
+}
+.London {
+  grid-column: span 1;
+  grid-row: span 2;
 }
 
-.paris{
+.Paris{
   grid-column: span 2;
   grid-row: span 1;
-  background-color: rgb(133, 133, 238);
 }
 
-.buenos-aires{
+.Buenos-Aires {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.Rome {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.Tokyo{
+  grid-column: span 1;
+  grid-row: span 1; 
+}
+
+.Berlin {
   grid-column: span 1;
   grid-row: span 2;
-  background-color: rgb(172, 123, 221);
 }
 
-.rome{
+.Barcelona {
   grid-column: span 1;
   grid-row: span 2;
-  background-color: rgb(228, 228, 149);
 }
 
-.tokyo{
-  grid-column: span 1;
-  grid-row: span 1;
-  background-color: rgb(149, 228, 149);
-}
-
-.berlin{
-  grid-column: span 1;
-  grid-row: span 1;
-  background-color: palevioletred;
-
-}
-
-.barcelona{
-  grid-column: span 1;
-  grid-row: span 1;
-  background-color: burlywood;
-}
-
-.new-york{
+.New-York{
   grid-column: span 2;
   grid-row: span 1;
-  background-color: rgb(224, 164, 85);
-
 }
 
-.rio{
+.Rio {
   grid-column: span 1;
   grid-row: span 1;
-  background-color: rgb(204, 125, 211);
 }
 
-.coming-soon{
+.img-container:last-child{
   grid-column: span 1;
   grid-row: span 1;
-  background-color: rgb(231, 141, 125);
+  background-color: #7ebf50;
 }
 
-.city-name{
+.city-name {
   font-size: 2rem;
-  color: black;
+  color: white;
   font-weight: bold;
+  text-shadow: #726e6e 3px 5px 2px;
+  width: 100%;
+  height: 100%;
+  padding-top: 20px;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 }
-
-
 </style>
 
 

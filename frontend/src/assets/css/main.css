@@ -1,6 +1,5 @@
 @import url('helper.css');
 @import url('normalize.css');
-
 * {
     box-sizing: border-box;
     padding: 0;
@@ -10,4 +9,8 @@
 a:-webkit-any-link {
     color: unset;
     text-decoration: none;
+}
+
+button {
+    cursor: pointer;
 }
