@@ -8,7 +8,7 @@
     </el-input>
     <!-- </div> -->
 
-    <ul class="clean-list" v-for="country in countries" :key="country">
+    <ul class="clean-list" v-for="(country, idx) in countries" :key="idx">
       <li v-if="searchWord"><a href="#">{{country}}</a></li>
     </ul>
 
@@ -46,9 +46,10 @@ export default {
 
 .city-search{
   width: 60%;
-  position: absolute;
-  top: 80%;
-  left: 20vw;
+  margin: 0 auto;
+//   position: absolute;
+//   top: 80%;
+//   left: 20vw;
 }
 
 li{

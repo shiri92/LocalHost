@@ -9,9 +9,21 @@ function addRoutes(app) {
 
     // GET LIST
     app.get(BASE, (req, res) => {
-        const query = req.query;
-        countryService.query(query)
-            .then(countries => res.json(countries))
+        const { cityName } = req.query;
+        countryService.query(cityName)
+            .then(countries => {
+                console.log(countries)
+                return res.json(countries)
+            })
+    })
+
+
+    app.get(BASE + '/top', (req, res) => {
+        countryService.queryTopDests()
+            .then(topDests => {
+                console.log(topDests)
+                return res.json(topDests)
+            })
     })
 
 
