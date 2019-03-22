@@ -7,8 +7,9 @@ const session = require('express-session')
 const app = express();
 
 /* ----- ROUTES -----*/
-const addUserRoutes = require('./routes/userRoutes')
 const addCountryRoutes = require('./routes/countryRoutes')
+const addCityRoutes = require('./routes/cityRoutes')
+const addUserRoutes = require('./routes/userRoutes')
 
 
 /* ----- SERVER -----*/
@@ -28,8 +29,9 @@ app.use(session({
 }))
 app.get('/', (req, res) => res.send('Hello World!'))
 
-addUserRoutes(app)
 addCountryRoutes(app)
+addCityRoutes(app);
+addUserRoutes(app)
 
 const PORT = process.env.PORT || 3003;
-app.listen(PORT, () => {})
+app.listen(PORT, () => { })
