@@ -7,8 +7,10 @@
       <router-link to="/about">About</router-link> |
       <router-link to="/profiles">Profiles</router-link>
 
-      <el-button type="success">Join</el-button>
-      <el-button type="success" plain>Log In</el-button>
+      <div class="join-container">
+        <el-button type="success">Join</el-button>
+        <el-button type="success" plain>Log In</el-button>
+      </div>
 
 
     </section>
@@ -31,7 +33,7 @@ export default {
   padding: 10px;
   width: 100%;
   background-color: white;
-  padding: 15px;
+  padding: 15px 60px 15px 60px;
   box-shadow: 1px 1px 8px black;
   position: fixed;
   top: 0;
