@@ -193,8 +193,6 @@ function _createUser(info, host, surf) {
 // }
 
 
-
-
 // todo  - add user only if nickname is not taken
 // function addUser(credentials) {
 //     console.log(credentials);

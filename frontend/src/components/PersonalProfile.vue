@@ -5,7 +5,8 @@
       <div class="profile-name">{{getCurrUser.info.firstName}}, {{getCurrUser.info.lastName}}</div>
       <div class="profile-language">{{getCurrUser.info.language}}</div>
       <hr>
-      <button class="request-btn">Send Request</button>
+      <button class="btn"><font-awesome-icon icon="couch" /> Send Request</button>
+      <button class="btn"><font-awesome-icon icon="envelope" /></button>
     </div>
     <div class="main-desc" v-if="getCurrUser">
       <nav class="profile-nav flex flex-row justify-center">
@@ -77,7 +78,10 @@ export default {
   .profile-language::first-letter {
     text-transform: uppercase;
   }
-  .request-btn {
+  hr {
+      margin: 20px;
+  }
+  .btn {
     margin: 5px;
     background-color: #287fb8;
     border: 1px solid #287fb8;
@@ -89,7 +93,6 @@ export default {
     font-weight: bold;
     line-height: 1.5;
     max-width: 240px;
-    min-width: 6em;
     padding: 8px 12px;
     text-align: center;
     text-decoration: none;
