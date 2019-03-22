@@ -1,12 +1,12 @@
 
+/* ----- DEPENDENCIES -----*/
 const cloudinary = require('cloudinary');
-
 configCloudinary();
-// saveToCloudinary("https://via.placeholder.com/500", "example_1");
 
 function configCloudinary() {
-    cloudinary.config(  // niv details
+    cloudinary.config(
         {
+            // niv
             cloud_name: 'dcl4oabi3',
             api_key: '835468792983949',
             api_secret: 'djgVO14O1DSteDPTimrKaq7E1Bo'
@@ -14,10 +14,7 @@ function configCloudinary() {
 }
 
 function saveToCloudinary(imgUrl, imgId) {
-    return cloudinary.v2.uploader.upload(imgUrl, { public_id: imgId }, function (error, result) {
-        return result;
-    });
-
+    return cloudinary.v2.uploader.upload(imgUrl, { public_id: imgId }, (error, result) => result);
 }
 
 function loadFromCloudinary(imgUrl) {

@@ -16,11 +16,13 @@ const BASE = '/user';
 
 function addRoutes(app) {
 
-    // GET LIST
+    // GET USERS
     app.get(BASE, (req, res) => {
         const query = req.query;
         userService.query(query).then(users => res.json(users))
     })
+
+    // GET USER
     app.get(`${BASE}/:id`, (req, res) => {
         const userId = req.params.id;
         userService.getById(userId).then(user => res.json(user));

@@ -7,8 +7,6 @@
     </div>
   </section>
 </template>
-
-
 <script>
 import ProfilesList from "../components/ProfilesList.vue";
 

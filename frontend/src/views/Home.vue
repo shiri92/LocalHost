@@ -7,7 +7,6 @@
 
     <city-search></city-search>
 
-
     <div class="cities-gallery grid">
       <div v-for="dest in topDests" :key="dest._id"
           :class="'img-container' + ' ' + dest.name"
@@ -16,7 +15,6 @@
       </div>
  
     </div>
-    
   </div>
 </template>
 
@@ -32,20 +30,20 @@ export default {
 
     }
   },
-  created(){
-    this.$store.dispatch({type: 'loadTopDests'})
+  created() {
+    this.$store.dispatch({ type: 'loadTopDests' })
   },
   methods: {
-    moveToUsers(ev){
-      let name = ev.target.innerText;      
+    moveToUsers(ev) {
+      let name = ev.target.innerText;
       this.$router.push('/profiles/' + name)
     }
   },
   computed: {
-    topDests(){
+    topDests() {
       return this.$store.getters.topDests;
     }
-    
+
   },
   components: {
     CitySearch,
@@ -55,14 +53,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.home{
+.home {
   padding-top: 50px;
   padding-bottom: 50px;
   background-color: #e6e6e6;
 }
 
-.cities-gallery{
+.cities-gallery {
   max-width: 80%;
   margin: 0 auto;
   grid-template-rows: repeat(4, 1fr);
@@ -72,7 +69,7 @@ export default {
   margin-top: 40px;
 }
 
-.img-container{
+.img-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -83,12 +80,11 @@ export default {
   background-position: center center;
 }
 
-.Bangkok{
+.Bangkok {
   grid-column: span 1;
   grid-row: span 1;
-
 }
-.London{
+.London {
   grid-column: span 1;
   grid-row: span 2;
 }
@@ -98,12 +94,12 @@ export default {
   grid-row: span 1;
 }
 
-.Buenos-Aires{
+.Buenos-Aires {
   grid-column: span 1;
   grid-row: span 1;
 }
 
-.Rome{
+.Rome {
   grid-column: span 1;
   grid-row: span 1;
 }
@@ -113,12 +109,12 @@ export default {
   grid-row: span 1; 
 }
 
-.Berlin{
+.Berlin {
   grid-column: span 1;
   grid-row: span 2;
 }
 
-.Barcelona{
+.Barcelona {
   grid-column: span 1;
   grid-row: span 2;
 }
@@ -128,7 +124,7 @@ export default {
   grid-row: span 1;
 }
 
-.Rio{
+.Rio {
   grid-column: span 1;
   grid-row: span 1;
 }
@@ -139,7 +135,7 @@ export default {
   background-color: #7ebf50;
 }
 
-.city-name{
+.city-name {
   font-size: 2rem;
   color: white;
   font-weight: bold;
@@ -151,8 +147,6 @@ export default {
   // justify-content: center;
   // align-items: center;
 }
-
-
 </style>
 
 
