@@ -66,7 +66,7 @@ function _createUsers() {
         "birthdate": 1553069493,
         "address": { "country": "Spain", "city": "Madrid" },
         "language": "english",
-        "imgUrl": '/img/profile-images/profile3.png'
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile3.jpg",
     };
     let info4 = {
         "username": "puki2",
@@ -76,33 +76,13 @@ function _createUsers() {
         "birthdate": 1553069493,
         "address": { "country": "France", "city": "Paris" },
         "language": "english",
-        "imgUrl": '/img/profile-images/profile4.png'
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile4.jpg",
     };
     let info5 = {
         "username": "puki2",
         "password": "123",
         "firstName": "Ross",
         "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": { "country": "Argentina", "city": "Buenos Aires" },
-        "language": "english",
-        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile3.jpg",
-    };
-    let info4 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Joey",
-        "lastName": "Tribbiani",
-        "birthdate": 1553069493,
-        "address": { "country": "Argentina", "city": "Buenos Aires" },
-        "language": "english",
-        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile4.jpg",
-    };
-    let info5 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Rachel",
-        "lastName": "Green",
         "birthdate": 1553069493,
         "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
@@ -111,43 +91,14 @@ function _createUsers() {
     let info6 = {
         "username": "puki2",
         "password": "123",
-        "firstName": "Chandler",
-        "lastName": "Bing",
+        "firstName": "Joey",
+        "lastName": "Tribbiani",
         "birthdate": 1553069493,
-        "address": { "country": "France", "city": "Paris" },
+        "address": { "country": "Argentina", "city": "Buenos Aires" },
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile6.jpg",
     };
-    let info7 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Ross",
-        "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": { "country": "Spain", "city": "Madrid" },
-        "language": "english",
-        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile7.jpg",
-    };
-    let info8 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Monica",
-        "lastName": "Geller",
-        "birthdate": 1553069493,
-        "address": { "country": "Thailand", "city": "Bangkok" },
-        "language": "english",
-        "imgUrl": '/img/profile-images/profile10.png'
-    };
-    let info11 = {
-        "username": "puki2",
-        "password": "123",
-        "firstName": "Phoebe",
-        "lastName": "Buffay",
-        "birthdate": 1553069493,
-        "address": { "country": "Thailand", "city": "Bangkok" },
-        "language": "english",
-        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile8.jpg",
-    };
+
     let host1 = {
         "date": {
             "from": 1553069493,
@@ -168,8 +119,6 @@ function _createUsers() {
     users.push(_createUser(info4, host2, surf2));
     users.push(_createUser(info5, host1, surf1));
     users.push(_createUser(info6, host1, surf1));
-    users.push(_createUser(info7, host1, surf1));
-    users.push(_createUser(info8, host1, surf1));
     return users;
 
     //dirname
