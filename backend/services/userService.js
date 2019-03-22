@@ -7,7 +7,6 @@ const ObjectId = require('mongodb').ObjectId;
 const USERS_COLLECTION = 'users_test';
 
 
-
 FillDB();
 
 async function FillDB() {
@@ -39,8 +38,6 @@ async function getById(id) {
 
 function _createUsers() {
     let users = [];
-    let host = null;
-    let surf = null;
     let info1 = {
         "username": "puki1",
         "password": "123",
@@ -134,6 +131,7 @@ function _createUsers() {
     };
     let host2 = null;
     let surf1 = null;
+    let surf2 = { hosterId: "a2" }
     users.push(_createUser(info1, host1, surf1));
     users.push(_createUser(info2, host2, surf2));
     users.push(_createUser(info3, host1, surf1));
@@ -144,13 +142,7 @@ function _createUsers() {
     users.push(_createUser(info8, host1, surf1));
     return users;
 
-    // console.log(__dirname + '../../frontend/public/img/profile-images/profile1.png')
-    // return cloudinaryService.saveToCloudinary('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile2.jpg', 'profile_1')
-    //     .then(result => {
-    //         info1.imgUrl = result.url;
-    //         users.push(_createUser(info1, host, surf));
-    //         return users;
-    //     })
+    //dirname
 }
 
 function _createUser(info, host, surf) {

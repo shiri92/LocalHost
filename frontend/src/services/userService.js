@@ -26,9 +26,6 @@ async function getById(id) {
 //         .then(res => res.data)
 // }
 
-
-
-
 // function login(credentials) {
 //     console.log(credentials);
 //     return axios.put(`${BASE_URL}/login`, credentials)

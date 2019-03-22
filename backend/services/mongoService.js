@@ -9,16 +9,18 @@ function connectToMongo() {
     // const url = (!process.env.PORT)? 'mongodb://localhost:27017' : 'mlab url'
 
     /* ----- MONGO ATLAS -----*/
-    const url = 'mongodb+srv://niv:13243545@cluster0-lartw.mongodb.net/test?retryWrites=true';
+    const username = 'niv';
+    const password = '13243545';
+    const url = `mongodb+srv://${username}:${password}@cluster0-lartw.mongodb.net/test?retryWrites=true`;
     const dbName = 'ontDB';
     const client = new MongoClient(url, { useNewUrlParser: true });
 
     return client.connect()
         .then(client => {
-            console.log('Connected to MongoDB');
+            console.log('Connected to MongoDB!');
             // If we get disconnected (e.g. db is down)
             client.on('close', () => {
-                console.log('MongoDB Diconnected!');
+                console.log('Disconnected from MongoDB!');
                 dbConn = null;
             })
             dbConn = client.db(dbName);
