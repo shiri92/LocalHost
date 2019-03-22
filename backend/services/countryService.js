@@ -4,22 +4,29 @@ const ObjectId = require('mongodb').ObjectId;
 
 /* ----- CONSTANTS -----*/
 const COUNTRIES_COLLECTION = 'countries';
+const TOP_DESTS_COLLECTION = 'topDests';
 
 FillDB();
 
 async function FillDB() {
     let db = await mongoService.connect();
-    let res = await db.collection(COUNTRIES_COLLECTION).find({}).toArray();
-    if (res.length === 0) addMany(countriesDB);
+    let countries = db.collection(COUNTRIES_COLLECTION).find({}).toArray();
+    let topDests = db.collection(TOP_DESTS_COLLECTION).find({}).toArray();
+
+    let resCountries = await countries;
+    if (resCountries.length === 0) addMany(countriesDB, COUNTRIES_COLLECTION);
+
+    let resTopDests = await topDests;
+    if (resCountries.length === 0) addMany(topDestsDB, TOP_DESTS_COLLECTION);
 }
 
-function addMany(countries) {
+function addMany(arr, key) {
     return mongoService.connect()
-        .then(db => db.collection(COUNTRIES_COLLECTION).insert(countries))
-        .then(res => {
-            res._id = res.insertedId;
-            return res;
-        })
+        .then(db => db.collection(key).insert(arr))
+        // .then(res => {
+        //     res._id = res.insertedId;
+        //     return res;
+        // })
 }
 
 // function query(searchWord) {
@@ -164,12 +171,11 @@ async function query(searchWord) {
 
 
 function queryTopDests() {
-    // return mongoService.connect()
-    //     .then(db => {
-    //         const collection = db.collection('topDests');
-    //         return collection.find({}).toArray()
-    //     })
-    return Promise.resolve(topDestDB);
+    return mongoService.connect()
+        .then(db => {
+            const collection = db.collection('topDests');
+            return collection.find({}).toArray()
+        })
 }
 
 var countriesDB = [{
@@ -200,48 +206,48 @@ var countriesDB = [{
 ]
 
 
-var topDestDB = [{
+var topDestsDB = [{
         "name": "Bangkok",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173600/b25zL2NpdGllcy9iYW5na29r/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173600/ons/cities/bangkok.jpg"
     },
     {
         "name": "London",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173600/b25zL2NpdGllcy9sb25kb24=/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173600/ons/cities/london.jpg"
     },
     {
         "name": "Paris",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173592/b25zL2NpdGllcy9wYXJpcw==/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173592/ons/cities/paris.jpg"
     },
     {
         "name": "Buenos-Aires",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173589/b25zL2NpdGllcy9idWVub3MtYWlyZXM=/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173589/ons/cities/buenos-aires.jpg"
     },
     {
         "name": "Rome",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173596/b25zL2NpdGllcy9yb21l/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173596/ons/cities/rome.jpg"
     },
     {
         "name": "Tokyo",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173596/b25zL2NpdGllcy90b2t5bw==/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173596/ons/cities/tokyo.jpg"
     },
     {
         "name": "Berlin",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173596/b25zL2NpdGllcy9iZXJsaW4=/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173596/ons/cities/berlin.jpg"
     },
     {
         "name": "Barcelona",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173587/b25zL2NpdGllcy9iYXJjZWxvbmE=/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173587/ons/cities/barcelona.jpg"
     },
     {
         "name": "New-York",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173606/b25zL2NpdGllcy9uZXcteW9yaw==/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173606/ons/cities/new-york.jpg"
     },
     {
         "name": "Rio",
-        "imgUrl": "https://res-console.cloudinary.com/dcl4oabi3/thumbnails/v1/image/upload/v1553173600/b25zL2NpdGllcy9yaW8=/grid"
+        "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173600/ons/cities/rio.jpg"
     },
     {
-        "name": "Coming-Soon...",
+        "name": "All Top Destinations...",
         "imgUrl": ""
     },
 ]

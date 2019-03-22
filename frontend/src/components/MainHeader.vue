@@ -4,8 +4,8 @@
 
         <nav-bar></nav-bar>
 
-        <h1>Some Emotional And Nice Text</h1>
-        <h2>Something less emotional</h2>
+        <h1>Find a Place To Stay On Your Travel</h1>
+        <h2>Improve Your Travel Experience!</h2>
 
         <el-button class="btn-join" type="success" round>Join</el-button>
 
@@ -30,8 +30,7 @@ export default {
 <style lang="scss" scoped>
 
 .main-header{
-  // background-image: url('../../public/img/world.jpg');
-  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('../../public/img/header.jpg');
+  background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/header.jpg');
   // background:url('../../public/img/header.jpg');
   background-repeat: no-repeat;  
   background-size: 100% 100%;
