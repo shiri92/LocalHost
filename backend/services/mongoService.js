@@ -9,7 +9,7 @@ function connectToMongo() {
     // const url = (!process.env.PORT)? 'mongodb://localhost:27017' : 'mlab url'
 
     /* ----- MONGO ATLAS -----*/
-    const url = 'mongodb+srv://niv:13243545@cluster0-lartw.mongodb.net/test?retryWrites=true'
+    const url = 'mongodb+srv://niv:13243545@cluster0-lartw.mongodb.net/test?retryWrites=true';
     const dbName = 'ontDB';
     const client = new MongoClient(url, { useNewUrlParser: true });
 
@@ -21,7 +21,7 @@ function connectToMongo() {
                 console.log('MongoDB Diconnected!');
                 dbConn = null;
             })
-            dbConn = client.db(dbName)
+            dbConn = client.db(dbName);
             return dbConn;
         })
 }

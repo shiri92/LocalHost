@@ -15,9 +15,7 @@ function query() {
 }
 
 function getById(id) {
-    return axios.get(`${BASE_API}/${id}`).then(res => {
-        return res.data;
-    })
+    return axios.get(`${BASE_API}/${id}`).then(res => res.data)
 }
 
 // function addUser(credentials) {
