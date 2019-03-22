@@ -22,9 +22,9 @@ async function addMany(users) {
     return res;
 }
 
-async function query() {
+async function query(currCity) {
     let db = await mongoService.connect();
-    return db.collection(USERS_COLLECTION).find({}).toArray();
+    return await db.collection(USERS_COLLECTION).find({ "info.city": currCity }).toArray();
 }
 
 async function getById(id) {
@@ -44,7 +44,8 @@ function _createUsers() {
         "firstName": "Rachel",
         "lastName": "Green",
         "birthdate": 1553069493,
-        "address": { "country": "Thailand", "city": "Bangkok" },
+        "country": "Thailand",
+        "city": "Bangkok",
         "language": "english",
         "imgUrl": 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile1.jpg',
     };
@@ -54,7 +55,8 @@ function _createUsers() {
         "firstName": "Jessica",
         "lastName": "Ben David",
         "birthdate": 1553069493,
-        "address": { "country": "Spain", "city": "Madrid" },
+        "country": "Spain",
+        "city": "Barcelona",
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile2.jpg",
     };
@@ -64,7 +66,8 @@ function _createUsers() {
         "firstName": "Monica",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": { "country": "Spain", "city": "Madrid" },
+        "country": "Spain",
+        "city": "Barcelona",
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile3.jpg",
     };
@@ -74,7 +77,8 @@ function _createUsers() {
         "firstName": "Chandler",
         "lastName": "Bing",
         "birthdate": 1553069493,
-        "address": { "country": "France", "city": "Paris" },
+        "country": "France",
+        "city": "Paris",
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile4.jpg",
     };
@@ -84,7 +88,8 @@ function _createUsers() {
         "firstName": "Ross",
         "lastName": "Geller",
         "birthdate": 1553069493,
-        "address": { "country": "Argentina", "city": "Buenos Aires" },
+        "country": "Argentina",
+        "city": "Buenos Aires",
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile5.jpg",
     };
@@ -94,7 +99,8 @@ function _createUsers() {
         "firstName": "Joey",
         "lastName": "Tribbiani",
         "birthdate": 1553069493,
-        "address": { "country": "Argentina", "city": "Buenos Aires" },
+        "country": "Argentina",
+        "city": "Buenos Aires",
         "language": "english",
         "imgUrl": "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174121/ons/profiles_sample/profile6.jpg",
     };
