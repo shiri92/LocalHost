@@ -1,8 +1,7 @@
 <template>
 
     <section class="main-footer">
-      I AM A FOOTER
-        
+      I AM A FOOTER    
     </section>
 
 </template>
