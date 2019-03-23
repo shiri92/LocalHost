@@ -33,12 +33,14 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons'
 import { faCouch } from '@fortawesome/free-solid-svg-icons'
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 library.add(faCoffee)
 library.add(faCouch)
 library.add(faEnvelope)
 library.add(faSortDown)
+library.add(faWindowClose)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
