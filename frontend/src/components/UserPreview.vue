@@ -1,9 +1,9 @@
 <template>
   <li class="single-profile flex flex-col space-between">
     <div>
-      <img :src="profile.info.imgUrl" alt>
+      <img :src="profile.imgUrl" alt>
     </div>
-    <div>{{profile.info.firstName}}, {{profile.info.lastName}}</div>
+    <div>{{profile.firstName}} {{profile.lastName}}</div>
 
     <!-- <router-link :to="'/profile-app/profile-edit/' + profile._id">
       <button>Edit</button>
