@@ -13,6 +13,9 @@ export default {
     },
     user(state) {
       return state.currUser;
+    },
+    loggedUser(state) {
+      return state.loggedUser;
     }
   },
   mutations: {
@@ -37,6 +40,7 @@ export default {
     },
     async signup(context, { credentials }) {
       let user = await userService.add(credentials);
+      context.commit({ type: "setLoggedUser", user });
       console.log("successfuly registered: ", user);
     },
     async login(context, { credentials }) {
