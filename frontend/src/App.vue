@@ -1,11 +1,9 @@
 <template>
   <div id="app" class="flex flex-col">
     <nav-bar></nav-bar>
-
     <div class="main-container">
       <router-view></router-view>
     </div>
-
     <main-footer></main-footer>
   </div>
 </template>
@@ -13,7 +11,6 @@
 <script>
 import NavBar from '@/components/NavBar'
 import MainFooter from '../src/components/MainFooter';
-
 
 export default {
   components: {
@@ -36,5 +33,7 @@ export default {
 
 .main-container {
   flex-grow: 1;
+  margin-top: 70px;
+  background-color: #e6e6e6;
 }
 </style>

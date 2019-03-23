@@ -1,16 +1,13 @@
 <template>
   <section class="flex justify-center flex-col align-center">
-    <!-- <router-link to="/profile-app/profile-edit">
-      <button>Add Profile</button>
-    </router-link>-->
-    <div class="profile-list-container" v-if="profiles">
+    <div class="profile-list-container" v-if="users">
       <router-link
         class="profile-list-item"
         :key="currProfile._id"
-        v-for="(currProfile, idx) in profiles"
-        :to="'/profile/' + currProfile._id"
+        v-for="(currProfile, idx) in users"
+        :to="'/userProfile/' + currProfile._id"
       >
-        <profile-preview :profile="currProfile" :idx="idx+1"></profile-preview>
+        <user-preview :profile="currProfile" :idx="idx+1"></user-preview>
       </router-link>
     </div>
   </section>
@@ -18,14 +15,15 @@
 
 
 <script>
-import ProfilePreview from "./ProfilePreview.vue";
+import UserPreview from './UserPreview.vue';
 
 export default {
-  name: "ProfileList",
-  props: ["profiles"],
+  name: "UserList",
+  props: ["users"],
   components: {
-    ProfilePreview
+    UserPreview
   },
+
 };
 </script>
 

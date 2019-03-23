@@ -1,17 +1,21 @@
 <template>
-  <section class="profiles-page">
+  <section class="users-page">
     <div class="main-title">Local Hosts</div>
-    <div class="profiles-container">
-      <profiles-list :profiles="getUsers"></profiles-list>
+    <div class="users-container">
+      <users-list :users="getUsers"></users-list>
     </div>
   </section>
 </template>
 
 <script>
-import ProfilesList from "../components/ProfilesList.vue";
+// import UsersList from "../components/UsersList.vue";
+import UsersList from '../components/UsersList.vue';
 
 export default {
-  name: "Profiles",
+  name: "Users",
+  components: {
+    UsersList
+  },
   created() {
     let { name } = this.$route.params;
     this.$store.dispatch({ type: 'loadUsers', city: name })
@@ -21,15 +25,11 @@ export default {
       return this.$store.getters.users;
     }
   },
-  components: {
-    ProfilesList
-  }
 };
 </script>
 
 <style lang="scss" scoped>
-.profiles-page {
-  background-color: antiquewhite;
+.users-page {
   .main-title {
     padding: 10px;
     font-size: 2rem;

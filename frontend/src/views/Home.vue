@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-
     <main-header></main-header>
 
     <why-join></why-join>
@@ -16,12 +15,8 @@
         :class="'img-container' + ' ' + dest.name"
         :style="'background-image: url(' + dest.imgUrl + ')'"
       >
-        <div
-          class="city-name"
-          @click="moveToUsers"
-        >{{dest.name}}</div>
+        <div class="city-name" @click="moveToUsers">{{dest.name}}</div>
       </div>
-
     </div>
   </div>
 </template>
@@ -45,7 +40,7 @@ export default {
   methods: {
     moveToUsers(ev) {
       let name = ev.target.innerText;
-      this.$router.push('/profiles/' + name)
+      this.$router.push('/users/' + name)
     }
   },
   computed: {
@@ -64,6 +59,7 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+  margin-top: -70px;
   padding-bottom: 50px;
   background-color: #e6e6e6;
 }
