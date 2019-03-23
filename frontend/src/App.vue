@@ -1,9 +1,5 @@
 <template>
   <div id="app" class="flex flex-col">
-    <div class="main-container">
-      <router-view></router-view>
-    </div>
-
     <nav-bar></nav-bar>
 
     <div class="main-container">

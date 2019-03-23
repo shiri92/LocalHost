@@ -9,11 +9,9 @@
       </div>
 
       <div class="join-container">
-        <router-link to="/signup">
-          <el-button type="success">Join</el-button>
-        </router-link>
+        <el-button type="success" @click="signUp">Join</el-button>
         <el-button type="success" plain>Login</el-button>
-        <log-in></log-in>
+        <!-- <log-in></log-in> -->
       </div>
     </div>
   </section>
@@ -23,6 +21,11 @@
 import logIn from './Login';
 export default {
   name: 'nav-bar',
+  methods: {
+    signUp() {
+      this.$router.push('/signup')
+    }
+  },
   components: {
     logIn
   }

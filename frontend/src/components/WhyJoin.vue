@@ -1,5 +1,6 @@
 <template>
-  <section class="why-join flex">
+  <section class="why-join">
+    <h1>Why Join?</h1>
     <div class="cards-container flex justify-center">
       <b-card
         title="Community"
@@ -48,7 +49,6 @@ export default {
 
 <style lang="scss" scoped>
 .why-join {
-  // background-image: url('../../public/img/green-back.jpg');
   padding-top: 100px;
   padding-bottom: 100px;
 }
@@ -62,26 +62,6 @@ export default {
   margin: 20px;
   text-align: left;
 }
-
-// img {
-//   width: 100%;
-//   height: 250px;
-// }
-
-// h1 {
-//   font-size: 1.5rem;
-//   text-align: left;
-// }
-
-// h2 {
-//   font-size: 1rem;
-//   text-align: left;
-// }
-
-// p {
-//   font-size: 1rem;
-//   text-align: left;
-// }
 </style>
 
 
