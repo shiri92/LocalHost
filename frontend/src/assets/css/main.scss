@@ -1,5 +1,7 @@
 @import url('helper.css');
 @import url('normalize.css');
+@import 'node_modules/bootstrap/scss/bootstrap';
+@import 'node_modules/bootstrap-vue/src/index.scss';
 * {
     box-sizing: border-box;
     padding: 0;
