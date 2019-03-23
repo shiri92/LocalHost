@@ -1,33 +1,33 @@
 <template>
+  <section class="nav-bar flex space-between align-center">
+    <div>Some Logo</div>
 
-    <section class="nav-bar flex space-between align-center">
-      <div>Some Logo</div>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> |
+    <router-link to="/profiles">Profiles</router-link>
 
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/profiles">Profiles</router-link>
-
-      <div class="join-container">
+    <div class="join-container">
+      <router-link to="/signup">
         <el-button type="success">Join</el-button>
-        <el-button type="success" plain>Log In</el-button>
-      </div>
-
-
-    </section>
-
-
+      </router-link>
+      <el-button type="success" plain>Login</el-button>
+      <log-in></log-in>
+    </div>
+  </section>
 </template>
 
 <script>
-
+import logIn from './Login';
 export default {
   name: 'nav-bar',
-  
+  components: {
+    logIn
+  }
+
 }
 </script>
 
 <style lang="scss" scoped>
-
 .nav-bar {
   z-index: 1;
   padding: 10px;
@@ -46,9 +46,6 @@ export default {
     }
   }
 }
-
-
-
 </style>
 
 

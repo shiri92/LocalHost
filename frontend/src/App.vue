@@ -1,12 +1,10 @@
 <template>
   <div id="app" class="flex flex-col">
+    <div class="main-container">
+      <router-view></router-view>
+    </div>
 
-
-      <div class="main-container">
-        <router-view></router-view>
-      </div>
-      
-      <main-footer></main-footer>
+    <main-footer></main-footer>
   </div>
 </template>
 
@@ -18,7 +16,7 @@ export default {
   components: {
     MainFooter
   }
-  
+
 }
 </script>
 
@@ -29,10 +27,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   min-height: 100vh;
+  position: relative;
 }
 
 .main-container {
   flex-grow: 1;
 }
-
 </style>
