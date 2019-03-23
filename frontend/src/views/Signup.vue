@@ -1,79 +1,71 @@
 <template>
-  <section class="signup">
-    <h1>Sign Up</h1>
-    <el-steps class="steps" :active="active" finish-status="success">
-      <el-step title="Step 1"></el-step>
-      <el-step title="Step 2"></el-step>
-    </el-steps>
-    <div class="form">
-      <b-form v-if="active === 0" class="flex flex-col">
-        <div class="name-container flex space-between">
-          <b-form-group
-            class="small-input"
-            id="exampleInputGroup1"
-            label="First Name:"
-            label-for="exampleInput1"
-          >
-            <b-form-input id="exampleInput1" type="email" v-model="form.fName" required/>
+  <section class="signup flex flex-col">
+    <h1 class="title">Sign Up</h1>
+    <div class="forms-container">
+      <el-steps class="steps" :active="active" finish-status="success">
+        <el-step title="Step 1"></el-step>
+        <el-step title="Step 2"></el-step>
+      </el-steps>
+      <div class="form">
+        <b-form v-if="active === 0" class="flex flex-col">
+          <div class="name-container flex space-between">
+            <b-form-group class="small-input" label="First Name:">
+              <b-form-input type="email" v-model="form.fName" required/>
+            </b-form-group>
+
+            <b-form-group class="small-input" label="Last Name:">
+              <b-form-input type="email" v-model="form.lName" required/>
+            </b-form-group>
+          </div>
+
+          <b-form-group label="Email address:">
+            <b-form-input type="email" v-model="form.email" required/>
           </b-form-group>
 
-          <b-form-group
-            class="small-input"
-            id="exampleInputGroup1"
-            label="Last Name:"
-            label-for="exampleInput1"
-          >
-            <b-form-input id="exampleInput1" type="email" v-model="form.lName" required/>
-          </b-form-group>
-        </div>
-
-        <b-form-group id="exampleInputGroup1" label="Email address:" label-for="exampleInput1">
-          <b-form-input id="exampleInput1" type="email" v-model="form.email" required/>
-        </b-form-group>
-
-        <b-form-group id="exampleInputGroup2" label="Password:" label-for="exampleInput2">
-          <b-form-input id="exampleInput2" type="password" v-model="form.password" required/>
-        </b-form-group>
-
-        <el-button
-          class="signup-btn"
-          style="margin-top: 12px;"
-          @click="next"
-          type="warning"
-        >Nest Step</el-button>
-      </b-form>
-
-      <b-form v-if="active === 1" class="flex flex-col">
-        <div class="name-container flex space-between">
-          <b-form-group
-            class="small-input"
-            id="exampleInputGroup1"
-            label="First:"
-            label-for="exampleInput1"
-          >
-            <b-form-input id="exampleInput1" type="email" v-model="form.fName" required/>
+          <b-form-group label="Password:">
+            <b-form-input type="password" v-model="form.password" required/>
           </b-form-group>
 
-          <b-form-group
-            class="small-input"
-            id="exampleInputGroup1"
-            label="Last Name:"
-            label-for="exampleInput1"
-          >
-            <b-form-input id="exampleInput1" type="email" v-model="form.lName" required/>
+          <el-button
+            class="signup-btn"
+            style="margin-top: 12px;"
+            @click="next"
+            type="warning"
+          >Nest Step</el-button>
+        </b-form>
+
+        <b-form v-if="active === 1" class="flex flex-col">
+          <div class="bday-container">
+            <label>Birthday:</label>
+            <div class="selects-container flex space-between">
+              <el-select class="bday-selsct" v-model="form.birthdate.day" placeholder="Day">
+                <el-option v-for="num in 31" :key="num" :value="num">{{num}}</el-option>
+              </el-select>
+              <el-select class="bday-selsct" v-model="form.birthdate.day" placeholder="Month">
+                <el-option v-for="num in 12" :key="num" :value="num">{{num}}</el-option>
+              </el-select>
+              <el-select class="bday-selsct" v-model="form.birthdate.day" placeholder="Year">
+                <el-option v-for="num in 100" :key="num" :value="num">{{num + 1920}}</el-option>
+              </el-select>
+            </div>
+          </div>
+
+          <label>Gender:</label>
+          <el-select class="gender-selsct" v-model="form.gender" placeholder="Gender">
+            <el-option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</el-option>
+          </el-select>
+
+          <b-form-group label="Location:">
+            <b-form-input type="text" v-model="form.password" required/>
           </b-form-group>
-        </div>
-
-        <b-form-group id="exampleInputGroup1" label="Email address:" label-for="exampleInput1">
-          <b-form-input id="exampleInput1" type="email" v-model="form.email" required/>
-        </b-form-group>
-
-        <b-form-group id="exampleInputGroup2" label="Password:" label-for="exampleInput2">
-          <b-form-input id="exampleInput2" type="password" v-model="form.password" required/>
-        </b-form-group>
-
-        <el-button class="signup-btn" style="margin-top: 12px;" @click="next" type="warning">Sign Up</el-button>
-      </b-form>
+          <el-button
+            class="signup-btn"
+            style="margin-top: 12px;"
+            @click="next"
+            type="warning"
+          >Sign Up</el-button>
+        </b-form>
+      </div>
     </div>
   </section>
 </template>
@@ -87,8 +79,11 @@ export default {
         fName: '',
         lName: '',
         email: '',
-        password: ''
-      }
+        password: '',
+        birthdate: { day: '', month: '', year: '' },
+        city: ''
+      },
+      genders: ['Male', 'Female', 'Other']
     }
   },
   methods: {
@@ -107,19 +102,28 @@ export default {
       return this.$store.getters.loggedUser;
     }
   }
-
 }
 </script>
 
 <style lang="scss" scoped>
 .signup {
-  padding: 20px;
+  // padding: 20px;
   background-color: white;
+  color: black;
+  font-weight: bold;
+  height: 100vh;
 }
+
+.title {
+  align-self: center;
+  margin-bottom: 20px;
+}
+
 form {
   max-width: 60%;
   margin: 0 auto;
-  padding: 100px 150px 100px 150px;
+  padding: 80px 130px 80px 130px;
+  margin-top: 40px;
   border: 1px solid rgb(199, 193, 193);
   border-radius: 3px;
   text-align: left;
@@ -135,8 +139,17 @@ form {
   width: 45%;
 }
 
-.signup-btn {
+.bday-container,
+.gender-selsct {
+  margin-bottom: 15px;
+}
+
+.el-button {
   width: 30%;
   align-self: center;
+}
+
+.bday-selsct {
+  width: 30%;
 }
 </style>
