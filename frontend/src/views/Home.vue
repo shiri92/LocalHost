@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-
     <main-header></main-header>
 
     <why-join></why-join>
@@ -16,12 +15,8 @@
         :class="'img-container' + ' ' + dest.name"
         :style="'background-image: url(' + dest.imgUrl + ')'"
       >
-        <div
-          class="city-name"
-          @click="moveToUsers"
-        >{{dest.name}}</div>
+        <div class="city-name" @click="moveToUsers">{{dest.name}}</div>
       </div>
-
     </div>
   </div>
 </template>
