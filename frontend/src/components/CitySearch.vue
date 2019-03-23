@@ -68,9 +68,11 @@ export default {
 
 li {
   background-color: white;
-  border: 1px solid black;
-  padding: 15px;
+  border-bottom: 1px solid rgb(219, 216, 216);
+  padding: 10px;
   font-family: lato-reg;
+  font-size: 0.9rem;
   text-align: left;
+  cursor: pointer;
 }
 </style>

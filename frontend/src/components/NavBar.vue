@@ -1,38 +1,30 @@
 <template>
+  <section class="nav-bar flex space-between align-center">
+    <div>Some Logo</div>
 
-    <section class="nav-bar flex space-between align-center">
-      <div>Some Logo</div>
-
-      <div class="nav-container flex space-between align-center">
-
-        <div class="links-container flex space-around">
-          <router-link to="/">Home</router-link>
-          <router-link to="/about">About</router-link>
-        </div>
-
-        <div class="join-container">
-          <el-button type="success">Join</el-button>
-          <el-button type="success" plain>Log In</el-button>
-        </div>
-
+    <div class="nav-container flex space-between align-center">
+      <div class="links-container flex space-around">
+        <router-link to="/">Home</router-link>
+        <router-link to="/about">About</router-link>
       </div>
 
-
-    </section>
-
-
+      <div class="join-container">
+        <el-button type="success">Join</el-button>
+        <el-button type="success" plain>Log In</el-button>
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
 
 export default {
   name: 'nav-bar',
-  
+
 }
 </script>
 
 <style lang="scss" scoped>
-
 .nav-bar {
   z-index: 1;
   padding: 10px;
@@ -47,21 +39,18 @@ export default {
     font-weight: bold;
     color: #2c3e50;
     &.router-link-exact-active {
-      color: #b6dfcc;
+      color: #7ebf50;
     }
   }
 }
 
-.nav-container{
+.nav-container {
   width: 40%;
 }
 
-.links-container{
+.links-container {
   width: 50%;
 }
-
-
-
 </style>
 
 
