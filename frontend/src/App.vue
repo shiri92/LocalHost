@@ -4,16 +4,24 @@
       <router-view></router-view>
     </div>
 
+    <nav-bar></nav-bar>
+
+    <div class="main-container">
+      <router-view></router-view>
+    </div>
+
     <main-footer></main-footer>
   </div>
 </template>
 
 <script>
+import NavBar from '@/components/NavBar'
 import MainFooter from '../src/components/MainFooter';
 
 
 export default {
   components: {
+    NavBar,
     MainFooter
   }
 

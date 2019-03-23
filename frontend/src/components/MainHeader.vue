@@ -2,7 +2,6 @@
 
     <section class="main-header flex flex-col align-center">
 
-        <nav-bar></nav-bar>
 
         <h1>Find a Place To Stay On Your Travel</h1>
         <h2>Improve Your Travel Experience!</h2>
@@ -15,13 +14,11 @@
 </template>
 
 <script>
-import NavBar from '../components/NavBar'
 
 
 export default {
   name: 'main-header',
   components: {
-    NavBar,
   }
   
 }

@@ -2,16 +2,19 @@
   <section class="nav-bar flex space-between align-center">
     <div>Some Logo</div>
 
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/profiles">Profiles</router-link>
+    <div class="nav-container flex space-between align-center">
+      <div class="links-container flex space-around">
+        <router-link to="/">Home</router-link>
+        <router-link to="/about">About</router-link>
+      </div>
 
-    <div class="join-container">
-      <router-link to="/signup">
-        <el-button type="success">Join</el-button>
-      </router-link>
-      <el-button type="success" plain>Login</el-button>
-      <log-in></log-in>
+      <div class="join-container">
+        <router-link to="/signup">
+          <el-button type="success">Join</el-button>
+        </router-link>
+        <el-button type="success" plain>Login</el-button>
+        <log-in></log-in>
+      </div>
     </div>
   </section>
 </template>
@@ -42,9 +45,17 @@ export default {
     font-weight: bold;
     color: #2c3e50;
     &.router-link-exact-active {
-      color: #b6dfcc;
+      color: #7ebf50;
     }
   }
+}
+
+.nav-container {
+  width: 40%;
+}
+
+.links-container {
+  width: 50%;
 }
 </style>
 
