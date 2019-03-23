@@ -2,14 +2,14 @@
   <section class="signup">
     <H1>Login</H1>
     <el-form :inline="false" :model="credentials" class="demo-form-inline">
-      <el-form-item label="Username" required>
-        <el-input required v-model="credentials.username" placeholder="Enter Username..."></el-input>
+      <el-form-item label="Email" required>
+        <el-input required v-model="credentials.email" placeholder="Enter Username..."></el-input>
       </el-form-item>
       <el-form-item label="Password" required>
         <el-input required v-model="credentials.password" placeholder="Enter Password..."></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">Login</el-button>
+        <el-button type="primary" @click="tryLogin">Login</el-button>
       </el-form-item>
       {{credentials}}
     </el-form>
@@ -21,14 +21,14 @@ export default {
   data() {
     return {
       credentials: {
-        username: '',
+        email: '',
         password: ''
       }
     }
   },
   methods: {
-    onSubmit() {
-      console.log('submit!');
+    tryLogin() {
+      this.$store.dispatch({ type: 'login', credentials: this.credentials })
     }
   }
 

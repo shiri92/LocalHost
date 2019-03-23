@@ -14,7 +14,7 @@
             label="First Name:"
             label-for="exampleInput1"
           >
-            <b-form-input id="exampleInput1" type="email" v-model="form.email" required/>
+            <b-form-input id="exampleInput1" type="email" v-model="form.fName" required/>
           </b-form-group>
 
           <b-form-group
@@ -23,7 +23,7 @@
             label="Last Name:"
             label-for="exampleInput1"
           >
-            <b-form-input id="exampleInput1" type="email" v-model="form.email" required/>
+            <b-form-input id="exampleInput1" type="email" v-model="form.lName" required/>
           </b-form-group>
         </div>
 
@@ -32,7 +32,7 @@
         </b-form-group>
 
         <b-form-group id="exampleInputGroup2" label="Password:" label-for="exampleInput2">
-          <b-form-input id="exampleInput2" type="text" v-model="form.password" required/>
+          <b-form-input id="exampleInput2" type="password" v-model="form.password" required/>
         </b-form-group>
 
         <el-button

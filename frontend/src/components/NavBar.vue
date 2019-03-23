@@ -10,8 +10,8 @@
 
       <div class="join-container">
         <el-button type="success" @click="signUp">Join</el-button>
-        <el-button type="success" plain>Login</el-button>
-        <!-- <log-in></log-in> -->
+        <el-button type="success" plain @click="toggleLogin">Login</el-button>
+        <log-in v-if="showLogin"></log-in>
       </div>
     </div>
   </section>
@@ -23,12 +23,20 @@ export default {
   name: 'nav-bar',
   methods: {
     signUp() {
-      this.$router.push('/signup')
+      this.$router.push('/signup');
+    },
+    toggleLogin() {
+      this.showLogin = !this.showLogin;
     }
   },
   components: {
     logIn
-  }
+  },
+  data() {
+    return {
+      showLogin: false,
+    }
+  },
 
 }
 </script>
