@@ -14,7 +14,7 @@
       <!-- </b-card> -->
 
       <div v-if="!getLoggedUser" class="join-container">
-        Welcome Guest!
+        <span class="welcome">Welcome Guest!</span>
         <el-button type="success" @click="signUp">Join</el-button>
         <el-button type="success" plain @click="loginOn">Login</el-button>
       </div>
@@ -71,8 +71,6 @@ export default {
       this.loginOff();
     }
   }
-
-
 }
 </script>
 
@@ -97,11 +95,14 @@ export default {
 }
 
 .nav-container {
-  width: 40%;
+  width: 60%;
+}
+.welcome {
+  padding: 20px;
 }
 
 .links-container {
-  width: 50%;
+  width: 60%;
 }
 </style>
 
