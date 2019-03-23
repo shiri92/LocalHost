@@ -9,16 +9,15 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar'
-import MainFooter from '../src/components/MainFooter';
+import NavBar from "@/components/NavBar";
+import MainFooter from "../src/components/MainFooter";
 
 export default {
   components: {
     NavBar,
     MainFooter
   }
-
-}
+};
 </script>
 
 
@@ -34,6 +33,6 @@ export default {
 .main-container {
   flex-grow: 1;
   margin-top: 70px;
-  background-color: #e6e6e6;
+  background-color: #f1efea;
 }
 </style>
