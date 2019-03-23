@@ -1,5 +1,5 @@
 <template>
-  <section class="nav-bar flex space-between align-center">
+  <section v-if="showNav" class="nav-bar flex space-between align-center">
     <div>Some Logo</div>
 
     <div class="nav-container flex space-between align-center">
@@ -58,11 +58,20 @@ export default {
       return this.$store.getters.loggedUser;
     }
   },
+  showNav() {
+    let isRouteWithNav = true;
+    if (this.$route.path !== '/signup') {
+      return true;
+    } else {
+      return false;
+    }
+  },
   watch: {
     $route(to, from) {
       this.loginOff();
     }
   }
+
 
 }
 </script>
