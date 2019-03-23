@@ -5,6 +5,7 @@ export default {
     state: {
         users: [],
         currUser: null,
+        loggedUser: null,
     },
     getters: {
         users(state) {
@@ -22,6 +23,9 @@ export default {
         setUser(state, { user }) {
             state.currUser = user;
         },
+        setLoggedUser(state, { user }) {
+            state.loggedUser = user;
+        }
     },
     actions: {
         async loadUsers(context, { city }) {
@@ -32,15 +36,14 @@ export default {
             let user = await userService.getById(userId);
             context.commit({ type: 'setUser', user });
         },
-        // async signup(context, { credentials }) {
-        //     return UserService.addUser(credentials);
-        // },
-        // async login(context, { credentials }) {
-        //     return UserService.login(credentials)
-        //         .then(user => {
-        //             context.commit({ type: 'setUser', user })
-        //             return user;
-        //         });
-        // },
+        async signup(context, { credentials }) {
+            let user = await UserService.add(credentials);
+            console.log('successfuly registered: ', user)
+        },
+        async login(context, { credentials }) {
+            let user = await userService.login(credentials);
+            context.commit({ type: 'setLoggedUser', user })
+            return user;
+        },
     }
 }

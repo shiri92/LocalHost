@@ -20,7 +20,21 @@ async function getById(id) {
     return res.data;
 }
 
+async function add(credentials) {
+    console.log(credentials);
+    let res = axios.post(`${BASE_API}`, credentials)
+    return res.data;
+}
+
+async function login(credentials) {
+    console.log(credentials);
+    let res = await axios.put(`${BASE_API}/login`, credentials)
+    return res.data;
+}
+
 export default {
     query,
     getById,
+    add,
+    login
 }

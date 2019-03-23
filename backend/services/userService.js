@@ -22,9 +22,26 @@ async function addMany(users) {
     return res;
 }
 
+
+
 async function query(currCity) {
     let db = await mongoService.connect();
     return await db.collection(USERS_COLLECTION).find({ "city": currCity }).toArray();
+}
+
+async function add(credentials) {
+    console.log(credentials);
+    let db = await mongoService.connect();
+    let res = await db.collection(USERS_COLLECTION).insertOne(credentials);
+    credentials._id = res.insertedId;
+    return credentials;
+}
+
+async function login(credentials) {
+    console.log('before', credentials);
+    let db = await mongoService.connect();
+    let res = await db.collection(USERS_COLLECTION).findOne(credentials)
+    return res;
 }
 
 async function getById(id) {
@@ -65,5 +82,7 @@ function _createUser(email, password, firstName, lastName, gender, birthdate, ci
 
 module.exports = {
     query,
+    add,
+    login,
     getById
 }

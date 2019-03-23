@@ -12,8 +12,8 @@
         <router-link to="/signup">
           <el-button type="success">Join</el-button>
         </router-link>
-        <el-button type="success" plain>Login</el-button>
-        <!-- <log-in></log-in> -->
+        <el-button type="success" plain @click="toggleLogin">Login</el-button>
+        <log-in v-if="showLogin"></log-in>
       </div>
     </div>
   </section>
@@ -25,7 +25,17 @@ export default {
   name: 'nav-bar',
   components: {
     logIn
-  }
+  },
+  data() {
+    return {
+      showLogin: false,
+    }
+  },
+  methods: {
+    toggleLogin() {
+      this.showLogin = !this.showLogin;
+    }
+  },
 
 }
 </script>

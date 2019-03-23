@@ -19,10 +19,7 @@ function addRoutes(app) {
     // GET USERS
     app.get(BASE, (req, res) => {
         const { city } = req.query;
-        userService.query(city).then(users => {
-            console.log(users);
-            return res.json(users);
-        })
+        userService.query(city).then(users => res.json(users))
     })
 
     // GET USER
@@ -31,23 +28,23 @@ function addRoutes(app) {
         userService.getById(userId).then(user => res.json(user));
     })
 
-    // app.post('/signup', (req, res) => {
-    //     const credentials = req.body;
-    //     userService.addUser(credentials)
-    //         .then(user => res.json(user))
-    // })
+    app.post(BASE, (req, res) => {
+        const credentials = req.body;
+        userService.addUser(credentials)
+            .then(user => res.json(user))
+    })
 
-    // app.put('/login', (req, res) => {
-    //     console.log('here');
-    //     console.log(req.body);
-    //     const credentials = req.body;
-    //     userService.checkLogin(credentials)
-    //         .then(user => {
-    //             if (!user) res.status(401).send('Something broke!');
-    //             req.session.user = user
-    //             res.json(user)
-    //         })
-    // })
+    app.put(`${BASE}/login`, (req, res) => {
+        const credentials = req.body;
+        userService.login(credentials)
+            .then(user => {
+                console.log(user);
+
+                // if (!user) res.status(401).send('Something broke!');
+                // req.session.user = user
+                // res.json(user)
+            })
+    })
 
 }
 
