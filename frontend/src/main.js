@@ -3,12 +3,15 @@ import App from './App.vue'
 import router from './router'
 import store from './store/store'
 import './registerServiceWorker'
-import css from '../src/assets/css/main.css'
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import css from '../src/assets/css/main.scss'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import BootstrapVue from 'bootstrap-vue'
+// import 'custom.scss'
+
 
 // scrolling
-var VueScrollTo = require('vue-scrollto'); 
+var VueScrollTo = require('vue-scrollto');
 Vue.use(VueScrollTo)
 Vue.use(VueScrollTo, {
     container: "body",
@@ -39,6 +42,7 @@ library.add(faSortDown)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
+Vue.use(BootstrapVue)
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false

@@ -1,9 +1,6 @@
 /* ----- DEPENDENCIES -----*/
-import utilService from './utilService.js';
 import Axios from 'axios';
-var axios = Axios.create({
-    withCredentials: true
-});
+var axios = Axios.create({ withCredentials: true });
 
 /* ----- CONSTANTS -----*/
 const BASE_URL = process.env.NODE_ENV !== 'development' ? '' : '//localhost:3003/country'
@@ -19,8 +16,7 @@ function queryCountries(searchWord) {
 }
 
 function queryTopDests() {
-    return axios.get(`${BASE_URL}/top`)
-        .then(res => res.data);
+    return axios.get(`${BASE_URL}/top`).then(res => res.data);
 }
 
 

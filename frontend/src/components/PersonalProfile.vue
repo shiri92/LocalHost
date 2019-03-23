@@ -101,9 +101,6 @@ export default {
 
 
 <style lang="scss" scoped>
-.profile-container {
-  background-color: antiquewhite;
-}
 @media (max-width: 568px) {
   .profile-container {
     flex-direction: column;

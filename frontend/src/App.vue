@@ -1,27 +1,24 @@
 <template>
   <div id="app" class="flex flex-col">
-
-      <main-header></main-header>
-
-      <div class="main-container">
-        <router-view></router-view>
-      </div>
-      
-      <main-footer></main-footer>
+    <nav-bar></nav-bar>
+    <div class="main-container">
+      <router-view></router-view>
+    </div>
+    <main-footer></main-footer>
   </div>
 </template>
 
 <script>
-import MainHeader from '../src/components/MainHeader';
+import NavBar from '@/components/NavBar'
 import MainFooter from '../src/components/MainFooter';
 
 
 export default {
   components: {
-    MainHeader,
+    NavBar,
     MainFooter
   }
-  
+
 }
 </script>
 
@@ -32,10 +29,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   min-height: 100vh;
+  position: relative;
 }
 
 .main-container {
   flex-grow: 1;
+  margin-top: 70px;
+  background-color: #e6e6e6;
 }
-
 </style>

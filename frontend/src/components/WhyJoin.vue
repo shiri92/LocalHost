@@ -1,30 +1,37 @@
 <template>
+  <section class="why-join flex">
+    <div class="cards-container flex justify-center">
+      <b-card
+        title="Community"
+        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333051/ons/why-join-1.jpg"
+        img-alt="Image"
+        img-top
+      >
+        <b-card-text>"A great way to experience places from a unique insider perspective. Travel is more about the people you meet than the places you see, people are inherently good."</b-card-text>
+        <b-card-text class="small text-muted">- Scott and Rachel (Traveling In Asia)</b-card-text>
+      </b-card>
 
-    <section class="why-join flex justify-center">
+      <b-card
+        title="Guesting"
+        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333101/ons/why-join-2.jpg"
+        img-alt="Image"
+        img-top
+      >
+        <b-card-text>"An opportunity to live very valuable and beautiful experiences. I know that anywhere in the world I visit, I'll possibly have a good friend waiting for me!"</b-card-text>
+        <b-card-text class="small text-muted">- Jessica (Traveling in South America)</b-card-text>
+      </b-card>
 
-        <div>
-            <img src="../../public/img/why-join-1.jpg">
-            <h1></h1>
-            <h2>"We can't recommend Couchsurfing highly enough. It's a great way to experience places from a unique insider perspective, and you'll undoubtedly make great friends along the way. Travel is more about the people you meet than the places you see, and Couchsurfing reinforced the fact that people are inherently good."</h2>
-            <p>- Matt and Sara (Traveling In Asia)</p>
-        </div>
-
-
-        <div>
-            <img src="">
-            <h1></h1>
-            <h2>"We can't recommend Couchsurfing highly enough. It's a great way to experience places from a unique insider perspective, and you'll undoubtedly make great friends along the way. Travel is more about the people you meet than the places you see, and Couchsurfing reinforced the fact that people are inherently good."</h2>
-            <p>- Matt and Sara
-(Traveling In Asia)</p>
-        </div>
-
-
-        <div>
-            <div class="img-host-side"></div>
-        </div>
-        
-    </section>
-
+      <b-card
+        title="Hosting"
+        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333102/ons/why-join-3.jpg"
+        img-alt="Image"
+        img-top
+      >
+        <b-card-text>"We had no money to travel the world with our four kids, and decided to let the world come to us. A lot of them became friends for life!"</b-card-text>
+        <b-card-text class="small text-muted">- Robbert, Brad, and Kids (Hosting in Amsterdam)</b-card-text>
+      </b-card>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -33,26 +40,48 @@
 export default {
   name: 'why-join',
   components: {
-    
+
   }
-  
+
 }
 </script>
 
 <style lang="scss" scoped>
-
-.why-join{
-    background-image: url()
+.why-join {
+  // background-image: url('../../public/img/green-back.jpg');
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
-img{
-    width: 50px;
-    height: auto;
-
+.cards-container {
+  max-width: 80%;
+  margin: 0 auto;
 }
 
+.card {
+  margin: 20px;
+  text-align: left;
+}
 
+// img {
+//   width: 100%;
+//   height: 250px;
+// }
 
+// h1 {
+//   font-size: 1.5rem;
+//   text-align: left;
+// }
+
+// h2 {
+//   font-size: 1rem;
+//   text-align: left;
+// }
+
+// p {
+//   font-size: 1rem;
+//   text-align: left;
+// }
 </style>
 
 

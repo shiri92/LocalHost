@@ -24,8 +24,8 @@ export default {
         },
     },
     actions: {
-        async loadUsers(context) {
-            let users = await userService.query();
+        async loadUsers(context, { city }) {
+            let users = await userService.query(city);
             context.commit({ type: 'setUsers', users });
         },
         async loadUser(context, { userId }) {

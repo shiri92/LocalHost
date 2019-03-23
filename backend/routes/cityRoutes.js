@@ -1,5 +1,5 @@
 /* ----- DEPENDENCIES -----*/
-const countryService = require('../services/cityService.js');
+const cityService = require('../services/cityService.js');
 
 /* ----- CONSTANTS -----*/
 const BASE = '/city';
@@ -9,18 +9,21 @@ function addRoutes(app) {
 
     // GET ALL CITIES
     app.get(BASE, (req, res) => {
-        const query = req.query;
-        userService.query(query).then(users => {
-            console.log(users);
-            res.json(users)
-        })
+        const { searchWord } = req.query;
+        cityService.query(searchWord).then(users => res.json(users))
+    });
+
+    // GET TOP CITIES
+    app.get(BASE + '/top', (req, res) => {
+        cityService.queryTopDests().then(topDests => res.json(topDests))
     })
 
+
     // GET CITY BY COUNTRY
-    app.get(`${BASE}/:country`, (req, res) => {
-        const { country } = req.query;
-        userService.getById(userId).then(user => res.json(user));
-    })
+    // app.get(`${BASE}/:country`, (req, res) => {
+    //     const { country } = req.query;
+    //     cityService.getById(userId).then(user => res.json(user));
+    // })
 
 
 }

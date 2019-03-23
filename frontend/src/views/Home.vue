@@ -1,6 +1,8 @@
 <template>
   <div class="home">
 
+    <main-header></main-header>
+
     <why-join></why-join>
 
     <h1>Top Destinations</h1>
@@ -8,17 +10,24 @@
     <city-search></city-search>
 
     <div class="cities-gallery grid">
-      <div v-for="dest in topDests" :key="dest._id"
-          :class="'img-container' + ' ' + dest.name"
-          :style="'background-image: url(' + dest.imgUrl + ')'">
-        <div class="city-name" @click="moveToUsers">{{dest.name}}</div>
+      <div
+        v-for="dest in topDests"
+        :key="dest._id"
+        :class="'img-container' + ' ' + dest.name"
+        :style="'background-image: url(' + dest.imgUrl + ')'"
+      >
+        <div
+          class="city-name"
+          @click="moveToUsers"
+        >{{dest.name}}</div>
       </div>
- 
+
     </div>
   </div>
 </template>
 
 <script>
+import MainHeader from '@/components/MainHeader';
 import CitySearch from '../components/CitySearch'
 import WhyJoin from '../components/WhyJoin'
 
@@ -46,6 +55,7 @@ export default {
 
   },
   components: {
+    MainHeader,
     CitySearch,
     WhyJoin
   }
@@ -54,7 +64,6 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-  padding-top: 50px;
   padding-bottom: 50px;
   background-color: #e6e6e6;
 }
@@ -74,8 +83,8 @@ export default {
   flex-direction: column;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 1px 1px 10px black;
-  background-repeat: no-repeat;    
+  // box-shadow: 1px 1px 10px black;
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center center;
 }
@@ -89,7 +98,7 @@ export default {
   grid-row: span 2;
 }
 
-.Paris{
+.Paris {
   grid-column: span 2;
   grid-row: span 1;
 }
@@ -104,9 +113,9 @@ export default {
   grid-row: span 1;
 }
 
-.Tokyo{
+.Tokyo {
   grid-column: span 1;
-  grid-row: span 1; 
+  grid-row: span 1;
 }
 
 .Berlin {
@@ -119,7 +128,7 @@ export default {
   grid-row: span 2;
 }
 
-.New-York{
+.New-York {
   grid-column: span 2;
   grid-row: span 1;
 }
@@ -129,7 +138,7 @@ export default {
   grid-row: span 1;
 }
 
-.img-container:last-child{
+.img-container:last-child {
   grid-column: span 1;
   grid-row: span 1;
   background-color: #7ebf50;
@@ -139,13 +148,13 @@ export default {
   font-size: 2rem;
   color: white;
   font-weight: bold;
-  text-shadow: #726e6e 3px 5px 2px;
+  // text-shadow: #726e6e 3px 5px 2px;
   width: 100%;
   height: 100%;
-  padding-top: 20px;
-  // display: flex;
-  // justify-content: center;
-  // align-items: center;
+  // padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 

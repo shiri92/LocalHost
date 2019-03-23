@@ -14,7 +14,8 @@ import UsersList from "../components/UsersList.vue";
 export default {
   name: "Users",
   created() {
-    this.$store.dispatch({ type: "loadUsers" });
+    let { name } = this.$route.params;
+    this.$store.dispatch({ type: 'loadUsers', city: name })
   },
   computed: {
     getUsers() {
@@ -29,7 +30,6 @@ export default {
 
 <style lang="scss" scoped>
 .users-page {
-  background-color: antiquewhite;
   .main-title {
     padding: 10px;
     font-size: 2rem;

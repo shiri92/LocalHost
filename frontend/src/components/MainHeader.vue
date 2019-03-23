@@ -2,7 +2,6 @@
 
     <section class="main-header flex flex-col align-center">
 
-        <nav-bar></nav-bar>
 
         <h1>Find a Place To Stay On Your Travel</h1>
         <h2>Improve Your Travel Experience!</h2>
@@ -15,13 +14,11 @@
 </template>
 
 <script>
-import NavBar from '../components/NavBar'
 
 
 export default {
   name: 'main-header',
   components: {
-    NavBar,
   }
   
 }
@@ -34,7 +31,7 @@ export default {
   // background:url('../../public/img/header.jpg');
   background-repeat: no-repeat;  
   background-size: 100% 100%;
-  height: 94vh;
+  height: 95vh;
   box-shadow: 2px 2px 10px black;
   justify-content: center;
   position: relative;
