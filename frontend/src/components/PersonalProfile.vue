@@ -1,20 +1,35 @@
 <template>
   <section class="profile-container flex flex-row">
-    <div class="side-profile" v-if="getCurrUser">
-      <img class="profile-img" :src="getCurrUser.info.imgUrl" alt>
-      <div class="profile-name">{{getCurrUser.info.firstName}}, {{getCurrUser.info.lastName}}</div>
-      <div class="profile-language">{{getCurrUser.info.language}}</div>
-      <hr>
-      <button class="btn">
-        <font-awesome-icon icon="couch"/>Send Request
-      </button>
-      <button class="btn">
-        <font-awesome-icon icon="envelope"/>
-      </button>
-      <button class="btn">More <font-awesome-icon icon="sort-down"/></button>
+    <div>
+      <div class="side-profile" v-if="getCurrUser">
+        <img class="profile-img" :src="getCurrUser.info.imgUrl" alt>
+        <div class="profile-name">{{getCurrUser.info.firstName}}, {{getCurrUser.info.lastName}}</div>
+        <div class="profile-language">{{getCurrUser.info.language}}</div>
+        <hr>
+        <!-- <button class="btn">
+          <font-awesome-icon icon="couch"/>Send Request
+        </button>
+        <button class="btn">
+          <font-awesome-icon icon="envelope"/>
+        </button>
+        <button class="btn">More
+          <font-awesome-icon icon="sort-down"/>
+        </button> -->
+      </div>
+      <div class="side-slider" :class="{sideDisplay: isProfileInDisplay}">
+        <button class="btn">
+          <font-awesome-icon icon="couch"/>Send Request
+        </button>
+        <button class="btn">
+          <font-awesome-icon icon="envelope"/>
+        </button>
+        <button class="btn">More
+          <font-awesome-icon icon="sort-down"/>
+        </button>
+      </div>
     </div>
     <div class="main-desc" v-if="getCurrUser">
-      <nav class="profile-nav flex flex-row justify-center">
+      <nav class="profile-nav flex flex-row justify-center" :class="{display: isNavInDisplay}">
         <a class="nav-item" href="#" v-scroll-to="'#about'">About</a>
         <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
         <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
@@ -36,16 +51,45 @@ import ProfileReferences from "../components/ProfileReferences.vue";
 
 export default {
   name: "userDetails",
+  data() {
+    return {
+      isNavInDisplay: false,
+      isProfileInDisplay: false,
+    };
+  },
   created() {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
+
+    var vm = this;
+    var val = window.addEventListener("scroll", function(e) {
+      var scrollPos = window.scrollY;
+      if (scrollPos > 700) {
+        vm.narrowNav(true);
+      } else {
+        vm.narrowNav(false);
+      }
+
+      if (scrollPos > 1200) {
+        vm.narrowProfile(true);
+      } else {
+        vm.narrowProfile(false);
+      }
+    });
   },
   computed: {
     getCurrUser() {
       return this.$store.getters.user;
     }
   },
-  methods: {},
+  methods: {
+    narrowNav(state) {
+      this.isNavInDisplay = state;
+    },
+    narrowProfile(state) {
+        this.isProfileInDisplay = state;
+    }
+  },
   components: {
     ProfileAbout,
     ProfileMyHome,
@@ -55,15 +99,20 @@ export default {
 };
 </script>
 
+
 <style lang="scss" scoped>
-.profile-container {
-  background-color: antiquewhite;
-}
 @media (max-width: 568px) {
-    .profile-container {
-        flex-direction: column;
-    }
+  .profile-container {
+    flex-direction: column;
+  }
 }
+
+.sideDisplay {
+  left: 0;
+  top: 120px;
+  position: fixed;
+}
+
 
 .side-profile {
   width: 30vw;
@@ -93,46 +142,70 @@ export default {
   hr {
     margin: 20px;
   }
-  .btn {
-    margin: 5px;
-    background-color: #67c23a;
-    border: 1px solid #67c23a;
-    border-radius: 3px;
-    color: #fff;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 15px;
-    font-weight: bold;
-    line-height: 1.5;
-    max-width: 240px;
-    padding: 8px 12px;
-    text-align: center;
-    text-decoration: none;
-    -webkit-transition: background-color 0.3s ease, border-color 0.3s ease;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-    white-space: normal;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -webkit-font-smoothing: antialiased;
-  }
-  .btn:hover {
-    background: #85ce61;
-    border-color: #85ce61;
-  }
+}
+
+.side-slider {
+    width: 30vw;
+}
+@media (max-width: 568px) {
+    .side-slider {
+        width: 100%;
+    }
+}
+
+.btn {
+  margin: 5px;
+  background-color: #67c23a;
+  border: 1px solid #67c23a;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.5;
+  max-width: 240px;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  -webkit-transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  white-space: normal;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
+}
+.btn:hover {
+  background: #85ce61;
+  border-color: #85ce61;
 }
 
 @media (max-width: 568px) {
-    .side-profile {
-        max-width: 97%;
-        width: 97%;
-    }
+  .side-profile {
+    max-width: 97%;
+    width: 97%;
+  }
 }
 
 .main-desc {
   border: 2px solid black;
   flex-grow: 1;
+  max-width: 68vw;
   margin: 5px;
   background-color: floralwhite;
+  .display {
+    top: 71px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    z-index: 10;
+    transition: 0.3s;
+  }
   .profile-nav {
     width: 100%;
     border-bottom: 2px solid black;
@@ -145,6 +218,11 @@ export default {
     .nav-item:hover {
       background-color: lightblue;
     }
+  }
+}
+@media (max-width: 568px) {
+  .main-desc {
+    max-width: unset;
   }
 }
 </style>

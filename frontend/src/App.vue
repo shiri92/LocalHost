@@ -1,15 +1,9 @@
 <template>
   <div id="app" class="flex flex-col">
-    <div class="main-container">
-      <router-view></router-view>
-    </div>
-
     <nav-bar></nav-bar>
-
     <div class="main-container">
       <router-view></router-view>
     </div>
-
     <main-footer></main-footer>
   </div>
 </template>
@@ -40,5 +34,7 @@ export default {
 
 .main-container {
   flex-grow: 1;
+  margin-top: 70px;
+  background-color: #e6e6e6;
 }
 </style>

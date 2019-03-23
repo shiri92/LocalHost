@@ -13,7 +13,7 @@
           <el-button type="success">Join</el-button>
         </router-link>
         <el-button type="success" plain>Login</el-button>
-        <log-in></log-in>
+        <!-- <log-in></log-in> -->
       </div>
     </div>
   </section>
