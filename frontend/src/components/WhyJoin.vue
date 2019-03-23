@@ -5,8 +5,10 @@
         <div class="cards-container flex justify-center">
 
             <div class="card">
-                <img src="../../public/img/why-join-1.jpg">
-                <h1>On Community</h1>
+                <!-- <div class="img-container"> -->
+                    <img src="../../public/img/why-join-1.jpeg">
+                <!-- </div> -->
+                <h1>Community</h1>
                 <br>
                 <h2>"A great way to experience places from a unique insider perspective, and you'll undoubtedly make great friends along the way. Travel is more about the people you meet than the places you see, people are inherently good."</h2>
                 <br>
@@ -15,8 +17,10 @@
 
 
             <div class="card">
-                <img src="">
-                <h1>On Surfing</h1>
+                <!-- <div class="img-container"> -->
+                    <img src="../../public/img/why-join-2.jpeg">
+                <!-- </div> -->
+                <h1>Guesting</h1>
                 <br>
                 <h2>"An opportunity to live very valuable and beautiful experiences. Filled my journey with stories, people, and friends. Given life to the places I visited, and I know that anywhere in the world I visit, I'll possibly have a good friend waiting for me!"</h2>
                 <br>
@@ -25,8 +29,10 @@
 
 
             <div class="card">
-                <img src="">
-                <h1>Meeting exiting people without leaving your home</h1>
+                <!-- <div class="img-container"> -->
+                    <img src="../../public/img/why-join-3.jpeg">
+                <!-- </div> -->
+                <h1>Hosting</h1>
                 <br>
                 <h2>"We wanted to show our children that people from all over the world are good, no matter what culture, skin color, or language. We had no money to travel the world with our four kids, and decided to let the world come to us. A lot of them became friends for life!"</h2>
                 <br>
@@ -55,8 +61,8 @@ export default {
 
 .why-join{
     // background-image: url('../../public/img/green-back.jpg');
-    padding-top: 200px;
-    padding-bottom: 200px;
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
 
 
@@ -69,9 +75,11 @@ export default {
     padding: 20px;
 }
 
+
+
 img{
     width: 100%;
-    height: auto;
+    height: 250px;
 }
 
 h1{
