@@ -4,13 +4,15 @@
       <div class="side-profile" v-if="getCurrUser">
         <img class="profile-img" :src="getCurrUser.imgUrl" alt>
         <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
+        <div class="profile-loc">{{getCurrUser.city}}, {{getCurrUser.country}}</div>
+
         <!-- <div class="profile-language">{{getCurrUser.language}}</div> -->
-        <div class="profile-age">{{getAge}}, {{getCurrUser.gender}}</div>
+        
         <hr>
       </div>
     </div>
     <div class="main-desc" v-if="getCurrUser">
-      <nav :class="{display: isNavInDisplay}">
+      <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
         <div class="flex space-evenly align-center">
           <div>{{getHosting}}</div>
           <div>
@@ -33,10 +35,10 @@
           <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
         </div>
       </nav>
-      <profile-about id="about"></profile-about>
-      <profile-myHome id="home"></profile-myHome>
-      <profile-pictures id="pics"></profile-pictures>
-      <profile-references id="ref"></profile-references>
+      <profile-about class="detail-section" :user="getCurrUser" id="about"></profile-about>
+      <profile-myHome class="detail-section" id="home"></profile-myHome>
+      <profile-pictures class="detail-section" id="pics"></profile-pictures>
+      <profile-references class="detail-section" id="ref"></profile-references>
     </div>
   </section>
 </template>
@@ -80,9 +82,6 @@ export default {
     getCurrUser() {
       return this.$store.getters.user;
     },
-    getAge() {
-      return this.calcAge();
-    },
     getHosting() {
       return this.hostingInfo();
     }
@@ -93,21 +92,6 @@ export default {
     },
     narrowProfile(state) {
       this.isProfileInDisplay = state;
-    },
-    calcAge() {
-      var birthYear = this.getCurrUser.birthdate.year;
-      var birthMonth = this.getCurrUser.birthdate.month;
-      var birthDay = this.getCurrUser.birthdate.day;
-
-      var today = new Date();
-      var age = today.getFullYear() - birthYear;
-
-      if (today.getMonth() + 1 < birthMonth) age--;
-      else if (today.getMonth() + 1 === birthMonth) {
-        if (today.getDay() < birthDay) age--;
-      }
-
-      return age;
     },
     hostingInfo() {
       if (this.getCurrUser.isHosting) return "Accepting Guests";
@@ -133,16 +117,18 @@ export default {
 
 .side-profile {
   width: 30vw;
-  max-width: 350px;
-  border: 2px solid black;
+  max-width: 320px;
+  min-width: 260px;
+  border-bottom: 2px solid rgba(0,0,0,0.15);
   height: 80vh;
-  margin: 5px;
+  margin: 5px 15px;
   background-color: white;
   padding: 15px;
   .profile-img {
     width: 100%;
-    max-width: 280px;
+    max-width: 225px;
     height: 40%;
+    max-height: 225px;
     border-radius: 50%;
   }
   .profile-name {
@@ -197,22 +183,23 @@ export default {
 }
 
 .main-desc {
-  border: 2px solid black;
   flex-grow: 1;
   margin: 5px;
-  background-color: white;
+  .main-desc-nav {
+    background-color: #fff;
+  }
   .display {
     top: 71px;
     left: 0;
     width: 100%;
-    background-color: white;
+    background-color: #fff;
     position: fixed;
     z-index: 10;
     transition: 0.3s;
   }
   .profile-nav {
     width: 100%;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid rgba(0,0,0,0.15);
     .nav-item {
       width: 100px;
       border: 1px 0 1px 0 solid black;
@@ -223,10 +210,8 @@ export default {
       background-color: lightblue;
     }
   }
+  .detail-section {
+    margin: 20px 0;
+  }
 }
-// @media (max-width: 568px) {
-//   .main-desc {
-//     max-width: unset;
-//   }
-// }
 </style>

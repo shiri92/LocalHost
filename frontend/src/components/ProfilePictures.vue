@@ -14,7 +14,8 @@ export default {
     .pictures {
         width: 100%;
         height: 500px;
-        border: 1px solid black;
+        border-bottom: 2px solid rgba(0,0,0,0.15);
+        background-color: #fff;
     }
 </style>
 
