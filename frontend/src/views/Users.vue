@@ -1,7 +1,6 @@
 <template>
   <section class="users-page">
     <div class="main-title">Local Hosts</div>
-
     <div class="users-container">
       <users-list :users="getUsers"></users-list>
     </div>
@@ -9,10 +8,14 @@
 </template>
 
 <script>
-import UsersList from "../components/UsersList.vue";
+// import UsersList from "../components/UsersList.vue";
+import UsersList from '../components/UsersList.vue';
 
 export default {
   name: "Users",
+  components: {
+    UsersList
+  },
   created() {
     let { name } = this.$route.params;
     this.$store.dispatch({ type: 'loadUsers', city: name })
@@ -22,9 +25,6 @@ export default {
       return this.$store.getters.users;
     }
   },
-  components: {
-    UsersList
-  }
 };
 </script>
 

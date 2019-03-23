@@ -12,7 +12,6 @@
 import NavBar from '@/components/NavBar'
 import MainFooter from '../src/components/MainFooter';
 
-
 export default {
   components: {
     NavBar,

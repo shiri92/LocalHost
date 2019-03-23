@@ -2,9 +2,9 @@
   <section class="profile-container flex flex-row">
     <div>
       <div class="side-profile" v-if="getCurrUser">
-        <img class="profile-img" :src="getCurrUser.info.imgUrl" alt>
-        <div class="profile-name">{{getCurrUser.info.firstName}}, {{getCurrUser.info.lastName}}</div>
-        <div class="profile-language">{{getCurrUser.info.language}}</div>
+        <img class="profile-img" :src="getCurrUser.imgUrl" alt>
+        <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
+        <div class="profile-language">{{getCurrUser.language}}</div>
         <hr>
         <!-- <button class="btn">
           <font-awesome-icon icon="couch"/>Send Request
@@ -14,7 +14,7 @@
         </button>
         <button class="btn">More
           <font-awesome-icon icon="sort-down"/>
-        </button> -->
+        </button>-->
       </div>
       <div class="side-slider" :class="{sideDisplay: isProfileInDisplay}">
         <button class="btn">
@@ -23,7 +23,8 @@
         <button class="btn">
           <font-awesome-icon icon="envelope"/>
         </button>
-        <button class="btn">More
+        <button class="btn">
+          More
           <font-awesome-icon icon="sort-down"/>
         </button>
       </div>
@@ -62,7 +63,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 700) {
         vm.narrowNav(true);
@@ -87,7 +88,7 @@ export default {
       this.isNavInDisplay = state;
     },
     narrowProfile(state) {
-        this.isProfileInDisplay = state;
+      this.isProfileInDisplay = state;
     }
   },
   components: {
@@ -112,7 +113,6 @@ export default {
   top: 120px;
   position: fixed;
 }
-
 
 .side-profile {
   width: 30vw;
@@ -145,12 +145,12 @@ export default {
 }
 
 .side-slider {
-    width: 30vw;
+  width: 30vw;
 }
 @media (max-width: 568px) {
-    .side-slider {
-        width: 100%;
-    }
+  .side-slider {
+    width: 100%;
+  }
 }
 
 .btn {
