@@ -9,17 +9,23 @@
       </div>
 
       <div class="join-container">
-        <el-button type="success">Join</el-button>
-        <el-button type="success" plain>Log In</el-button>
+        <router-link to="/signup">
+          <el-button type="success">Join</el-button>
+        </router-link>
+        <el-button type="success" plain>Login</el-button>
+        <log-in></log-in>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-
+import logIn from './Login';
 export default {
   name: 'nav-bar',
+  components: {
+    logIn
+  }
 
 }
 </script>
