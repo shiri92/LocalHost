@@ -2,7 +2,9 @@
   <section class="profile-container flex" v-if="getCurrUser">
     <div class="side-wrapper">
       <div class="side-profile" v-if="getCurrUser">
+        <!-- <div class="img-container"> -->
         <img class="profile-img" :src="getCurrUser.imgUrl" alt>
+        <!-- </div> -->
         <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
         <!-- <div class="profile-language">{{getCurrUser.language}}</div> -->
         <div class="profile-age">{{getAge}}, {{getCurrUser.gender}}</div>
@@ -20,7 +22,8 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn">More
+            <button class="btn">
+              More
               <font-awesome-icon icon="sort-down"/>
             </button>
           </div>
@@ -61,7 +64,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 700) {
         vm.narrowNav(true);
@@ -143,7 +146,7 @@ export default {
     width: 100%;
     max-width: 280px;
     height: 40%;
-    border-radius: 50%;
+    border-radius: 200px;
   }
   .profile-name {
     font-size: 1.5em;
