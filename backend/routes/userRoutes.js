@@ -14,33 +14,31 @@ const BASE = "/user";
 // }
 
 function addRoutes(app) {
-  // GET USERS
-  app.get(BASE, (req, res) => {
-    const { city } = req.query;
-    userService.query(city).then(users => res.json(users));
-  });
-
-  // GET USER
-  app.get(`${BASE}/:id`, (req, res) => {
-    const userId = req.params.id;
-    userService.getById(userId).then(user => res.json(user));
-  });
-
-  app.post(BASE, (req, res) => {
-    const credentials = req.body;
-    userService.add(credentials).then(user => res.json(user));
-  });
-
-  app.put(`${BASE}/login`, (req, res) => {
-    const credentials = req.body;
-    userService.login(credentials).then(user => {
-      console.log(user);
-
-      // if (!user) res.status(401).send('Something broke!');
-      // req.session.user = user
-      // res.json(user)
+    // GET USERS
+    app.get(BASE, (req, res) => {
+        const { city } = req.query;
+        userService.query(city).then(users => res.json(users));
     });
-  });
+
+    // GET USER
+    app.get(`${BASE}/:id`, (req, res) => {
+        const userId = req.params.id;
+        userService.getById(userId).then(user => res.json(user));
+    });
+
+    app.post(BASE, (req, res) => {
+        const credentials = req.body;
+        userService.add(credentials).then(user => res.json(user));
+    });
+
+    app.put(`${BASE}/login`, (req, res) => {
+        const credentials = req.body;
+        userService.login(credentials).then(user => {
+            if (!user) res.status(401).send('Something broke!');
+            req.session.user = user;
+            res.json(user)
+        });
+    });
 }
 
 module.exports = addRoutes;

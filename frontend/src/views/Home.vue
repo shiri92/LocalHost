@@ -62,6 +62,7 @@ export default {
   margin-top: -70px;
   padding-bottom: 50px;
   background-color: #e6e6e6;
+  text-align: center;
 }
 
 .cities-gallery {
