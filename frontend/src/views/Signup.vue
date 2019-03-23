@@ -42,17 +42,15 @@
           type="warning"
         >Nest Step</el-button>
       </b-form>
-
-      <b-form v-if="active === 1" class="flex flex-col">
+      <!-- v-if="active === 1" -->
+      <b-form class="flex flex-col">
         <div class="name-container flex space-between">
-          <b-form-group
-            class="small-input"
-            id="exampleInputGroup1"
-            label="First:"
-            label-for="exampleInput1"
-          >
-            <b-form-input id="exampleInput1" type="email" v-model="form.fName" required/>
-          </b-form-group>
+          <el-form-item label="Birthday:">
+            <el-select v-model="form.birthdate.day" placeholder="Day">
+              <el-option label="Zone one" value="shanghai"></el-option>
+              <el-option label="Zone two" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
 
           <b-form-group
             class="small-input"
@@ -87,7 +85,8 @@ export default {
         fName: '',
         lName: '',
         email: '',
-        password: ''
+        password: '',
+        birthdate: { day: '', month: '', year: '' }
       }
     }
   },
