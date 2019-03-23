@@ -3,13 +3,18 @@
     <section class="nav-bar flex space-between align-center">
       <div>Some Logo</div>
 
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/profiles">Profiles</router-link>
+      <div class="nav-container flex space-between align-center">
 
-      <div class="join-container">
-        <el-button type="success">Join</el-button>
-        <el-button type="success" plain>Log In</el-button>
+        <div class="links-container flex space-around">
+          <router-link to="/">Home</router-link>
+          <router-link to="/about">About</router-link>
+        </div>
+
+        <div class="join-container">
+          <el-button type="success">Join</el-button>
+          <el-button type="success" plain>Log In</el-button>
+        </div>
+
       </div>
 
 
@@ -45,6 +50,14 @@ export default {
       color: #b6dfcc;
     }
   }
+}
+
+.nav-container{
+  width: 40%;
+}
+
+.links-container{
+  width: 50%;
 }
 
 

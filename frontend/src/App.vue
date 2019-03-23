@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="flex flex-col">
 
+      <nav-bar></nav-bar>
 
       <div class="main-container">
         <router-view></router-view>
@@ -11,11 +12,13 @@
 </template>
 
 <script>
+import NavBar from '@/components/NavBar'
 import MainFooter from '../src/components/MainFooter';
 
 
 export default {
   components: {
+    NavBar,
     MainFooter
   }
   
