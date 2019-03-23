@@ -45,7 +45,6 @@ section {
   transform: translate(-50%, -50%);
   background-color: white;
   border-radius: 10px;
-  background-color: rgb(62, 62, 62);
-  color: white;
+  color: rgb(62, 62, 62);
 }
 </style>

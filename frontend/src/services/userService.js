@@ -1,40 +1,39 @@
-
 /* ----- DEPENDENCIES -----*/
-import Axios from 'axios';
+import Axios from "axios";
 var axios = Axios.create({
-    withCredentials: true
+  withCredentials: true
 }); // save the session cookies
 
-
 /* ----- CONSTANTS -----*/
-const BASE_API = process.env.NODE_ENV !== 'development' ? '' : '//localhost:3003/user';
+const BASE_API =
+  process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
 
 async function query(city) {
-    let query = `?city=${city}`;
-    let res = await axios.get(`${BASE_API}${query}`);
-    return res.data;
+  let query = `?city=${city}`;
+  let res = await axios.get(`${BASE_API}${query}`);
+  return res.data;
 }
 
 async function getById(id) {
-    let res = await axios.get(`${BASE_API}/${id}`);
-    return res.data;
+  let res = await axios.get(`${BASE_API}/${id}`);
+  return res.data;
 }
 
 async function add(credentials) {
-    console.log(credentials);
-    let res = axios.post(`${BASE_API}`, credentials)
-    return res.data;
+  console.log(credentials);
+  let res = await axios.post(`${BASE_API}`, credentials);
+  return res.data;
 }
 
 async function login(credentials) {
-    console.log(credentials);
-    let res = await axios.put(`${BASE_API}/login`, credentials)
-    return res.data;
+  console.log(credentials);
+  let res = await axios.put(`${BASE_API}/login`, credentials);
+  return res.data;
 }
 
 export default {
-    query,
-    getById,
-    add,
-    login
-}
+  query,
+  getById,
+  add,
+  login
+};

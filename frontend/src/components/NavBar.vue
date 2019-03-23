@@ -9,9 +9,7 @@
       </div>
 
       <div class="join-container">
-        <router-link to="/signup">
-          <el-button type="success">Join</el-button>
-        </router-link>
+        <el-button type="success" @click="signUp">Join</el-button>
         <el-button type="success" plain @click="toggleLogin">Login</el-button>
         <log-in v-if="showLogin"></log-in>
       </div>
@@ -23,17 +21,20 @@
 import logIn from './Login';
 export default {
   name: 'nav-bar',
+  methods: {
+    signUp() {
+      this.$router.push('/signup');
+    },
+    toggleLogin() {
+      this.showLogin = !this.showLogin;
+    }
+  },
   components: {
     logIn
   },
   data() {
     return {
       showLogin: false,
-    }
-  },
-  methods: {
-    toggleLogin() {
-      this.showLogin = !this.showLogin;
     }
   },
 
