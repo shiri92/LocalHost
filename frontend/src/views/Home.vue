@@ -40,7 +40,7 @@ export default {
   methods: {
     moveToUsers(ev) {
       let name = ev.target.innerText;
-      this.$router.push('/profiles/' + name)
+      this.$router.push('/users/' + name)
     }
   },
   computed: {
