@@ -86,6 +86,7 @@ export default {
       genders: ['Male', 'Female', 'Other']
     }
   },
+
   methods: {
     next() {
       if (this.active === 1) {
@@ -111,7 +112,7 @@ export default {
   background-color: white;
   color: black;
   font-weight: bold;
-  height: 100vh;
+  // height: 100vh;
 }
 
 .title {

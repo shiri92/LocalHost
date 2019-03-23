@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="flex flex-col">
     <nav-bar></nav-bar>
-    <div class="main-container">
+    <div :class="{grow: currPage !== '/signup'}" class="main-container flex flex-col">
       <router-view></router-view>
     </div>
     <main-footer></main-footer>
@@ -13,6 +13,20 @@ import NavBar from "@/components/NavBar";
 import MainFooter from "../src/components/MainFooter";
 
 export default {
+  data() {
+    return {
+      currPage: ''
+
+    }
+  },
+  created() {
+    this.currPage = this.$route.path;
+  },
+  watch: {
+    $route(to, from) {
+      this.currPage = this.$route.path;
+    }
+  },
   components: {
     NavBar,
     MainFooter
@@ -29,8 +43,11 @@ export default {
   position: relative;
 }
 
-.main-container {
+.grow {
   flex-grow: 1;
+}
+
+.main-container {
   margin-top: 70px;
   background-color: #f1efea;
 }
