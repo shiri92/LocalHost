@@ -1,40 +1,37 @@
 <template>
-  <section class="profile-container flex flex-row">
-    <div>
+  <section class="profile-container flex" v-if="getCurrUser">
+    <div class="side-wrapper">
       <div class="side-profile" v-if="getCurrUser">
         <img class="profile-img" :src="getCurrUser.imgUrl" alt>
         <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
-        <div class="profile-language">{{getCurrUser.language}}</div>
+        <!-- <div class="profile-language">{{getCurrUser.language}}</div> -->
+        <div class="profile-age">{{getAge}}, {{getCurrUser.gender}}</div>
         <hr>
-        <!-- <button class="btn">
-          <font-awesome-icon icon="couch"/>Send Request
-        </button>
-        <button class="btn">
-          <font-awesome-icon icon="envelope"/>
-        </button>
-        <button class="btn">More
-          <font-awesome-icon icon="sort-down"/>
-        </button>-->
-      </div>
-      <div class="side-slider" :class="{sideDisplay: isProfileInDisplay}">
-        <button class="btn">
-          <font-awesome-icon icon="couch"/>&nbsp;Send Request
-        </button>
-        <button class="btn">
-          <font-awesome-icon icon="envelope"/>
-        </button>
-        <button class="btn">
-          More
-          <font-awesome-icon icon="sort-down"/>
-        </button>
       </div>
     </div>
     <div class="main-desc" v-if="getCurrUser">
-      <nav class="profile-nav flex flex-row justify-center" :class="{display: isNavInDisplay}">
-        <a class="nav-item" href="#" v-scroll-to="'#about'">About</a>
-        <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
-        <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
-        <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
+      <nav :class="{display: isNavInDisplay}">
+        <div class="flex space-evenly align-center">
+          <div>{{getHosting}}</div>
+          <div>
+            <button class="btn">
+              <font-awesome-icon icon="couch"/>&nbsp;Send Request
+            </button>
+            <button class="btn">
+              <font-awesome-icon icon="envelope"/>
+            </button>
+            <button class="btn">More
+              <font-awesome-icon icon="sort-down"/>
+            </button>
+          </div>
+        </div>
+        <hr style="margin: 0">
+        <div class="profile-nav flex flex-row justify-center">
+          <a class="nav-item" href="#" v-scroll-to="'#about'">About</a>
+          <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
+          <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
+          <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
+        </div>
       </nav>
       <profile-about id="about"></profile-about>
       <profile-myHome id="home"></profile-myHome>
@@ -56,6 +53,7 @@ export default {
     return {
       isNavInDisplay: false,
       isProfileInDisplay: false,
+      age: null
     };
   },
   created() {
@@ -63,7 +61,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function (e) {
+    var val = window.addEventListener("scroll", function(e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 700) {
         vm.narrowNav(true);
@@ -81,6 +79,12 @@ export default {
   computed: {
     getCurrUser() {
       return this.$store.getters.user;
+    },
+    getAge() {
+      return this.calcAge();
+    },
+    getHosting() {
+      return this.hostingInfo();
     }
   },
   methods: {
@@ -89,6 +93,25 @@ export default {
     },
     narrowProfile(state) {
       this.isProfileInDisplay = state;
+    },
+    calcAge() {
+      var birthYear = this.getCurrUser.birthdate.year;
+      var birthMonth = this.getCurrUser.birthdate.month;
+      var birthDay = this.getCurrUser.birthdate.day;
+
+      var today = new Date();
+      var age = today.getFullYear() - birthYear;
+
+      if (today.getMonth() + 1 < birthMonth) age--;
+      else if (today.getMonth() + 1 === birthMonth) {
+        if (today.getDay() < birthDay) age--;
+      }
+
+      return age;
+    },
+    hostingInfo() {
+      if (this.getCurrUser.isHosting) return "Accepting Guests";
+      else return "Not Accepting Guests";
     }
   },
   components: {
@@ -108,19 +131,13 @@ export default {
   }
 }
 
-.sideDisplay {
-  left: 0;
-  top: 120px;
-  position: fixed;
-}
-
 .side-profile {
   width: 30vw;
   max-width: 350px;
   border: 2px solid black;
   height: 80vh;
   margin: 5px;
-  background-color: floralwhite;
+  background-color: white;
   padding: 15px;
   .profile-img {
     width: 100%;
@@ -141,15 +158,6 @@ export default {
   }
   hr {
     margin: 20px;
-  }
-}
-
-.side-slider {
-  width: 30vw;
-}
-@media (max-width: 568px) {
-  .side-slider {
-    width: 100%;
   }
 }
 
@@ -183,26 +191,21 @@ export default {
 
 @media (max-width: 568px) {
   .side-profile {
-    max-width: 97%;
-    width: 97%;
+    max-width: 98%;
+    width: 98%;
   }
 }
 
 .main-desc {
   border: 2px solid black;
   flex-grow: 1;
-  max-width: 68vw;
   margin: 5px;
-  background-color: floralwhite;
+  background-color: white;
   .display {
     top: 71px;
     left: 0;
     width: 100%;
     background-color: white;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     position: fixed;
     z-index: 10;
     transition: 0.3s;
@@ -221,10 +224,9 @@ export default {
     }
   }
 }
-@media (max-width: 568px) {
-  .main-desc {
-    max-width: unset;
-  }
-}
+// @media (max-width: 568px) {
+//   .main-desc {
+//     max-width: unset;
+//   }
+// }
 </style>
-
