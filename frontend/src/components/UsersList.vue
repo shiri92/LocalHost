@@ -5,9 +5,9 @@
         class="profile-list-item"
         :key="currProfile._id"
         v-for="(currProfile, idx) in users"
-        :to="'/profile/' + currProfile._id"
+        :to="'/userProfile/' + currProfile._id"
       >
-        <profile-preview :profile="currProfile" :idx="idx+1"></profile-preview>
+        <user-preview :profile="currProfile" :idx="idx+1"></user-preview>
       </router-link>
     </div>
   </section>
@@ -15,14 +15,15 @@
 
 
 <script>
-import ProfilePreview from "./ProfilePreview.vue";
+import UserPreview from './UserPreview.vue';
 
 export default {
   name: "UserList",
   props: ["users"],
   components: {
-    ProfilePreview
+    UserPreview
   },
+
 };
 </script>
 
