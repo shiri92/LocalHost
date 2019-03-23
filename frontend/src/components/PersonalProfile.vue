@@ -18,7 +18,7 @@
       </div>
       <div class="side-slider" :class="{sideDisplay: isProfileInDisplay}">
         <button class="btn">
-          <font-awesome-icon icon="couch"/>Send Request
+          <font-awesome-icon icon="couch"/>&nbsp;Send Request
         </button>
         <button class="btn">
           <font-awesome-icon icon="envelope"/>
@@ -178,6 +178,7 @@ export default {
 .btn:hover {
   background: #85ce61;
   border-color: #85ce61;
+  color: #fff;
 }
 
 @media (max-width: 568px) {
