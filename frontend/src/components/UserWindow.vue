@@ -5,6 +5,7 @@
       <div class="details">
         <div class="name">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
         <div>{{getLoggedUser.email}}</div>
+        <el-button class="inbox-btn">Inbox</el-button>
       </div>
     </div>
     <div class="bottom flex space-between">
@@ -70,10 +71,12 @@ export default {
 
 .details {
   margin-left: 20px;
+  text-align: left;
 }
 
 .logout-btn,
-.profile-btn {
+.profile-btn,
+.inbox-btn {
   margin: 20px;
 }
 </style>

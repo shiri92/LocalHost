@@ -39,6 +39,15 @@ async function add(credentials) {
   return credentials;
 }
 
+async function addRequest(request) {
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(request.userId) },
+    { $push: { requests: request.info } }
+  );
+  return request;
+}
+
 async function login(credentials) {
   let db = await mongoService.connect();
   let res = await db.collection(USERS_COLLECTION).findOne(credentials);
@@ -112,19 +121,24 @@ function _createUser(
     lastName,
     gender,
     birthdate,
-    isHosting: false,
+    isHosting: true,
+    guests: [],
+    requests: [],
     isSurfing: false,
     city,
     country,
     language: null,
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile1.jpg"
+      gender === "Male"
+        ? "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430377/male-profile.png"
+        : "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430382/female-profile.png"
   };
 }
 
 module.exports = {
   query,
   add,
+  addRequest,
   login,
   getById
 };

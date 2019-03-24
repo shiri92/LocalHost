@@ -22,6 +22,10 @@ async function add(credentials) {
   return res.data;
 }
 
+async function addRequest(request) {
+  await axios.put(`${BASE_API}/request`, request);
+}
+
 async function login(credentials) {
   let res = await axios.put(`${BASE_API}/login`, credentials);
   return res.data;
@@ -40,6 +44,7 @@ export default {
   query,
   getById,
   add,
+  addRequest,
   login,
   checkLogged,
   logout

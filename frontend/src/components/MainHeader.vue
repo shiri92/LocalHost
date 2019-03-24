@@ -7,7 +7,7 @@
     <div class="header-title" v-if="$route.path === '/'">
       <h1>Find a Place To Stay On Your Travel</h1>
       <h2>Improve Your Travel Experience!</h2>
-      <el-button class="btn-join" type="success" round>Join</el-button>
+      <el-button class="btn-join" type="success" @click="$router.push('/signup')" round>Join</el-button>
     </div>
 
     <div class="users-title" v-if="$route.path !== '/'">

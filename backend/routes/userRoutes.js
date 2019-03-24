@@ -48,6 +48,12 @@ function addRoutes(app) {
     req.session.destroy();
     return res.json();
   });
+
+  app.put(`${BASE}/request`, (req, res) => {
+    userService.addRequest(req.body).then(() => {
+      return res.json();
+    });
+  });
 }
 
 module.exports = addRoutes;

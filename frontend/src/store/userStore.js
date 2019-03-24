@@ -1,5 +1,6 @@
 /* ----- DEPENDENCIES -----*/
 import userService from "../services/userService.js";
+import { log } from "util";
 
 export default {
   state: {
@@ -59,6 +60,10 @@ export default {
     async logout(context) {
       await userService.logout();
       context.commit({ type: "logout" });
+    },
+    async addRequest(context, payload) {
+      await userService.addRequest(payload);
+      // show friendly tiny modal
     }
   }
 };
