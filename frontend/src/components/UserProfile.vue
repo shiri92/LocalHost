@@ -22,7 +22,12 @@
             </button>
           </div>
           <div v-else>
-            <button class="btn">Edit My Profile</button>
+            <router-link
+              :to="'/userProfile/' + currUser._id + '/edit'"
+              :key="currUser._id"
+            >
+              <button class="btn">Edit My Profile</button>
+            </router-link>
           </div>
         </div>
         <hr style="margin: 0">
@@ -118,17 +123,10 @@ export default {
     max-height: 225px;
     border-radius: 50%;
     box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.75);
+    margin-bottom: 15px;
   }
   .profile-name {
     font-size: 1.5em;
-  }
-  .profile-language {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 5px;
-  }
-  .profile-language::first-letter {
-    text-transform: uppercase;
   }
   hr {
     margin: 20px;

@@ -5,6 +5,7 @@ import About from './views/About.vue';
 import Users from './views/Users.vue';
 import Signup from './views/Signup.vue';
 import UserProfile from './components/UserProfile.vue';
+import EditProfile from './components/EditProfile.vue';
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ export default new Router({
             path: '/userProfile/:userId',
             name: 'userProfile',
             component: UserProfile,
+        },
+        {
+            path: '/userProfile/:userId/edit',
+            name: 'editProfile',
+            component: EditProfile,
         }
     ]
 })
