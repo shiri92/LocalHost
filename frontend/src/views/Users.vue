@@ -1,5 +1,5 @@
 <template>
-  <section class="users-page">
+  <section class="users">
     <div class="main-title">Local Hosts</div>
     <div class="users-container">
       <users-list :users="getUsers"></users-list>
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.users-page {
+.users {
   .main-title {
     padding: 10px;
     font-size: 2rem;
