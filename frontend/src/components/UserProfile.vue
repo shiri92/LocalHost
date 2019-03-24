@@ -12,7 +12,7 @@
           <div>{{(getCurrUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div>
             <button class="btn">
-              <font-awesome-icon icon="couch"/>&nbsp;Send Request
+              <font-awesome-icon icon="couch"/>&nbsp;Send Request!
             </button>
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
