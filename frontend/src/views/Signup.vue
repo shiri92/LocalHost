@@ -41,11 +41,11 @@
               <el-select class="bday-selsct" v-model="form.birthdate.day" placeholder="Day">
                 <el-option v-for="num in 31" :key="num" :value="num">{{num}}</el-option>
               </el-select>
-              <el-select class="bday-selsct" v-model="form.birthdate.day" placeholder="Month">
+              <el-select class="bday-selsct" v-model="form.birthdate.month" placeholder="Month">
                 <el-option v-for="num in 12" :key="num" :value="num">{{num}}</el-option>
               </el-select>
-              <el-select class="bday-selsct" v-model="form.birthdate.day" placeholder="Year">
-                <el-option v-for="num in 100" :key="num" :value="num">{{num + 1920}}</el-option>
+              <el-select class="bday-selsct" v-model="form.birthdate.year" placeholder="Year">
+                <el-option v-for="num in 100" :key="num" :value="num + 1920">{{num + 1920}}</el-option>
               </el-select>
             </div>
           </div>
@@ -55,9 +55,12 @@
             <el-option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</el-option>
           </el-select>
 
-          <b-form-group label="Location:">
-            <b-form-input type="text" v-model="form.password" required/>
-          </b-form-group>
+          <label>Location:</label>
+          <el-autocomplete
+            @input="setAddres"
+            v-model="searchWord"
+            :fetch-suggestions="querySearchAsync"
+          ></el-autocomplete>
           <el-button
             class="signup-btn"
             style="margin-top: 12px;"
@@ -83,7 +86,8 @@ export default {
         birthdate: { day: '', month: '', year: '' },
         city: ''
       },
-      genders: ['Male', 'Female', 'Other']
+      genders: ['Male', 'Female', 'Other'],
+      searchWord: '',
     }
   },
 
@@ -97,10 +101,25 @@ export default {
       }
       if (this.active++ > 1) this.active = 0;
     },
+    querySearchAsync(queryString, cb) {
+      if (this.searchWord) {
+        this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord })
+          .then(cities => {
+            var results = cities.map(city => { return { value: city.name + ', ' + city.country } });
+            cb(results);
+          })
+      }
+    },
+    setAddres(ev) {
+      this.form.city = ev;
+    }
   },
   computed: {
     getLoggedUser() {
       return this.$store.getters.loggedUser;
+    },
+    getCities() {
+      return this.$store.getters.cities;
     }
   }
 }
@@ -108,11 +127,9 @@ export default {
 
 <style lang="scss" scoped>
 .signup {
-  // padding: 20px;
   background-color: white;
   color: black;
   font-weight: bold;
-  // height: 100vh;
 }
 
 .title {
