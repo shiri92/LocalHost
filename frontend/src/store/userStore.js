@@ -1,5 +1,6 @@
 /* ----- DEPENDENCIES -----*/
 import userService from "../services/userService.js";
+import { log } from "util";
 
 export default {
     state: {
@@ -50,6 +51,11 @@ export default {
             let user = await userService.login(credentials);
             context.commit({ type: "setLoggedUser", user });
             console.log("Successfuly Logged In: ", user);
+        },
+        async addRequest(context, payload) {
+            await userService.addRequest(payload);
+            // show friendly tiny modal
+
         }
     }
 };

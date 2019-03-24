@@ -39,6 +39,13 @@ function addRoutes(app) {
             res.json(user)
         });
     });
+
+    app.put(`${BASE}/request`, (req, res) => {
+        userService.addRequest(req.body).then(() => {
+            return res.json();
+        })
+
+    })
 }
 
 module.exports = addRoutes;
