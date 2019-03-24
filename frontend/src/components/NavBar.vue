@@ -16,13 +16,13 @@
       <div v-if="!getLoggedUser" class="join-container">
         <!-- <span class="welcome">Welcome Guest!</span> -->
         <el-button type="success" @click="signUp">Join</el-button>
-        <el-button type="success" plain @click="loginOn">Log in</el-button>
+        <el-button type="success" plain @click="loginFormOn">Log in</el-button>
       </div>
       <div v-else>
         <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
         <el-button type="success" @click="logOut">Log out</el-button>
       </div>
-      <log-in v-if="showLogin" @loginOff="loginOff"></log-in>
+      <log-in v-if="showLoginForm" @loginOff="loginFormOff"></log-in>
     </div>
   </section>
 </template>
@@ -35,11 +35,11 @@ export default {
     signUp() {
       this.$router.push('/signup');
     },
-    loginOn() {
-      this.showLogin = true;
+    loginFormOn() {
+      this.showLoginForm = true;
     },
-    loginOff() {
-      this.showLogin = false;
+    loginFormOff() {
+      this.showLoginForm = false;
     },
     logOut() {
       this.$store.commit({ type: 'logout' });
@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      showLogin: false,
+      showLoginForm: false,
     }
   },
   computed: {

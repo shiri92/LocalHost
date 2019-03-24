@@ -17,9 +17,12 @@ async function getById(id) {
 }
 
 async function add(credentials) {
-    console.log(credentials);
     let res = await axios.post(`${BASE_API}`, credentials);
     return res.data;
+}
+
+async function addRequest(request) {
+    await axios.put(`${BASE_API}/request`, request);
 }
 
 async function login(credentials) {
@@ -31,5 +34,6 @@ export default {
     query,
     getById,
     add,
+    addRequest,
     login
 };
