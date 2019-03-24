@@ -1,5 +1,6 @@
 <template>
-  <section class="users">
+  <section class="users flex flex-col">
+    <main-header></main-header>
     <div class="main-title">Local Hosts</div>
     <div class="users-container">
       <users-list :users="getUsers"></users-list>
@@ -8,13 +9,14 @@
 </template>
 
 <script>
-// import UsersList from "../components/UsersList.vue";
 import UsersList from '../components/UsersList.vue';
+import MainHeader from '../../src/components/MainHeader'
 
 export default {
   name: "Users",
   components: {
-    UsersList
+    UsersList,
+    MainHeader
   },
   created() {
     let { name } = this.$route.params;
@@ -34,6 +36,7 @@ export default {
     padding: 10px;
     font-size: 2rem;
     font-weight: bold;
+    align-self: center;
   }
 }
 </style>

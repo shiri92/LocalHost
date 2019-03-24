@@ -16,11 +16,11 @@
       <div v-if="!getLoggedUser" class="join-container">
         <span class="welcome">Welcome Guest!</span>
         <el-button type="success" @click="signUp">Join</el-button>
-        <el-button type="success" plain @click="loginOn">Login</el-button>
+        <el-button type="success" plain @click="loginOn">Log in</el-button>
       </div>
       <div v-else>
-        <div>Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</div>
-        <el-button type="success" @click="logOut">Logout</el-button>
+        <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
+        <el-button type="success" @click="logOut">Log out</el-button>
       </div>
       <log-in v-if="showLogin" @loginOff="loginOff"></log-in>
     </div>
@@ -98,11 +98,11 @@ export default {
   width: 60%;
 }
 .welcome {
-  padding: 20px;
+  padding-right: 20px;
 }
 
 .links-container {
-  width: 60%;
+  width: 40%;
 }
 </style>
 

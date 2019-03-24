@@ -65,6 +65,10 @@ export default {
   text-align: center;
 }
 
+h1 {
+  margin-bottom: 40px;
+}
+
 .cities-gallery {
   max-width: 80%;
   margin: 0 auto;
@@ -145,10 +149,9 @@ export default {
   font-size: 2rem;
   color: white;
   font-weight: bold;
-  // text-shadow: #726e6e 3px 5px 2px;
+  text-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
   width: 100%;
   height: 100%;
-  // padding-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;

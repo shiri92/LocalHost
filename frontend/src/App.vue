@@ -1,6 +1,7 @@
 <template>
   <div id="app" class="flex flex-col">
     <nav-bar></nav-bar>
+
     <div :class="{grow: currPage !== '/signup'}" class="main-container flex flex-col">
       <router-view></router-view>
     </div>
