@@ -1,12 +1,9 @@
 /* ----- DEPENDENCIES -----*/
 import Axios from "axios";
-var axios = Axios.create({
-    withCredentials: true
-}); // save the session cookies
+var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONSTANTS -----*/
-const BASE_API =
-    process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
+const BASE_API = process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
 
 async function query(city) {
     let query = `?city=${city}`;

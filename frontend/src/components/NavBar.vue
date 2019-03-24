@@ -14,12 +14,12 @@
       <!-- </b-card> -->
 
       <div v-if="!getLoggedUser" class="join-container">
-        <span class="welcome">Welcome Guest!</span>
+        <!-- <span class="welcome">Welcome Guest!</span> -->
         <el-button type="success" @click="signUp">Join</el-button>
         <el-button type="success" plain @click="loginOn">Login</el-button>
       </div>
       <div v-else>
-        <div>Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</div>
+        <!-- <div>Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</div> -->
         <el-button type="success" @click="logOut">Logout</el-button>
       </div>
       <log-in v-if="showLogin" @loginOff="loginOff"></log-in>

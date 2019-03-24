@@ -17,7 +17,8 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn">More
+            <button class="btn">
+              More
               <font-awesome-icon icon="sort-down"/>
             </button>
           </div>
@@ -56,7 +57,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);
@@ -111,7 +112,7 @@ export default {
     height: 40%;
     max-height: 225px;
     border-radius: 50%;
-    box-shadow: 2px 2px 15px -1px rgba(0,0,0,0.75);
+    box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.75);
   }
   .profile-name {
     font-size: 1.5em;
@@ -187,10 +188,9 @@ export default {
       border: 1px 0 1px 0 solid black;
       padding: 10px;
       cursor: pointer;
-
     }
     .nav-item:hover {
-      color: #ED6504;
+      color: #ed6504;
     }
   }
   .detail-section {
