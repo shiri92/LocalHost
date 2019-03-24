@@ -3,7 +3,7 @@
     <div class="pictures-pref">
       <h3 class="header-box">PICTURES</h3>
       <hr style="margin: 0">
-      <div class="user-info"></div>
+      <div class="user-info">Coming soon...</div>
     </div>
   </section>
 </template>

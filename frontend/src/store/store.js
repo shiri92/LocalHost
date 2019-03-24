@@ -8,15 +8,6 @@ import cityStore from './cityStore.js';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-    state: {
-
-    },
-    mutations: {
-
-    },
-    actions: {
-
-    },
     modules: {
         userStore,
         countryStore,

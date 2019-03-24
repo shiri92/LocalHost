@@ -1,40 +1,47 @@
 <template>
-  <section class="profile-container flex" v-if="getCurrUser">
+  <section class="profile-container flex" v-if="currUser">
     <div class="side-profile">
-      <img class="profile-img" :src="getCurrUser.imgUrl" alt>
-      <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
-      <div class="profile-loc">{{getCurrUser.city}}, {{getCurrUser.country}}</div>
+      <img class="profile-img" :src="currUser.imgUrl" alt>
+      <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
+      <div class="profile-loc">{{currUser.city}}, {{currUser.country}}</div>
       <hr>
     </div>
-    <div class="main-desc" v-if="getCurrUser">
+    <div class="main-desc">
       <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-        <div class="flex space-evenly align-center">
-          <div>{{(getCurrUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
-          <div>
+        <div class="flex space-evenly align-center" v-if="loggedUser">
+          <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
+          <div v-if="loggedUser._id !== currUser._id">
             <button @click="requestFormOn" class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request!
             </button>
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn">
-              More
+            <button class="btn">More
               <font-awesome-icon icon="sort-down"/>
             </button>
+          </div>
+          <div v-else>
+            <router-link
+              :to="'/userProfile/' + currUser._id + '/edit'"
+              :key="currUser._id"
+            >
+              <button class="btn">Edit My Profile</button>
+            </router-link>
           </div>
         </div>
         <hr style="margin: 0">
         <div class="profile-nav flex flex-row justify-center">
-          <a class="nav-item" href="#" v-scroll-to="'#about'">About</a>
+          <a class="nav-item" href="#" v-scroll-to="'#about'">About Me</a>
           <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
           <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
           <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
         </div>
       </nav>
-      <profile-about class="detail-section" :user="getCurrUser" id="about"></profile-about>
-      <profile-myHome class="detail-section" :user="getCurrUser" id="home"></profile-myHome>
-      <profile-pictures class="detail-section" :user="getCurrUser" id="pics"></profile-pictures>
-      <profile-references class="detail-section" :user="getCurrUser" id="ref"></profile-references>
+      <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
+      <profile-myHome class="detail-section" :user="currUser" id="home"></profile-myHome>
+      <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
+      <profile-references class="detail-section" :user="currUser" id="ref"></profile-references>
     </div>
     <guest-request
       @requestOff="requestFormOff"
@@ -64,7 +71,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function (e) {
+    var val = window.addEventListener("scroll", function(e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);
@@ -74,8 +81,11 @@ export default {
     });
   },
   computed: {
-    getCurrUser() {
+    currUser() {
       return this.$store.getters.user;
+    },
+    loggedUser() {
+      return this.$store.getters.loggedUser;
     }
   },
   methods: {
@@ -131,17 +141,10 @@ export default {
     max-height: 225px;
     border-radius: 50%;
     box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.75);
+    margin-bottom: 15px;
   }
   .profile-name {
     font-size: 1.5em;
-  }
-  .profile-language {
-    font-size: 1.2em;
-    font-weight: bold;
-    margin: 5px;
-  }
-  .profile-language::first-letter {
-    text-transform: uppercase;
   }
   hr {
     margin: 20px;
