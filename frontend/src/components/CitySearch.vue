@@ -1,29 +1,13 @@
 <template>
   <section class="city-search">
-
-    <!-- <div class="search-container flex"> -->
-
-    <el-input
-      @input="search"
-      placeholder="Where do you want to go?"
+    <el-autocomplete
+      class="input"
       v-model="searchWord"
-    >
-      <el-button
-        type="success"
-        slot="append"
-        icon="el-icon-search"
-        plain
-      >Search</el-button>
-    </el-input>
-    <!-- </div> -->
-
-    <ul
-      class="clean-list"
-      v-for="(city, idx) in getCities"
-      :key="idx"
-    >
-      <li v-if="searchWord"><a href="#">{{city.name}}, {{city.country}}</a></li>
-    </ul>
+      @select="chooseCity"
+      placeholder="Where do you want to go?"
+      :fetch-suggestions="querySearchAsync"
+    ></el-autocomplete>
+    <el-button class="btn" type="success" slot="append" icon="el-icon-search" plain>Search</el-button>
   </section>
 </template>
 
@@ -44,14 +28,26 @@ export default {
     }
   },
   methods: {
-    search() {
-      if (this.searchWord)
-        this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord });
-      else {
-        let cities = [];
-        this.$store.commit({ type: 'setCities', cities })
+    querySearchAsync(queryString, cb) {
+      if (this.searchWord) {
+        this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord })
+          .then(cities => {
+            this.cities = cities
+            let results = cities.map(city => { return { value: city.name + ', ' + city.country } });
+            cb(results);
+          })
       }
-
+    },
+    chooseCity(ev) {
+      let inputRes = JSON.parse(JSON.stringify(ev)).value;
+      let idx = inputRes.indexOf(',');
+      let currCity = inputRes.substr(0, idx)
+      this.$router.push(`/users/${currCity}`);
+    }
+  },
+  computed: {
+    getCities() {
+      return this.$store.getters.cities;
     }
   }
 }
@@ -59,20 +55,15 @@ export default {
 
 <style scoped lang="scss">
 .city-search {
-  width: 60%;
+  width: 50%;
   margin: 0 auto;
-  //   position: absolute;
-  //   top: 80%;
-  //   left: 20vw;
 }
 
-li {
-  background-color: white;
-  border-bottom: 1px solid rgb(219, 216, 216);
-  padding: 10px;
-  font-family: lato-reg;
-  font-size: 0.9rem;
-  text-align: left;
-  cursor: pointer;
+.input {
+  width: 85%;
+}
+
+.btn {
+  width: 15%;
 }
 </style>
