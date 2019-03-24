@@ -1,5 +1,5 @@
 <template>
-  <section class="nav-bar flex space-between align-center">
+  <section v-if="showNav" class="nav-bar flex space-between align-center">
     <div>Some Logo</div>
 
     <div class="nav-container flex space-between align-center">
@@ -8,11 +8,21 @@
         <router-link to="/about">About</router-link>
       </div>
 
-      <div class="join-container">
+      <!-- <b-card bg-variant="dark" text-variant="white" title="Guest"> -->
+      <!-- <b-card-text>With supporting text below as a natural lead-in to additional content.</b-card-text> -->
+      <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
+      <!-- </b-card> -->
+
+      <div v-if="!getLoggedUser" class="join-container">
+        Welcome Guest!
         <el-button type="success" @click="signUp">Join</el-button>
-        <el-button type="success" plain @click="toggleLogin">Login</el-button>
-        <log-in v-if="showLogin"></log-in>
+        <el-button type="success" plain @click="loginOn">Login</el-button>
       </div>
+      <div v-else>
+        <div>Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</div>
+        <el-button type="success" @click="logOut">Logout</el-button>
+      </div>
+      <log-in v-if="showLogin" @loginOff="loginOff"></log-in>
     </div>
   </section>
 </template>
@@ -25,8 +35,14 @@ export default {
     signUp() {
       this.$router.push('/signup');
     },
-    toggleLogin() {
-      this.showLogin = !this.showLogin;
+    loginOn() {
+      this.showLogin = true;
+    },
+    loginOff() {
+      this.showLogin = false;
+    },
+    logOut() {
+      this.$store.commit({ type: 'logout' });
     }
   },
   components: {
@@ -37,6 +53,25 @@ export default {
       showLogin: false,
     }
   },
+  computed: {
+    getLoggedUser() {
+      return this.$store.getters.loggedUser;
+    },
+    showNav() {
+      let isRouteWithNav = true;
+      if (this.$route.path !== '/signup') {
+        return true;
+      } else {
+        return false;
+      }
+    },
+  },
+  watch: {
+    $route(to, from) {
+      this.loginOff();
+    }
+  }
+
 
 }
 </script>

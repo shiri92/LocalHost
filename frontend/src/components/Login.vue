@@ -1,6 +1,7 @@
 <template>
   <section class="signup">
     <H1>Login</H1>
+    <font-awesome-icon icon="window-close" @click="$emit('loginOff')"/>
     <el-form :inline="false" :model="credentials" class="demo-form-inline">
       <el-form-item label="Email" required>
         <el-input required v-model="credentials.email" placeholder="Enter Username..."></el-input>
@@ -11,7 +12,7 @@
       <el-form-item>
         <el-button type="primary" @click="tryLogin">Login</el-button>
       </el-form-item>
-      {{credentials}}
+      <div v-if="getLoggedUser">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
     </el-form>
   </section>
 </template>
@@ -29,6 +30,15 @@ export default {
   methods: {
     tryLogin() {
       this.$store.dispatch({ type: 'login', credentials: this.credentials })
+        .then(() => {
+          this.$router.push(this.$route.path);
+          this.$emit('loginOff');
+        })
+    }
+  },
+  computed: {
+    getLoggedUser() {
+      return this.$store.getters.loggedUser;
     }
   }
 
