@@ -1,16 +1,33 @@
 <template>
   <section class="about" v-if="user">
     <div class="overview">
-      <h3 class="header-box">Overview</h3>
+      <h5 class="header-box">OVERVIEW</h5>
       <hr style="margin: 0">
-      <div class="user-info flex flex-col">
-        <div class="info-item">
-          <font-awesome-icon icon="comment"/>
-          &nbsp;Fluent in {{user.language}}
+      <div class="user-info flex flex-row ">
+        <div class="flex flex-col" style="width: 50%">
+          <div class="info-item">
+            <font-awesome-icon icon="quote-left"/>&nbsp;0 References
+          </div>
+          <div class="info-item">
+            <font-awesome-icon icon="comment"/>
+            &nbsp;Fluent in {{user.language}}
+          </div>
+          <div class="info-item" style="margin-bottom: 0">
+            <font-awesome-icon icon="venus-mars"/>
+            {{getAge}}, {{user.gender}}
+          </div>
         </div>
-        <div class="info-item">
-          <font-awesome-icon icon="venus-mars"/>
-          {{getAge}}, {{user.gender}}
+        <div class="flex flex-col">
+          <div class="info-item">
+            <font-awesome-icon icon="briefcase"/>&nbsp;No occupation listed
+          </div>
+          <div class="info-item">
+            <font-awesome-icon icon="book"/>&nbsp;No education listed
+          </div>
+          <div class="info-item" style="margin-bottom: 0">
+            <font-awesome-icon icon="map-marker-alt"/>
+            &nbsp;{{user.city}}, {{user.country}}
+          </div>
         </div>
       </div>
     </div>
@@ -48,16 +65,16 @@ export default {
 <style lang="scss" scoped>
 .about {
   width: 100%;
-  height: 500px;
   border-bottom: 2px solid rgba(0, 0, 0, 0.15);
   background-color: #fff;
 }
 .overview {
-  margin: 10px;
   .header-box {
     padding: 20px;
     margin: 0px;
     text-align: left;
+    font-weight: bold;
+    font-size: 1em;
   }
   .user-info {
     padding: 20px;

@@ -1,20 +1,15 @@
 <template>
   <section class="profile-container flex" v-if="getCurrUser">
-    <div class="side-wrapper">
-      <div class="side-profile" v-if="getCurrUser">
-        <img class="profile-img" :src="getCurrUser.imgUrl" alt>
-        <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
-        <div class="profile-loc">{{getCurrUser.city}}, {{getCurrUser.country}}</div>
-
-        <!-- <div class="profile-language">{{getCurrUser.language}}</div> -->
-        
-        <hr>
-      </div>
+    <div class="side-profile">
+      <img class="profile-img" :src="getCurrUser.imgUrl" alt>
+      <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
+      <div class="profile-loc">{{getCurrUser.city}}, {{getCurrUser.country}}</div>
+      <hr>
     </div>
     <div class="main-desc" v-if="getCurrUser">
       <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
         <div class="flex space-evenly align-center">
-          <div>{{getHosting}}</div>
+          <div>{{(getCurrUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div>
             <button class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request
@@ -36,9 +31,9 @@
         </div>
       </nav>
       <profile-about class="detail-section" :user="getCurrUser" id="about"></profile-about>
-      <profile-myHome class="detail-section" id="home"></profile-myHome>
-      <profile-pictures class="detail-section" id="pics"></profile-pictures>
-      <profile-references class="detail-section" id="ref"></profile-references>
+      <profile-myHome class="detail-section" :user="getCurrUser" id="home"></profile-myHome>
+      <profile-pictures class="detail-section" :user="getCurrUser" id="pics"></profile-pictures>
+      <profile-references class="detail-section" :user="getCurrUser" id="ref"></profile-references>
     </div>
   </section>
 </template>
@@ -54,8 +49,6 @@ export default {
   data() {
     return {
       isNavInDisplay: false,
-      isProfileInDisplay: false,
-      age: null
     };
   },
   created() {
@@ -65,37 +58,21 @@ export default {
     var vm = this;
     var val = window.addEventListener("scroll", function(e) {
       var scrollPos = window.scrollY;
-      if (scrollPos > 700) {
+      if (scrollPos > 110) {
         vm.narrowNav(true);
       } else {
         vm.narrowNav(false);
-      }
-
-      if (scrollPos > 1200) {
-        vm.narrowProfile(true);
-      } else {
-        vm.narrowProfile(false);
       }
     });
   },
   computed: {
     getCurrUser() {
       return this.$store.getters.user;
-    },
-    getHosting() {
-      return this.hostingInfo();
     }
   },
   methods: {
     narrowNav(state) {
       this.isNavInDisplay = state;
-    },
-    narrowProfile(state) {
-      this.isProfileInDisplay = state;
-    },
-    hostingInfo() {
-      if (this.getCurrUser.isHosting) return "Accepting Guests";
-      else return "Not Accepting Guests";
     }
   },
   components: {
@@ -109,6 +86,9 @@ export default {
 
 
 <style lang="scss" scoped>
+.profile-container {
+  margin-top: 70px;
+}
 @media (max-width: 568px) {
   .profile-container {
     flex-direction: column;
@@ -119,17 +99,19 @@ export default {
   width: 30vw;
   max-width: 320px;
   min-width: 260px;
-  border-bottom: 2px solid rgba(0,0,0,0.15);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.15);
   height: 80vh;
   margin: 5px 15px;
   background-color: white;
   padding: 15px;
+  text-align: center;
   .profile-img {
     width: 100%;
     max-width: 225px;
     height: 40%;
     max-height: 225px;
     border-radius: 50%;
+    box-shadow: 2px 2px 15px -1px rgba(0,0,0,0.75);
   }
   .profile-name {
     font-size: 1.5em;
@@ -199,15 +181,16 @@ export default {
   }
   .profile-nav {
     width: 100%;
-    border-bottom: 2px solid rgba(0,0,0,0.15);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
     .nav-item {
       width: 100px;
       border: 1px 0 1px 0 solid black;
       padding: 10px;
       cursor: pointer;
+
     }
     .nav-item:hover {
-      background-color: lightblue;
+      color: #ED6504;
     }
   }
   .detail-section {
