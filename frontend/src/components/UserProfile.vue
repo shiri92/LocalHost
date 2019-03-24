@@ -7,7 +7,7 @@
       <hr>
     </div>
     <div class="main-desc" v-if="getCurrUser">
-      <nav class="main-desc-nav" :class="{ display: isNavInDisplay }">
+      <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
         <div class="flex space-evenly align-center">
           <div>{{(getCurrUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div>
@@ -108,64 +108,30 @@ export default {
   text-align: center;
   .profile-img {
     width: 100%;
+    max-width: 225px;
     height: 40%;
     max-height: 225px;
-    max-width: 225px;
-    margin-bottom: 15px;
     border-radius: 50%;
     box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.75);
   }
   .profile-name {
-    font-size: 1.8em;
+    font-size: 1.5em;
+  }
+  .profile-language {
+    font-size: 1.2em;
     font-weight: bold;
+    margin: 5px;
   }
-  .info {
-    text-align: center;
-    width: 80%;
-    padding-bottom: 15px;
+  .profile-language::first-letter {
+    text-transform: uppercase;
   }
-}
-
-.main-desc {
-  flex-grow: 4;
-  .main-desc-nav {
-    padding: 15px;
-    background-color: #fff;
-  }
-  .display {
-    top: 71px;
-    left: 0;
-    width: 100%;
-    background-color: #fff;
-    position: fixed;
-    z-index: 10;
-    transition: 0.3s;
-  }
-  .profile-nav {
-    .nav-item {
-      width: 100px;
-      border: 1px 0 1px 0 solid black;
-      padding: 10px;
-      cursor: pointer;
-    }
-    .nav-item:hover {
-      background-color: lightblue;
-    }
-  }
-
-  @media (max-width: 568px) {
-    .user-profile {
-      flex-direction: column;
-    }
-    .side-profile {
-      max-width: 98%;
-      width: 98%;
-    }
+  hr {
+    margin: 20px;
   }
 }
 
 .btn {
-  // margin: 5px;
+  margin: 5px;
   background-color: #67c23a;
   border: 1px solid #67c23a;
   border-radius: 3px;
@@ -176,7 +142,7 @@ export default {
   font-weight: bold;
   line-height: 1.5;
   max-width: 240px;
-  // padding: 8px 12px;
+  padding: 8px 12px;
   text-align: center;
   text-decoration: none;
   -webkit-transition: background-color 0.3s ease, border-color 0.3s ease;
