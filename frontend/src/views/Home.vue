@@ -15,7 +15,7 @@
         :class="'img-container' + ' ' + dest.name"
         :style="'background-image: url(' + dest.imgUrl + ')'"
       >
-        <div class="city-name" @click="moveToUsers">{{dest.name}}</div>
+        <div class="city-name" @click="moveToUsers(dest)">{{dest.name}}</div>
       </div>
     </div>
   </div>
@@ -38,16 +38,16 @@ export default {
     this.$store.dispatch({ type: 'loadTopDests' })
   },
   methods: {
-    moveToUsers(ev) {
-      let name = ev.target.innerText;
-      this.$router.push('/users/' + name)
+    moveToUsers(dest) {
+      let destCountry = dest.country;
+      let destCity = dest.name;
+      this.$router.push('/users/' + destCountry + '&' + destCity)
     }
   },
   computed: {
     topDests() {
       return this.$store.getters.topDests;
     }
-
   },
   components: {
     MainHeader,

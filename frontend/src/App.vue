@@ -22,6 +22,7 @@ export default {
   },
   created() {
     this.currPage = this.$route.path;
+    this.$store.dispatch({ type: 'checkLogged' });
   },
   watch: {
     $route(to, from) {

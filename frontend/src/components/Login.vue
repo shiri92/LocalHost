@@ -3,15 +3,10 @@
     <div class="top flex space-between align-center">
       <H1>Login</H1>
       <span @click="$emit('loginOff')">&times;</span>
-      <!-- <font-awesome-icon icon="window-close" @click="$emit('loginOff')"/> -->
     </div>
     <hr>
     <div class="content flex flex-col">
       <el-form :inline="false" :model="credentials" class="demo-form-inline">
-        <!-- <el-form-item label="Email" required>
-          <el-input required v-model="credentials.email" placeholder="Enter Username..."></el-input>
-        </el-form-item>-->
-
         <b-form-group class="input" required>
           <b-form-input
             type="email"
@@ -29,14 +24,6 @@
             placeholder="Enter Password..."
           />
         </b-form-group>
-
-        <!-- <el-form-item label="Password" required>
-          <el-input required v-model="credentials.password" placeholder="Enter Password..."></el-input>
-        </el-form-item>-->
-
-        <!-- <el-form-item>
-          <el-button class="btn-login" type="warning" @click="tryLogin">Login</el-button>
-        </el-form-item>-->
 
         <div class="btn-container flex justify-center">
           <el-button class="btn-login" type="warning" @click="tryLogin">Login</el-button>

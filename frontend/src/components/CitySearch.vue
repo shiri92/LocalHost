@@ -12,7 +12,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'CitySearch',
   props: {
@@ -42,7 +41,8 @@ export default {
       let inputRes = JSON.parse(JSON.stringify(ev)).value;
       let idx = inputRes.indexOf(',');
       let currCity = inputRes.substr(0, idx)
-      this.$router.push(`/users/${currCity}`);
+      let currCountry = inputRes.substr(idx + 2, inputRes.length)
+      this.$router.push(`/users/${currCountry}&${currCity}`);
     }
   },
   computed: {

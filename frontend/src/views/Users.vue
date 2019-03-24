@@ -19,8 +19,9 @@ export default {
     MainHeader
   },
   created() {
-    let { name } = this.$route.params;
-    this.$store.dispatch({ type: 'loadUsers', city: name })
+    let { city } = this.$route.params;
+    let { country } = this.$route.params;
+    this.$store.dispatch('loadUsers', { city: city, country: country })
   },
   computed: {
     getUsers() {

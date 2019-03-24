@@ -1,6 +1,6 @@
 <template>
   <section
-    class="main-header flex flex-col align-center"
+    class="main-header flex flex-col align-center justify-center"
     :style="'background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + backImg + ')'"
     :class="{'users-head': $route.path !== '/'}"
   >
@@ -11,7 +11,7 @@
     </div>
 
     <div class="users-title" v-if="$route.path !== '/'">
-      <h2>Country</h2>
+      <h2>{{currPageCountry}}</h2>
       <h1>{{currPageCity}}</h1>
     </div>
   </section>
@@ -28,16 +28,20 @@ export default {
     }
   },
   created() {
-    let cutString = this.$route.path.substring(1, this.$route.path.length)
-    let idx = cutString.indexOf('/');
-    this.currPageCity = cutString.substr(idx + 1, cutString.length)
+    let cutString = this.$route.path.substring(1, this.$route.path.length);
+
+    let idxSlash = cutString.indexOf('/');
+    let idxAnd = cutString.indexOf('&');
+
+    this.currPageCountry = cutString.substr(idxSlash + 1, idxAnd - idxSlash - 1);
+    this.currPageCity = cutString.substr(idxAnd + 1, cutString.length);
   },
   computed: {
     backImg() {
       if (this.$route.path === '/') {
         return 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/header.jpg';
       } else {
-        return ('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/cities/' + this.$route.params.name.toLowerCase() + '.jpg');
+        return ('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/cities/' + this.$route.params.city.toLowerCase() + '.jpg');
       }
     },
   }
@@ -50,8 +54,6 @@ export default {
   background-size: cover;
   height: 95vh;
   box-shadow: 2px 2px 10px black;
-  justify-content: center;
-  position: relative;
 }
 
 .users-head {
