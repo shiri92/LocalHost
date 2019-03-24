@@ -1,20 +1,17 @@
 <template>
-  <section class="profile-container flex" v-if="getCurrUser">
-    <div class="side-wrapper">
-      <div class="side-profile" v-if="getCurrUser">
-        <!-- <div class="img-container"> -->
-        <img class="profile-img" :src="getCurrUser.imgUrl" alt>
-        <!-- </div> -->
-        <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
-        <!-- <div class="profile-language">{{getCurrUser.language}}</div> -->
-        <div class="profile-age">{{getAge}}, {{getCurrUser.gender}}</div>
-        <hr>
+  <section class="user-profile flex" v-if="getCurrUser">
+    <div class="side-container flex flex-col align-center">
+      <img class="profile-img" :src="getCurrUser.imgUrl" alt>
+      <div class="info">
+        <div class="profile-name">{{ getCurrUser.firstName }} {{ getCurrUser.lastName }}</div>
+        <div class="profile-loc">{{ getCurrUser.city }}, {{ getCurrUser.country }}</div>
       </div>
+      <!-- <div class="profile-language">{{getCurrUser.language}}</div> -->
     </div>
     <div class="main-desc" v-if="getCurrUser">
-      <nav :class="{display: isNavInDisplay}">
+      <nav class="main-desc-nav" :class="{ display: isNavInDisplay }">
         <div class="flex space-evenly align-center">
-          <div>{{getHosting}}</div>
+          <div>{{ (getCurrUser.isHosting)? "Accepting Guests":"Not Accepting Guests" }}</div>
           <div>
             <button class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request
@@ -36,10 +33,10 @@
           <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
         </div>
       </nav>
-      <profile-about id="about"></profile-about>
-      <profile-myHome id="home"></profile-myHome>
-      <profile-pictures id="pics"></profile-pictures>
-      <profile-references id="ref"></profile-references>
+      <profile-about class="detail-section" :user="getCurrUser" id="about"></profile-about>
+      <profile-myHome class="detail-section" id="home"></profile-myHome>
+      <profile-pictures class="detail-section" id="pics"></profile-pictures>
+      <profile-references class="detail-section" id="ref"></profile-references>
     </div>
   </section>
 </template>
@@ -83,12 +80,6 @@ export default {
     getCurrUser() {
       return this.$store.getters.user;
     },
-    getAge() {
-      return this.calcAge();
-    },
-    getHosting() {
-      return this.hostingInfo();
-    }
   },
   methods: {
     narrowNav(state) {
@@ -97,25 +88,6 @@ export default {
     narrowProfile(state) {
       this.isProfileInDisplay = state;
     },
-    calcAge() {
-      var birthYear = this.getCurrUser.birthdate.year;
-      var birthMonth = this.getCurrUser.birthdate.month;
-      var birthDay = this.getCurrUser.birthdate.day;
-
-      var today = new Date();
-      var age = today.getFullYear() - birthYear;
-
-      if (today.getMonth() + 1 < birthMonth) age--;
-      else if (today.getMonth() + 1 === birthMonth) {
-        if (today.getDay() < birthDay) age--;
-      }
-
-      return age;
-    },
-    hostingInfo() {
-      if (this.getCurrUser.isHosting) return "Accepting Guests";
-      else return "Not Accepting Guests";
-    }
   },
   components: {
     ProfileAbout,
@@ -128,44 +100,104 @@ export default {
 
 
 <style lang="scss" scoped>
-@media (max-width: 568px) {
-  .profile-container {
-    flex-direction: column;
-  }
+.user-profile {
+  padding: 15px;
+  margin: 15px;
 }
 
-.side-profile {
-  width: 30vw;
-  max-width: 350px;
-  border: 2px solid black;
-  height: 80vh;
-  margin: 5px;
-  background-color: white;
+.side-container {
+  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  flex-grow: 1;
+  height: 550px;
   padding: 15px;
+  margin-right: 15px;
+  background-color: #fff;
   .profile-img {
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.5);
+    margin-bottom: 15px;
+    border-radius: 50%;
     width: 100%;
-    max-width: 280px;
-    height: 40%;
-    border-radius: 200px;
+    max-width: 270px;
+    max-height: 270px;
+    object-fit: cover;
+    object-position: center center;
   }
   .profile-name {
-    font-size: 1.5em;
-  }
-  .profile-language {
-    font-size: 1.2em;
+    font-size: 1.8em;
     font-weight: bold;
-    margin: 5px;
   }
-  .profile-language::first-letter {
-    text-transform: uppercase;
-  }
-  hr {
-    margin: 20px;
+  .info {
+    text-align: center;
+    width: 80%;
+    padding-bottom: 15px;
   }
 }
 
+.main-desc {
+  flex-grow: 4;
+  .main-desc-nav {
+    padding: 15px;
+    background-color: #fff;
+  }
+  .display {
+    top: 71px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    z-index: 10;
+    transition: 0.3s;
+  }
+  .profile-nav {
+    .nav-item {
+      width: 100px;
+      // border: 1px 0 1px 0 solid black;
+      // padding: 10px;
+      cursor: pointer;
+    }
+    .nav-item:hover {
+      background-color: lightblue;
+    }
+  }
+
+  @media (max-width: 568px) {
+    .user-profile {
+      flex-direction: column;
+    }
+    .side-profile {
+      max-width: 98%;
+      width: 98%;
+    }
+  }
+}
+
+// .side-profile {
+//   width: 30vw;
+//   max-width: 320px;
+//   min-width: 260px;
+//   border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+//   background-color: white;
+//   .profile-img {
+//     width: 100%;
+//     max-width: 225px;
+//     height: 40%;
+//     max-height: 225px;
+//     border-radius: 50%;
+//   }
+//   .profile-name {
+//     font-size: 1.5em;
+//   }
+//   .profile-language {
+//     font-size: 1.2em;
+//     font-weight: bold;
+//   }
+//   .profile-language::first-letter {
+//     text-transform: uppercase;
+//   }
+// }
+
 .btn {
-  margin: 5px;
+  // margin: 5px;
   background-color: #67c23a;
   border: 1px solid #67c23a;
   border-radius: 3px;
@@ -176,7 +208,7 @@ export default {
   font-weight: bold;
   line-height: 1.5;
   max-width: 240px;
-  padding: 8px 12px;
+  // padding: 8px 12px;
   text-align: center;
   text-decoration: none;
   -webkit-transition: background-color 0.3s ease, border-color 0.3s ease;
@@ -191,45 +223,4 @@ export default {
   border-color: #85ce61;
   color: #fff;
 }
-
-@media (max-width: 568px) {
-  .side-profile {
-    max-width: 98%;
-    width: 98%;
-  }
-}
-
-.main-desc {
-  border: 2px solid black;
-  flex-grow: 1;
-  margin: 5px;
-  background-color: white;
-  .display {
-    top: 71px;
-    left: 0;
-    width: 100%;
-    background-color: white;
-    position: fixed;
-    z-index: 10;
-    transition: 0.3s;
-  }
-  .profile-nav {
-    width: 100%;
-    border-bottom: 2px solid black;
-    .nav-item {
-      width: 100px;
-      border: 1px 0 1px 0 solid black;
-      padding: 10px;
-      cursor: pointer;
-    }
-    .nav-item:hover {
-      background-color: lightblue;
-    }
-  }
-}
-// @media (max-width: 568px) {
-//   .main-desc {
-//     max-width: unset;
-//   }
-// }
 </style>
