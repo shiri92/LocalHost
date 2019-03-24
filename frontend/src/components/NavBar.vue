@@ -8,49 +8,51 @@
         <router-link to="/about">About</router-link>
       </div>
 
-      <!-- <b-card bg-variant="dark" text-variant="white" title="Guest"> -->
-      <!-- <b-card-text>With supporting text below as a natural lead-in to additional content.</b-card-text> -->
-      <!-- <b-button href="#" variant="primary">Go somewhere</b-button> -->
-      <!-- </b-card> -->
-
       <div v-if="!getLoggedUser" class="join-container">
-        <!-- <span class="welcome">Welcome Guest!</span> -->
+        <span class="welcome">Welcome Guest!</span>
         <el-button type="success" @click="signUp">Join</el-button>
-        <el-button type="success" plain @click="loginOn">Log in</el-button>
+        <el-button type="success" plain @click="loginFormOn">Log in</el-button>
       </div>
       <div v-else>
         <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
-        <el-button type="success" @click="logOut">Log out</el-button>
+        <img class="user-img" @click="toggleUserWindow" :src="getLoggedUser.imgUrl">
       </div>
-      <log-in v-if="showLogin" @loginOff="loginOff"></log-in>
+
+      <user-window v-if="showUserWindow" @closeWindow="showUserWindow = false"></user-window>
+
+      <log-in v-if="showLoginForm" @loginOff="loginFormOff"></log-in>
     </div>
   </section>
 </template>
 
 <script>
 import logIn from './Login';
+import userWindow from './UserWindow';
+
 export default {
   name: 'nav-bar',
   methods: {
     signUp() {
       this.$router.push('/signup');
     },
-    loginOn() {
-      this.showLogin = true;
+    loginFormOn() {
+      this.showLoginForm = true;
     },
-    loginOff() {
-      this.showLogin = false;
+    loginFormOff() {
+      this.showLoginForm = false;
     },
-    logOut() {
-      this.$store.commit({ type: 'logout' });
+    toggleUserWindow() {
+      this.showUserWindow = !this.showUserWindow
     }
   },
   components: {
-    logIn
+    logIn,
+    userWindow
   },
   data() {
     return {
-      showLogin: false,
+      showLoginForm: false,
+      showUserWindow: false
     }
   },
   computed: {
@@ -68,7 +70,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      this.loginOff();
+      this.loginFormOff();
     }
   }
 }
@@ -103,6 +105,13 @@ export default {
 
 .links-container {
   width: 40%;
+}
+
+.user-img {
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 </style>
 

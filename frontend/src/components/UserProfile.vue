@@ -11,7 +11,7 @@
         <div class="flex space-evenly align-center" v-if="loggedUser">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div v-if="loggedUser._id !== currUser._id">
-            <button class="btn">
+            <button @click="requestFormOn" class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request!
             </button>
             <button class="btn">
@@ -43,6 +43,11 @@
       <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
       <profile-references class="detail-section" :user="currUser" id="ref"></profile-references>
     </div>
+    <guest-request
+      @requestOff="requestFormOff"
+      v-if="showRequestForm"
+      @guestRequest="addGuestRequest"
+    ></guest-request>
   </section>
 </template>
 
@@ -51,12 +56,14 @@ import ProfileAbout from "../components/ProfileAbout.vue";
 import ProfileMyHome from "../components/ProfileMyHome.vue";
 import ProfilePictures from "../components/ProfilePictures.vue";
 import ProfileReferences from "../components/ProfileReferences.vue";
+import GuestRequest from '../components/GuestRequest.vue';
 
 export default {
-  name: "userDetails",
+  name: "userProfile",
   data() {
     return {
-      isNavInDisplay: false
+      isNavInDisplay: false,
+      showRequestForm: false,
     };
   },
   created() {
@@ -84,13 +91,24 @@ export default {
   methods: {
     narrowNav(state) {
       this.isNavInDisplay = state;
-    }
+    },
+    addGuestRequest(request) {
+      this.$store.dispatch('addRequest', { info: request, userId: this.getCurrUser._id })
+        .then(() => this.requestFormOff());
+    },
+    requestFormOn() {
+      this.showRequestForm = true;
+    },
+    requestFormOff() {
+      this.showRequestForm = false;
+    },
   },
   components: {
     ProfileAbout,
     ProfileMyHome,
     ProfilePictures,
-    ProfileReferences
+    ProfileReferences,
+    GuestRequest,
   }
 };
 </script>

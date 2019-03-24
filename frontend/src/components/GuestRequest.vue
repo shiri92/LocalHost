@@ -1,32 +1,29 @@
 <template>
-  <section class="login">
+  <section class="guest-request">
     <div class="top flex space-between align-center">
-      <H1>Login</H1>
-      <span @click="$emit('loginOff')">&times;</span>
+      <h1>Request Booking</h1>
+      <span @click="$emit('requestOff')">&times;</span>
     </div>
     <hr>
     <div class="content flex flex-col">
-      <el-form :inline="false" :model="credentials" class="demo-form-inline">
+      <el-form :inline="false" :model="request" class="demo-form-inline">
         <b-form-group class="input" required>
-          <b-form-input
-            type="email"
-            v-model="credentials.email"
-            required
-            placeholder="Enter Email..."
-          />
+          <b-form-input type="date" v-model="request.date" required/>
         </b-form-group>
 
         <b-form-group class="input" required>
-          <b-form-input
-            type="password"
-            v-model="credentials.password"
+          <b-form-textarea
+            id="textarea"
+            v-model="request.message"
+            placeholder="Write a Message..."
+            rows="3"
+            max-rows="6"
             required
-            placeholder="Enter Password..."
           />
         </b-form-group>
 
         <div class="btn-container flex justify-center">
-          <el-button class="btn-login" type="warning" @click="tryLogin">Login</el-button>
+          <el-button class="btn-login" type="warning" @click="onSubmit">Send Request</el-button>
         </div>
 
         <div v-if="getLoggedUser">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
@@ -37,22 +34,18 @@
 
 <script>
 export default {
-  name: 'login',
+  name: 'guest-request',
   data() {
     return {
-      credentials: {
-        email: '',
-        password: ''
+      request: {
+        date: '',
+        message: ''
       }
     }
   },
   methods: {
-    tryLogin() {
-      this.$store.dispatch({ type: 'login', credentials: this.credentials })
-        .then(() => {
-          this.$router.push(this.$route.path);
-          this.$emit('loginOff');
-        })
+    onSubmit() {
+      this.$emit('guestRequest', this.request)
     }
   },
   computed: {
@@ -65,7 +58,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.login {
+.guest-request {
   position: fixed;
   top: 40%;
   left: 50%;
@@ -106,10 +99,5 @@ span {
 
 .btn-container {
   margin: 30px;
-}
-
-.btn-login {
-  justify-self: center;
-  width: 30%;
 }
 </style>

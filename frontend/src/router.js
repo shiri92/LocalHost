@@ -7,7 +7,7 @@ import Signup from './views/Signup.vue';
 import UserProfile from './components/UserProfile.vue';
 import EditProfile from './components/EditProfile.vue';
 
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
     routes: [{
@@ -26,7 +26,7 @@ export default new Router({
             component: Signup
         },
         {
-            path: '/users/:name',
+            path: "/users/:country&:city",
             name: 'users',
             component: Users
         },
