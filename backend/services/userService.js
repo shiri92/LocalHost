@@ -10,10 +10,7 @@ FillDB();
 
 async function FillDB() {
     let db = await mongoService.connect();
-    let res = await db
-        .collection(USERS_COLLECTION)
-        .find({})
-        .toArray();
+    let res = await db.collection(USERS_COLLECTION).find({}).toArray();
     if (res.length === 0) addMany(_createUsers());
 }
 
@@ -26,14 +23,10 @@ async function addMany(users) {
 
 async function query(currCity) {
     let db = await mongoService.connect();
-    return await db
-        .collection(USERS_COLLECTION)
-        .find({ city: currCity })
-        .toArray();
+    return await db.collection(USERS_COLLECTION).find({ city: currCity }).toArray();
 }
 
 async function add(credentials) {
-    console.log(credentials);
     let db = await mongoService.connect();
     let res = await db.collection(USERS_COLLECTION).insertOne(credentials);
     credentials._id = res.insertedId;
@@ -41,7 +34,6 @@ async function add(credentials) {
 }
 
 async function login(credentials) {
-    console.log("before", credentials);
     let db = await mongoService.connect();
     let res = await db.collection(USERS_COLLECTION).findOne(credentials);
     return res;
@@ -58,55 +50,13 @@ async function getById(id) {
 
 function _createUsers() {
     let users = [];
-    users.push(
-        _createUser(
-            "nivordsar@gmail.com",
-            "123",
-            "Niv",
-            "Saar",
-            "Male",
-            { day: 24, month: 09, year: 1997 },
-            "Bangkok",
-            "Thailand"
-        )
-    );
-    users.push(
-        _createUser(
-            "shiriron92@gmail.com",
-            "123",
-            "Shiri",
-            "Ron",
-            "Female",
-            { day: 09, month: 11, year: 1992 },
-            "Barcelona",
-            "Spain"
-        )
-    );
-    users.push(
-        _createUser(
-            "taniratz@hotmail.com",
-            "123",
-            "Yonatan",
-            "Ratzon",
-            "Male",
-            { day: 19, month: 02, year: 1993 },
-            "Barcelona",
-            "Spain"
-        )
-    );
+    users.push(_createUser("nivordsar@gmail.com", "123", "Niv", "Saar", "Male", { day: 24, month: 09, year: 1997 }, "Bangkok", "Thailand"));
+    users.push(_createUser("shiriron92@gmail.com", "123", "Shiri", "Ron", "Female", { day: 09, month: 11, year: 1992 }, "Barcelona", "Spain"));
+    users.push(_createUser("taniratz@hotmail.com", "123", "Yonatan", "Ratzon", "Male", { day: 19, month: 02, year: 1993 }, "Barcelona", "Spain"));
     return users;
 }
 
-function _createUser(
-    email,
-    password,
-    firstName,
-    lastName,
-    gender,
-    birthdate,
-    city,
-    country
-) {
+function _createUser(email, password, firstName, lastName, gender, birthdate, city, country) {
     return {
         email,
         password,
@@ -119,8 +69,7 @@ function _createUser(
         city,
         country,
         language: null,
-        imgUrl:
-            "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile1.jpg"
+        imgUrl: "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553174118/ons/profiles_sample/profile1.jpg"
     };
 }
 

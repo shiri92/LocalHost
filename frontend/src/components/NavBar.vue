@@ -14,7 +14,7 @@
       <!-- </b-card> -->
 
       <div v-if="!getLoggedUser" class="join-container">
-        <span class="welcome">Welcome Guest!</span>
+        <!-- <span class="welcome">Welcome Guest!</span> -->
         <el-button type="success" @click="signUp">Join</el-button>
         <el-button type="success" plain @click="loginOn">Log in</el-button>
       </div>
