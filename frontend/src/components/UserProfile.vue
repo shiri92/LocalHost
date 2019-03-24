@@ -107,7 +107,10 @@ export default {
   padding: 15px;
   text-align: center;
   .profile-img {
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 40%;
+    max-height: 225px;
+    max-width: 225px;
     margin-bottom: 15px;
     border-radius: 50%;
     box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.75);
@@ -141,8 +144,8 @@ export default {
   .profile-nav {
     .nav-item {
       width: 100px;
-      // border: 1px 0 1px 0 solid black;
-      // padding: 10px;
+      border: 1px 0 1px 0 solid black;
+      padding: 10px;
       cursor: pointer;
     }
     .nav-item:hover {
@@ -160,31 +163,6 @@ export default {
     }
   }
 }
-
-// .side-profile {
-//   width: 30vw;
-//   max-width: 320px;
-//   min-width: 260px;
-//   border-bottom: 2px solid rgba(0, 0, 0, 0.15);
-//   background-color: white;
-//   .profile-img {
-//     width: 100%;
-//     max-width: 225px;
-//     height: 40%;
-//     max-height: 225px;
-//     border-radius: 50%;
-//   }
-//   .profile-name {
-//     font-size: 1.5em;
-//   }
-//   .profile-language {
-//     font-size: 1.2em;
-//     font-weight: bold;
-//   }
-//   .profile-language::first-letter {
-//     text-transform: uppercase;
-//   }
-// }
 
 .btn {
   // margin: 5px;
