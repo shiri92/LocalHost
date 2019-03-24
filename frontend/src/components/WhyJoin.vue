@@ -48,6 +48,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h1 {
+  margin-bottom: 50px;
+}
 .why-join {
   padding-top: 100px;
   padding-bottom: 100px;

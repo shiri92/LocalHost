@@ -55,12 +55,12 @@
             <el-option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</el-option>
           </el-select>
 
-          <!-- <b-form-group label="Location:">
-            <b-form-input @input="setLocation" type="text" v-model="form.city" required/>
-          </b-form-group>-->
-
           <label>Location:</label>
-          <el-autocomplete v-model="searchWord" :fetch-suggestions="querySearchAsync"></el-autocomplete>
+          <el-autocomplete
+            @input="setAddres"
+            v-model="searchWord"
+            :fetch-suggestions="querySearchAsync"
+          ></el-autocomplete>
           <el-button
             class="signup-btn"
             style="margin-top: 12px;"
@@ -88,7 +88,6 @@ export default {
       },
       genders: ['Male', 'Female', 'Other'],
       searchWord: '',
-      cities: []
     }
   },
 
@@ -106,11 +105,13 @@ export default {
       if (this.searchWord) {
         this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord })
           .then(cities => {
-            this.cities = cities
             var results = cities.map(city => { return { value: city.name + ', ' + city.country } });
             cb(results);
           })
       }
+    },
+    setAddres(ev) {
+      this.form.city = ev;
     }
   },
   computed: {
@@ -126,11 +127,9 @@ export default {
 
 <style lang="scss" scoped>
 .signup {
-  // padding: 20px;
   background-color: white;
   color: black;
   font-weight: bold;
-  // height: 100vh;
 }
 
 .title {
