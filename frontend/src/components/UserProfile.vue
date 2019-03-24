@@ -1,17 +1,15 @@
 <template>
-  <section class="user-profile flex" v-if="getCurrUser">
-    <div class="side-container flex flex-col align-center">
+  <section class="profile-container flex" v-if="getCurrUser">
+    <div class="side-profile">
       <img class="profile-img" :src="getCurrUser.imgUrl" alt>
-      <div class="info">
-        <div class="profile-name">{{ getCurrUser.firstName }} {{ getCurrUser.lastName }}</div>
-        <div class="profile-loc">{{ getCurrUser.city }}, {{ getCurrUser.country }}</div>
-      </div>
-      <!-- <div class="profile-language">{{getCurrUser.language}}</div> -->
+      <div class="profile-name">{{getCurrUser.firstName}} {{getCurrUser.lastName}}</div>
+      <div class="profile-loc">{{getCurrUser.city}}, {{getCurrUser.country}}</div>
+      <hr>
     </div>
     <div class="main-desc" v-if="getCurrUser">
       <nav class="main-desc-nav" :class="{ display: isNavInDisplay }">
         <div class="flex space-evenly align-center">
-          <div>{{ (getCurrUser.isHosting)? "Accepting Guests":"Not Accepting Guests" }}</div>
+          <div>{{(getCurrUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div>
             <button class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request
@@ -34,9 +32,9 @@
         </div>
       </nav>
       <profile-about class="detail-section" :user="getCurrUser" id="about"></profile-about>
-      <profile-myHome class="detail-section" id="home"></profile-myHome>
-      <profile-pictures class="detail-section" id="pics"></profile-pictures>
-      <profile-references class="detail-section" id="ref"></profile-references>
+      <profile-myHome class="detail-section" :user="getCurrUser" id="home"></profile-myHome>
+      <profile-pictures class="detail-section" :user="getCurrUser" id="pics"></profile-pictures>
+      <profile-references class="detail-section" :user="getCurrUser" id="ref"></profile-references>
     </div>
   </section>
 </template>
@@ -52,8 +50,6 @@ export default {
   data() {
     return {
       isNavInDisplay: false,
-      isProfileInDisplay: false,
-      age: null
     };
   },
   created() {
@@ -63,31 +59,22 @@ export default {
     var vm = this;
     var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
-      if (scrollPos > 700) {
+      if (scrollPos > 110) {
         vm.narrowNav(true);
       } else {
         vm.narrowNav(false);
-      }
-
-      if (scrollPos > 1200) {
-        vm.narrowProfile(true);
-      } else {
-        vm.narrowProfile(false);
       }
     });
   },
   computed: {
     getCurrUser() {
       return this.$store.getters.user;
-    },
+    }
   },
   methods: {
     narrowNav(state) {
       this.isNavInDisplay = state;
-    },
-    narrowProfile(state) {
-      this.isProfileInDisplay = state;
-    },
+    }
   },
   components: {
     ProfileAbout,
@@ -100,27 +87,30 @@ export default {
 
 
 <style lang="scss" scoped>
-.user-profile {
-  padding: 15px;
-  margin: 15px;
+.profile-container {
+  margin-top: 70px;
+}
+@media (max-width: 568px) {
+  .profile-container {
+    flex-direction: column;
+  }
 }
 
-.side-container {
-  box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-  flex-grow: 1;
-  height: 550px;
+.side-profile {
+  width: 30vw;
+  max-width: 320px;
+  min-width: 260px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+  height: 80vh;
+  margin: 5px 15px;
+  background-color: white;
   padding: 15px;
-  margin-right: 15px;
-  background-color: #fff;
+  text-align: center;
   .profile-img {
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.5);
     margin-bottom: 15px;
     border-radius: 50%;
-    width: 100%;
-    max-width: 270px;
-    max-height: 270px;
-    object-fit: cover;
-    object-position: center center;
+    box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.75);
   }
   .profile-name {
     font-size: 1.8em;
@@ -222,5 +212,45 @@ export default {
   background: #85ce61;
   border-color: #85ce61;
   color: #fff;
+}
+
+@media (max-width: 568px) {
+  .side-profile {
+    max-width: 98%;
+    width: 98%;
+  }
+}
+
+.main-desc {
+  flex-grow: 1;
+  margin: 5px;
+  .main-desc-nav {
+    background-color: #fff;
+  }
+  .display {
+    top: 71px;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    position: fixed;
+    z-index: 10;
+    transition: 0.3s;
+  }
+  .profile-nav {
+    width: 100%;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+    .nav-item {
+      width: 100px;
+      border: 1px 0 1px 0 solid black;
+      padding: 10px;
+      cursor: pointer;
+    }
+    .nav-item:hover {
+      color: #ed6504;
+    }
+  }
+  .detail-section {
+    margin: 20px 0;
+  }
 }
 </style>
