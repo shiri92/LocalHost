@@ -90,8 +90,17 @@ export default {
     narrowNav(state) {
       this.isNavInDisplay = state;
     },
-    addGuestRequest(request) {
-      this.$store.dispatch('addRequest', { info: request, userId: this.currUser._id })
+    addGuestRequest(requestInfo) {
+      let request = {
+        info: requestInfo,
+        hostId: this.currUser._id,
+        guest: {
+          id: this.loggedUser._id,
+          firstName: this.loggedUser.firstName,
+          lastName: this.loggedUser.lastName
+        }
+      }
+      this.$store.dispatch('addRequest', { request: request })
         .then(() => this.requestFormOff());
     },
     requestFormOn() {
