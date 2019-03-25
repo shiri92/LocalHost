@@ -1,36 +1,20 @@
-/* ----- DEPENDENCIES -----*/
+/* ----- DEPEND -----*/
 const userService = require("../services/userService.js");
+const cloudinaryService = require('../services/cloudinaryService');
 
-/* ----- CONSTANTS -----*/
+
+
+/* ----- CONST -----*/
 const BASE = "/user";
 
-// function checkAdmin(req, res, next) {
-//     console.log('INSIDE MIDDLEWARE: ', req.session.user);
-//     if (!req.session.user || !req.session.user.isAdmin) {
-//         res.status(401).end('Unauthorized');
-//         return;
-//     }
-//     next();
-// }
-
 function addRoutes(app) {
-  // GET USERS
-  app.get(BASE, (req, res) => {
-    const { country, city } = req.query;
-    userService.query(country, city).then(users => res.json(users));
+
+  // Logged User Check (Session Only)
+  app.put(`${BASE}/checkLogged`, (req, res) => {
+    return res.json(req.session.user);
   });
 
-  // GET USER
-  app.get(`${BASE}/:id`, (req, res) => {
-    const userId = req.params.id;
-    userService.getById(userId).then(user => res.json(user));
-  });
-
-  app.post(BASE, (req, res) => {
-    const credentials = req.body;
-    userService.add(credentials).then(user => res.json(user));
-  });
-
+  // Login User
   app.put(`${BASE}/login`, (req, res) => {
     const credentials = req.body;
     userService.login(credentials).then(user => {
@@ -40,21 +24,63 @@ function addRoutes(app) {
     });
   });
 
-  app.put(`${BASE}/checkLogged`, (req, res) => {
-    return res.json(req.session.user);
-  });
-
+  // Logout User (Session Only)
   app.put(`${BASE}/logout`, (req, res) => {
     req.session.destroy();
     return res.json();
   });
 
+  // GET Users
+  app.get(BASE, (req, res) => {
+    const { country, city } = req.query;
+    userService.query(country, city).then(users => res.json(users));
+  });
+
+  // GET User By Id
+  app.get(`${BASE}/:id`, (req, res) => {
+    const userId = req.params.id;
+    userService.getById(userId).then(user => res.json(user));
+  });
+
+  // ADD User
+  app.post(BASE, (req, res) => {
+    const credentials = req.body;
+    userService.add(credentials).then(user => res.json(user));
+  });
+
+  // ADD Guest Request
   app.put(`${BASE}/request`, (req, res) => {
     let { request } = req.body;
-    userService.addRequest(request).then(() => {
-      return res.json();
-    });
+    userService.addRequest(request).then(() => res.json());
   });
+
+  // UPDATE User
+  // app.put(`${BASE}/:id`, (req, res) => {
+  //   const credentials = req.body;
+  //   userService.update(credentials).then(() => res.json());
+  // })
+
+  // UPDATE Profile Image
+  app.post(`${BASE}/:id/img`, (req, res) => {
+    let formData = req.files;
+    cloudinaryService.doUploadImg(formData, url => {
+      console.log('success!', url);
+    });
+    // userService.updateProfileImg(imgFile, userId).then(imgUrl => res.json(imgUrl))
+  })
+
+
+
 }
 
 module.exports = addRoutes;
+
+
+// function checkAdmin(req, res, next) {
+//     console.log('INSIDE MIDDLEWARE: ', req.session.user);
+//     if (!req.session.user || !req.session.user.isAdmin) {
+//         res.status(401).end('Unauthorized');
+//         return;
+//     }
+//     next();
+// }

@@ -17,7 +17,8 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn">More
+            <button class="btn">
+              More
               <font-awesome-icon icon="sort-down"/>
             </button>
           </div>
@@ -68,7 +69,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);
@@ -111,7 +112,7 @@ export default {
     }
   },
   watch: {
-    "$route.params.userId": function(userId) {
+    "$route.params.userId": function (userId) {
       this.$store.dispatch({ type: "loadUser", userId });
     }
   },
