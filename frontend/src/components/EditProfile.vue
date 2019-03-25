@@ -98,7 +98,7 @@
         </div>
         <hr>
         <el-button type="success" class="el-btn el-btn-success">Save</el-button>
-        <el-button type="success" plain>Cancel</el-button>
+        <el-button @click="onCancel" type="success" plain>Cancel</el-button>
       </form>
     </div>
   </section>
@@ -130,6 +130,9 @@ export default {
       console.log('file:', this.selectedFile);
       
     //   axios.post()
+    },
+    onCancel() {
+        this.$router.push('/userProfile/' + this.getLoggedUser._id);
     }
   }
 };
