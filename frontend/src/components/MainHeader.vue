@@ -80,7 +80,7 @@ h2 {
 
 .arrow-down {
   position: absolute;
-  top: 27%;
+  top: 25%;
   width: 90px;
   height: 90px;
   cursor: pointer;
