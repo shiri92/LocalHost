@@ -55,10 +55,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.city-search {
-  // margin: 0 auto;
-}
-
 .input {
   width: 400px;
 }

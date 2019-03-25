@@ -5,7 +5,7 @@
       <div class="details">
         <div class="name">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
         <div>{{getLoggedUser.email}}</div>
-        <el-button class="inbox-btn">Inbox</el-button>
+        <el-button @click="goToInbox" class="inbox-btn">Inbox</el-button>
       </div>
     </div>
     <div class="bottom flex space-between">
@@ -36,6 +36,9 @@ export default {
     goToProfile() {
       this.$router.push('/userProfile/' + this.getLoggedUser._id);
       this.$emit('closeWindow');
+    },
+    goToInbox() {
+      this.$router.push('/userProfile/' + this.getLoggedUser._id + '/inbox');
     }
   },
 }

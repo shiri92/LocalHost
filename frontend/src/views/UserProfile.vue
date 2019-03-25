@@ -17,8 +17,7 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn">
-              More
+            <button class="btn">More
               <font-awesome-icon icon="sort-down"/>
             </button>
           </div>
@@ -54,14 +53,14 @@ import ProfileAbout from "../components/ProfileAbout.vue";
 import ProfileMyHome from "../components/ProfileMyHome.vue";
 import ProfilePictures from "../components/ProfilePictures.vue";
 import ProfileReferences from "../components/ProfileReferences.vue";
-import GuestRequest from '../components/GuestRequest.vue';
+import GuestRequest from "../components/GuestRequest.vue";
 
 export default {
   name: "user-profile",
   data() {
     return {
       isNavInDisplay: false,
-      showRequestForm: false,
+      showRequestForm: false
     };
   },
   created() {
@@ -69,7 +68,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function (e) {
+    var val = window.addEventListener("scroll", function(e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);
@@ -99,8 +98,9 @@ export default {
           firstName: this.loggedUser.firstName,
           lastName: this.loggedUser.lastName
         }
-      }
-      this.$store.dispatch('addRequest', { request: request })
+      };
+      this.$store
+        .dispatch("addRequest", { request: request })
         .then(() => this.requestFormOff());
     },
     requestFormOn() {
@@ -108,14 +108,19 @@ export default {
     },
     requestFormOff() {
       this.showRequestForm = false;
-    },
+    }
+  },
+  watch: {
+    "$route.params.userId": function(userId) {
+      this.$store.dispatch({ type: "loadUser", userId });
+    }
   },
   components: {
     ProfileAbout,
     ProfileMyHome,
     ProfilePictures,
     ProfileReferences,
-    GuestRequest,
+    GuestRequest
   }
 };
 </script>

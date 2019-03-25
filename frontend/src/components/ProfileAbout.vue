@@ -10,7 +10,7 @@
           </div>
           <div class="info-item">
             <font-awesome-icon icon="comment"/>
-            &nbsp;Fluent in {{user.language}}
+            &nbsp;Fluent in {{user.language[0]}}
           </div>
           <div class="info-item" style="margin-bottom: 0">
             <font-awesome-icon icon="venus-mars"/>

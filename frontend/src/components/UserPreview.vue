@@ -1,41 +1,74 @@
 <template>
-  <li class="single-profile flex flex-col space-between">
-    <div>
-      <img :src="profile.imgUrl" alt>
+  <li>
+    <!-- <li class="single-profile flex flex-col space-between"> -->
+    <div class="container flex space-between flex-col align-center">
+      <div class="card">
+        <div class="hero"></div>
+        <div class="main">
+          <div class="user">
+            <img class="avatar" :src="profile.imgUrl" alt width="100" height="100">
+            <div class="user-details">
+              <h3>{{profile.firstName}} {{profile.lastName}}</h3>
+              <span class="location">
+                <font-awesome-icon icon="map-marker-alt"/>
+                <span>&nbsp;{{profile.city}}, {{profile.country}}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div>{{profile.firstName}} {{profile.lastName}}</div>
-
-    <!-- <router-link :to="'/profile-app/profile-edit/' + profile._id">
-      <button>Edit</button>
-    </router-link>
-    <button @click="deleteProfile">Delete</button>-->
   </li>
 </template>
 
 <script>
 export default {
   props: ["profile"],
-  methods: {
-    // deleteProfile() {
-    //   this.$store.dispatch({ type: "deleteProfile", id: this.profile._id });
-    // }
-  }
+  methods: {}
 };
 </script>
 
 <style lang="scss" scoped>
-.single-profile {
-  background-color: floralwhite;
-  justify-content: space-between;
-  width: 200px;
-  height: 300px;
-  border-radius: 5px;
-  padding-bottom: 5px;
-}
-
-img {
-  width: 100%;
-  height: 240px;
-  border-radius: 5px 5px 0 0;
+li {
+  .container {
+    .card {
+      width: 300px;
+      border-radius: 5px;
+      box-shadow: 2px 5px 10px #ccc;
+      background: white;
+      .hero {
+        height: 100px;
+        background: url("https://images.unsplash.com/photo-1425321395722-b1dd54a97cf3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=6bb26c224def312127d93e664ec5d03d");
+        background-size: cover;
+        border-radius: 5px 5px 0px 0px;
+      }
+      .main {
+        border-bottom: 1px solid #ddd;
+        padding: 0 10px;
+        .user {
+          display: flex;
+          height: 75px;
+          .avatar {
+            border-radius: 50%;
+            border: 3px solid #fff;
+            position: relative;
+            top: -50px;
+          }
+          .user-details {
+            margin: 10px 0 0 10px;
+            h3 {
+              margin: 0;
+              font-size: 1.17em;
+              font-weight: bold;
+            }
+            .location {
+              color: #444;
+              font-size: 0.9em;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>
