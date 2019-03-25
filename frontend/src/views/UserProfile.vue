@@ -57,7 +57,7 @@ import ProfileReferences from "../components/ProfileReferences.vue";
 import GuestRequest from '../components/GuestRequest.vue';
 
 export default {
-  name: "userProfile",
+  name: "user-profile",
   data() {
     return {
       isNavInDisplay: false,
@@ -91,7 +91,7 @@ export default {
       this.isNavInDisplay = state;
     },
     addGuestRequest(request) {
-      this.$store.dispatch('addRequest', { info: request, userId: this.getCurrUser._id })
+      this.$store.dispatch('addRequest', { info: request, userId: this.currUser._id })
         .then(() => this.requestFormOff());
     },
     requestFormOn() {
@@ -100,11 +100,6 @@ export default {
     requestFormOff() {
       this.showRequestForm = false;
     },
-  },
-  watch: {
-    '$route.params.userId': function (userId) {
-      this.$store.dispatch({ type: "loadUser", userId });
-    }
   },
   components: {
     ProfileAbout,
@@ -201,6 +196,7 @@ export default {
     width: 100%;
     background-color: #fff;
     position: fixed;
+    z-index: 10;
     transition: 0.3s;
   }
   .profile-nav {
@@ -212,7 +208,7 @@ export default {
       padding: 10px;
       cursor: pointer;
     }
-    .nav-item:hover, .nav-item:focus {
+    .nav-item:hover {
       color: #ed6504;
     }
   }

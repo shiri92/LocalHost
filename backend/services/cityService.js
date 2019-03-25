@@ -74,7 +74,7 @@ var citiesDB = [
   },
   {
     name: "Rome",
-    country: "Italia",
+    country: "Italy",
     imgUrl:
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173596/ons/cities/rome.jpg"
   },
@@ -115,19 +115,14 @@ var citiesDB = [
   },
   {
     name: "Amsterdam",
-    country: "Nether Lands",
+    country: "Netherlands",
     imgUrl: ""
   },
   {
-    name: "Mexico City",
+    name: "Mexico-City",
     country: "Mexico",
     imgUrl: ""
   },
-  {
-    name: "Mexico City",
-    country: "Mexico",
-    imgUrl: ""
-  }
 ];
 
 var topDestsDB = [
@@ -157,7 +152,7 @@ var topDestsDB = [
   },
   {
     name: "Rome",
-    country: "Italia",
+    country: "Italy",
     imgUrl:
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173596/ons/cities/rome.jpg"
   },

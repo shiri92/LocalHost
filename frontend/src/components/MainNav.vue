@@ -1,5 +1,5 @@
 <template>
-  <section v-if="showNav" class="nav-bar flex space-between align-center">
+  <section v-if="showNav" class="main-nav flex space-between align-center">
     <div>Some Logo</div>
 
     <div class="nav-container flex space-between align-center">
@@ -39,7 +39,11 @@ import logIn from './Login';
 import userWindow from './UserWindow';
 
 export default {
-  name: 'nav-bar',
+  name: 'main-nav',
+  components: {
+    logIn,
+    userWindow
+  },
   methods: {
     signUp() {
       this.$router.push('/signup');
@@ -56,10 +60,7 @@ export default {
       this.showUserWindow = !this.showUserWindow
     }
   },
-  components: {
-    logIn,
-    userWindow
-  },
+
   data() {
     return {
       showLoginForm: false,
@@ -89,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.nav-bar {
+.main-nav {
   z-index: 1;
   padding: 10px;
   width: 100%;

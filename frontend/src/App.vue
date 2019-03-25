@@ -2,7 +2,7 @@
   <div id="app" class="flex flex-col">
     <div class="screen" :class="{'open': isBackDark}"></div>
 
-    <nav-bar @darkBack="makeDark" @clearBack="makeClear"></nav-bar>
+    <main-nav @darkBack="makeDark" @clearBack="makeClear"></main-nav>
 
     <div :class="{grow: currPage !== '/signup'}" class="main-container flex flex-col">
       <router-view></router-view>
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import NavBar from "@/components/NavBar";
-import MainFooter from "../src/components/MainFooter";
+import MainNav from "@/components/MainNav";
+import MainFooter from "@/components/MainFooter";
 
 export default {
   data() {
@@ -21,6 +21,10 @@ export default {
       currPage: '',
       isBackDark: false
     }
+  },
+  components: {
+    MainNav,
+    MainFooter
   },
   created() {
     this.currPage = this.$route.path;
@@ -38,11 +42,8 @@ export default {
     $route(to, from) {
       this.currPage = this.$route.path;
     }
-  },
-  components: {
-    NavBar,
-    MainFooter
   }
+
 };
 </script>
 
