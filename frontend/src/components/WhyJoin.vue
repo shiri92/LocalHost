@@ -1,8 +1,9 @@
 <template>
-  <section class="why-join">
+  <section class="why-join" id="whyjoin">
     <h1>Why Join?</h1>
     <div class="cards-container flex justify-center">
       <b-card
+        class="card"
         title="Community"
         img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333051/ons/why-join-1.jpg"
         img-alt="Image"
@@ -13,6 +14,7 @@
       </b-card>
 
       <b-card
+        class="card"
         title="Guesting"
         img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333101/ons/why-join-2.jpg"
         img-alt="Image"
@@ -23,6 +25,7 @@
       </b-card>
 
       <b-card
+        class="card"
         title="Hosting"
         img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333102/ons/why-join-3.jpg"
         img-alt="Image"
@@ -49,7 +52,7 @@ export default {
 
 <style lang="scss" scoped>
 h1 {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 .why-join {
   padding-top: 100px;
@@ -64,6 +67,12 @@ h1 {
 .card {
   margin: 20px;
   text-align: left;
+  z-index: 0;
+}
+@media (max-width: 850px) {
+  .cards-container {
+    flex-direction: column;
+  }
 }
 </style>
 

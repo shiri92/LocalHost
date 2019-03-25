@@ -17,15 +17,13 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn">More
+            <button class="btn">
+              More
               <font-awesome-icon icon="sort-down"/>
             </button>
           </div>
           <div v-else>
-            <router-link
-              :to="'/userProfile/' + currUser._id + '/edit'"
-              :key="currUser._id"
-            >
+            <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
               <button class="btn">Edit My Profile</button>
             </router-link>
           </div>
@@ -71,7 +69,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);

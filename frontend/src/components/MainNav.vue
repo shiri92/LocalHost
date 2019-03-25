@@ -3,24 +3,33 @@
     <div>Some Logo</div>
 
     <div class="nav-container flex space-between align-center">
-      <div class="links-container flex space-around">
+      <div :class="{'open': isHamburgerOpen}" class="links-container flex space-around">
         <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
+        <router-link to="/about">About</router-link>|
       </div>
 
-      <div v-if="!getLoggedUser" class="join-container">
-        <span class="welcome">Welcome Guest!</span>
-        <el-button type="success" @click="signUp">Join</el-button>
-        <el-button type="success" plain @click="loginFormOn">Log in</el-button>
-      </div>
-      <div v-else>
-        <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
-        <img class="user-img" @click="toggleUserWindow" :src="getLoggedUser.imgUrl">
+      <div class="buttons-container">
+        <div v-if="!getLoggedUser" class="join-container">
+          <span class="welcome">Welcome Guest!</span>
+          <el-button type="success" @click="signUp">Join</el-button>
+          <el-button type="success" plain @click="loginFormOn">Log in</el-button>
+        </div>
+        <div v-else>
+          <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
+          <img class="user-img" @click="toggleUserWindow" :src="getLoggedUser.imgUrl">
+        </div>
       </div>
 
       <user-window v-if="showUserWindow" @closeWindow="showUserWindow = false"></user-window>
 
       <log-in v-if="showLoginForm" @loginOff="loginFormOff"></log-in>
+
+      <img
+        class="hamburger"
+        @click="isHamburgerOpen = !isHamburgerOpen"
+        src="../../public/img/hamburger.png"
+        alt
+      >
     </div>
   </section>
 </template>
@@ -41,9 +50,11 @@ export default {
     },
     loginFormOn() {
       this.showLoginForm = true;
+      this.$emit('darkBack')
     },
     loginFormOff() {
       this.showLoginForm = false;
+      this.$emit('clearBack')
     },
     toggleUserWindow() {
       this.showUserWindow = !this.showUserWindow
@@ -53,7 +64,8 @@ export default {
   data() {
     return {
       showLoginForm: false,
-      showUserWindow: false
+      showUserWindow: false,
+      isHamburgerOpen: false
     }
   },
   computed: {
@@ -97,8 +109,12 @@ export default {
   }
 }
 
+.hamburger {
+  display: none;
+}
+
 .nav-container {
-  width: 60%;
+  min-width: 40%;
 }
 .welcome {
   padding-right: 20px;
@@ -114,6 +130,54 @@ export default {
   height: 40px;
   border-radius: 50%;
 }
+
+@media (max-width: 1200px) {
+  .nav-container {
+    min-width: 50%;
+  }
+}
+
+@media (max-width: 1120px) {
+  .nav-container {
+    min-width: 60%;
+  }
+}
+
+@media (max-width: 950px) {
+  .nav-container {
+    min-width: 80%;
+  }
+}
+
+@media (max-width: 750px) {
+  .hamburger {
+    display: block;
+    width: 40px;
+    height: 40px;
+  }
+  .links-container {
+    background-color: rgb(236, 209, 165);
+    box-shadow: 1px 1px 7px rgb(122, 120, 120);
+    position: fixed;
+    padding: 15px;
+    font-weight: bold;
+    min-width: 160px;
+    left: 0;
+    top: 9.2%;
+    z-index: 1;
+    transform: translate(-300px, 0);
+    transition: transform 0.3s ease;
+  }
+  .links-container.open {
+    transform: translate(0, 0);
+  }
+}
+
+// @media (max-width: 600px) {
+//   .buttons-container{
+
+//   }
+// }
 </style>
 
 

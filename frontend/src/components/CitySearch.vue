@@ -1,5 +1,5 @@
 <template>
-  <section class="city-search">
+  <section class="city-search flex justify-center">
     <el-autocomplete
       class="input"
       v-model="searchWord"
@@ -8,6 +8,7 @@
       :fetch-suggestions="querySearchAsync"
     ></el-autocomplete>
     <el-button class="btn" type="success" slot="append" icon="el-icon-search" plain>Search</el-button>
+    <el-button class="btn-empty" type="success" slot="append" icon="el-icon-search" plain></el-button>
   </section>
 </template>
 
@@ -55,15 +56,37 @@ export default {
 
 <style scoped lang="scss">
 .city-search {
-  width: 50%;
-  margin: 0 auto;
+  // margin: 0 auto;
 }
 
 .input {
-  width: 85%;
+  width: 400px;
 }
 
 .btn {
-  width: 15%;
+  width: 110px;
+}
+
+.btn-empty {
+  display: none;
+  margin: 0;
+}
+@media (max-width: 1000px) {
+  .input {
+    width: 50%;
+  }
+}
+
+@media (max-width: 800px) {
+  .input {
+    width: 60%;
+  }
+  .btn {
+    display: none;
+  }
+  .btn-empty {
+    display: block;
+    margin: 0;
+  }
 }
 </style>
