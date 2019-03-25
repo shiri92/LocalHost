@@ -9,13 +9,18 @@
       <h2>Improve Your Travel Experience!</h2>
       <el-button class="btn-join" type="success" @click="$router.push('/signup')" round>Join</el-button>
     </div>
+    <img
+      v-if="$route.path === '/'"
+      class="arrow-down"
+      href="#"
+      v-scroll-to="'#whyjoin'"
+      src="../../public/img/arrow-down.png"
+    >
 
     <div class="users-title" v-if="$route.path !== '/'">
       <h2>{{currPageCountry}}</h2>
       <h1>{{currPageCity}}</h1>
     </div>
-
-    <img class="arrow-down" href="#" v-scroll-to="'#whyjoin'" src="../../public/img/arrow-down.png">
   </section>
 </template>
 

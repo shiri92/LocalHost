@@ -71,7 +71,7 @@ h1 {
 .cities-gallery {
   max-width: 1200px;
   margin: 0 auto;
-  grid-template-rows: repeat(4, 160px);
+  grid-template-rows: repeat(4, 140px);
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
   height: 90vh;
