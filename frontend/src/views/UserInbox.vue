@@ -12,8 +12,8 @@
                 </div>
             </div>
             <div class="answer-btns">
-                <el-button type="success">Accept</el-button>
-                <el-button type="danger">Decline</el-button>
+                <el-button type="success" @click="replyToRequest('yes')">Accept</el-button>
+                <el-button type="danger" @click="replyToRequest('no')">Decline</el-button>
             </div>
         </div>
     </section>
@@ -24,8 +24,14 @@ export default {
     computed: {
         user() {
             return this.$store.getters.loggedUser;
-        }
-    }
+        },
+    },
+    methods: {
+        replyToRequest(ans) {
+            // if (ans === 'yes') 
+            // else 
+        },
+    },
 }
 </script>
 
