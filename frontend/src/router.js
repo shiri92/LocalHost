@@ -11,6 +11,7 @@ import UserInbox from './views/UserInbox.vue'
 Vue.use(Router);
 
 export default new Router({
+    scrollBehavior: (to, from, savedPosition) => ({ y: 0 }),
     routes: [{
         path: '/',
         name: 'home',

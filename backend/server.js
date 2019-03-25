@@ -1,9 +1,11 @@
 /* ----- DEPENDENCIES -----*/
-const cors = require('cors')
-const express = require('express')
-const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
-const session = require('express-session')
+const cors = require('cors');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const fileUpload = require('express-fileupload');
+// const fileParser = require('express-fileupload');
 const app = express();
 
 /* ----- ROUTES -----*/
@@ -21,6 +23,7 @@ app.use(cors({ /* ----- FOR GITHUB -----*/
 // app.use(express.static('public')); /* ----- FOR HEROKU -----*/
 app.use(bodyParser.json())
 app.use(cookieParser());
+app.use(fileUpload());
 app.use(session({
     secret: 'this is a secret',
     resave: false,
