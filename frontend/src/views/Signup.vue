@@ -3,8 +3,8 @@
     <h1 class="title">Sign Up</h1>
     <div class="forms-container">
       <el-steps class="steps" :active="active" finish-status="success">
-        <el-step title="Step 1"></el-step>
-        <el-step title="Step 2"></el-step>
+        <el-step class="step" @click="$router.push('/signup')" title="Step 1"></el-step>
+        <el-step class="step" title="Step 2"></el-step>
       </el-steps>
       <div class="form">
         <b-form v-if="active === 0" class="flex flex-col">
@@ -151,7 +151,10 @@ form {
 .steps {
   margin: 0 auto;
   max-width: 40%;
-  display: flex;
+}
+
+.step {
+  cursor: pointer;
 }
 
 .small-input {

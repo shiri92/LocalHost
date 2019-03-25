@@ -62,6 +62,7 @@ export default {
 
 <style lang="scss" scoped>
 .guest-request {
+  z-index: 10;
   position: fixed;
   top: 40%;
   left: 50%;

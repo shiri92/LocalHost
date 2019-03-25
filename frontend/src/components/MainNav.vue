@@ -72,9 +72,9 @@ export default {
     },
   },
   watch: {
-    $route(to, from) {
-      this.loginFormOff();
-    }
+    // $route(to, from) {
+    //   this.loginFormOff();
+    // }
   }
 }
 </script>

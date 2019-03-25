@@ -71,10 +71,10 @@ h1 {
 .cities-gallery {
   max-width: 1200px;
   margin: 0 auto;
-  grid-template-rows: repeat(4, 140px);
+  grid-template-rows: repeat(4, 180px);
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
-  height: 90vh;
+  // height: 90vh;
   margin-top: 40px;
 }
 
@@ -148,7 +148,7 @@ h1 {
   font-size: 2rem;
   color: white;
   font-weight: bold;
-  text-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
+  text-shadow: 0px 3px 15px rgba(0, 0, 0, 1);
   width: 100%;
   height: 100%;
   display: flex;
@@ -158,7 +158,6 @@ h1 {
 
 @media (max-width: 1200px) {
   .cities-gallery {
-    height: auto;
     max-width: 980px;
   }
 }

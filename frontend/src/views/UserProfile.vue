@@ -17,10 +17,12 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn">
+            <button class="btn" @click="openReview">
               More
-              <font-awesome-icon icon="sort-down"/>
+              <!-- <font-awesome-icon icon="sort-down"/> -->
             </button>
+
+            <review-form v-if="isReviewFormOpen"></review-form>
           </div>
           <div v-else>
             <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
@@ -55,6 +57,8 @@ import ProfileMyHome from "../components/ProfileMyHome.vue";
 import ProfilePictures from "../components/ProfilePictures.vue";
 import ProfileReferences from "../components/ProfileReferences.vue";
 import GuestRequest from '../components/GuestRequest.vue';
+import ReviewForm from '../components/ReviewForm.vue';
+
 
 export default {
   name: "user-profile",
@@ -62,6 +66,7 @@ export default {
     return {
       isNavInDisplay: false,
       showRequestForm: false,
+      isReviewFormOpen: false
     };
   },
   created() {
@@ -100,6 +105,15 @@ export default {
     requestFormOff() {
       this.showRequestForm = false;
     },
+    openReview() {
+      console.log('hey')
+      // this.isReviewFormOpen = true;
+    }
+  },
+  watch: {
+    '$route.params.userId'(userId) {
+      this.$store.dispatch({ type: "loadUser", userId });
+    }
   },
   components: {
     ProfileAbout,
@@ -107,6 +121,7 @@ export default {
     ProfilePictures,
     ProfileReferences,
     GuestRequest,
+    ReviewForm
   }
 };
 </script>
