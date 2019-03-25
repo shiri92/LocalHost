@@ -8,7 +8,9 @@
     <div class="content flex flex-col">
       <el-form :inline="false" :model="request" class="demo-form-inline">
         <b-form-group class="input" required>
-          <b-form-input type="date" v-model="request.date" required/>
+          Start Date:
+          <b-form-input type="date" v-model="request.dateStart" required/>End Date:
+          <b-form-input type="date" v-model="request.dateEnd" required/>
         </b-form-group>
 
         <b-form-group class="input" required>
@@ -38,7 +40,8 @@ export default {
   data() {
     return {
       request: {
-        date: '',
+        dateStart: '',
+        dateEnd: '',
         message: ''
       }
     }

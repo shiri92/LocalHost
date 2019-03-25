@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="flex flex-col">
-    <nav-bar></nav-bar>
+    <main-nav></main-nav>
 
     <div :class="{grow: currPage !== '/signup'}" class="main-container flex flex-col">
       <router-view></router-view>
@@ -10,15 +10,18 @@
 </template>
 
 <script>
-import NavBar from "@/components/NavBar";
-import MainFooter from "../src/components/MainFooter";
+import MainNav from "@/components/MainNav";
+import MainFooter from "@/components/MainFooter";
 
 export default {
   data() {
     return {
       currPage: ''
-
     }
+  },
+  components: {
+    MainNav,
+    MainFooter
   },
   created() {
     this.currPage = this.$route.path;
@@ -28,11 +31,8 @@ export default {
     $route(to, from) {
       this.currPage = this.$route.path;
     }
-  },
-  components: {
-    NavBar,
-    MainFooter
   }
+
 };
 </script>
 

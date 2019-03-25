@@ -18,11 +18,12 @@
 import UserPreview from './UserPreview.vue';
 
 export default {
-  name: "UserList",
-  props: ["users"],
+  name: "user-list",
   components: {
     UserPreview
   },
+  props: ["users"],
+
 
 };
 </script>
