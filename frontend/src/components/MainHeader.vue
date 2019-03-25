@@ -5,7 +5,7 @@
     :class="{'users-head': $route.path !== '/'}"
   >
     <div class="header-title" v-if="$route.path === '/'">
-      <h1>Find a Place To Stay On Your Travel</h1>
+      <h1>Find a Place To Stay On Your Travels</h1>
       <h2>Improve Your Travel Experience!</h2>
       <el-button class="btn-join" type="success" @click="$router.push('/signup')" round>Join</el-button>
     </div>
@@ -48,7 +48,11 @@ export default {
       if (this.$route.path === '/') {
         return 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/header.jpg';
       } else {
-        return ('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/cities/' + this.$route.params.city.toLowerCase() + '.jpg');
+        let cityName = this.$route.params.city.toLowerCase();
+        if (cityName.indexOf(' ') !== -1) {
+          cityName = cityName.replace(/\s/g, "%20");
+        }
+        return ('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/cities/' + cityName + '.jpg');
       }
     },
   }
@@ -85,7 +89,7 @@ h2 {
 
 .arrow-down {
   position: absolute;
-  top: 25%;
+  top: 23%;
   width: 90px;
   height: 90px;
   cursor: pointer;

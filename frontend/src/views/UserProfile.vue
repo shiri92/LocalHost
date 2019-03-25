@@ -17,10 +17,12 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn">
+            <button class="btn" @click="openReview">
               More
-              <font-awesome-icon icon="sort-down"/>
+              <!-- <font-awesome-icon icon="sort-down"/> -->
             </button>
+
+            <review-form v-if="isReviewFormOpen"></review-form>
           </div>
           <div v-else>
             <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
@@ -54,14 +56,17 @@ import ProfileAbout from "../components/ProfileAbout.vue";
 import ProfileMyHome from "../components/ProfileMyHome.vue";
 import ProfilePictures from "../components/ProfilePictures.vue";
 import ProfileReferences from "../components/ProfileReferences.vue";
-import GuestRequest from "../components/GuestRequest.vue";
+import GuestRequest from '../components/GuestRequest.vue';
+import ReviewForm from '../components/ReviewForm.vue';
+
 
 export default {
   name: "user-profile",
   data() {
     return {
       isNavInDisplay: false,
-      showRequestForm: false
+      showRequestForm: false,
+      isReviewFormOpen: false
     };
   },
   created() {
@@ -109,10 +114,14 @@ export default {
     },
     requestFormOff() {
       this.showRequestForm = false;
+    },
+    openReview() {
+      console.log('hey')
+      // this.isReviewFormOpen = true;
     }
   },
   watch: {
-    "$route.params.userId": function (userId) {
+    '$route.params.userId'(userId) {
       this.$store.dispatch({ type: "loadUser", userId });
     }
   },
@@ -121,7 +130,8 @@ export default {
     ProfileMyHome,
     ProfilePictures,
     ProfileReferences,
-    GuestRequest
+    GuestRequest,
+    ReviewForm
   }
 };
 </script>
@@ -179,12 +189,8 @@ export default {
   padding: 8px 12px;
   text-align: center;
   text-decoration: none;
-  -webkit-transition: background-color 0.3s ease, border-color 0.3s ease;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   white-space: normal;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -webkit-font-smoothing: antialiased;
 }
 .btn:hover {
   background: #85ce61;

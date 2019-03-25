@@ -3,8 +3,8 @@
     <h1 class="title">Sign Up</h1>
     <div class="forms-container">
       <el-steps class="steps" :active="active" finish-status="success">
-        <el-step title="Step 1"></el-step>
-        <el-step title="Step 2"></el-step>
+        <el-step class="step" @click.native="stepBack" title="Step 1"></el-step>
+        <el-step class="step" title="Step 2"></el-step>
       </el-steps>
       <div class="form">
         <b-form v-if="active === 0" class="flex flex-col">
@@ -113,6 +113,9 @@ export default {
     },
     setAddres(ev) {
       this.form.city = ev;
+    },
+    stepBack() {
+      this.active = 0;
     }
   },
   computed: {
@@ -128,14 +131,23 @@ export default {
 
 <style lang="scss" scoped>
 .signup {
+  margin-top: -70px;
   background-color: white;
   color: black;
   font-weight: bold;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(0, 0, 0, 0.7)
+    ),
+    url("../../public/img/signup.jpg");
+  background-size: cover;
+  height: 100vh;
+  padding-top: 20px;
 }
 
 .title {
   align-self: center;
-  margin-bottom: 20px;
+  color: white;
 }
 
 form {
@@ -143,15 +155,21 @@ form {
   margin: 0 auto;
   padding: 80px 130px 80px 130px;
   margin-top: 40px;
+  margin-bottom: 40px;
   border: 1px solid rgb(199, 193, 193);
   border-radius: 3px;
   text-align: left;
+  background-color: #fff;
+  opacity: 0.9;
 }
 
 .steps {
   margin: 0 auto;
   max-width: 40%;
-  display: flex;
+}
+
+.step {
+  cursor: pointer;
 }
 
 .small-input {

@@ -1,5 +1,5 @@
 <template>
-  <section class="login">
+  <section class="review-form">
     <div class="top flex space-between align-center">
       <H1>Login</H1>
       <span @click="$emit('loginOff')">&times;</span>
@@ -35,75 +35,17 @@
 
 <script>
 export default {
-  name: 'log-in',
+  name: 'review-form',
   data() {
     return {
-      credentials: {
-        email: '',
-        password: ''
-      }
+
     }
   },
   methods: {
-    tryLogin() {
-      this.$store.dispatch({ type: 'login', credentials: this.credentials })
-        .then(() => {
-          this.$router.push(this.$route.path);
-          this.$emit('loginOff');
-        })
-    }
+
   },
 }
 </script>
 
 <style lang="scss" scoped>
-.login {
-  z-index: 10;
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  width: 30%;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  transform: translate(-50%, -50%);
-  border-radius: 10px;
-  background-color: white;
-  color: rgb(62, 62, 62);
-}
-
-.top {
-  padding: 10px 30px 10px 30px;
-}
-
-h1 {
-  font-size: 1.5rem;
-  margin: 0;
-}
-
-hr {
-  margin: 0;
-}
-
-span {
-  cursor: pointer;
-  font-size: 2.5rem;
-  color: rgb(175, 169, 169);
-}
-
-.content {
-  padding: 30px 30px 0 30px;
-}
-
-.input {
-  margin: 0 30px 30px 30px;
-}
-
-.btn-container {
-  margin: 30px;
-}
-
-.btn-login {
-  justify-self: center;
-  width: 100px;
-  background-color: rgb(29, 47, 206);
-}
 </style>
