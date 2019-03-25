@@ -75,6 +75,7 @@
 
 <script>
 export default {
+  name: 'sign-up',
   data() {
     return {
       active: 0,
@@ -95,9 +96,7 @@ export default {
     next() {
       if (this.active === 1) {
         this.$store.dispatch({ type: 'signup', credentials: this.form })
-          .then(() => {
-            this.$router.push('/userProfile/' + this.getLoggedUser._id)
-          })
+          .then(() => this.$router.push('/userProfile/' + this.getLoggedUser._id));
       }
       if (this.active++ > 1) this.active = 0;
     },
@@ -105,7 +104,9 @@ export default {
       if (this.searchWord) {
         this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord })
           .then(cities => {
-            var results = cities.map(city => { return { value: city.name + ', ' + city.country } });
+            var results = cities.map(city => {
+              return { value: city.name + ', ' + city.country }
+            });
             cb(results);
           })
       }

@@ -6,8 +6,6 @@ var axios = Axios.create({ withCredentials: true });
 const BASE_URL = process.env.NODE_ENV !== 'development' ? '' : '//localhost:3003/country'
 
 
-// var countries = ['Israel', 'Thailand', 'Spain', 'Argentina']
-
 function queryCountries(searchWord) {
     let query = searchWord ? `?cityName=${searchWord}` : '';
     return axios.get(`${BASE_URL}` + query).then(res => res.data);

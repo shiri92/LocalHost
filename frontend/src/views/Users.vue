@@ -3,19 +3,19 @@
     <main-header></main-header>
     <div class="main-title">Local Hosts</div>
     <div class="users-container">
-      <users-list :users="getUsers"></users-list>
+      <user-list :users="getUsers"></user-list>
     </div>
   </section>
 </template>
 
 <script>
-import UsersList from '../components/UsersList.vue';
+import UserList from '../components/UserList.vue';
 import MainHeader from '../../src/components/MainHeader'
 
 export default {
   name: "Users",
   components: {
-    UsersList,
+    UserList,
     MainHeader
   },
   created() {
