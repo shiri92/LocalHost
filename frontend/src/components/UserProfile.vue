@@ -103,6 +103,11 @@ export default {
       this.showRequestForm = false;
     },
   },
+  watch: {
+    '$route.params.userId': function (userId) {
+      this.$store.dispatch({ type: "loadUser", userId });
+    }
+  },
   components: {
     ProfileAbout,
     ProfileMyHome,
@@ -198,7 +203,6 @@ export default {
     width: 100%;
     background-color: #fff;
     position: fixed;
-    z-index: 10;
     transition: 0.3s;
   }
   .profile-nav {
@@ -210,7 +214,7 @@ export default {
       padding: 10px;
       cursor: pointer;
     }
-    .nav-item:hover {
+    .nav-item:hover, .nav-item:focus {
       color: #ed6504;
     }
   }

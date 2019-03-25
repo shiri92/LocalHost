@@ -7,7 +7,7 @@
       <hr>
       <input name="file" id="file" class="input-file" type="file" @change="onFileSelected">
       <label for="file">Choose a file</label>
-      <!-- <el-button type="success" @click="onUpload">Upload</el-button> -->
+      <el-button type="success" @click="onUpload">Upload</el-button>
     </div>
     <div class="edit-form form-container flex align-center flex-col">
       <h2>{{user.firstName}} {{user.lastName}}</h2>
@@ -127,6 +127,9 @@ export default {
     onUpload() {
       const fd = new FormData();
       fd.append("image", this.selectedFile, this.selectedFile.name);
+      console.log('file:', this.selectedFile);
+      
+    //   axios.post()
     }
   }
 };
@@ -158,14 +161,14 @@ export default {
   hr {
     margin: 20px;
   }
-  .input-file {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-  }
+//   .input-file {
+//     width: 0.1px;
+//     height: 0.1px;
+//     opacity: 0;
+//     overflow: hidden;
+//     position: absolute;
+//     z-index: -1;
+//   }
   .input-file + label {
     font-size: 1.25em;
     font-weight: 700;
@@ -173,6 +176,7 @@ export default {
     background-color: black;
     display: inline-block;
     cursor: pointer;
+    padding: 10px;
   }
   .input-file:focus + label,
   .input-file + label:hover {

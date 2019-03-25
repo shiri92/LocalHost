@@ -93,7 +93,7 @@ function _createUsers() {
     _createUser(
       "taniratz@hotmail.com",
       "123",
-      "Yonatan",
+      "Yehonatan",
       "Ratzon",
       "Male",
       { day: 19, month: 02, year: 1993 },
