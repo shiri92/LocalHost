@@ -2,7 +2,8 @@
   <div id="app" class="flex flex-col">
     <div class="screen" :class="{'open': isBackDark}"></div>
 
-    <main-nav @darkBack="makeDark" @clearBack="makeClear"></main-nav>
+    <main-nav @loginOn="showLogin"></main-nav>
+    <log-in v-if="showLoginForm" @loginOff="loginFormOff"></log-in>
 
     <div :class="{grow: currPage !== '/signup'}" class="main-container flex flex-col">
       <router-view></router-view>
@@ -13,17 +14,20 @@
 
 <script>
 import MainNav from "@/components/MainNav";
+import logIn from '../src/components/Login';
 import MainFooter from "@/components/MainFooter";
 
 export default {
   data() {
     return {
       currPage: '',
-      isBackDark: false
+      isBackDark: false,
+      showLoginForm: false,
     }
   },
   components: {
     MainNav,
+    logIn,
     MainFooter
   },
   created() {
@@ -31,11 +35,13 @@ export default {
     this.$store.dispatch({ type: 'checkLogged' });
   },
   methods: {
-    makeDark() {
-      this.isBackDark = true;
-    },
-    makeClear() {
+    loginFormOff() {
+      this.showLoginForm = false;
       this.isBackDark = false;
+    },
+    showLogin() {
+      this.showLoginForm = true;
+      this.isBackDark = true;
     }
   },
   watch: {
@@ -57,7 +63,7 @@ export default {
 }
 
 .screen {
-  // z-index: 2;
+  z-index: 2;
   position: fixed;
   width: 100%;
   height: 100%;

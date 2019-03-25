@@ -22,8 +22,6 @@
 
       <user-window v-if="showUserWindow" @closeWindow="showUserWindow = false"></user-window>
 
-      <log-in v-if="showLoginForm" @loginOff="loginFormOff"></log-in>
-
       <img
         class="hamburger"
         @click="isHamburgerOpen = !isHamburgerOpen"
@@ -35,13 +33,11 @@
 </template>
 
 <script>
-import logIn from './Login';
 import userWindow from './UserWindow';
 
 export default {
   name: 'main-nav',
   components: {
-    logIn,
     userWindow
   },
   methods: {
@@ -49,12 +45,7 @@ export default {
       this.$router.push('/signup');
     },
     loginFormOn() {
-      this.showLoginForm = true;
-      this.$emit('darkBack')
-    },
-    loginFormOff() {
-      this.showLoginForm = false;
-      this.$emit('clearBack')
+      this.$emit('loginOn')
     },
     toggleUserWindow() {
       this.showUserWindow = !this.showUserWindow
@@ -63,7 +54,6 @@ export default {
 
   data() {
     return {
-      showLoginForm: false,
       showUserWindow: false,
       isHamburgerOpen: false
     }
