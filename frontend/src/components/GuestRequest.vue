@@ -6,17 +6,17 @@
     </div>
     <hr>
     <div class="content flex flex-col">
-      <el-form :inline="false" :model="request" class="demo-form-inline">
+      <el-form :inline="false" :model="requestInfo" class="demo-form-inline">
         <b-form-group class="input" required>
           Start Date:
-          <b-form-input type="date" v-model="request.dateStart" required/>End Date:
-          <b-form-input type="date" v-model="request.dateEnd" required/>
+          <b-form-input type="date" v-model="requestInfo.startDate" required/>End Date:
+          <b-form-input type="date" v-model="requestInfo.endDate" required/>
         </b-form-group>
 
         <b-form-group class="input" required>
           <b-form-textarea
             id="textarea"
-            v-model="request.message"
+            v-model="requestInfo.message"
             placeholder="Write a Message..."
             rows="3"
             max-rows="6"
@@ -39,16 +39,16 @@ export default {
   name: 'guest-request',
   data() {
     return {
-      request: {
-        dateStart: '',
-        dateEnd: '',
+      requestInfo: {
+        startDate: '',
+        endDate: '',
         message: ''
       }
     }
   },
   methods: {
     onSubmit() {
-      this.$emit('guestRequest', this.request)
+      this.$emit('guestRequest', this.requestInfo)
     }
   },
   computed: {

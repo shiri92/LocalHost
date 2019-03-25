@@ -17,14 +17,39 @@ function saveToCloudinary(imgUrl, imgId) {
     return cloudinary.v2.uploader.upload(imgUrl, { public_id: imgId }, (error, result) => result);
 }
 
+function doUploadImg(file, onSuccess) {
+    const CLOUD_NAME = 'dcl4oabi3';
+    const RESOURCE_TYPE = 'image';
+    var UPLOAD_URL = `https://api.cloudinart.com/v1_1/${CLOUD_NAME}/${RESOURCE_TYPE}/upload`;
+    console.log(file);
+
+    // fetch(UPLOAD_URL, {
+    //     method: 'POST',
+    //     body: formData
+    // })
+    //     .then(function (response) {
+    //         return response.json();
+    //     })
+    //     .then(onSuccess)
+    //     .catch(function (error) {
+    //         console.error(error);
+    //     })
+}
+
 function loadFromCloudinary(imgUrl) {
     let img = cloudinary.image(`${imgUrl}`, { type: "fetch" });
     return Promise.resolve(img);
 }
 
+function test() {
+    console.log('heyyy');
+}
+
 module.exports = {
     saveToCloudinary,
-    loadFromCloudinary
+    doUploadImg,
+    loadFromCloudinary,
+    test
 }
 
 

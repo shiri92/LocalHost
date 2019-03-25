@@ -6,10 +6,12 @@ import Users from './views/Users.vue';
 import Signup from './views/Signup.vue';
 import UserProfile from './views/UserProfile.vue';
 import EditProfile from './views/EditProfile.vue';
+import UserInbox from './views/UserInbox.vue'
 
 Vue.use(Router);
 
 export default new Router({
+    scrollBehavior: (to, from, savedPosition) => ({ y: 0 }),
     routes: [{
         path: '/',
         name: 'home',
@@ -39,6 +41,11 @@ export default new Router({
         path: '/userProfile/:userId/edit',
         name: 'editProfile',
         component: EditProfile,
+    },
+    {
+        path: '/userProfile/:userId/inbox',
+        name: 'userInbox',
+        component: UserInbox,
     }
     ]
 })

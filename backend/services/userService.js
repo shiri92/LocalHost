@@ -1,21 +1,23 @@
-/* ----- DEPENDENCIES -----*/
+/* ----- DEPEND -----*/
 const mongoService = require("./mongoService");
 const cloudinaryService = require("./cloudinaryService");
 const ObjectId = require("mongodb").ObjectId;
 
-/* ----- CONSTANTS -----*/
+/* ----- CONST -----*/
 const USERS_COLLECTION = "users";
 
 module.exports = {
-  query,
-  add,
-  addRequest,
   login,
-  getById
+  query,
+  getById,
+  add,
+  addRequest
+  // update
 };
 
 FillDB();
 
+// Fill Mongo Data Base (will be on mongo service)
 async function FillDB() {
   let db = await mongoService.connect();
   let res = await db
@@ -24,7 +26,7 @@ async function FillDB() {
     .toArray();
   if (res.length === 0) addMany(_createUsers());
 }
-
+// Fill Mongo Data Base (will be on mongo service)
 async function addMany(users) {
   let db = await mongoService.connect();
   let res = await db.collection(USERS_COLLECTION).insert(users);
@@ -32,6 +34,14 @@ async function addMany(users) {
   return res;
 }
 
+// Login User
+async function login(credentials) {
+  let db = await mongoService.connect();
+  let res = await db.collection(USERS_COLLECTION).findOne(credentials);
+  return res;
+}
+
+// GET Users By Address
 async function query(currCountry, currCity) {
   let db = await mongoService.connect();
   return await db
@@ -40,28 +50,7 @@ async function query(currCountry, currCity) {
     .toArray();
 }
 
-async function add(credentials) {
-  let db = await mongoService.connect();
-  let res = await db.collection(USERS_COLLECTION).insertOne(credentials);
-  credentials._id = res.insertedId;
-  return credentials;
-}
-
-async function addRequest(request) {
-  let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(request.userId) },
-    { $push: { requests: request.info } }
-  );
-  return request;
-}
-
-async function login(credentials) {
-  let db = await mongoService.connect();
-  let res = await db.collection(USERS_COLLECTION).findOne(credentials);
-  return res;
-}
-
+// GET User By Id
 async function getById(id) {
   const _id = new ObjectId(id);
   let db = await mongoService.connect();
@@ -70,6 +59,30 @@ async function getById(id) {
   user.img = img;
   return user;
 }
+
+// ADD User
+async function add(credentials) {
+  let db = await mongoService.connect();
+  let res = await db.collection(USERS_COLLECTION).insertOne(credentials);
+  credentials._id = res.insertedId;
+  return credentials;
+}
+
+// ADD Guest Request
+async function addRequest(request) {
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(request.hostId) },
+    { $push: { requests: request } }
+  );
+  return request;
+}
+
+// UPDATE User
+// async function update(credentials) {
+// let db = await mongoService.connect();
+// db.collection(USERS_COLLECTION).updateOne({ _id: toy._id }, { $set: toy });
+// }
 
 function _createUser(
   email,
@@ -116,6 +129,7 @@ function _createUser(
   };
 }
 
+// Create Users Sample
 function _createUsers() {
   let users = [];
   users.push(

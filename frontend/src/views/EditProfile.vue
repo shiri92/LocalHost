@@ -7,7 +7,7 @@
       <hr>
       <input name="file" id="file" class="input-file" type="file" @change="onFileSelected">
       <label for="file">Choose a file</label>
-      <!-- <el-button type="success" @click="onUpload">Upload</el-button> -->
+      <el-button type="success" @click="onUpload">Upload</el-button>
     </div>
     <div class="edit-form form-container flex align-center flex-col">
       <h2>{{user.firstName}} {{user.lastName}}</h2>
@@ -97,7 +97,7 @@
           </div>
         </div>
         <hr>
-        <el-button type="success" class="el-btn el-btn-success">Save</el-button>
+        <el-button @click="onSave" type="success" class="el-btn el-btn-success">Save</el-button>
         <el-button type="success" plain>Cancel</el-button>
       </form>
     </div>
@@ -114,7 +114,8 @@ export default {
   },
   created() {
     let userId = this.$route.params.userId;
-    this.$store.dispatch({ type: "loadUser", userId });
+    this.$store.dispatch({ type: "loadUser", userId })
+      .then()
   },
   computed: {
     user() {
@@ -126,8 +127,18 @@ export default {
       this.selectedFile = ev.target.files[0];
     },
     onUpload() {
-      const fd = new FormData();
-      fd.append("image", this.selectedFile, this.selectedFile.name);
+      let userId = this.$route.params.userId;
+      this.$store.dispatch({ type: "updateProfileImg", imgFile: this.selectedFile, userId })
+      // const fd = new FormData();
+      // var formData = new FormData();
+      // formData.append("image", this.selectedFile, this.selectedFile.name);
+      // formData.append('image', 'image_value');
+      // console.log(formData);
+
+
+    },
+    onSave() {
+
     }
   }
 };

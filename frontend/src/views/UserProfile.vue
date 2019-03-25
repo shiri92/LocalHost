@@ -95,8 +95,18 @@ export default {
     narrowNav(state) {
       this.isNavInDisplay = state;
     },
-    addGuestRequest(request) {
-      this.$store.dispatch('addRequest', { info: request, userId: this.currUser._id })
+    addGuestRequest(requestInfo) {
+      let request = {
+        info: requestInfo,
+        hostId: this.currUser._id,
+        guest: {
+          id: this.loggedUser._id,
+          firstName: this.loggedUser.firstName,
+          lastName: this.loggedUser.lastName
+        }
+      };
+      this.$store
+        .dispatch("addRequest", { request: request })
         .then(() => this.requestFormOff());
     },
     requestFormOn() {
@@ -179,12 +189,8 @@ export default {
   padding: 8px 12px;
   text-align: center;
   text-decoration: none;
-  -webkit-transition: background-color 0.3s ease, border-color 0.3s ease;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   white-space: normal;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -webkit-font-smoothing: antialiased;
 }
 .btn:hover {
   background: #85ce61;
