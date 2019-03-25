@@ -6,7 +6,7 @@
       <div class="profile-loc">{{user.city}}, {{user.country}}</div>
       <hr>
       <input name="file" id="file" class="input-file" type="file" @change="onFileSelected">
-      <label for="file">Choose a file</label>
+      <label for="file">Choose a file 33333</label>
       <el-button type="success" @click="onUpload">Upload</el-button>
     </div>
     <div class="edit-form form-container flex align-center flex-col">
