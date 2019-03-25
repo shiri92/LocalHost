@@ -50,7 +50,8 @@ function addRoutes(app) {
   });
 
   app.put(`${BASE}/request`, (req, res) => {
-    userService.addRequest(req.body).then(() => {
+    let { request } = req.body;
+    userService.addRequest(request).then(() => {
       return res.json();
     });
   });

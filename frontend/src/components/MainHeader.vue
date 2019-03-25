@@ -14,6 +14,8 @@
       <h2>{{currPageCountry}}</h2>
       <h1>{{currPageCity}}</h1>
     </div>
+
+    <img class="arrow-down" href="#" v-scroll-to="'#whyjoin'" src="../../public/img/arrow-down.png">
   </section>
 </template>
 
@@ -52,8 +54,8 @@ export default {
 .main-header {
   background-repeat: no-repeat;
   background-size: cover;
-  height: 95vh;
-  box-shadow: 2px 2px 10px black;
+  height: 100vh;
+  // box-shadow: 2px 2px 10px black;
 }
 
 .users-head {
@@ -67,13 +69,40 @@ h1 {
 
 h2 {
   color: white;
-  font-size: rem;
+  font-size: 1rem;
 }
 
 .btn-join {
   font-size: 1.2rem;
   width: 150px;
   margin: 10px;
+}
+
+.arrow-down {
+  position: absolute;
+  top: 25%;
+  width: 90px;
+  height: 90px;
+  cursor: pointer;
+}
+
+@media (max-width: 1200px) {
+  .main-header {
+    background-position: center, center;
+  }
+}
+
+@media (max-width: 900px) {
+  .main-header {
+    height: 70vh;
+    background-position: center, center;
+  }
+}
+
+@media (max-width: 400px) {
+  .main-header {
+    background-position: top center;
+  }
 }
 </style>
 

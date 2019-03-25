@@ -145,7 +145,7 @@ var topDestsDB = [
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173592/ons/cities/paris.jpg"
   },
   {
-    name: "Buenos-Aires",
+    name: "Buenos Aires",
     country: "Argentina",
     imgUrl:
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173589/ons/cities/buenos-aires.jpg"
@@ -175,13 +175,13 @@ var topDestsDB = [
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173587/ons/cities/barcelona.jpg"
   },
   {
-    name: "New-York",
+    name: "New York",
     country: "NY, USA",
     imgUrl:
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173606/ons/cities/new-york.jpg"
   },
   {
-    name: "Rio",
+    name: "Rio De Janeiro",
     country: "Brazil",
     imgUrl:
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173600/ons/cities/rio.jpg"
