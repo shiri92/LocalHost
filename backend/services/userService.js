@@ -40,10 +40,11 @@ async function add(credentials) {
 }
 
 async function addRequest(request) {
+  console.log(request);
   let db = await mongoService.connect();
   db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(request.userId) },
-    { $push: { requests: request.info } }
+    { _id: new ObjectId(request.hostId) },
+    { $push: { requests: request } }
   );
   return request;
 }
