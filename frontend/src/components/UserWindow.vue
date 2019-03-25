@@ -31,23 +31,24 @@ export default {
     logOut() {
       this.$store.dispatch({ type: 'logout' });
       this.$emit('closeWindow');
+      this.$router.push('/');
     },
     goToProfile() {
       this.$router.push('/userProfile/' + this.getLoggedUser._id);
       this.$emit('closeWindow');
     }
-  }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 .user-window {
-  position: absolute;
+  position: fixed;
   top: 70px;
   right: 60px;
   background-color: white;
-  //   border: 1px solid rgb(185, 183, 183);
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
+  z-index: 1;
 }
 
 .top {

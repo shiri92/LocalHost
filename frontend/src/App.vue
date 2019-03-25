@@ -1,6 +1,8 @@
 <template>
   <div id="app" class="flex flex-col">
-    <nav-bar></nav-bar>
+    <div class="screen" :class="{'open': isBackDark}"></div>
+
+    <nav-bar @darkBack="makeDark" @clearBack="makeClear"></nav-bar>
 
     <div :class="{grow: currPage !== '/signup'}" class="main-container flex flex-col">
       <router-view></router-view>
@@ -16,13 +18,21 @@ import MainFooter from "../src/components/MainFooter";
 export default {
   data() {
     return {
-      currPage: ''
-
+      currPage: '',
+      isBackDark: false
     }
   },
   created() {
     this.currPage = this.$route.path;
     this.$store.dispatch({ type: 'checkLogged' });
+  },
+  methods: {
+    makeDark() {
+      this.isBackDark = true;
+    },
+    makeClear() {
+      this.isBackDark = false;
+    }
   },
   watch: {
     $route(to, from) {
@@ -45,12 +55,32 @@ export default {
   position: relative;
 }
 
+.screen {
+  // z-index: 2;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #000;
+  background: rgba(0, 0, 0, 0.8);
+  visibility: hidden;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.open {
+  visibility: visible;
+  opacity: 1;
+}
+
 .grow {
   flex-grow: 1;
 }
 
 .main-container {
   margin-top: 70px;
-  background-color: #f1efea;
+  background-color: #e6e6e6;
 }
 </style>

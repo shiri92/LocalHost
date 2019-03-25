@@ -61,7 +61,6 @@ export default {
 .home {
   margin-top: -70px;
   padding-bottom: 50px;
-  background-color: #e6e6e6;
   text-align: center;
 }
 
@@ -70,9 +69,9 @@ h1 {
 }
 
 .cities-gallery {
-  max-width: 80%;
+  max-width: 1200px;
   margin: 0 auto;
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 160px);
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
   height: 90vh;
@@ -104,7 +103,7 @@ h1 {
   grid-row: span 1;
 }
 
-.Buenos-Aires {
+.Buenos {
   grid-column: span 1;
   grid-row: span 1;
 }
@@ -129,7 +128,7 @@ h1 {
   grid-row: span 2;
 }
 
-.New-York {
+.New {
   grid-column: span 2;
   grid-row: span 1;
 }
@@ -156,6 +155,24 @@ h1 {
   justify-content: center;
   align-items: center;
 }
+
+@media (max-width: 1200px) {
+  .cities-gallery {
+    height: auto;
+    max-width: 980px;
+  }
+}
+
+// @media (max-width: 760px) {
+//   .cities-gallery {
+//     height: auto;
+//     display: block;
+//   }
+
+//   .img-container {
+//     margin: 10px;
+//   }
+// }
 </style>
 
 
