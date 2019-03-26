@@ -3,7 +3,8 @@ import Axios from "axios";
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
-const BASE_API = process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
+const BASE_API =
+  process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
 
 // Logged User Check (Session Only)
 async function checkLogged() {
@@ -53,12 +54,24 @@ async function update(credentials) {
 
 // UPDATE Profile Image Url
 async function updateUserImg(imgUrl, userId) {
-  await axios.put(`${BASE_API}/${userId}/img`, { imgUrl })
+  await axios.put(`${BASE_API}/${userId}/img`, { imgUrl });
+}
+
+async function addReview(review) {
+  let res = await axios.put(`${BASE_API}/review`, review);
+  console.log(res.data);
+  return res.data;
 }
 
 export default {
-  checkLogged, login, logout,
-  query, getById,
-  add, addRequest,
-  update, updateUserImg
+  checkLogged,
+  login,
+  logout,
+  query,
+  getById,
+  add,
+  addRequest,
+  addReview,
+  update,
+  updateUserImg
 };

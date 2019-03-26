@@ -33,7 +33,7 @@ export default {
 .profile-list-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 20px;
   margin: 10px;
   overflow: auto;
 }

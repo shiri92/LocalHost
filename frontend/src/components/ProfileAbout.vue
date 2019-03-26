@@ -19,10 +19,12 @@
         </div>
         <div class="flex flex-col">
           <div class="info-item">
-            <font-awesome-icon icon="briefcase"/>&nbsp;No occupation listed
+            <font-awesome-icon icon="briefcase"/>
+            &nbsp;{{(user.occupation)? user.occupation:'No occupation listed'}}
           </div>
           <div class="info-item">
-            <font-awesome-icon icon="book"/>&nbsp;No education listed
+            <font-awesome-icon icon="book"/>
+            &nbsp;{{(user.education)? user.education:'No education listed'}}
           </div>
           <div class="info-item" style="margin-bottom: 0">
             <font-awesome-icon icon="map-marker-alt"/>

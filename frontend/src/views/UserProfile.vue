@@ -1,5 +1,5 @@
 <template>
-  <section class="profile-container flex" v-if="currUser">
+  <section class="profile-container flex justify-center" v-if="currUser">
     <div class="side-profile">
       <img class="profile-img" :src="currUser.imgUrl" alt>
       <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
@@ -8,7 +8,7 @@
     </div>
     <div class="main-desc">
       <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-        <div class="flex space-evenly align-center" v-if="loggedUser">
+        <div class="flex justify-center align-center" v-if="loggedUser">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div v-if="loggedUser._id !== currUser._id">
             <button @click="requestFormOn" class="btn">
@@ -19,10 +19,10 @@
             </button>
             <button class="btn" @click="openReview">
               More
-              <!-- <font-awesome-icon icon="sort-down"/> -->
+              <font-awesome-icon icon="sort-down"/>
             </button>
 
-            <review-form v-if="isReviewFormOpen"></review-form>
+            <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
           </div>
           <div v-else>
             <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
@@ -35,13 +35,13 @@
           <a class="nav-item" href="#" v-scroll-to="'#about'">About Me</a>
           <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
           <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
-          <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
+          <a class="nav-item" href="#" v-scroll-to="'#references'">References</a>
         </div>
       </nav>
       <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
       <profile-myHome class="detail-section" :user="currUser" id="home"></profile-myHome>
       <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-      <profile-references class="detail-section" :user="currUser" id="ref"></profile-references>
+      <profile-references class="detail-section" :user="currUser" id="references"></profile-references>
     </div>
     <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
   </section>
@@ -115,8 +115,10 @@ export default {
       this.showRequestForm = false;
     },
     openReview() {
-      console.log('hey')
-      // this.isReviewFormOpen = true;
+      this.isReviewFormOpen = true;
+    },
+    reviewFormOff() {
+      this.isReviewFormOpen = false;
     }
   },
   watch: {
@@ -138,7 +140,7 @@ export default {
 
 <style lang="scss" scoped>
 .profile-container {
-  margin-top: 70px;
+  margin-top: 50px;
 }
 @media (max-width: 568px) {
   .profile-container {
@@ -173,6 +175,13 @@ export default {
   }
 }
 
+@media (max-width: 568px) {
+  .side-profile {
+    max-width: 98%;
+    width: 92%;
+  }
+}
+
 .btn {
   margin: 5px;
   background-color: #67c23a;
@@ -197,16 +206,10 @@ export default {
   color: #fff;
 }
 
-@media (max-width: 568px) {
-  .side-profile {
-    max-width: 98%;
-    width: 98%;
-  }
-}
-
 .main-desc {
   flex-grow: 1;
-  margin: 5px;
+  margin: 5px 15px 5px 0;
+  max-width: 1000px;
   .main-desc-nav {
     background-color: #fff;
   }
@@ -234,6 +237,11 @@ export default {
   }
   .detail-section {
     margin: 20px 0;
+  }
+}
+@media (max-width: 568px) {
+  .main-desc {
+    margin: 5px 15px;
   }
 }
 </style>
