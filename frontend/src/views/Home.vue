@@ -22,26 +22,23 @@
 </template>
 
 <script>
-import MainHeader from '@/components/MainHeader';
-import CitySearch from '../components/CitySearch'
-import WhyJoin from '../components/WhyJoin'
-
+import MainHeader from "@/components/MainHeader";
+import CitySearch from "../components/CitySearch";
+import WhyJoin from "../components/WhyJoin";
 
 export default {
-  name: 'home',
+  name: "home",
   data() {
-    return {
-
-    }
+    return {};
   },
   created() {
-    this.$store.dispatch({ type: 'loadTopDests' })
+    this.$store.dispatch({ type: "loadTopDests" });
   },
   methods: {
     moveToUsers(dest) {
       let destCountry = dest.country;
       let destCity = dest.name;
-      this.$router.push('/users/' + destCountry + '&' + destCity)
+      this.$router.push("/users/" + destCountry + "&" + destCity);
     }
   },
   computed: {
@@ -54,7 +51,7 @@ export default {
     CitySearch,
     WhyJoin
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -74,80 +71,76 @@ h1 {
   grid-template-rows: repeat(4, 180px);
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 20px;
-  // height: 90vh;
   margin-top: 40px;
+  .img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  }
+  .Bangkok {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .London {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
+  .Paris {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .Buenos {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .Rome {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .Tokyo {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .Berlin {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
+  .Barcelona {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+
+  .New {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+
+  .Rio {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .img-container:last-child {
+    grid-column: span 1;
+    grid-row: span 1;
+    background-color: #7ebf50;
+  }
 }
 
 @media (max-width: 1200px) {
   .cities-gallery {
     max-width: 980px;
   }
-}
-
-.img-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  cursor: pointer;
-  // box-shadow: 1px 1px 10px black;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-}
-
-.Bangkok {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-.London {
-  grid-column: span 1;
-  grid-row: span 2;
-}
-
-.Paris {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-
-.Buenos {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-
-.Rome {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-
-.Tokyo {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-
-.Berlin {
-  grid-column: span 1;
-  grid-row: span 2;
-}
-
-.Barcelona {
-  grid-column: span 1;
-  grid-row: span 2;
-}
-
-.New {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-
-.Rio {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-
-.img-container:last-child {
-  grid-column: span 1;
-  grid-row: span 1;
-  background-color: #7ebf50;
 }
 
 @media (max-width: 1050px) {
@@ -163,16 +156,16 @@ h1 {
     grid-template-rows: repeat(7, 180px);
     grid-gap: 10px;
     margin: 10px;
-  }
-  .London {
-    grid-row: span 1;
-  }
-  .Berlin {
-    grid-row: span 1;
-  }
-  .Barcelona {
-    grid-column: span 2;
-    grid-row: span 1;
+    .London {
+      grid-row: span 1;
+    }
+    .Berlin {
+      grid-row: span 1;
+    }
+    .Barcelona {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
   }
 }
 
@@ -187,19 +180,4 @@ h1 {
   justify-content: center;
   align-items: center;
 }
-
-
-
-// @media (max-width: 760px) {
-//   .cities-gallery {
-//     height: auto;
-//     display: block;
-//   }
-
-//   .img-container {
-//     margin: 10px;
-//   }
-// }
 </style>
-
-
