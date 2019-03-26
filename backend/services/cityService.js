@@ -10,24 +10,23 @@ FillDB();
 
 async function FillDB() {
   let db = await mongoService.connect();
-  let cities = db.collection(CITIES_COLLECTION).find({}).toArray();
-  let topDests = db.collection(TOP_DESTS_COLLECTION).find({}).toArray();
-
-  let resCities = await cities;
-  if (resCities.length === 0) addMany(citiesDB, CITIES_COLLECTION);
-
-  let resTopDests = await topDests;
-  if (resTopDests.length === 0) addMany(topDestsDB, TOP_DESTS_COLLECTION);
+  let cities = await db.collection(CITIES_COLLECTION).find({}).toArray();
+  let topDests = await db.collection(TOP_DESTS_COLLECTION).find({}).toArray();
+  if (cities.length === 0) addMany(citiesDB, CITIES_COLLECTION);
+  if (topDests.length === 0) addMany(topDestsDB, TOP_DESTS_COLLECTION);
 }
 
-function addMany(arr, key) {
-  return mongoService.connect().then(db => db.collection(key).insert(arr));
+async function addMany(arr, key) {
+  let db = await mongoService.connect();
+  let res = await db.collection(key).insert(arr);
+  return res;
 }
 
 async function query(searchWord) {
   let queryRegex = { $regex: searchWord, $options: "-i" };
   let db = await mongoService.connect();
-  return db.collection(CITIES_COLLECTION).find({ $or: [{ name: queryRegex }, { country: queryRegex }] }).toArray();
+  let res = await db.collection(CITIES_COLLECTION).find({ $or: [{ name: queryRegex }, { country: queryRegex }] }).toArray();
+  return res;
 }
 
 async function queryTopDests() {

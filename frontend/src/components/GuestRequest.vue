@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$emit('guestRequest', this.requestInfo)
+      this.$emit('sendRequest', this.requestInfo)
     }
   },
   computed: {

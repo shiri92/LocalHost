@@ -17,6 +17,7 @@
             </div>
           </div>
           <rate-stars></rate-stars>
+
           <div>{{reference.rating}}</div>
           <div>{{reference.description}}</div>
         </div>
