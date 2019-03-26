@@ -1,5 +1,8 @@
 <template>
-  <section v-if="showNav" class="main-footer">I AM A FOOTER</section>
+  <section v-if="showNav" class="main-footer">
+    <router-link to="/about">About</router-link>
+    <div>I AM A FOOTER</div> 
+    </section>
 </template>
 
 <script>
