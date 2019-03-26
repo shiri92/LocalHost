@@ -10,9 +10,7 @@ async function uploadProfileImg(imgFile) {
     let formData = new FormData();
     formData.append('file', imgFile);
     let res = await axios.post(BASE_API, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
+        headers: { 'Content-Type': 'multipart/form-data' }
     });
     return res.data;
 }
