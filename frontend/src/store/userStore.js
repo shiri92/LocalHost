@@ -34,6 +34,9 @@ export default {
     },
     setProfileImg(state, { cloudImgUrl }) {
       state.currUser.imgUrl = cloudImgUrl;
+    },
+    addReview(state, { review }) {
+      state.currUser.references.push(review);
     }
   },
   actions: {
@@ -70,8 +73,9 @@ export default {
       let cloudImgUrl = await userService.updateProfileImg(imgFile, userId);
       context.commit({ type: "setProfileImg", cloudImgUrl });
     },
-    async setReview(context, { review }) {
+    async addReview(context, { review }) {
       await userService.addReview(review);
+      context.commit({ type: "addReview", review });
     }
   }
 };

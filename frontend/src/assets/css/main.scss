@@ -1,18 +1,18 @@
-@import url('helper.css');
-@import url('normalize.css');
-@import 'node_modules/bootstrap/scss/bootstrap';
-@import 'node_modules/bootstrap-vue/src/index.scss';
+@import url("helper.scss");
+@import url("normalize.css");
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/bootstrap-vue/src/index.scss";
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 a:-webkit-any-link {
-    color: unset;
-    text-decoration: none;
+  color: unset;
+  text-decoration: none;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }

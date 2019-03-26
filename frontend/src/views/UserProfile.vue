@@ -35,13 +35,13 @@
           <a class="nav-item" href="#" v-scroll-to="'#about'">About Me</a>
           <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
           <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
-          <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
+          <a class="nav-item" href="#" v-scroll-to="'#references'">References</a>
         </div>
       </nav>
       <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
       <profile-myHome class="detail-section" :user="currUser" id="home"></profile-myHome>
       <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-      <profile-references class="detail-section" :user="currUser" id="ref"></profile-references>
+      <profile-references class="detail-section" :user="currUser" id="references"></profile-references>
     </div>
     <guest-request
       @requestOff="requestFormOff"

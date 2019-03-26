@@ -54,6 +54,7 @@
 
 <script>
 export default {
+  props: ['rating'],
   name: 'rate-stars',
   data() {
     return {

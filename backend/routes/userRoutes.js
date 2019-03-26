@@ -52,9 +52,9 @@ function addRoutes(app) {
   });
 
   //ADD review to user
-  app.put(`${BASE}/:id`, (req, res) => {
+  app.put(`${BASE}/review`, (req, res) => {
     const review = req.body;
-    userService.update(review).then(() => res.json());
+    userService.addReview(review).then(() => res.json());
   });
 
   // UPDATE User

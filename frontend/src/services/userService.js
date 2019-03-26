@@ -54,7 +54,9 @@ async function update(credentials) {
 
 // ADD review to user
 async function addReview(review) {
-  await axios.put(`${BASE_API}/${review.givenToId}`, review);
+  let res = await axios.put(`${BASE_API}/review`, review);
+  console.log(res.data);
+  return res.data;
 }
 
 // UPDATE Profile Image

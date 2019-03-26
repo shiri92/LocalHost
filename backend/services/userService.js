@@ -11,7 +11,8 @@ module.exports = {
   query,
   getById,
   add,
-  addRequest
+  addRequest,
+  addReview
   // update
 };
 
@@ -76,6 +77,16 @@ async function addRequest(request) {
     { $push: { requests: request } }
   );
   return request;
+}
+
+// ADD Review
+async function addReview(review) {
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(review.givenToId) },
+    { $push: { references: review } }
+  );
+  return review;
 }
 
 // UPDATE User

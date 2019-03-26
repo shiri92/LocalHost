@@ -62,98 +62,93 @@ export default {
   margin-top: -70px;
   padding-bottom: 50px;
   text-align: center;
-}
+  h1 {
+    margin-bottom: 40px;
+  }
+  .cities-gallery {
+    max-width: 1200px;
+    margin: 0 auto;
+    grid-template-rows: repeat(4, 180px);
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+    // height: 90vh;
+    margin-top: 40px;
+    .img-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      // box-shadow: 1px 1px 10px black;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      .city-name {
+        font-size: 2rem;
+        color: white;
+        font-weight: bold;
+        text-shadow: 0px 3px 15px rgba(0, 0, 0, 1);
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+    .Bangkok {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
+    .London {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
 
-h1 {
-  margin-bottom: 40px;
-}
+    .Paris {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
 
-.cities-gallery {
-  max-width: 1200px;
-  margin: 0 auto;
-  grid-template-rows: repeat(4, 180px);
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 20px;
-  // height: 90vh;
-  margin-top: 40px;
-}
+    .Buenos {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
 
-.img-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  cursor: pointer;
-  // box-shadow: 1px 1px 10px black;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-}
+    .Rome {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
 
-.Bangkok {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-.London {
-  grid-column: span 1;
-  grid-row: span 2;
-}
+    .Tokyo {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
 
-.Paris {
-  grid-column: span 2;
-  grid-row: span 1;
-}
+    .Berlin {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
 
-.Buenos {
-  grid-column: span 1;
-  grid-row: span 1;
-}
+    .Barcelona {
+      grid-column: span 1;
+      grid-row: span 2;
+    }
 
-.Rome {
-  grid-column: span 1;
-  grid-row: span 1;
-}
+    .New {
+      grid-column: span 2;
+      grid-row: span 1;
+    }
 
-.Tokyo {
-  grid-column: span 1;
-  grid-row: span 1;
-}
+    .Rio {
+      grid-column: span 1;
+      grid-row: span 1;
+    }
 
-.Berlin {
-  grid-column: span 1;
-  grid-row: span 2;
-}
-
-.Barcelona {
-  grid-column: span 1;
-  grid-row: span 2;
-}
-
-.New {
-  grid-column: span 2;
-  grid-row: span 1;
-}
-
-.Rio {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-
-.img-container:last-child {
-  grid-column: span 1;
-  grid-row: span 1;
-  background-color: #7ebf50;
-}
-
-.city-name {
-  font-size: 2rem;
-  color: white;
-  font-weight: bold;
-  text-shadow: 0px 3px 15px rgba(0, 0, 0, 1);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    .img-container:last-child {
+      grid-column: span 1;
+      grid-row: span 1;
+      background-color: #7ebf50;
+    }
+  }
 }
 
 @media (max-width: 1200px) {
