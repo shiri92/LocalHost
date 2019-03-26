@@ -6,36 +6,36 @@
       <div class="user-info flex flex-row">
         <ul class="flex flex-col" style="width: 50%; margin: 0">
           <li class="info-item">Max Number of Guests?
-            <span></span>
+            <span class="ans">{{user.maxNumOfGuests}}</span>
           </li>
           <li class="info-item">Last-Minute Requests Okay?
-            <span></span>
+            <span class="ans">{{(user.isLastMinReq)? 'Yes':'No'}}</span>
           </li>
           <li class="info-item">Preferred Gender to Host:
-            <span></span>
+            <span class="ans">{{user.prefGenderToHost}}</span>
           </li>
           <li class="info-item">Kid Friendly?
-            <span></span>
+            <span class="ans">{{(user.isKidFriendly)? 'Yes':'No'}}</span>
           </li>
           <li class="info-item">Pet Friendly?
-            <span></span>
+            <span class="ans">{{(user.isPetFriendly)? 'Yes':'No'}}</span>
           </li>
           <li class="info-item" style="margin: 0">Smoking Allowed?
-            <span></span>
+            <span class="ans">{{(user.isSmokeAllowed)? 'Yes':'No'}}</span>
           </li>
         </ul>
         <ul class="flex flex-col">
           <li class="info-item">Has Pets?
-            <span></span>
+            <span class="ans">{{user.hasPets}}</span>
           </li>
           <li class="info-item">Has Children?
-            <span></span>
+            <span class="ans">{{user.hasChildren}}</span>
           </li>
           <li class="info-item">Smoking at Home?
-            <span></span>
+            <span class="ans">{{(user.isSmoking)? 'Yes':'No'}}</span>
           </li>
           <li class="info-item">Wheelchair Accessible?
-            <span></span>
+            <span class="ans">{{(user.isWheelchairAccessible)? 'Yes':'No'}}</span>
           </li>
         </ul>
       </div>
@@ -71,6 +71,10 @@ export default {
     text-align: left;
     margin-bottom: 10px;
     font-weight: bold;
+    .ans {
+      font-weight: 100;
+      margin-left: 10px;
+    }
   }
 }
 </style>
