@@ -48,15 +48,16 @@ function addRoutes(app) {
 
   // ADD Guest Request
   app.put(`${BASE}/request`, async (req, res) => {
-    let request = req.body;
+    const request = req.body;
     await userService.addRequest(request);
     return res.json();
   });
 
-  //ADD review to user
-  app.put(`${BASE}/review`, (req, res) => {
+  //ADD Review
+  app.put(`${BASE}/review`, async (req, res) => {
     const review = req.body;
-    userService.addReview(review).then(() => res.json());
+    await userService.addReview(review);
+    return res.json();
   });
 
   // UPDATE User
@@ -71,6 +72,20 @@ function addRoutes(app) {
     let { imgUrl } = req.body;
     await userService.updateUserImg(imgUrl, id);
     return res.json();
+  });
+
+  // (UPDATE HOST USER) Book Guest
+  app.put(`${BASE}/:id/bookGuest`, async (req, res) => {
+    const { id } = req.params;
+    const sender = req.body;
+    await userService.bookGuest(id, sender);
+  });
+
+  // (UPDATE GUEST USER) Book Host
+  app.put(`${BASE}/:id/bookHost`, async (req, res) => {
+    const { id } = req.params;
+    const recipient = req.body;
+    // await userService.bookHost(id, recipient);
   });
 }
 

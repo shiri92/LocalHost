@@ -12,12 +12,10 @@ const FEMALE_IMG =
 
 module.exports = {
   login,
-  query,
-  getById,
-  add,
-  addRequest,
-  addReview,
-  updateUserImg
+  query, getById,
+  add, addRequest, addReview,
+  updateUserImg,
+  bookGuest, bookHost,
   // update
 };
 
@@ -78,21 +76,21 @@ async function add(credentials) {
 // ADD Guest Request
 async function addRequest(request) {
   let db = await mongoService.connect();
-  await db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(request.recipient.id) },
-    { $push: { requests: request } }
-  );
-  return review;
+  await db.collection(USERS_COLLECTION).updateOne
+    (
+      { _id: new ObjectId(request.recipient.id) },
+      { $push: { requests: request } }
+    );
 }
 
 // ADD Review
 async function addReview(review) {
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(review.givenToId) },
-    { $push: { references: review } }
-  );
-  return review;
+  db.collection(USERS_COLLECTION).updateOne
+    (
+      { _id: new ObjectId(review.givenToId) },
+      { $push: { references: review } }
+    );
 }
 
 // UPDATE User
@@ -108,6 +106,26 @@ async function updateUserImg(imgUrl, userId) {
     { _id: new ObjectId(userId) },
     { $set: { imgUrl: imgUrl } }
   );
+}
+
+// (UPDATE HOST USER) Book Guest
+async function bookGuest(hostId, newGuest) {
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne
+    (
+      { _id: new ObjectId(hostId) },
+      { $push: { guests: newGuest } }
+    );
+}
+
+// (UPDATE GUEST USER) Book Host
+async function bookHost(guestId, host) {
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne
+    (
+      { _id: new ObjectId(guestId) },
+      { $push: { hosts: host } }
+    );
 }
 
 // Create User

@@ -57,21 +57,25 @@ async function updateUserImg(imgUrl, userId) {
   await axios.put(`${BASE_API}/${userId}/img`, { imgUrl });
 }
 
+// ADD Review
 async function addReview(review) {
-  let res = await axios.put(`${BASE_API}/review`, review);
-  console.log(res.data);
-  return res.data;
+  await axios.put(`${BASE_API}/review`, review);
+}
+
+// (UPDATE HOST USER) Book Guest
+async function bookGuest(sender, recipient) {
+  const { id } = recipient;
+  await axios.put(`${BASE_API}/${id}/bookGuest`, { sender });
+}
+// (UPDATE GUEST USER) Book Host
+async function bookHost(sender, recipient) {
+  const { id } = sender;
+  await axios.put(`${BASE_API}/${id}/bookHost`, { recipient });
 }
 
 export default {
-  checkLogged,
-  login,
-  logout,
-  query,
-  getById,
-  add,
-  addRequest,
-  addReview,
-  update,
-  updateUserImg
+  checkLogged, login, logout,
+  query, getById,
+  add, addRequest, addReview, bookGuest, bookHost,
+  update, updateUserImg
 };
