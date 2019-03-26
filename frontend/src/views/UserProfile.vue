@@ -21,7 +21,6 @@
               More
               <font-awesome-icon icon="sort-down"/>
             </button>
-
             <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
           </div>
           <div v-else>
