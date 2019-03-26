@@ -1,17 +1,16 @@
 /* ----- DEPEND -----*/
-const mongoService = require("./mongoService");
-const cloudinaryService = require("./cloudinaryService");
-const ObjectId = require("mongodb").ObjectId;
+const mongoService = require('./mongoService');
+const cloudService = require('./cloudService');
+const ObjectId = require('mongodb').ObjectId;
 
 /* ----- CONST -----*/
-const USERS_COLLECTION = "users";
+const USERS_COLLECTION = 'users';
 
 module.exports = {
   login,
-  query,
-  getById,
-  add,
-  addRequest
+  query, getById,
+  add, addRequest,
+  updateProfileImg
   // update
 };
 
@@ -55,7 +54,7 @@ async function getById(id) {
   const _id = new ObjectId(id);
   let db = await mongoService.connect();
   let user = await db.collection(USERS_COLLECTION).findOne({ _id });
-  let img = await cloudinaryService.loadFromCloudinary(user.imgUrl);
+  let img = await cloudService.downloadImg(user.imgUrl);
   user.img = img;
   return user;
 }
@@ -84,16 +83,17 @@ async function addRequest(request) {
 // db.collection(USERS_COLLECTION).updateOne({ _id: toy._id }, { $set: toy });
 // }
 
-function _createUser(
-  email,
-  password,
-  firstName,
-  lastName,
-  gender,
-  birthdate,
-  city,
-  country
-) {
+// UPDATE Profile Image Url
+async function updateProfileImg(imgUrl, userId) {
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(userId) },
+    { $set: { imgUrl: imgUrl } }
+  )
+}
+
+// Create User
+function _createUser(email, password, firstName, lastName, gender, birthdate, city, country) {
   return {
     email,
     password,
@@ -129,7 +129,7 @@ function _createUser(
   };
 }
 
-// Create Users Sample
+// Generate Users Sample
 function _createUsers() {
   let users = [];
   users.push(

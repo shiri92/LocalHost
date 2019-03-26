@@ -126,15 +126,11 @@ export default {
     onFileSelected(ev) {
       this.selectedFile = ev.target.files[0];
     },
-    onUpload() {
+    async onUpload() {
       let userId = this.$route.params.userId;
-      this.$store.dispatch({ type: "updateProfileImg", imgFile: this.selectedFile, userId })
-      // const fd = new FormData();
-      // var formData = new FormData();
-      // formData.append("image", this.selectedFile, this.selectedFile.name);
-      // formData.append('image', 'image_value');
-      // console.log(formData);
-
+      let imgUrl = await this.$store.dispatch({ type: 'uploadProfileImg', imgFile: this.selectedFile });
+      await this.$store.dispatch({ type: "updateProfileImg", imgUrl: imgUrl, userId });
+      console.log('successfuly updated!')
 
     },
     onSave() {
