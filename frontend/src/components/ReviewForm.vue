@@ -32,6 +32,8 @@
         </div>
       </div>
       <rate-stars @rate="setRate"></rate-stars>
+      <!-- <rate-stars></rate-stars> -->
+
       <label>Youre Review:</label>
       <textarea v-model="review.description" cols="30" rows="8"></textarea>
       <div class="btn-container flex justify-center">
@@ -63,8 +65,8 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch({ type: 'loadUser', userId: this.$route.params });
-    this.$store.dispatch({ type: 'checkLogged', userId: this.$route.params });
+    // this.$store.dispatch({ type: 'loadUser', userId: this.$route.params });
+    // this.$store.dispatch({ type: 'checkLogged', userId: this.$route.params });
     this.review.givenBy = this.loggedUser.firstName + ' ' + this.loggedUser.lastName;
     this.review.givenByImgUrl = this.loggedUser.imgUrl;
     this.review.givenTo = this.currUser.firstName + ' ' + this.currUser.lastName;
@@ -73,7 +75,7 @@ export default {
   },
   computed: {
     currUser() {
-      return this.$store.getters.user;
+      return this.$store.getters.currUser;
     },
     loggedUser() {
       return this.$store.getters.loggedUser

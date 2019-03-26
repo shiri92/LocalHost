@@ -244,6 +244,5 @@ export default {
   .main-desc {
     margin: 5px 15px;
   }
-
 }
 </style>
