@@ -1,6 +1,5 @@
 /* ----- DEPEND -----*/
 import userService from "../services/userService.js";
-import { log } from "util";
 
 export default {
   state: {
@@ -32,8 +31,8 @@ export default {
     setUser(state, { user }) {
       state.currUser = user;
     },
-    setProfileImg(state, { cloudImgUrl }) {
-      state.currUser.imgUrl = cloudImgUrl;
+    setProfileImg(state, { imgUrl }) {
+      state.currUser.imgUrl = imgUrl;
     }
   },
   actions: {
@@ -54,8 +53,8 @@ export default {
       let user = await userService.add(credentials);
       context.commit({ type: "setLoggedUser", user });
     },
-    async loadUsers(context, payload) {
-      let users = await userService.query(payload.city, payload.country);
+    async loadUsers(context, { city, country }) {
+      let users = await userService.query(city, country);
       context.commit({ type: "setUsers", users });
     },
     async loadUser(context, { userId }) {
@@ -64,11 +63,24 @@ export default {
     },
     async addRequest(context, payload) {
       await userService.addRequest(payload);
-      // show friendly tiny modal
+      // add to front...
+      // show friendly tiny modal...
     },
-    async updateProfileImg(context, { imgFile, userId }) {
-      let cloudImgUrl = await userService.updateProfileImg(imgFile, userId);
-      context.commit({ type: 'setProfileImg', cloudImgUrl })
-    }
+    async removeRequest(context, guestId) { // by id
+      // remove from front...
+      // show friednky tiny modal...
+    },
+    async BookGuest(context, request) {
+      // get request (with guestId, hostId), register the guest to the host...
+
+    },
+    async BookHost(context, request) {
+      // get request (with guestId, hostId), register the host to the guest...
+    },
+    async updateProfileImg(context, { imgUrl, userId }) {
+      await userService.updateProfileImg(imgUrl, userId);
+      context.commit({ type: 'setProfileImg', imgUrl })
+    },
+
   }
 };

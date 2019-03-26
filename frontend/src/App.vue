@@ -14,7 +14,7 @@
 
 <script>
 import MainNav from "@/components/MainNav";
-import logIn from '../src/components/Login';
+import logIn from '@/components/Login';
 import MainFooter from "@/components/MainFooter";
 
 export default {

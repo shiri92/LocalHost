@@ -1,8 +1,6 @@
 /* ----- DEPEND -----*/
 const userService = require("../services/userService.js");
-const cloudinaryService = require('../services/cloudinaryService');
-
-
+const cloudService = require('../services/cloudService');
 
 /* ----- CONST -----*/
 const BASE = "/user";
@@ -50,7 +48,7 @@ function addRoutes(app) {
 
   // ADD Guest Request
   app.put(`${BASE}/request`, (req, res) => {
-    let { request } = req.body;
+    const { request } = req.body;
     userService.addRequest(request).then(() => res.json());
   });
 
@@ -61,15 +59,11 @@ function addRoutes(app) {
   // })
 
   // UPDATE Profile Image
-  app.post(`${BASE}/:id/img`, (req, res) => {
-    let formData = req.files;
-    cloudinaryService.doUploadImg(formData, url => {
-      console.log('success!', url);
-    });
-    // userService.updateProfileImg(imgFile, userId).then(imgUrl => res.json(imgUrl))
-  })
-
-
+  app.put(`${BASE}/:id/img`, (req, res) => {
+    let { id } = req.params;
+    let { imgUrl } = req.body;
+    userService.updateProfileImg(imgUrl, id).then(imgUrl => res.json())
+  });
 
 }
 

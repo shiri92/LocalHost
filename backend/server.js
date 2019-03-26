@@ -5,13 +5,13 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
-// const fileParser = require('express-fileupload');
 const app = express();
 
 /* ----- ROUTES -----*/
-const addCountryRoutes = require('./routes/countryRoutes')
-const addCityRoutes = require('./routes/cityRoutes')
-const addUserRoutes = require('./routes/userRoutes')
+const addUserRoutes = require('./routes/userRoutes');
+const addCityRoutes = require('./routes/cityRoutes');
+const addCountryRoutes = require('./routes/countryRoutes');
+const addCloudRoutes = require('./routes/cloudRoutes');
 
 
 /* ----- SERVER -----*/
@@ -30,11 +30,12 @@ app.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }))
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello From Server'))
 
-addCountryRoutes(app)
-addCityRoutes(app);
 addUserRoutes(app)
+addCityRoutes(app);
+addCountryRoutes(app)
+addCloudRoutes(app);
 
 const PORT = process.env.PORT || 3003;
 app.listen(PORT, () => { })
