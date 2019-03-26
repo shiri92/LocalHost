@@ -36,6 +36,9 @@ export default {
     },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
+    },
+    setLoggedUserImg(state, { imgUrl }) {
+      state.loggedUser.imgUrl = imgUrl;
     }
   },
   actions: {
@@ -63,8 +66,8 @@ export default {
       let user = await userService.getById(userId);
       context.commit({ type: "setCurrUser", user });
     },
-    async addRequest(context, payload) {
-      await userService.addRequest(payload);
+    async addRequest(context, { request }) {
+      await userService.addRequest(request);
       // add to front...
       // show friendly tiny modal...
     },
@@ -85,7 +88,9 @@ export default {
     },
     async updateUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);
-      context.commit({ type: "setCurrUserImg", imgUrl });
-    }
+      // context.commit({ type: 'setCurrUserImg', imgUrl })
+      context.commit({ type: 'setLoggedUserImg', imgUrl })
+    },
+
   }
 };

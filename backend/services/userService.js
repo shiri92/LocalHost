@@ -78,12 +78,11 @@ async function add(credentials) {
 // ADD Guest Request
 async function addRequest(request) {
   let db = await mongoService.connect();
-  await db
-    .collection(USERS_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(request.hostId) },
-      { $push: { requests: request } }
-    );
+  await db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(request.recipient.id) },
+    { $push: { requests: request } }
+  );
+  return review;
 }
 
 // ADD Review
@@ -156,7 +155,7 @@ function _createUser(
     },
     /* ----- Social Details -----*/
     pictures: [],
-    reviews: []
+    references: [],
   };
 }
 
