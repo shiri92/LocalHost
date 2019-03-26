@@ -166,6 +166,28 @@ h1 {
       grid-column: span 2;
       grid-row: span 1;
     }
+    .New {
+      grid-column: span 2;
+    }
+  }
+}
+
+@media (max-width: 568px) {
+  .cities-gallery {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(11, 180px);
+    grid-gap: 5px;
+    margin: 5px;
+    .Paris {
+      grid-column: span 1;
+    }
+    .Barcelona {
+      grid-row: span 1;
+      grid-column: span 1;
+    }
+    .New {
+      grid-column: span 1;
+    }
   }
 }
 

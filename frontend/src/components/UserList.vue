@@ -23,8 +23,6 @@ export default {
     UserPreview
   },
   props: ["users"],
-
-
 };
 </script>
 
@@ -32,10 +30,10 @@ export default {
 <style>
 .profile-list-container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
   margin: 10px;
-  overflow: auto;
 }
 
 .profile-list-item {
