@@ -49,7 +49,7 @@ function addRoutes(app) {
 
   // ADD Guest Request
   app.put(`${BASE}/request`, async (req, res) => {
-    const { request } = req.body;
+    let request = req.body;
     await userService.addRequest(request);
     return res.json();
   });

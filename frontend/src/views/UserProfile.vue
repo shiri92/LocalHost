@@ -43,19 +43,15 @@
       <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
       <profile-references class="detail-section" :user="currUser" id="ref"></profile-references>
     </div>
-    <guest-request
-      @requestOff="requestFormOff"
-      v-if="showRequestForm"
-      @guestRequest="addGuestRequest"
-    ></guest-request>
+    <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
   </section>
 </template>
 
 <script>
 import ProfileAbout from "../components/ProfileAbout.vue";
-import ProfileMyHome from "../components/ProfileMyHome.vue";
-import ProfilePictures from "../components/ProfilePictures.vue";
-import ProfileReferences from "../components/ProfileReferences.vue";
+import ProfileMyHome from '../components/ProfileMyHome.vue';
+import ProfilePictures from '../components/ProfilePictures.vue';
+import ProfileReferences from '../components/ProfileReferences.vue';
 import GuestRequest from '../components/GuestRequest.vue';
 import ReviewForm from '../components/ReviewForm.vue';
 
@@ -95,19 +91,22 @@ export default {
     narrowNav(state) {
       this.isNavInDisplay = state;
     },
-    addGuestRequest(requestInfo) {
+    async sendRequest(requestInfo) {
       let request = {
         info: requestInfo,
-        hostId: this.currUser._id,
-        guest: {
+        sender: {
           id: this.loggedUser._id,
           firstName: this.loggedUser.firstName,
           lastName: this.loggedUser.lastName
+        },
+        recipient: {
+          id: this.currUser._id,
+          firstName: this.currUser.firstName,
+          lastName: this.currUser.lastName
         }
       };
-      this.$store
-        .dispatch("addRequest", { request: request })
-        .then(() => this.requestFormOff());
+      await this.$store.dispatch({ type: 'addRequest', request: request });
+      this.requestFormOff();
     },
     requestFormOn() {
       this.showRequestForm = true;
@@ -122,7 +121,7 @@ export default {
   },
   watch: {
     '$route.params.userId'(userId) {
-      this.$store.dispatch({ type: "loadUser", userId });
+      this.$store.dispatch({ type: 'loadUser', userId });
     }
   },
   components: {

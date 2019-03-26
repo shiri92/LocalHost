@@ -68,7 +68,7 @@ async function add(credentials) {
 async function addRequest(request) {
   let db = await mongoService.connect();
   await db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(request.hostId) },
+    { _id: new ObjectId(request.recipient.id) },
     { $push: { requests: request } }
   );
 }
@@ -125,7 +125,7 @@ function _createUser(email, password, firstName, lastName, gender, birthdate, ci
     },
     /* ----- Social Details -----*/
     pictures: [],
-    reviews: [],
+    references: [],
   };
 }
 
