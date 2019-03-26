@@ -68,7 +68,10 @@ export default {
     },
     async updateProfileImg(context, { imgFile, userId }) {
       let cloudImgUrl = await userService.updateProfileImg(imgFile, userId);
-      context.commit({ type: 'setProfileImg', cloudImgUrl })
+      context.commit({ type: "setProfileImg", cloudImgUrl });
+    },
+    async setReview(context, { review }) {
+      await userService.addReview(review);
     }
   }
 };

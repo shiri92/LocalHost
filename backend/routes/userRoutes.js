@@ -1,14 +1,11 @@
 /* ----- DEPEND -----*/
 const userService = require("../services/userService.js");
-const cloudinaryService = require('../services/cloudinaryService');
-
-
+const cloudinaryService = require("../services/cloudinaryService");
 
 /* ----- CONST -----*/
 const BASE = "/user";
 
 function addRoutes(app) {
-
   // Logged User Check (Session Only)
   app.put(`${BASE}/checkLogged`, (req, res) => {
     return res.json(req.session.user);
@@ -54,6 +51,12 @@ function addRoutes(app) {
     userService.addRequest(request).then(() => res.json());
   });
 
+  //ADD review to user
+  app.put(`${BASE}/:id`, (req, res) => {
+    const review = req.body;
+    userService.update(review).then(() => res.json());
+  });
+
   // UPDATE User
   // app.put(`${BASE}/:id`, (req, res) => {
   //   const credentials = req.body;
@@ -64,17 +67,13 @@ function addRoutes(app) {
   app.post(`${BASE}/:id/img`, (req, res) => {
     let formData = req.files;
     cloudinaryService.doUploadImg(formData, url => {
-      console.log('success!', url);
+      console.log("success!", url);
     });
     // userService.updateProfileImg(imgFile, userId).then(imgUrl => res.json(imgUrl))
-  })
-
-
-
+  });
 }
 
 module.exports = addRoutes;
-
 
 // function checkAdmin(req, res, next) {
 //     console.log('INSIDE MIDDLEWARE: ', req.session.user);

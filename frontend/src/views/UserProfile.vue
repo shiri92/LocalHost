@@ -19,10 +19,10 @@
             </button>
             <button class="btn" @click="openReview">
               More
-              <!-- <font-awesome-icon icon="sort-down"/> -->
+              <font-awesome-icon icon="sort-down"/>
             </button>
 
-            <review-form v-if="isReviewFormOpen"></review-form>
+            <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
           </div>
           <div v-else>
             <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
@@ -116,8 +116,10 @@ export default {
       this.showRequestForm = false;
     },
     openReview() {
-      console.log('hey')
-      // this.isReviewFormOpen = true;
+      this.isReviewFormOpen = true;
+    },
+    reviewFormOff() {
+      this.isReviewFormOpen = false;
     }
   },
   watch: {

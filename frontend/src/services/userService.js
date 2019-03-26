@@ -1,10 +1,10 @@
 /* ----- DEPEND -----*/
 import Axios from "axios";
-import { log } from "util";
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
-const BASE_API = process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
+const BASE_API =
+  process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
 
 // Logged User Check (Session Only)
 async function checkLogged() {
@@ -52,16 +52,20 @@ async function update(credentials) {
   await axios.put(`${BASE_API}/${id}`, credentials);
 }
 
+// ADD review to user
+async function addReview(review) {
+  await axios.put(`${BASE_API}/${review.givenToId}`, review);
+}
+
 // UPDATE Profile Image
 async function updateProfileImg(imgFile, userId) {
   let formData = new FormData();
-  let UPLOAD_PRESET = 'jhqr9o4c';
-  formData.append('file', imgFile);
-  formData.append('upload_preset', UPLOAD_PRESET);
-  let res = axios.post(`${BASE_API}/${userId}/img`,
-    formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
+  let UPLOAD_PRESET = "jhqr9o4c";
+  formData.append("file", imgFile);
+  formData.append("upload_preset", UPLOAD_PRESET);
+  let res = axios.post(`${BASE_API}/${userId}/img`, formData, {
+    headers: { "Content-Type": "multipart/form-data" }
+  });
   // console.log(File);
   // console.log(userId);
   // let res = axios.post(`${BASE_API}/${userId}/img`, { 'file': File });
@@ -71,8 +75,14 @@ async function updateProfileImg(imgFile, userId) {
 }
 
 export default {
-  checkLogged, login, logout,
-  query, getById,
-  add, addRequest,
-  update, updateProfileImg
+  checkLogged,
+  login,
+  logout,
+  query,
+  getById,
+  add,
+  addRequest,
+  addReview,
+  update,
+  updateProfileImg
 };

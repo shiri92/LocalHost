@@ -109,7 +109,7 @@ function _createUser(
     country,
     language: [],
     references: [],
-    ocupation: "",
+    occupation: "",
     education: "",
     maxNumOfGuests: 1,
     isLastMinReq: false,
