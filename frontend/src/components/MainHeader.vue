@@ -101,10 +101,19 @@ h2 {
   }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
   .main-header {
     height: 70vh;
     background-position: center, center;
+  }
+  .arrow-down {
+    top: 30%;
+  }
+}
+
+@media (max-width: 900px) {
+  .arrow-down {
+    display: none;
   }
 }
 

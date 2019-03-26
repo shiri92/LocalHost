@@ -39,15 +39,10 @@
 </template>
 
 <script>
-
-
 export default {
-  name: 'why-join',
-  components: {
-
-  }
-
-}
+  name: "why-join",
+  components: {}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -68,9 +63,26 @@ export default {
   }
 }
 
-@media (max-width: 850px) {
-  .cards-container {
-    flex-direction: column;
+@media (max-width: 1050px) {
+  .why-join {
+    padding: 50px 0;
+    .cards-container {
+      max-width: 100%;
+      .card {
+        margin: 10px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .why-join {
+    padding: 50px 0;
+    .cards-container {
+      flex-direction: column;
+      max-width: 100%;
+      
+    }
   }
 }
 </style>
