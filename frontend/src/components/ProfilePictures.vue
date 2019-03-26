@@ -41,8 +41,7 @@ export default {
   .user-info {
     padding: 20px;
     display: grid;
-    // grid-template-columns: repeat(4, 1fr);
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
     gap: 10px;
     .display-images {
       margin: 0;
@@ -56,4 +55,3 @@ export default {
   }
 }
 </style>
-

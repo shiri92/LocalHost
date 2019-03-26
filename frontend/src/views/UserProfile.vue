@@ -1,5 +1,5 @@
 <template>
-  <section class="profile-container flex" v-if="currUser">
+  <section class="profile-container flex justify-center" v-if="currUser">
     <div class="side-profile">
       <img class="profile-img" :src="currUser.imgUrl" alt>
       <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
@@ -139,7 +139,7 @@ export default {
 
 <style lang="scss" scoped>
 .profile-container {
-  margin-top: 70px;
+  margin-top: 50px;
 }
 @media (max-width: 568px) {
   .profile-container {
@@ -174,6 +174,13 @@ export default {
   }
 }
 
+@media (max-width: 568px) {
+  .side-profile {
+    max-width: 98%;
+    width: 92%;
+  }
+}
+
 .btn {
   margin: 5px;
   background-color: #67c23a;
@@ -198,16 +205,10 @@ export default {
   color: #fff;
 }
 
-@media (max-width: 568px) {
-  .side-profile {
-    max-width: 98%;
-    width: 98%;
-  }
-}
-
 .main-desc {
   flex-grow: 1;
-  margin: 5px;
+  margin: 5px 15px 5px 0;
+  max-width: 1000px;
   .main-desc-nav {
     background-color: #fff;
   }
@@ -236,5 +237,11 @@ export default {
   .detail-section {
     margin: 20px 0;
   }
+}
+@media (max-width: 568px) {
+  .main-desc {
+    margin: 5px 15px;
+  }
+
 }
 </style>

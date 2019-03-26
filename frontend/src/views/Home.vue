@@ -78,6 +78,12 @@ h1 {
   margin-top: 40px;
 }
 
+@media (max-width: 1200px) {
+  .cities-gallery {
+    max-width: 980px;
+  }
+}
+
 .img-container {
   display: flex;
   flex-direction: column;
@@ -144,6 +150,32 @@ h1 {
   background-color: #7ebf50;
 }
 
+@media (max-width: 1050px) {
+  .cities-gallery {
+    max-width: 750px;
+  }
+}
+
+@media (max-width: 768px) {
+  .cities-gallery {
+    max-width: 750px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(7, 180px);
+    grid-gap: 10px;
+    margin: 10px;
+  }
+  .London {
+    grid-row: span 1;
+  }
+  .Berlin {
+    grid-row: span 1;
+  }
+  .Barcelona {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+}
+
 .city-name {
   font-size: 2rem;
   color: white;
@@ -156,11 +188,7 @@ h1 {
   align-items: center;
 }
 
-@media (max-width: 1200px) {
-  .cities-gallery {
-    max-width: 980px;
-  }
-}
+
 
 // @media (max-width: 760px) {
 //   .cities-gallery {
