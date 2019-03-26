@@ -1,17 +1,22 @@
 /* ----- DEPEND -----*/
-const mongoService = require('./mongoService');
-const cloudService = require('./cloudService');
-const ObjectId = require('mongodb').ObjectId;
+const mongoService = require("./mongoService");
+const cloudService = require("./cloudService");
+const ObjectId = require("mongodb").ObjectId;
 
 /* ----- CONST -----*/
-const USERS_COLLECTION = 'users';
-const MALE_IMG = 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430377/male-profile.png';
-const FEMALE_IMG = 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430382/female-profile.png';
+const USERS_COLLECTION = "users";
+const MALE_IMG =
+  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430377/male-profile.png";
+const FEMALE_IMG =
+  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430382/female-profile.png";
 
 module.exports = {
   login,
-  query, getById,
-  add, addRequest,
+  query,
+  getById,
+  add,
+  addRequest,
+  addReview,
   updateUserImg
   // update
 };
@@ -21,7 +26,10 @@ FillDB();
 // Fill Mongo Data Base (will be on mongo service)
 async function FillDB() {
   let db = await mongoService.connect();
-  let res = await db.collection(USERS_COLLECTION).find({}).toArray();
+  let res = await db
+    .collection(USERS_COLLECTION)
+    .find({})
+    .toArray();
   if (res.length === 0) addMany(_createUsers());
 }
 // Fill Mongo Data Base (will be on mongo service)
@@ -42,7 +50,10 @@ async function login(credentials) {
 // GET Users By Address
 async function query(currCountry, currCity) {
   let db = await mongoService.connect();
-  let res = await db.collection(USERS_COLLECTION).find({ country: currCountry, city: currCity }).toArray();
+  let res = await db
+    .collection(USERS_COLLECTION)
+    .find({ country: currCountry, city: currCity })
+    .toArray();
   return res;
 }
 
@@ -67,10 +78,22 @@ async function add(credentials) {
 // ADD Guest Request
 async function addRequest(request) {
   let db = await mongoService.connect();
-  await db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(request.hostId) },
-    { $push: { requests: request } }
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(request.hostId) },
+      { $push: { requests: request } }
+    );
+}
+
+// ADD Review
+async function addReview(review) {
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(review.givenToId) },
+    { $push: { references: review } }
   );
+  return review;
 }
 
 // UPDATE User
@@ -82,15 +105,23 @@ async function addRequest(request) {
 // UPDATE Profile Image Url
 async function updateUserImg(imgUrl, userId) {
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne
-    (
-      { _id: new ObjectId(userId) },
-      { $set: { imgUrl: imgUrl } }
-    )
+  db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(userId) },
+    { $set: { imgUrl: imgUrl } }
+  );
 }
 
 // Create User
-function _createUser(email, password, firstName, lastName, gender, birthdate, city, country) {
+function _createUser(
+  email,
+  password,
+  firstName,
+  lastName,
+  gender,
+  birthdate,
+  city,
+  country
+) {
   return {
     /* ----- Personal Details -----*/
     email,
@@ -100,8 +131,8 @@ function _createUser(email, password, firstName, lastName, gender, birthdate, ci
     gender,
     birthdate,
     languages: [],
-    occupation: '',
-    education: '',
+    occupation: "",
+    education: "",
     imgUrl: gender === "Male" ? MALE_IMG : FEMALE_IMG,
     /* ----- Location Details -----*/
     city,
@@ -115,17 +146,17 @@ function _createUser(email, password, firstName, lastName, gender, birthdate, ci
     messages: [],
     placeDetails: {
       guestCapacity: 0,
-      guestGenderPref: 'Any',
+      guestGenderPref: "Any",
       isKidFriendly: false,
       isPetFriendly: false,
       isSmokingAllowed: false,
       isDisabledAccessible: false,
       pets: 0,
-      children: 0,
+      children: 0
     },
     /* ----- Social Details -----*/
     pictures: [],
-    reviews: [],
+    reviews: []
   };
 }
 

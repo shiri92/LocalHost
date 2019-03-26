@@ -1,11 +1,10 @@
 /* ----- DEPEND -----*/
-const userService = require('../services/userService.js');
+const userService = require("../services/userService.js");
 
 /* ----- CONST -----*/
-const BASE = '/user';
+const BASE = "/user";
 
 function addRoutes(app) {
-
   // Logged User Check (Session Only)
   app.put(`${BASE}/checkLogged`, (req, res) => {
     return res.json(req.session.user);
@@ -54,6 +53,12 @@ function addRoutes(app) {
     return res.json();
   });
 
+  //ADD review to user
+  app.put(`${BASE}/review`, (req, res) => {
+    const review = req.body;
+    userService.addReview(review).then(() => res.json());
+  });
+
   // UPDATE User
   // app.put(`${BASE}/:id`, (req, res) => {
   //   const credentials = req.body;
@@ -67,11 +72,9 @@ function addRoutes(app) {
     await userService.updateUserImg(imgUrl, id);
     return res.json();
   });
-
 }
 
 module.exports = addRoutes;
-
 
 // function checkAdmin(req, res, next) {
 //     console.log('INSIDE MIDDLEWARE: ', req.session.user);

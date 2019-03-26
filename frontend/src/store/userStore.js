@@ -31,6 +31,9 @@ export default {
     setCurrUser(state, { user }) {
       state.currUser = user;
     },
+    addReview(state, { review }) {
+      state.currUser.references.push(review);
+    },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
     }
@@ -65,21 +68,24 @@ export default {
       // add to front...
       // show friendly tiny modal...
     },
-    async removeRequest(context, guestId) { // by id
+    async addReview(context, { review }) {
+      await userService.addReview(review);
+      context.commit({ type: "addReview", review });
+    },
+    async removeRequest(context, guestId) {
+      // by id
       // remove from front...
       // show friednky tiny modal...
     },
     async BookGuest(context, request) {
       // get request (with guestId, hostId), register the guest to the host...
-
     },
     async BookHost(context, request) {
       // get request (with guestId, hostId), register the host to the guest...
     },
     async updateUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);
-      context.commit({ type: 'setCurrUserImg', imgUrl })
-    },
-
+      context.commit({ type: "setCurrUserImg", imgUrl });
+    }
   }
 };

@@ -51,24 +51,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h1 {
-  margin-bottom: 20px;
-}
 .why-join {
   padding-top: 100px;
   padding-bottom: 100px;
+  h1 {
+    margin-bottom: 20px;
+  }
+  .cards-container {
+    max-width: 80%;
+    margin: 0 auto;
+    .card {
+      margin: 20px;
+      text-align: left;
+      z-index: 0;
+    }
+  }
 }
 
-.cards-container {
-  max-width: 80%;
-  margin: 0 auto;
-}
-
-.card {
-  margin: 20px;
-  text-align: left;
-  z-index: 0;
-}
 @media (max-width: 850px) {
   .cards-container {
     flex-direction: column;

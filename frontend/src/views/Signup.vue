@@ -143,11 +143,17 @@ export default {
   background-size: cover;
   height: 100vh;
   padding-top: 20px;
+  .title {
+    align-self: center;
+    color: white;
+  }
 }
-
-.title {
-  align-self: center;
-  color: white;
+.steps {
+  margin: 0 auto;
+  max-width: 40%;
+  .step {
+    cursor: pointer;
+  }
 }
 
 form {
@@ -163,15 +169,6 @@ form {
   opacity: 0.9;
 }
 
-.steps {
-  margin: 0 auto;
-  max-width: 40%;
-}
-
-.step {
-  cursor: pointer;
-}
-
 .small-input {
   width: 45%;
 }
@@ -182,7 +179,7 @@ form {
 }
 
 .el-button {
-  width: 30%;
+  width: 130px;
   align-self: center;
 }
 
