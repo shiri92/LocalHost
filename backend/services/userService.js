@@ -1,17 +1,23 @@
 /* ----- DEPEND -----*/
 const mongoService = require("./mongoService");
-const cloudinaryService = require("./cloudinaryService");
+const cloudService = require("./cloudService");
 const ObjectId = require("mongodb").ObjectId;
 
 /* ----- CONST -----*/
 const USERS_COLLECTION = "users";
+const MALE_IMG =
+  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430377/male-profile.png";
+const FEMALE_IMG =
+  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430382/female-profile.png";
 
 module.exports = {
   login,
   query,
   getById,
   add,
-  addRequest
+  addRequest,
+  addReview,
+  updateUserImg
   // update
 };
 
@@ -44,10 +50,11 @@ async function login(credentials) {
 // GET Users By Address
 async function query(currCountry, currCity) {
   let db = await mongoService.connect();
-  return await db
+  let res = await db
     .collection(USERS_COLLECTION)
     .find({ country: currCountry, city: currCity })
     .toArray();
+  return res;
 }
 
 // GET User By Id
@@ -55,7 +62,7 @@ async function getById(id) {
   const _id = new ObjectId(id);
   let db = await mongoService.connect();
   let user = await db.collection(USERS_COLLECTION).findOne({ _id });
-  let img = await cloudinaryService.loadFromCloudinary(user.imgUrl);
+  let img = await cloudService.loadImg(user.imgUrl);
   user.img = img;
   return user;
 }
@@ -71,11 +78,22 @@ async function add(credentials) {
 // ADD Guest Request
 async function addRequest(request) {
   let db = await mongoService.connect();
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(request.hostId) },
+      { $push: { requests: request } }
+    );
+}
+
+// ADD Review
+async function addReview(review) {
+  let db = await mongoService.connect();
   db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(request.hostId) },
-    { $push: { requests: request } }
+    { _id: new ObjectId(review.givenToId) },
+    { $push: { references: review } }
   );
-  return request;
+  return review;
 }
 
 // UPDATE User
@@ -84,6 +102,16 @@ async function addRequest(request) {
 // db.collection(USERS_COLLECTION).updateOne({ _id: toy._id }, { $set: toy });
 // }
 
+// UPDATE Profile Image Url
+async function updateUserImg(imgUrl, userId) {
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(userId) },
+    { $set: { imgUrl: imgUrl } }
+  );
+}
+
+// Create User
 function _createUser(
   email,
   password,
@@ -95,41 +123,44 @@ function _createUser(
   country
 ) {
   return {
+    /* ----- Personal Details -----*/
     email,
     password,
     firstName,
     lastName,
     gender,
     birthdate,
-    isHosting: true,
-    guests: [],
-    requests: [],
-    isSurfing: false,
+    languages: [],
+    occupation: "",
+    education: "",
+    imgUrl: gender === "Male" ? MALE_IMG : FEMALE_IMG,
+    /* ----- Location Details -----*/
     city,
     country,
-    language: [],
-    references: [],
-    ocupation: "",
-    education: "",
-    maxNumOfGuests: 1,
-    isLastMinReq: false,
-    prefGenderToHost: "Any",
-    isKidFriendly: false,
-    isPetFriendly: false,
-    isSmokeAllowed: false,
-    hasPets: 0,
-    hasChildren: 0,
-    isSmoking: false,
-    isWheelchairAccessible: false,
-    imgs: [],
-    imgUrl:
-      gender === "Male"
-        ? "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430377/male-profile.png"
-        : "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430382/female-profile.png"
+    /* ----- Surfing Details -----*/
+    isHosting: false,
+    isSurfing: false,
+    guests: [],
+    hosts: [],
+    requests: [],
+    messages: [],
+    placeDetails: {
+      guestCapacity: 0,
+      guestGenderPref: "Any",
+      isKidFriendly: false,
+      isPetFriendly: false,
+      isSmokingAllowed: false,
+      isDisabledAccessible: false,
+      pets: 0,
+      children: 0
+    },
+    /* ----- Social Details -----*/
+    pictures: [],
+    reviews: []
   };
 }
 
-// Create Users Sample
+// Generate Users Sample
 function _createUsers() {
   let users = [];
   users.push(

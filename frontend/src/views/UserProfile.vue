@@ -19,10 +19,10 @@
             </button>
             <button class="btn" @click="openReview">
               More
-              <!-- <font-awesome-icon icon="sort-down"/> -->
+              <font-awesome-icon icon="sort-down"/>
             </button>
 
-            <review-form v-if="isReviewFormOpen"></review-form>
+            <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
           </div>
           <div v-else>
             <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
@@ -35,13 +35,13 @@
           <a class="nav-item" href="#" v-scroll-to="'#about'">About Me</a>
           <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
           <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
-          <a class="nav-item" href="#" v-scroll-to="'#ref'">References</a>
+          <a class="nav-item" href="#" v-scroll-to="'#references'">References</a>
         </div>
       </nav>
       <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
       <profile-myHome class="detail-section" :user="currUser" id="home"></profile-myHome>
       <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-      <profile-references class="detail-section" :user="currUser" id="ref"></profile-references>
+      <profile-references class="detail-section" :user="currUser" id="references"></profile-references>
     </div>
     <guest-request
       @requestOff="requestFormOff"
@@ -61,7 +61,7 @@ import ReviewForm from '../components/ReviewForm.vue';
 
 
 export default {
-  name: "user-profile",
+  name: 'user-profile',
   data() {
     return {
       isNavInDisplay: false,
@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     currUser() {
-      return this.$store.getters.user;
+      return this.$store.getters.currUser;
     },
     loggedUser() {
       return this.$store.getters.loggedUser;
@@ -116,8 +116,10 @@ export default {
       this.showRequestForm = false;
     },
     openReview() {
-      console.log('hey')
-      // this.isReviewFormOpen = true;
+      this.isReviewFormOpen = true;
+    },
+    reviewFormOff() {
+      this.isReviewFormOpen = false;
     }
   },
   watch: {

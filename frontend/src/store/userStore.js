@@ -1,18 +1,17 @@
 /* ----- DEPEND -----*/
 import userService from "../services/userService.js";
-import { log } from "util";
 
 export default {
   state: {
-    users: [],
+    currUsers: [],
     currUser: null,
     loggedUser: null
   },
   getters: {
-    users(state) {
-      return state.users;
+    currUsers(state) {
+      return state.currUsers;
     },
-    user(state) {
+    currUser(state) {
       return state.currUser;
     },
     loggedUser(state) {
@@ -26,21 +25,23 @@ export default {
     logout(state) {
       state.loggedUser = null;
     },
-    setUsers(state, { users }) {
-      state.users = users;
+    setCurrUsers(state, { users }) {
+      state.currUsers = users;
     },
-    setUser(state, { user }) {
+    setCurrUser(state, { user }) {
       state.currUser = user;
     },
-    setProfileImg(state, { cloudImgUrl }) {
-      state.currUser.imgUrl = cloudImgUrl;
+    addReview(state, { review }) {
+      state.currUser.references.push(review);
+    },
+    setCurrUserImg(state, { imgUrl }) {
+      state.currUser.imgUrl = imgUrl;
     }
   },
   actions: {
     async checkLogged(context) {
       let user = await userService.checkLogged();
       context.commit({ type: "setLoggedUser", user });
-      console.log("Successfuly Logged In: ", user);
     },
     async login(context, { credentials }) {
       let user = await userService.login(credentials);
@@ -54,21 +55,37 @@ export default {
       let user = await userService.add(credentials);
       context.commit({ type: "setLoggedUser", user });
     },
-    async loadUsers(context, payload) {
-      let users = await userService.query(payload.city, payload.country);
-      context.commit({ type: "setUsers", users });
+    async loadUsers(context, { city, country }) {
+      let users = await userService.query(city, country);
+      context.commit({ type: "setCurrUsers", users });
     },
     async loadUser(context, { userId }) {
       let user = await userService.getById(userId);
-      context.commit({ type: "setUser", user });
+      context.commit({ type: "setCurrUser", user });
     },
     async addRequest(context, payload) {
       await userService.addRequest(payload);
-      // show friendly tiny modal
+      // add to front...
+      // show friendly tiny modal...
     },
-    async updateProfileImg(context, { imgFile, userId }) {
-      let cloudImgUrl = await userService.updateProfileImg(imgFile, userId);
-      context.commit({ type: 'setProfileImg', cloudImgUrl })
+    async addReview(context, { review }) {
+      await userService.addReview(review);
+      context.commit({ type: "addReview", review });
+    },
+    async removeRequest(context, guestId) {
+      // by id
+      // remove from front...
+      // show friednky tiny modal...
+    },
+    async BookGuest(context, request) {
+      // get request (with guestId, hostId), register the guest to the host...
+    },
+    async BookHost(context, request) {
+      // get request (with guestId, hostId), register the host to the guest...
+    },
+    async updateUserImg(context, { imgUrl, userId }) {
+      await userService.updateUserImg(imgUrl, userId);
+      context.commit({ type: "setCurrUserImg", imgUrl });
     }
   }
 };
