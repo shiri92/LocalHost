@@ -1,6 +1,5 @@
 /* ----- DEPEND -----*/
 import Axios from "axios";
-import { log } from "util";
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
