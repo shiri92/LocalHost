@@ -1,9 +1,8 @@
 /* ----- DEPEND -----*/
-const userService = require("../services/userService.js");
-const cloudService = require('../services/cloudService');
+const userService = require('../services/userService.js');
 
 /* ----- CONST -----*/
-const BASE = "/user";
+const BASE = '/user';
 
 function addRoutes(app) {
 
@@ -13,13 +12,12 @@ function addRoutes(app) {
   });
 
   // Login User
-  app.put(`${BASE}/login`, (req, res) => {
+  app.put(`${BASE}/login`, async (req, res) => {
     const credentials = req.body;
-    userService.login(credentials).then(user => {
-      if (!user) res.status(401).send("Something broke!");
-      req.session.user = user;
-      res.json(user);
-    });
+    let user = await userService.login(credentials);
+    if (!user) res.status(401).send("Something broke!");
+    req.session.user = user;
+    res.json(user);
   });
 
   // Logout User (Session Only)
@@ -29,27 +27,31 @@ function addRoutes(app) {
   });
 
   // GET Users
-  app.get(BASE, (req, res) => {
+  app.get(BASE, async (req, res) => {
     const { country, city } = req.query;
-    userService.query(country, city).then(users => res.json(users));
+    let users = await userService.query(country, city);
+    return res.json(users);
   });
 
   // GET User By Id
-  app.get(`${BASE}/:id`, (req, res) => {
+  app.get(`${BASE}/:id`, async (req, res) => {
     const userId = req.params.id;
-    userService.getById(userId).then(user => res.json(user));
+    let user = await userService.getById(userId);
+    return res.json(user);
   });
 
-  // ADD User
-  app.post(BASE, (req, res) => {
+  // ADD User, Return User With Id
+  app.post(BASE, async (req, res) => {
     const credentials = req.body;
-    userService.add(credentials).then(user => res.json(user));
+    let user = await userService.add(credentials);
+    return res.json(user);
   });
 
   // ADD Guest Request
-  app.put(`${BASE}/request`, (req, res) => {
+  app.put(`${BASE}/request`, async (req, res) => {
     const { request } = req.body;
-    userService.addRequest(request).then(() => res.json());
+    await userService.addRequest(request);
+    return res.json();
   });
 
   // UPDATE User
@@ -58,11 +60,12 @@ function addRoutes(app) {
   //   userService.update(credentials).then(() => res.json());
   // })
 
-  // UPDATE Profile Image
-  app.put(`${BASE}/:id/img`, (req, res) => {
+  // UPDATE Profile Image, return ImgUrl
+  app.put(`${BASE}/:id/img`, async (req, res) => {
     let { id } = req.params;
     let { imgUrl } = req.body;
-    userService.updateProfileImg(imgUrl, id).then(imgUrl => res.json())
+    await userService.updateUserImg(imgUrl, id);
+    return res.json();
   });
 
 }

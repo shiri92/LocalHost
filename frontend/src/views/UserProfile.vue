@@ -61,7 +61,7 @@ import ReviewForm from '../components/ReviewForm.vue';
 
 
 export default {
-  name: "user-profile",
+  name: 'user-profile',
   data() {
     return {
       isNavInDisplay: false,
@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     currUser() {
-      return this.$store.getters.user;
+      return this.$store.getters.currUser;
     },
     loggedUser() {
       return this.$store.getters.loggedUser;

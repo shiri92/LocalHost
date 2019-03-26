@@ -52,7 +52,7 @@ async function update(credentials) {
 }
 
 // UPDATE Profile Image Url
-async function updateProfileImg(imgUrl, userId) {
+async function updateUserImg(imgUrl, userId) {
   await axios.put(`${BASE_API}/${userId}/img`, { imgUrl })
 }
 
@@ -60,5 +60,5 @@ export default {
   checkLogged, login, logout,
   query, getById,
   add, addRequest,
-  update, updateProfileImg
+  update, updateUserImg
 };

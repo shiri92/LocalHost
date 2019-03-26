@@ -1,31 +1,18 @@
-/* ----- DEPENDENCIES -----*/
+/* ----- DEPEND -----*/
 const countryService = require('../services/countryService.js');
 
-/* ----- CONSTANTS -----*/
+/* ----- CONST -----*/
 const BASE = '/country';
 
 
 function addRoutes(app) {
 
-    // GET COUNTRIES
-    app.get(BASE, (req, res) => {
+    // GET Countries
+    app.get(BASE, async (req, res) => {
         const { cityName } = req.query;
-        countryService.query(cityName)
-            .then(countries => {
-                // console.log(countries)
-                return res.json(countries);
-            })
-    })
-
-    // app.get(`${BASE}/:id`, (req, res) => {
-    //     const locId = req.params.id
-    //     countryService.getById(locId)
-    //         .then(loc => {
-    //             return res.json(loc)
-    //         });
-    // })
-
-
+        let countries = await countryService.query(cityName);
+        return res.json(countries);
+    });
 
 }
 

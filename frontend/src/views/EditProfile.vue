@@ -1,21 +1,20 @@
 <template>
-  <section class="flex align-center flex-row" v-if="user">
+  <section class="flex align-center flex-row" v-if="getUser">
     <div class="side-profile">
-      <img class="profile-img" :src="user.imgUrl" alt>
-      <div class="profile-name">{{user.firstName}} {{user.lastName}}</div>
-      <div class="profile-loc">{{user.city}}, {{user.country}}</div>
+      <img class="profile-img" :src="getUser.imgUrl" alt>
+      <div class="profile-name">{{getUser.firstName}} {{getUser.lastName}}</div>
+      <div class="profile-loc">{{getUser.city}}, {{getUser.country}}</div>
       <hr>
-      <input name="file" id="file" class="input-file" type="file" @change="onFileSelected">
+      <input name="file" id="file" class="input-file" type="file" @change="updateImg">
       <label for="file">Choose a file</label>
-      <el-button type="success" @click="onUpload">Upload</el-button>
     </div>
     <div class="edit-form form-container flex align-center flex-col">
-      <h2>{{user.firstName}} {{user.lastName}}</h2>
+      <h2>{{getUser.firstName}} {{getUser.lastName}}</h2>
       <form class="form" action>
         <div class="about-edit">
           <div class="form-item flex space-between">
             <label for="hosting">Hosting Availability:&nbsp;</label>
-            <select class="form-input" v-model="user.isHosting">
+            <select class="form-input" v-model="getUser.isHosting">
               <option value="true">Accepting Guests</option>
               <option value="false">Not Accepting Guests</option>
             </select>
@@ -28,7 +27,7 @@
                 class="form-input"
                 type="text"
                 placeholder="Enter languages"
-                v-model="user.language"
+                v-model="getUser.language"
               >
             </div>
             <div class="form-item flex space-between">
@@ -37,12 +36,12 @@
                 class="form-input"
                 type="text"
                 placeholder="Enter country"
-                v-model="user.country"
+                v-model="getUser.country"
               >
             </div>
             <div class="form-item flex space-between">
               <label for="city">City:&nbsp;</label>
-              <input class="form-input" type="text" placeholder="Enter city" v-model="user.city">
+              <input class="form-input" type="text" placeholder="Enter city" v-model="getUser.city">
             </div>
             <div class="form-item flex space-between">
               <label for="occupation">Occupation:&nbsp;</label>
@@ -54,7 +53,7 @@
             </div>
             <div class="form-item flex space-between">
               <label for="gender">Gender:&nbsp;</label>
-              <select class="form-input" v-model="user.gender">
+              <select class="form-input" v-model="getUser.gender">
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
@@ -118,20 +117,15 @@ export default {
       .then()
   },
   computed: {
-    user() {
-      return this.$store.getters.user;
+    getUser() {
+      return this.$store.getters.currUser;
     }
   },
   methods: {
-    onFileSelected(ev) {
-      this.selectedFile = ev.target.files[0];
-    },
-    async onUpload() {
-      let userId = this.$route.params.userId;
-      let imgUrl = await this.$store.dispatch({ type: 'uploadProfileImg', imgFile: this.selectedFile });
-      await this.$store.dispatch({ type: "updateProfileImg", imgUrl: imgUrl, userId });
-      console.log('successfuly updated!')
-
+    async updateImg(ev) {
+      let { userId } = this.$route.params;
+      let imgUrl = await this.$store.dispatch({ type: 'uploadProfileImg', imgFile: ev.target.files[0] });
+      await this.$store.dispatch({ type: 'updateUserImg', imgUrl: imgUrl, userId });
     },
     onSave() {
 
