@@ -1,6 +1,5 @@
 <template>
   <li>
-    <!-- <li class="single-profile flex flex-col space-between"> -->
     <div class="container flex space-between flex-col align-center">
       <div class="card">
         <div class="hero"></div>

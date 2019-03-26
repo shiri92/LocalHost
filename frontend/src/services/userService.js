@@ -52,28 +52,15 @@ async function update(credentials) {
   await axios.put(`${BASE_API}/${id}`, credentials);
 }
 
-// ADD review to user
+// UPDATE Profile Image Url
+async function updateUserImg(imgUrl, userId) {
+  await axios.put(`${BASE_API}/${userId}/img`, { imgUrl });
+}
+
 async function addReview(review) {
   let res = await axios.put(`${BASE_API}/review`, review);
   console.log(res.data);
   return res.data;
-}
-
-// UPDATE Profile Image
-async function updateProfileImg(imgFile, userId) {
-  let formData = new FormData();
-  let UPLOAD_PRESET = "jhqr9o4c";
-  formData.append("file", imgFile);
-  formData.append("upload_preset", UPLOAD_PRESET);
-  let res = axios.post(`${BASE_API}/${userId}/img`, formData, {
-    headers: { "Content-Type": "multipart/form-data" }
-  });
-  // console.log(File);
-  // console.log(userId);
-  // let res = axios.post(`${BASE_API}/${userId}/img`, { 'file': File });
-  // let query = `imgFile=${payload.imgFile}`;
-  // let res = await axios.put(`${BASE_API}/${payload.userId}/img${query}`);
-  // return res.data;
 }
 
 export default {
@@ -86,5 +73,5 @@ export default {
   addRequest,
   addReview,
   update,
-  updateProfileImg
+  updateUserImg
 };

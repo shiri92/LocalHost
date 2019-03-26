@@ -8,7 +8,7 @@
     </div>
     <div class="main-desc">
       <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-        <div class="flex space-evenly align-center" v-if="loggedUser">
+        <div class="flex justify-center align-center" v-if="loggedUser">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div v-if="loggedUser._id !== currUser._id">
             <button @click="requestFormOn" class="btn">
@@ -61,7 +61,7 @@ import ReviewForm from '../components/ReviewForm.vue';
 
 
 export default {
-  name: "user-profile",
+  name: 'user-profile',
   data() {
     return {
       isNavInDisplay: false,
@@ -85,7 +85,7 @@ export default {
   },
   computed: {
     currUser() {
-      return this.$store.getters.user;
+      return this.$store.getters.currUser;
     },
     loggedUser() {
       return this.$store.getters.loggedUser;

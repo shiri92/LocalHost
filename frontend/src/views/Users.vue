@@ -13,7 +13,7 @@ import UserList from '../components/UserList.vue';
 import MainHeader from '../../src/components/MainHeader'
 
 export default {
-  name: "Users",
+  name: 'Users',
   components: {
     UserList,
     MainHeader
@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     getUsers() {
-      return this.$store.getters.users;
+      return this.$store.getters.currUsers;
     }
   },
 };

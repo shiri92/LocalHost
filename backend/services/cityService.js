@@ -1,8 +1,8 @@
-/* ----- DEPENDENCIES -----*/
+/* ----- DEPEND -----*/
 const mongoService = require("./mongoService");
 const ObjectId = require("mongodb").ObjectId;
 
-/* ----- CONSTANTS -----*/
+/* ----- CONST -----*/
 const CITIES_COLLECTION = "cities";
 const TOP_DESTS_COLLECTION = "topDests";
 
@@ -10,14 +10,8 @@ FillDB();
 
 async function FillDB() {
   let db = await mongoService.connect();
-  let cities = db
-    .collection(CITIES_COLLECTION)
-    .find({})
-    .toArray();
-  let topDests = db
-    .collection(TOP_DESTS_COLLECTION)
-    .find({})
-    .toArray();
+  let cities = db.collection(CITIES_COLLECTION).find({}).toArray();
+  let topDests = db.collection(TOP_DESTS_COLLECTION).find({}).toArray();
 
   let resCities = await cities;
   if (resCities.length === 0) addMany(citiesDB, CITIES_COLLECTION);
@@ -33,18 +27,13 @@ function addMany(arr, key) {
 async function query(searchWord) {
   let queryRegex = { $regex: searchWord, $options: "-i" };
   let db = await mongoService.connect();
-  return db
-    .collection(CITIES_COLLECTION)
-    .find({ $or: [{ name: queryRegex }, { country: queryRegex }] })
-    .toArray();
+  return db.collection(CITIES_COLLECTION).find({ $or: [{ name: queryRegex }, { country: queryRegex }] }).toArray();
 }
 
 async function queryTopDests() {
   let db = await mongoService.connect();
-  return db
-    .collection("topDests")
-    .find({})
-    .toArray();
+  let res = await db.collection("topDests").find({}).toArray();
+  return res;
 }
 
 var citiesDB = [
