@@ -3,14 +3,14 @@
     <div class="overview">
       <h5 class="header-box">OVERVIEW</h5>
       <hr style="margin: 0">
-      <div class="user-info flex flex-row ">
+      <div class="user-info flex flex-row">
         <div class="flex flex-col" style="width: 50%">
           <div class="info-item">
             <font-awesome-icon icon="quote-left"/>&nbsp;0 References
           </div>
           <div class="info-item">
             <font-awesome-icon icon="comment"/>
-            &nbsp;Fluent in {{user.language[0]}}
+            &nbsp;Fluent in {{user.languages[0]}}
           </div>
           <div class="info-item" style="margin-bottom: 0">
             <font-awesome-icon icon="venus-mars"/>
@@ -19,10 +19,12 @@
         </div>
         <div class="flex flex-col">
           <div class="info-item">
-            <font-awesome-icon icon="briefcase"/>&nbsp;{{(user.occupation)? user.occupation:'No occupation listed'}}
+            <font-awesome-icon icon="briefcase"/>
+            &nbsp;{{(user.occupation)? user.occupation:'No occupation listed'}}
           </div>
           <div class="info-item">
-            <font-awesome-icon icon="book"/>&nbsp;{{(user.education)? user.education:'No education listed'}}
+            <font-awesome-icon icon="book"/>
+            &nbsp;{{(user.education)? user.education:'No education listed'}}
           </div>
           <div class="info-item" style="margin-bottom: 0">
             <font-awesome-icon icon="map-marker-alt"/>
