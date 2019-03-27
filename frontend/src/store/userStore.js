@@ -31,14 +31,23 @@ export default {
     setCurrUser(state, { user }) {
       state.currUser = user;
     },
-    addReview(state, { review }) {
-      state.currUser.references.push(review);
+    addRequest(state, { request }) {
+      state.currUser.requests.push(request);
+    },
+    addReview(state, { res }) {
+      state.currUser.references.push(res);
     },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
     },
     setLoggedUserImg(state, { imgUrl }) {
       state.loggedUser.imgUrl = imgUrl;
+    },
+    removeReview(state, { reviewId }) {
+      let currReviewIdx = state.currUser.references.findIndex(
+        review => reviewId === review._id
+      );
+      state.currUser.references.splice(currReviewIdx, 1);
     }
   },
   actions: {
@@ -68,29 +77,39 @@ export default {
     },
     async addRequest(context, { request }) {
       await userService.addRequest(request);
-      // add to front...
-      // show friendly tiny modal...
+      context.commit({ type: "addRequest", request });
+      // TODO: show sweet alert...
     },
     async addReview(context, { review }) {
-      await userService.addReview(review);
-      context.commit({ type: "addReview", review });
+      let res = await userService.addReview(review);
+      context.commit({ type: "addReview", res });
+    },
+    async removeReview(context, { currUserId, reviewId }) {
+      await userService.removeReview(currUserId, reviewId);
+      context.commit({ type: "removeReview", reviewId });
     },
     async removeRequest(context, guestId) {
-      // by id
-      // remove from front...
-      // show friednky tiny modal...
+      // TODO: update backend...
+      // TODO: update frontend...
+      // TODO: show sweet alert...
     },
-    async BookGuest(context, request) {
-      // get request (with guestId, hostId), register the guest to the host...
+    async bookGuest(context, { request }) {
+      let { sender, recipient } = request;
+      await userService.bookGuest(sender, recipient);
+      await userService.removeRequest(sender, recipient);
+      // TODO: update frontend...
+      // TODO: show sweet alert...
     },
-    async BookHost(context, request) {
-      // get request (with guestId, hostId), register the host to the guest...
+    async bookHost(context, { request }) {
+      let { sender, recipient } = request;
+      await userService.bookHost(sender, recipient);
+      // TODO: update frontend...
+      // TODO: show sweet alert...
     },
     async updateUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);
       // context.commit({ type: 'setCurrUserImg', imgUrl })
-      context.commit({ type: 'setLoggedUserImg', imgUrl })
-    },
-
+      context.commit({ type: "setLoggedUserImg", imgUrl });
+    }
   }
 };
