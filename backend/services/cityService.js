@@ -52,61 +52,61 @@ var citiesDB = [
     name: "Bangkok",
     country: "Thailand",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173600/ons/cities/bangkok.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566355/city-imgs/bangkok.jpg"
   },
   {
     name: "London",
     country: "England",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173600/ons/cities/london.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566358/city-imgs/london.jpg"
   },
   {
     name: "Paris",
     country: "France",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173592/ons/cities/paris.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566352/city-imgs/paris.jpg"
   },
   {
-    name: "Buenos-Aires",
+    name: "Buenos Aires",
     country: "Argentina",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173589/ons/cities/buenos-aires.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566351/city-imgs/buenos%20aires.jpg"
   },
   {
     name: "Rome",
     country: "Italy",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173596/ons/cities/rome.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566354/city-imgs/rome.jpg"
   },
   {
     name: "Tokyo",
     country: "Japan",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173596/ons/cities/tokyo.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566355/city-imgs/tokyo.jpg"
   },
   {
     name: "Berlin",
     country: "Germany",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173596/ons/cities/berlin.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566353/city-imgs/berlin.jpg"
   },
   {
     name: "Barcelona",
     country: "Spain",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173587/ons/cities/barcelona.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566351/city-imgs/barcelona.jpg"
   },
   {
-    name: "New-York",
+    name: "New York",
     country: "NY, USA",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173606/ons/cities/new-york.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566360/city-imgs/new%20york.jpg"
   },
   {
     name: "Rio",
     country: "Brazil",
     imgUrl:
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553173600/ons/cities/rio.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566358/city-imgs/rio%20de%20janeiro.jpg"
   },
   {
     name: "Madrid",
@@ -119,7 +119,7 @@ var citiesDB = [
     imgUrl: ""
   },
   {
-    name: "Mexico-City",
+    name: "Mexico City",
     country: "Mexico",
     imgUrl: ""
   }

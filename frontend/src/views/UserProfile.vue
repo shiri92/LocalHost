@@ -3,7 +3,7 @@
     <div class="side-profile">
       <img class="profile-img" :src="currUser.imgUrl" alt>
       <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
-      <div class="profile-loc">{{currUser.city}}, {{currUser.country}}</div>
+      <div class="profile-loc">{{currUser.address.city}}, {{currUser.address.country}}</div>
       <hr>
       <div class="flex justify-center align-center flex-col">
         <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>

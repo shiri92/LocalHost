@@ -1,20 +1,20 @@
 <template>
-  <section class="edit-section flex justify-center" v-if="currUser">
+  <section class="edit-section flex justify-center" v-if="user">
     <div class="side-profile">
-      <img class="profile-img" :src="currUser.imgUrl" alt>
-      <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
-      <div class="profile-loc">{{currUser.city}}, {{currUser.country}}</div>
+      <img class="profile-img" :src="user.imgUrl" alt>
+      <div class="profile-name">{{user.firstName}} {{user.lastName}}</div>
+      <div class="profile-loc">{{user.address.city}}, {{user.address.country}}</div>
       <hr>
       <input name="file" id="file" class="input-file" type="file" @change="updateImg">
       <label for="file">Choose a file</label>
     </div>
     <div class="edit-form form-container flex align-center flex-col">
       <form class="form" action>
-        <h2>{{currUser.firstName}} {{currUser.lastName}}</h2>
+        <h2>{{user.firstName}} {{user.lastName}}</h2>
         <div class="about-edit">
           <div class="form-item flex space-between">
             <label for="hosting">Hosting Availability:&nbsp;</label>
-            <select class="form-input" v-model="currUser.isHosting">
+            <select class="form-input" v-model="user.isHosting">
               <option value="true">Accepting Guests</option>
               <option value="false">Not Accepting Guests</option>
             </select>
@@ -28,34 +28,28 @@
                 class="form-input"
                 type="text"
                 placeholder="Enter languages"
-                v-model="currUser.language"
+                v-model="user.languages"
               >
             </div>
+
             <div class="form-item flex space-between">
-              <label for="country">Country:&nbsp;</label>
-              <input
-                class="form-input"
-                type="text"
-                placeholder="Enter country"
-                v-model="currUser.country"
-              >
+              <label>Address:&nbsp;</label>
+              <el-autocomplete
+                placeholder="Enter city name"
+                class="form-autocomplete"
+                @select="setAddres"
+                v-model="searchWord"
+                :fetch-suggestions="querySearchAsync"
+              ></el-autocomplete>
             </div>
-            <div class="form-item flex space-between">
-              <label for="city">City:&nbsp;</label>
-              <input
-                class="form-input"
-                type="text"
-                placeholder="Enter city"
-                v-model="currUser.city"
-              >
-            </div>
+
             <div class="form-item flex space-between">
               <label for="occupation">Occupation:&nbsp;</label>
               <input
                 class="form-input"
                 type="text"
                 placeholder="Enter occupation"
-                v-model="currUser.occupation"
+                v-model="user.occupation"
               >
             </div>
             <div class="form-item flex space-between">
@@ -64,12 +58,12 @@
                 class="form-input"
                 type="text"
                 placeholder="Enter education"
-                v-model="currUser.education"
+                v-model="user.education"
               >
             </div>
             <div class="form-item flex space-between">
               <label for="gender">Gender:&nbsp;</label>
-              <select class="form-input" v-model="currUser.gender">
+              <select class="form-input" v-model="user.gender">
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
@@ -80,7 +74,7 @@
         <div class="home-edit">
           <div class="form-item flex space-between">
             <label for="room">Max Number of Guests:&nbsp;</label>
-            <select class="form-input" v-model="currUser.placeDetails.guestCapacity">
+            <select class="form-input" v-model="user.placeDetails.guestCapacity">
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -96,7 +90,7 @@
           </div>
           <div class="form-item flex space-between">
             <label for="room">Gender preference:&nbsp;</label>
-            <select class="form-input" v-model="currUser.placeDetails.guestGenderPref">
+            <select class="form-input" v-model="user.placeDetails.guestGenderPref">
               <option value="Any">Any</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -109,30 +103,26 @@
             </label>
             <ul class="clean-list">
               <li>
-                <input type="checkbox" value="pet" v-model="currUser.placeDetails.isPetFriendly"> Pet Friendly
+                <input type="checkbox" value="pet" v-model="user.placeDetails.isPetFriendly"> Pet Friendly
               </li>
               <li>
-                <input type="checkbox" value="kids" v-model="currUser.placeDetails.isKidFriendly"> Kid Friendly
+                <input type="checkbox" value="kids" v-model="user.placeDetails.isKidFriendly"> Kid Friendly
               </li>
               <li>
-                <input
-                  type="checkbox"
-                  value="smoking"
-                  v-model="currUser.placeDetails.isSmokingAllowed"
-                > Smoking Allowed
+                <input type="checkbox" value="smoking" v-model="user.placeDetails.isSmokingAllowed"> Smoking Allowed
               </li>
               <li>
                 <input
                   type="checkbox"
                   value="disabled"
-                  v-model="currUser.placeDetails.isDisabledAccessible"
+                  v-model="user.placeDetails.isDisabledAccessible"
                 > Disabled accessible
               </li>
             </ul>
           </div>
           <div class="form-item flex space-between">
             <label for="room">How many pets?:&nbsp;</label>
-            <select class="form-input" v-model="currUser.placeDetails.pets">
+            <select class="form-input" v-model="user.placeDetails.pets">
               <option value="0">None</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -142,7 +132,7 @@
           </div>
           <div class="form-item flex space-between">
             <label for="room">How many kids?:&nbsp;</label>
-            <select class="form-input" v-model="currUser.placeDetails.kids">
+            <select class="form-input" v-model="user.placeDetails.kids">
               <option value="0">None</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -153,7 +143,7 @@
         </div>
         <hr>
         <el-button @click="onSave" type="success" class="el-btn el-btn-success">Save</el-button>
-        <el-button type="success" @click="$router.push('/userProfile/' + currUser._id)" plain>Cancel</el-button>
+        <el-button type="success" @click="$router.push('/userProfile/' + user._id)" plain>Cancel</el-button>
       </form>
     </div>
   </section>
@@ -164,19 +154,42 @@ export default {
   name: "edit-profile",
   data() {
     return {
-      selectedFile: null
+      user: null,
+      searchWord: ''
     };
   },
   created() {
-    let userId = this.$route.params.userId;
-    this.$store.dispatch({ type: "loadUser", userId }).then();
+    this.user = JSON.parse(JSON.stringify(this.getLoggedUser));
   },
   computed: {
-    currUser() {
-      return this.$store.getters.currUser;
+    getLoggedUser() {
+      return this.$store.getters.loggedUser;
+    }
+  },
+  watch: {
+    getLoggedUser(newVal, oldVal) {
+      this.user = JSON.parse(JSON.stringify(this.getLoggedUser));
     }
   },
   methods: {
+    querySearchAsync(queryString, cb) {
+      if (this.searchWord) {
+        this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord })
+          .then(cities => {
+            var results = cities.map(city => {
+              return { value: city.name + ', ' + city.country }
+            });
+            cb(results);
+          })
+      }
+    },
+    setAddres(ev) {
+      let str = ev.value;
+      let idx = str.indexOf(',');
+      let currCity = str.substr(0, idx);
+      let currCountry = str.substr(idx + 2, str.length - 1);
+      this.user.address = { city: currCity, country: currCountry };
+    },
     async updateImg(ev) {
       let { userId } = this.$route.params;
       let imgUrl = await this.$store.dispatch({
@@ -189,7 +202,10 @@ export default {
         userId
       });
     },
-    onSave() { }
+    onSave() {
+      this.$store.dispatch({ type: 'updateUser', user: this.user })
+        .then(() => this.$router.push('/userProfile/' + this.user._id))
+    }
   }
 };
 </script>
@@ -261,6 +277,11 @@ export default {
         .form-input {
           width: 200px;
           padding: 5px;
+          border: 1px solid burlywood;
+          border-radius: 5px;
+        }
+        .form-autocomplete {
+          width: 200px;
           border: 1px solid burlywood;
           border-radius: 5px;
         }

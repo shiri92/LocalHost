@@ -10,7 +10,7 @@
 
 <script>
 import UserList from '../components/UserList.vue';
-import MainHeader from '../../src/components/MainHeader'
+import MainHeader from '@/components/MainHeader'
 
 export default {
   name: 'Users',

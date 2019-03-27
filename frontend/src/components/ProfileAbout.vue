@@ -28,7 +28,7 @@
           </div>
           <div class="info-item">
             <font-awesome-icon icon="map-marker-alt"/>
-            &nbsp;{{user.city}}, {{user.country}}
+            &nbsp;{{user.address.city}}, {{user.address.country}}
           </div>
         </div>
       </div>

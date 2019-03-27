@@ -63,6 +63,7 @@ export default {
 .main-header {
   background-repeat: no-repeat;
   background-size: cover;
+  // background-position: center center;
   height: 100vh;
   background-attachment: fixed;
 }
