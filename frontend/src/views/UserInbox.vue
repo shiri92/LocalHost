@@ -53,6 +53,7 @@ export default {
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 5px;
+    animation-duration: 2s;
   }
 }
 </style>

@@ -87,6 +87,7 @@ export default {
     async bookGuest(context, { request }) {
       let { sender, recipient } = request;
       await userService.bookGuest(sender, recipient);
+      await userService.removeRequest(sender, recipient);
       // TODO: update frontend...
       // TODO: show sweet alert...
     },

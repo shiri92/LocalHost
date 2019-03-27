@@ -47,6 +47,16 @@ async function addRequest(request) {
   await axios.put(`${BASE_API}/request`, request);
 }
 
+// ADD User Review
+async function addReview(review) {
+  await axios.put(`${BASE_API}/review`, review);
+}
+
+// DELETE Guest Request 
+async function removeRequest(sender, recipient) {
+  await axios.delete(`${BASE_API}/${recipient.id}`, { sender })
+}
+
 // UPDATE User
 async function update(credentials) {
   await axios.put(`${BASE_API}/${id}`, credentials);
@@ -57,10 +67,7 @@ async function updateUserImg(imgUrl, userId) {
   await axios.put(`${BASE_API}/${userId}/img`, { imgUrl });
 }
 
-// ADD Review
-async function addReview(review) {
-  await axios.put(`${BASE_API}/review`, review);
-}
+
 
 // (UPDATE HOST USER) Book Guest
 async function bookGuest(sender, recipient) {
