@@ -54,9 +54,9 @@ async function addReview(review) {
   return res.data;
 }
 
-// DELETE User Request 
+// DELETE User Request
 async function removeRequest(recipientId, requestId) {
-  await axios.delete(`${BASE_API}/${recipientId}/request/${requestId}`)
+  await axios.delete(`${BASE_API}/${recipientId}/request/${requestId}`);
 }
 
 // DELETE User Review
@@ -65,8 +65,9 @@ async function removeReview(currUserId, reviewId) {
 }
 
 // UPDATE User
-async function update(credentials) {
-  await axios.put(`${BASE_API}/${id}`, credentials);
+async function updateUser(user) {
+  let res = await axios.put(`${BASE_API}/${user._id}`, user);
+  return res.data;
 }
 
 // UPDATE Profile Image Url
@@ -85,11 +86,19 @@ async function bookHost(sender, recipient) {
   await axios.put(`${BASE_API}/${id}/bookHost`, { recipient });
 }
 
-
 export default {
-  checkLogged, login, logout,
-  query, getById,
-  add, addRequest, addReview, bookGuest, bookHost,
-  removeReview, removeRequest,
-  update, updateUserImg
+  checkLogged,
+  login,
+  logout,
+  query,
+  getById,
+  add,
+  addRequest,
+  addReview,
+  bookGuest,
+  bookHost,
+  removeReview,
+  removeRequest,
+  updateUser,
+  updateUserImg
 };

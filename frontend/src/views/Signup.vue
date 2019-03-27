@@ -61,12 +61,21 @@
             v-model="searchWord"
             :fetch-suggestions="querySearchAsync"
           ></el-autocomplete>
-          <el-button
-            class="signup-btn"
-            style="margin-top: 12px;"
-            @click="next"
-            type="warning"
-          >Sign Up</el-button>
+
+          <div class="btns-container flex">
+            <el-button
+              class="signup-btn"
+              style="margin-top: 12px;"
+              type="warning"
+              @click.native="stepBack"
+            >Previous Step</el-button>
+            <el-button
+              class="signup-btn"
+              style="margin-top: 12px;"
+              @click="next"
+              type="warning"
+            >Sign Up</el-button>
+          </div>
         </b-form>
       </div>
     </div>
@@ -85,7 +94,7 @@ export default {
         email: '',
         password: '',
         birthdate: { day: '', month: '', year: '' },
-        city: ''
+        address: {}
       },
       genders: ['Male', 'Female', 'Other'],
       searchWord: '',
@@ -112,7 +121,10 @@ export default {
       }
     },
     setAddres(ev) {
-      this.form.city = ev;
+      let idx = ev.indexOf(',');
+      let currCity = ev.substr(0, idx);
+      let currCountry = ev.substr(idx + 2, ev.length - 1);
+      this.form.address = { city: currCity, country: currCountry };
     },
     stepBack() {
       this.active = 0;
@@ -208,6 +220,9 @@ form {
   margin-bottom: 15px;
 }
 
+.btns-container {
+  align-self: center;
+}
 .el-button {
   width: 130px;
   align-self: center;

@@ -10,10 +10,7 @@ function addRoutes(app) {
     if (req.session.user) {
       let user = await userService.getById(req.session.user._id);
       return res.json(user);
-    }
-    else
-      return res.json();
-
+    } else return res.json();
   });
 
   // Login User
@@ -82,12 +79,11 @@ function addRoutes(app) {
     return res.end(`Request ${requestId} Deleted`);
   });
 
-
   // UPDATE User
-  // app.put(`${BASE}/:id`, (req, res) => {
-  //   const credentials = req.body;
-  //   userService.update(credentials).then(() => res.json());
-  // })
+  app.put(`${BASE}/:id`, (req, res) => {
+    const user = req.body;
+    userService.update(user).then(() => res.json());
+  });
 
   // UPDATE Profile Image, return ImgUrl
   app.put(`${BASE}/:id/img`, async (req, res) => {

@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div class="container flex space-between flex-col align-center">
+    <div class="card-container flex space-between flex-col ">
       <div class="card">
         <div class="hero"></div>
         <div class="main">
@@ -10,7 +10,7 @@
               <h3>{{profile.firstName}} {{profile.lastName}}</h3>
               <span class="location">
                 <font-awesome-icon icon="map-marker-alt"/>
-                <span>&nbsp;{{profile.city}}, {{profile.country}}</span>
+                <span>&nbsp;{{profile.address.city}}, {{profile.address.country}}</span>
               </span>
             </div>
           </div>
@@ -29,9 +29,8 @@ export default {
 
 <style lang="scss" scoped>
 li {
-  .container {
+  .card-container {
     .card {
-      width: 300px;
       border-radius: 5px;
       box-shadow: 2px 5px 10px #ccc;
       background: white;
@@ -46,7 +45,7 @@ li {
         padding: 0 10px;
         .user {
           display: flex;
-          height: 75px;
+          margin-bottom: 5px;
           .avatar {
             border-radius: 50%;
             border: 3px solid #fff;

@@ -20,8 +20,8 @@ module.exports = {
   removeReview, removeRequest,
   updateUserImg,
   bookGuest,
-  bookHost
-  // update
+  bookHost,
+  update
 };
 
 FillDB();
@@ -50,7 +50,10 @@ async function login(credentials) {
 // GET Users By Address
 async function query(currCountry, currCity) {
   let db = await mongoService.connect();
-  let res = await db.collection(USERS_COLLECTION).find({ country: currCountry, city: currCity }).toArray();
+  let res = await db
+    .collection(USERS_COLLECTION)
+    .find({ "address.city": currCity, "address.country": currCountry })
+    .toArray();
   return res;
 }
 
@@ -67,7 +70,20 @@ async function getById(id) {
 // ADD User
 async function add(credentials) {
   let db = await mongoService.connect();
-  let res = await db.collection(USERS_COLLECTION).insertOne(credentials);
+  let res = await db
+    .collection(USERS_COLLECTION)
+    .insertOne(
+      _createUser(
+        credentials.email,
+        credentials.password,
+        credentials.firstName,
+        credentials.lastName,
+        gender,
+        birthdate,
+        city,
+        country
+      )
+    );
   credentials._id = res.insertedId;
   return credentials;
 }
@@ -113,10 +129,12 @@ async function removeRequest(currUserId, requestId) {
 }
 
 // UPDATE User
-// async function update(credentials) {
-// let db = await mongoService.connect();
-// db.collection(USERS_COLLECTION).updateOne({ _id: toy._id }, { $set: toy });
-// }
+async function update(user) {
+  user._id = new ObjectId(user._id);
+  let db = await mongoService.connect();
+  db.collection(USERS_COLLECTION).updateOne({ _id: user._id }, { $set: user });
+  return user;
+}
 
 // UPDATE Profile Image Url
 async function updateUserImg(imgUrl, userId) {
@@ -153,8 +171,7 @@ function _createUser(
   lastName,
   gender,
   birthdate,
-  city,
-  country
+  address
 ) {
   return {
     /* ----- Personal Details -----*/
@@ -169,8 +186,7 @@ function _createUser(
     education: "",
     imgUrl: gender === "Male" ? MALE_IMG : FEMALE_IMG,
     /* ----- Location Details -----*/
-    city,
-    country,
+    address,
     /* ----- Surfing Details -----*/
     isHosting: false,
     isSurfing: false,
@@ -205,8 +221,7 @@ function _createUsers() {
       "Saar",
       "Male",
       { day: 24, month: 09, year: 1997 },
-      "Bangkok",
-      "Thailand"
+      { city: "Bangkok", country: "Thailand" }
     )
   );
   users.push(
@@ -217,8 +232,7 @@ function _createUsers() {
       "Ron",
       "Female",
       { day: 09, month: 11, year: 1992 },
-      "Barcelona",
-      "Spain"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -229,8 +243,7 @@ function _createUsers() {
       "Ratzon",
       "Male",
       { day: 19, month: 02, year: 1993 },
-      "Barcelona",
-      "Spain"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -241,8 +254,7 @@ function _createUsers() {
       "Turner",
       "Female",
       { day: 08, month: 09, year: 1990 },
-      "Barcelona",
-      "Spain"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -253,8 +265,7 @@ function _createUsers() {
       "County",
       "Female",
       { day: 30, month: 10, year: 1992 },
-      "Barcelona",
-      "Spain"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -265,8 +276,7 @@ function _createUsers() {
       "Edwards",
       "Female",
       { day: 11, month: 07, year: 1994 },
-      "Barcelona",
-      "Spain"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -277,8 +287,7 @@ function _createUsers() {
       "Nelson",
       "Male",
       { day: 14, month: 06, year: 1988 },
-      "Barcelona",
-      "Spain"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -289,8 +298,7 @@ function _createUsers() {
       "Powell",
       "Male",
       { day: 05, month: 02, year: 1980 },
-      "Barcelona",
-      "Spain"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -301,8 +309,7 @@ function _createUsers() {
       "Turner",
       "Male",
       { day: 08, month: 09, year: 1985 },
-      "Bangkok",
-      "Thailand"
+      { city: "Bangkok", country: "Thailand" }
     )
   );
   users.push(
@@ -313,8 +320,7 @@ function _createUsers() {
       "Smith",
       "Male",
       { day: 12, month: 09, year: 1989 },
-      "Barcelona",
-      "Spain"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -325,8 +331,7 @@ function _createUsers() {
       "Harrison",
       "Female",
       { day: 18, month: 09, year: 1980 },
-      "Bangkok",
-      "Thailand"
+      { city: "Bangkok", country: "Thailand" }
     )
   );
 

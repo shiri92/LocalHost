@@ -2,7 +2,7 @@
   <section v-if="showNav" class="main-nav flex space-between align-center">
     <div class="nav-container flex space-between align-center">
       <div class="links-container flex space-around">
-        <router-link to="/">Some Logo</router-link>
+        <router-link to="/"><div class="logo"></div></router-link>
       </div>
 
       <div class="buttons-container">
@@ -84,6 +84,13 @@ export default {
       color: #7ebf50;
     }
   }
+}
+
+.logo {
+  height: 40px;
+  width: 150px;
+  background-image: url('../../public/img/logo.png');
+  background-size: cover;
 }
 
 .welcome {
