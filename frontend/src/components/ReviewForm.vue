@@ -53,13 +53,7 @@ export default {
         getAsAGuest: false,
         sender: { id: '', firstName: '', lastName: '', imgUrl: '', country: '', city: '' },
         recipient: { id: '', firstName: '', lastName: '' },
-        // givenBy: '',
-        // givenById: '',
-        // givenByImgUrl: '',
-        // givenTo: '',
-        // givenToId: '',
         createdAt: Date.now(),
-        // givenLocation: '',
         rating: 0,
         description: '',
       }
