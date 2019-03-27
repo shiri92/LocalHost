@@ -1,18 +1,15 @@
 <template>
   <section v-if="showNav" class="main-nav flex space-between align-center">
-    <div>Some Logo</div>
-
     <div class="nav-container flex space-between align-center">
-      <div :class="{'open': isHamburgerOpen}" class="links-container flex space-around">
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>|
+      <div class="links-container flex space-around">
+        <router-link to="/">Some Logo</router-link>
       </div>
 
       <div class="buttons-container">
         <div v-if="!getLoggedUser" class="join-container">
-          <span class="welcome">Welcome Guest!</span>
-          <el-button type="success" @click="signUp">Join</el-button>
-          <el-button type="success" plain @click="loginFormOn">Log in</el-button>
+          <span class="welcome">Welcome guest!</span>
+          <el-button class="el-button" type="success" @click="signUp">Join</el-button>
+          <el-button class="el-button" type="success" plain @click="loginFormOn">Log in</el-button>
         </div>
         <div v-else>
           <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
@@ -21,13 +18,6 @@
       </div>
 
       <user-window v-if="showUserWindow" @closeWindow="showUserWindow = false"></user-window>
-
-      <img
-        class="hamburger"
-        @click="isHamburgerOpen = !isHamburgerOpen"
-        src="../../public/img/hamburger.png"
-        alt
-      >
     </div>
   </section>
 </template>
@@ -55,7 +45,6 @@ export default {
   data() {
     return {
       showUserWindow: false,
-      isHamburgerOpen: false
     }
   },
   computed: {
@@ -80,11 +69,14 @@ export default {
   padding: 10px;
   width: 100%;
   background-color: white;
-  padding: 15px 60px 15px 60px;
+  padding: 15px;
   box-shadow: 1px 1px 8px black;
   position: fixed;
   top: 0;
   left: 0;
+  .nav-container {
+    width: 100%;
+  }
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -94,19 +86,14 @@ export default {
   }
 }
 
-.hamburger {
-  display: none;
-}
-
-.nav-container {
-  min-width: 40%;
-}
 .welcome {
   padding-right: 20px;
 }
 
-.links-container {
-  width: 40%;
+@media (max-width: 568px) {
+  .welcome {
+    display: none;
+  }
 }
 
 .user-img {
@@ -116,53 +103,10 @@ export default {
   border-radius: 50%;
 }
 
-@media (max-width: 1200px) {
-  .nav-container {
-    min-width: 50%;
+@media (max-width: 568px) {
+  .el-button {
+    padding: 10px;
   }
 }
 
-@media (max-width: 1120px) {
-  .nav-container {
-    min-width: 60%;
-  }
-}
-
-@media (max-width: 950px) {
-  .nav-container {
-    min-width: 80%;
-  }
-}
-
-@media (max-width: 750px) {
-  .hamburger {
-    display: block;
-    width: 40px;
-    height: 40px;
-  }
-  .links-container {
-    background-color: rgb(236, 209, 165);
-    box-shadow: 1px 1px 7px rgb(122, 120, 120);
-    position: fixed;
-    padding: 15px;
-    font-weight: bold;
-    min-width: 160px;
-    left: 0;
-    top: 9.2%;
-    z-index: 1;
-    transform: translate(-300px, 0);
-    transition: transform 0.3s ease;
-  }
-  .links-container.open {
-    transform: translate(0, 0);
-  }
-}
-
-// @media (max-width: 600px) {
-//   .buttons-container{
-
-//   }
-// }
 </style>
-
-

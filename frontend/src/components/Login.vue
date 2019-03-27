@@ -35,25 +35,26 @@
 
 <script>
 export default {
-  name: 'log-in',
+  name: "log-in",
   data() {
     return {
       credentials: {
-        email: '',
-        password: ''
+        email: "",
+        password: ""
       }
-    }
+    };
   },
   methods: {
     tryLogin() {
-      this.$store.dispatch({ type: 'login', credentials: this.credentials })
+      this.$store
+        .dispatch({ type: "login", credentials: this.credentials })
         .then(() => {
           this.$router.push(this.$route.path);
-          this.$emit('loginOff');
-        })
+          this.$emit("loginOff");
+        });
     }
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -82,6 +83,21 @@ export default {
   }
   .content {
     padding: 30px 30px 0 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .login {
+    width: 50%;
+    .content {
+      padding: 30px 25px 0 25px;
+    }
+  }
+}
+
+@media (max-width: 568px) {
+  .login {
+    width: 80%;
   }
 }
 

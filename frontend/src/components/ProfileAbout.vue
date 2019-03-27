@@ -3,21 +3,21 @@
     <div class="overview">
       <h5 class="header-box">OVERVIEW</h5>
       <hr style="margin: 0">
-      <div class="user-info flex flex-row">
-        <div class="flex flex-col" style="width: 50%">
+      <div class="user-info flex">
+        <div class="side flex flex-col">
           <div class="info-item">
             <font-awesome-icon icon="quote-left"/>&nbsp;0 References
           </div>
           <div class="info-item">
-            <font-awesome-icon icon="comment"/>
-            &nbsp;Fluent in {{user.languages}}
+            <font-awesome-icon icon="comment"/>&nbsp;Fluent in
+            <span v-for="(language, idx) in user.languages" :key="idx">{{language}}</span>
           </div>
-          <div class="info-item" style="margin-bottom: 0">
+          <div class="info-item">
             <font-awesome-icon icon="venus-mars"/>
             {{getAge}}, {{user.gender}}
           </div>
         </div>
-        <div class="flex flex-col">
+        <div class="side flex flex-col">
           <div class="info-item">
             <font-awesome-icon icon="briefcase"/>
             &nbsp;{{(user.occupation)? user.occupation:'No occupation listed'}}
@@ -26,7 +26,7 @@
             <font-awesome-icon icon="book"/>
             &nbsp;{{(user.education)? user.education:'No education listed'}}
           </div>
-          <div class="info-item" style="margin-bottom: 0">
+          <div class="info-item">
             <font-awesome-icon icon="map-marker-alt"/>
             &nbsp;{{user.city}}, {{user.country}}
           </div>
@@ -71,6 +71,7 @@ export default {
   background-color: #fff;
 }
 .overview {
+  margin-top: 50px;
   .header-box {
     padding: 20px;
     margin: 0px;
@@ -80,6 +81,30 @@ export default {
   }
   .user-info {
     padding: 20px;
+    flex-direction: row;
+    .side {
+      width: 50%;
+      .info-item:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    .user-info {
+      flex-direction: column;
+      .side {
+        width: unset;
+        .info-item:last-child {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 568px) {
+  .overview {
+    margin-top: unset;
   }
 }
 .info-item {
