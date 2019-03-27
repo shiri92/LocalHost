@@ -6,7 +6,7 @@
       <div class="filter flex">
         <h3
           class="from-guests flex align-center"
-          :class="{'clicked':isFromGuestsClicked}"
+          :class="{'filter-clicked':isFromGuestsClicked}"
           @click="fromGuestsToShow"
         >
           From Guests
@@ -14,7 +14,7 @@
         </h3>
         <h3
           class="from-hosts flex align-center"
-          :class="{'clicked':isFromHostsClicked}"
+          :class="{'filter-clicked':isFromHostsClicked}"
           @click="fromHostsToShow"
         >
           From Hosts
@@ -41,11 +41,15 @@
                 <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
               </div>
             </div>
-            <div class="content">{{reference.description}}</div>
-            <div class="read-more" @click="readMore">Read more</div>
+            <div
+              class="content"
+              :class="{'read-more-clicked': reference.isClicked}"
+            >{{reference.description}}</div>
+            <div class="read-more" @click="readMore(reference)">Read more</div>
           </div>
         </div>
       </div>
+
       <div v-else class="references-container flex">
         <div class="reference flex flex-col" v-for="(reference, idx) in revFromHosts" :key="idx">
           <hr style="margin-top: 0">
@@ -66,8 +70,11 @@
                 <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
               </div>
             </div>
-            <div class="content">{{reference.description}}</div>
-            <div class="read-more" @click="readMore">Read more</div>
+            <div
+              class="content"
+              :class="{'read-more-clicked': reference.isClicked}"
+            >{{reference.description}}</div>
+            <div class="read-more" @click="readMore(reference)">Read more</div>
           </div>
         </div>
       </div>
@@ -111,8 +118,8 @@ export default {
         this.$store.dispatch({ type: 'removeReview', currUserId, reviewId })
       }
     },
-    readMore() {
-      console.log('hey')
+    readMore(reference) {
+      reference.isClicked = !reference.isClicked;
     }
   }
 };
@@ -182,6 +189,11 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
         }
+        .read-more-clicked {
+          white-space: normal;
+          overflow: visible;
+          text-overflow: clip;
+        }
         .read-more {
           text-align: right;
           padding-right: 20px;
@@ -210,7 +222,7 @@ export default {
   transition: 0.2s;
 }
 
-.clicked {
+.filter-clicked {
   color: orangered;
   div {
     background-color: orangered;
