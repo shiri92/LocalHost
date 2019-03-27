@@ -195,7 +195,8 @@ export default {
           text-overflow: clip;
         }
         .read-more {
-          text-align: right;
+          float: right;
+          width: 110px;
           padding-right: 20px;
           margin-bottom: 20px;
           cursor: pointer;
