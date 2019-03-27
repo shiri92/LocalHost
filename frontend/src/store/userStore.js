@@ -31,6 +31,9 @@ export default {
     setCurrUser(state, { user }) {
       state.currUser = user;
     },
+    addRequest(state, { request }) {
+      state.currUser.requests.push(request);
+    },
     addReview(state, { res }) {
       state.currUser.references.push(res);
     },
@@ -74,8 +77,8 @@ export default {
     },
     async addRequest(context, { request }) {
       await userService.addRequest(request);
-      // add to front...
-      // show friendly tiny modal...
+      context.commit({ type: "addRequest", request });
+      // TODO: show sweet alert...
     },
     async addReview(context, { review }) {
       let res = await userService.addReview(review);
@@ -86,15 +89,22 @@ export default {
       context.commit({ type: "removeReview", reviewId });
     },
     async removeRequest(context, guestId) {
-      // by id
-      // remove from front...
-      // show friednky tiny modal...
+      // TODO: update backend...
+      // TODO: update frontend...
+      // TODO: show sweet alert...
     },
-    async BookGuest(context, request) {
-      // get request (with guestId, hostId), register the guest to the host...
+    async bookGuest(context, { request }) {
+      let { sender, recipient } = request;
+      await userService.bookGuest(sender, recipient);
+      await userService.removeRequest(sender, recipient);
+      // TODO: update frontend...
+      // TODO: show sweet alert...
     },
-    async BookHost(context, request) {
-      // get request (with guestId, hostId), register the host to the guest...
+    async bookHost(context, { request }) {
+      let { sender, recipient } = request;
+      await userService.bookHost(sender, recipient);
+      // TODO: update frontend...
+      // TODO: show sweet alert...
     },
     async updateUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);

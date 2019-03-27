@@ -8,14 +8,14 @@
     >
       <div class="user-info">
         <div class="request-info">
-          <span>{{request.guest.firstName}} {{request.guest.lastName}}</span>
+          <span>{{request.sender.firstName}} {{request.sender.lastName}}</span>
           has requested to stay with you from {{request.info.startDate}} till {{request.info.endDate}}
         </div>
         <div class="request-msg">{{request.info.message}}</div>
       </div>
       <div class="answer-btns">
-        <el-button type="success" @click="acceptRequest()">Accept</el-button>
-        <el-button type="danger" @click="declineRequest()">Decline</el-button>
+        <el-button type="success" @click="acceptRequest(request)">Accept</el-button>
+        <el-button type="danger" @click="declineRequest(request)">Decline</el-button>
       </div>
     </div>
   </section>
@@ -29,11 +29,14 @@ export default {
     },
   },
   methods: {
-    acceptRequest() {
-
+    acceptRequest(request) {
+      this.$store.dispatch({ type: 'bookGuest', request })
+        .then(() => console.log('Successfuly Registered The Guest'))
+      //   this.$store.dispatch({ type: 'bookHost', request })
+      //     .then(() => console.log('Successfuly Registered The Host'))
     },
-    declineRequest() {
-
+    declineRequest(request) {
+      console.log(request);
     }
   },
 }
@@ -50,6 +53,7 @@ export default {
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 5px;
+    animation-duration: 2s;
   }
 }
 </style>
