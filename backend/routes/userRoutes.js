@@ -10,10 +10,7 @@ function addRoutes(app) {
     if (req.session.user) {
       let user = await userService.getById(req.session.user._id);
       return res.json(user);
-    }
-    else
-      return res.json();
-
+    } else return res.json();
   });
 
   // Login User
@@ -79,10 +76,6 @@ function addRoutes(app) {
     await userService.removeRequest(currUserId, requestId);
     return res.end(`Request ${requestId} Deleted`);
   });
-
-
-  // DELETE Guest Request
-  // app.delete()
 
   // UPDATE User
   // app.put(`${BASE}/:id`, (req, res) => {
