@@ -6,8 +6,14 @@ const BASE = "/user";
 
 function addRoutes(app) {
   // Logged User Check (Session Only)
-  app.put(`${BASE}/checkLogged`, (req, res) => {
-    return res.json(req.session.user);
+  app.put(`${BASE}/checkLogged`, async (req, res) => {
+    if (req.session.user) {
+      let user = await userService.getById(req.session.user._id);
+      return res.json(user);
+    }
+    else
+      return res.json();
+
   });
 
   // Login User
@@ -46,27 +52,34 @@ function addRoutes(app) {
     return res.json(user);
   });
 
-  // ADD Guest Request
+  // ADD User Request
   app.put(`${BASE}/request`, async (req, res) => {
     const request = req.body;
-    await userService.addRequest(request);
-    return res.json();
+    let result = await userService.addRequest(request);
+    return res.json(result);
   });
 
-  //ADD review to user
+  //ADD User Review
   app.put(`${BASE}/review`, async (req, res) => {
     const review = req.body;
     let result = await userService.addReview(review);
     return res.json(result);
   });
 
-  // DELETE review
+  // DELETE User Review
   app.delete(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
     const currUserId = req.params.currUserId;
     const reviewId = req.params.reviewId;
     await userService.removeReview(currUserId, reviewId);
     return res.end(`Review ${reviewId} Deleted`);
   });
+  app.delete(`${BASE}/:currUserId/request/:requestId`, async (req, res) => {
+    const currUserId = req.params.currUserId;
+    const requestId = req.params.requestId;
+    await userService.removeRequest(currUserId, requestId);
+    return res.end(`Request ${requestId} Deleted`);
+  });
+
 
   // DELETE Guest Request
   // app.delete()
