@@ -10,7 +10,7 @@
               <h3>{{profile.firstName}} {{profile.lastName}}</h3>
               <span class="location">
                 <font-awesome-icon icon="map-marker-alt"/>
-                <span>&nbsp;{{profile.city}}, {{profile.country}}</span>
+                <span>&nbsp;{{profile.address.city}}, {{profile.address.country}}</span>
               </span>
             </div>
           </div>

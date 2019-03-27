@@ -35,7 +35,7 @@
               <div class="dry-details flex space-between">
                 <div>
                   <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
-                  <div>{{reference.sender.city}}, {{reference.sender.country}}</div>
+                  <div>{{reference.sender.address}}</div>
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
                 <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
@@ -64,7 +64,7 @@
               <div class="dry-details flex space-between">
                 <div>
                   <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
-                  <div>{{reference.sender.city}}, {{reference.sender.country}}</div>
+                  <div>{{reference.sender.address}}</div>
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
                 <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
