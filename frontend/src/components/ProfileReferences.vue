@@ -1,5 +1,5 @@
 <template>
-  <section class="references">
+  <section v-if="loggedUser" class="references">
     <div>
       <h3 class="header-box">REFERENCES</h3>
       <hr style="margin: 0">
