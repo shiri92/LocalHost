@@ -25,7 +25,7 @@
             Pet Friendly?
             <span class="ans">{{(pref.isPetFriendly)? 'Yes':'No'}}</span>
           </li>
-          <li class="info-item" style="margin: 0">
+          <li class="info-item">
             Smoking Allowed?
             <span class="ans">{{(pref.isDisabledAccessible)? 'Yes':'No'}}</span>
           </li>
