@@ -1,7 +1,6 @@
 <template>
   <section class="user-inbox" v-if="user">
     <h2>MY INBOX</h2>
-    {{user.requests}}
     <div
       class="request flex flex-row space-between align-center"
       :key="idx"
@@ -34,10 +33,10 @@ export default {
   },
   methods: {
     acceptRequest(request) {
-      //   this.$store.dispatch({ type: 'bookGuest', request })
-      //     .then(() => console.log('Successfuly Registered The Guest'))
-      //   this.$store.dispatch({ type: 'bookHost', request })
-      //     .then(() => console.log('Successfuly Registered The Host'))
+      this.$store.dispatch({ type: 'bookGuest', request })
+        .then(() => console.log('Successfuly Registered The Guest'))
+      this.$store.dispatch({ type: 'bookHost', request })
+        .then(() => console.log('Successfuly Registered The Host'))
       this.$store.dispatch({ type: 'removeRequest', request })
         .then(() => console.log('success remove the request'));
 
