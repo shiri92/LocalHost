@@ -58,7 +58,8 @@ async function updateUserImg(imgUrl, userId) {
 }
 
 async function addReview(review) {
-  await axios.put(`${BASE_API}/review`, review);
+  let res = await axios.put(`${BASE_API}/review`, review);
+  return res.data;
 }
 
 async function removeReview(currUserId, reviewId) {

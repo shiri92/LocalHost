@@ -31,8 +31,8 @@ export default {
     setCurrUser(state, { user }) {
       state.currUser = user;
     },
-    addReview(state, { review }) {
-      state.currUser.references.push(review);
+    addReview(state, { res }) {
+      state.currUser.references.push(res);
     },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
@@ -78,8 +78,8 @@ export default {
       // show friendly tiny modal...
     },
     async addReview(context, { review }) {
-      await userService.addReview(review);
-      context.commit({ type: "addReview", review });
+      let res = await userService.addReview(review);
+      context.commit({ type: "addReview", res });
     },
     async removeReview(context, { currUserId, reviewId }) {
       await userService.removeReview(currUserId, reviewId);

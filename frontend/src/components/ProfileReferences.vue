@@ -24,6 +24,7 @@
       <div v-if="isFromGuestsClicked" class="references-container flex">
         <div class="reference flex flex-col" v-for="(reference, idx) in revFromGuests" :key="idx">
           <hr style="margin-top: 0">
+          {{reference._id}}
           <div
             class="delete-review"
             v-if="loggedUser._id === reference.sender.id"

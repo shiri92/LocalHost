@@ -56,8 +56,8 @@ function addRoutes(app) {
   //ADD review to user
   app.put(`${BASE}/review`, async (req, res) => {
     const review = req.body;
-    await userService.addReview(review);
-    return res.json();
+    let result = await userService.addReview(review);
+    return res.json(result);
   });
 
   // DELETE review
