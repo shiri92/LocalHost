@@ -18,8 +18,8 @@
               <font-awesome-icon icon="envelope"/>
             </button>
             <button class="btn" @click="openReview">
-              More
-              <font-awesome-icon icon="sort-down"/>
+              Add Review
+              <!-- <font-awesome-icon icon="sort-down"/> -->
             </button>
             <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
           </div>
@@ -40,7 +40,12 @@
       <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
       <profile-myHome class="detail-section" :user="currUser" id="home"></profile-myHome>
       <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-      <profile-references class="detail-section" :user="currUser" id="references"></profile-references>
+      <profile-references
+        class="detail-section"
+        :user="currUser"
+        :loggedUser="loggedUser"
+        id="references"
+      ></profile-references>
     </div>
     <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
   </section>

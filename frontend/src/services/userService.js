@@ -58,9 +58,11 @@ async function updateUserImg(imgUrl, userId) {
 }
 
 async function addReview(review) {
-  let res = await axios.put(`${BASE_API}/review`, review);
-  console.log(res.data);
-  return res.data;
+  await axios.put(`${BASE_API}/review`, review);
+}
+
+async function removeReview(currUserId, reviewId) {
+  await axios.delete(`${BASE_API}/${currUserId}/review/${reviewId}`);
 }
 
 export default {
@@ -72,6 +74,7 @@ export default {
   add,
   addRequest,
   addReview,
+  removeReview,
   update,
   updateUserImg
 };

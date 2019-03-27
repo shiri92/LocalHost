@@ -39,6 +39,12 @@ export default {
     },
     setLoggedUserImg(state, { imgUrl }) {
       state.loggedUser.imgUrl = imgUrl;
+    },
+    removeReview(state, { reviewId }) {
+      let currReviewIdx = state.currUser.references.findIndex(
+        review => reviewId === review._id
+      );
+      state.currUser.references.splice(currReviewIdx, 1);
     }
   },
   actions: {
@@ -75,6 +81,10 @@ export default {
       await userService.addReview(review);
       context.commit({ type: "addReview", review });
     },
+    async removeReview(context, { currUserId, reviewId }) {
+      await userService.removeReview(currUserId, reviewId);
+      context.commit({ type: "removeReview", reviewId });
+    },
     async removeRequest(context, guestId) {
       // by id
       // remove from front...
@@ -89,8 +99,7 @@ export default {
     async updateUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);
       // context.commit({ type: 'setCurrUserImg', imgUrl })
-      context.commit({ type: 'setLoggedUserImg', imgUrl })
-    },
-
+      context.commit({ type: "setLoggedUserImg", imgUrl });
+    }
   }
 };
