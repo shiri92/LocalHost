@@ -18,7 +18,9 @@ module.exports = {
   addRequest,
   addReview,
   removeReview, removeRequest,
-  updateUserImg
+  updateUserImg,
+  bookGuest,
+  bookHost
   // update
 };
 
@@ -27,10 +29,7 @@ FillDB();
 // Fill Mongo Data Base (will be on mongo service)
 async function FillDB() {
   let db = await mongoService.connect();
-  let res = await db
-    .collection(USERS_COLLECTION)
-    .find({})
-    .toArray();
+  let res = await db.collection(USERS_COLLECTION).find({}).toArray();
   if (res.length === 0) addMany(_createUsers());
 }
 // Fill Mongo Data Base (will be on mongo service)
@@ -51,10 +50,7 @@ async function login(credentials) {
 // GET Users By Address
 async function query(currCountry, currCity) {
   let db = await mongoService.connect();
-  let res = await db
-    .collection(USERS_COLLECTION)
-    .find({ country: currCountry, city: currCity })
-    .toArray();
+  let res = await db.collection(USERS_COLLECTION).find({ country: currCountry, city: currCity }).toArray();
   return res;
 }
 
@@ -80,12 +76,10 @@ async function add(credentials) {
 async function addRequest(request) {
   request._id = new ObjectId();
   let db = await mongoService.connect();
-  await db
-    .collection(USERS_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(request.recipient.id) },
-      { $push: { requests: request } }
-    );
+  await db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(request.recipient.id) },
+    { $push: { requests: request } }
+  );
   return request;
 }
 
@@ -93,7 +87,7 @@ async function addRequest(request) {
 async function addReview(review) {
   review._id = ObjectId();
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne(
+  await db.collection(USERS_COLLECTION).updateOne(
     { _id: new ObjectId(review.recipient.id) },
     { $push: { references: review } }
   );
@@ -101,25 +95,21 @@ async function addReview(review) {
 }
 
 // DELETE User Review
-function removeReview(currUserId, reviewId) {
-  return mongoService.connect().then(db => {
-    const collection = db.collection(USERS_COLLECTION);
-    return collection.updateOne(
-      { _id: new ObjectId(currUserId) },
-      { $pull: { references: { _id: new ObjectId(reviewId) } } }
-    );
-  });
+async function removeReview(currUserId, reviewId) {
+  let db = await mongoService.connect();
+  await db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(currUserId) },
+    { $pull: { references: { _id: new ObjectId(reviewId) } } }
+  );
 }
 
 // DELETE User Request
-function removeRequest(currUserId, requestId) {
-  return mongoService.connect().then(db => {
-    const collection = db.collection(USERS_COLLECTION);
-    return collection.updateOne(
-      { _id: new ObjectId(currUserId) },
-      { $pull: { requests: { _id: new ObjectId(requestId) } } }
-    );
-  });
+async function removeRequest(currUserId, requestId) {
+  let db = await mongoService.connect();
+  await db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(currUserId) },
+    { $pull: { requests: { _id: new ObjectId(requestId) } } }
+  );
 }
 
 // UPDATE User
@@ -131,7 +121,7 @@ function removeRequest(currUserId, requestId) {
 // UPDATE Profile Image Url
 async function updateUserImg(imgUrl, userId) {
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne(
+  await db.collection(USERS_COLLECTION).updateOne(
     { _id: new ObjectId(userId) },
     { $set: { imgUrl: imgUrl } }
   );
@@ -140,21 +130,19 @@ async function updateUserImg(imgUrl, userId) {
 // (UPDATE HOST USER) Book Guest
 async function bookGuest(hostId, newGuest) {
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne
-    (
-      { _id: new ObjectId(hostId) },
-      { $push: { guests: newGuest } }
-    );
+  await db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(hostId) },
+    { $addToSet: { guests: newGuest } }
+  );
 }
 
 // (UPDATE GUEST USER) Book Host
-async function bookHost(guestId, host) {
+async function bookHost(guestId, newHost) {
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne
-    (
-      { _id: new ObjectId(guestId) },
-      { $push: { hosts: host } }
-    );
+  await db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(guestId) },
+    { $addToSet: { hosts: newHost } }
+  );
 }
 
 // Create User

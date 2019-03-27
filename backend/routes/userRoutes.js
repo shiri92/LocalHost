@@ -73,6 +73,8 @@ function addRoutes(app) {
     await userService.removeReview(currUserId, reviewId);
     return res.end(`Review ${reviewId} Deleted`);
   });
+
+  // DELETE Guest Request
   app.delete(`${BASE}/:currUserId/request/:requestId`, async (req, res) => {
     const currUserId = req.params.currUserId;
     const requestId = req.params.requestId;
@@ -80,9 +82,6 @@ function addRoutes(app) {
     return res.end(`Request ${requestId} Deleted`);
   });
 
-
-  // DELETE Guest Request
-  // app.delete()
 
   // UPDATE User
   // app.put(`${BASE}/:id`, (req, res) => {
