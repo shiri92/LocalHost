@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div class="container flex space-between flex-col align-center">
+    <div class="card-container flex space-between flex-col ">
       <div class="card">
         <div class="hero"></div>
         <div class="main">
@@ -29,9 +29,8 @@ export default {
 
 <style lang="scss" scoped>
 li {
-  .container {
+  .card-container {
     .card {
-      width: 300px;
       border-radius: 5px;
       box-shadow: 2px 5px 10px #ccc;
       background: white;
@@ -46,7 +45,7 @@ li {
         padding: 0 10px;
         .user {
           display: flex;
-          height: 75px;
+          margin-bottom: 5px;
           .avatar {
             border-radius: 50%;
             border: 3px solid #fff;

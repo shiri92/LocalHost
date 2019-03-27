@@ -35,24 +35,27 @@
       </div>
     </div>
     <div class="main-desc">
-      <div class="cmps">
+      <div class="cmps" id="cmps" >
         <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-          <div class="profile-nav flex flex-row justify-center">
-            <a class="nav-item" href="#" v-scroll-to="'#about'">Overview</a>
-            <a class="nav-item" href="#" v-scroll-to="'#home'">Home</a>
-            <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
-            <a class="nav-item" href="#" v-scroll-to="'#references'">References</a>
+          <!-- ON DESKTOP -->
+          <div class="profile-nav flex flex-row justify-center" v-if="window.width > 768">
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: '#cmps'}">Overview</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: '#cmps'}">Home</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: '#cmps'}">Pictures</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#references', container: '#cmps'}">References</a>
+          </div>
+          <!-- ON MOBILE -->
+          <div class="profile-nav flex flex-row justify-center" v-else>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: 'body'}">Pictures</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#references', container: 'body'}">References</a>
           </div>
         </nav>
         <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
         <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
         <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-        <profile-references
-          class="detail-section"
-          :loggedUser="loggedUser"
-          :user="currUser"
-          id="references"
-        ></profile-references>
+        <profile-references class="detail-section" :user="currUser" :loggedUser="loggedUser" id="references"></profile-references>
       </div>
     </div>
     <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
@@ -73,7 +76,11 @@ export default {
     return {
       isNavInDisplay: false,
       showRequestForm: false,
-      isReviewFormOpen: false
+      isReviewFormOpen: false,
+      window: {
+        width: 0,
+        height: 0
+      }
     };
   },
   created() {
@@ -89,6 +96,9 @@ export default {
         vm.narrowNav(false);
       }
     });
+
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
   },
   computed: {
     currUser() {
@@ -96,6 +106,9 @@ export default {
     },
     loggedUser() {
       return this.$store.getters.loggedUser;
+    },
+    test() {
+      console.log('window size:',window.screen.width); 
     }
   },
   methods: {
@@ -130,7 +143,14 @@ export default {
     },
     reviewFormOff() {
       this.isReviewFormOpen = false;
-    }
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
+    }  
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
   },
   watch: {
     "$route.params.userId"(userId) {
@@ -153,7 +173,7 @@ export default {
 .profile-container {
   margin-top: 10px;
 }
-@media (max-width: 568px) {
+@media (max-width: 768px) {
   .profile-container {
     flex-direction: column;
     margin-top: 0;
@@ -186,7 +206,7 @@ export default {
   }
 }
 
-@media (max-width: 568px) {
+@media (max-width: 768px) {
   .side-profile {
     max-width: 98%;
     width: 92%;
@@ -221,6 +241,7 @@ export default {
   flex-grow: 1;
   margin: 5px 15px 5px 0;
   max-width: 1000px;
+  overflow: hidden;
   position: relative;
   .main-desc-nav {
     background-color: #fff;

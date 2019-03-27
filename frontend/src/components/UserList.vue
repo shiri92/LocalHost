@@ -1,6 +1,6 @@
 <template>
-  <section class="flex justify-center flex-col align-center">
-    <div class="profile-list-container" v-if="users">
+  <section class="list-container flex justify-center flex-col align-center">
+    <div class="profile-list" v-if="users">
       <router-link
         class="profile-list-item"
         :key="currProfile._id"
@@ -15,28 +15,29 @@
 
 
 <script>
-import UserPreview from './UserPreview.vue';
+import UserPreview from "./UserPreview.vue";
 
 export default {
   name: "user-list",
   components: {
     UserPreview
   },
-  props: ["users"],
+  props: ["users"]
 };
 </script>
 
-
-<style>
-.profile-list-container {
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 10px;
-  margin: 10px;
-}
-
-.profile-list-item {
-  list-style: none;
+<style lang="scss" scoped>
+.list-container {
+  margin: 20px;
+  .profile-list {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    .profile-list-item {
+      list-style: none;
+      width: 100%;
+    }
+  }
 }
 </style>
