@@ -22,6 +22,7 @@ module.exports = {
   bookGuest,
   bookHost,
   update
+
 };
 
 FillDB();
