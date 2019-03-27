@@ -1,5 +1,6 @@
 <template>
   <section class="profile-container flex justify-center" v-if="currUser">
+    <!-- {{test}} -->
     <div class="side-profile">
       <img class="profile-img" :src="currUser.imgUrl" alt>
       <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
@@ -32,26 +33,17 @@
       </div>
     </div>
     <div class="main-desc">
-      
-      <!-- ON DESKTOP -->
-      <div class="cmps desktop" id="cmps">
+      <div class="cmps" id="cmps" >
         <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-          <div class="profile-nav flex flex-row justify-center">
+          <!-- ON DESKTOP -->
+          <div class="profile-nav flex flex-row justify-center" v-if="window.width > 768">
             <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: '#cmps'}">Overview</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: '#cmps'}">Home</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: '#cmps'}">Pictures</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#references', container: '#cmps'}">References</a>
           </div>
-        </nav>
-        <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
-        <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
-        <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-        <profile-references class="detail-section" :user="currUser" id="references"></profile-references>
-      </div>
-      <!-- ON MOBILE -->
-      <div class="cmps mobile" id="cmps">
-        <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-          <div class="profile-nav flex flex-row justify-center">
+          <!-- ON MOBILE -->
+          <div class="profile-nav flex flex-row justify-center" v-else>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: 'body'}">Pictures</a>
@@ -61,12 +53,7 @@
         <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
         <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
         <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-        <profile-references
-          class="detail-section"
-          :loggedUser="loggedUser"
-          :user="currUser"
-          id="references"
-        ></profile-references>
+        <profile-references class="detail-section" :user="currUser" :loggedUser="loggedUser" id="references"></profile-references>
       </div>
     </div>
     <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
@@ -88,6 +75,10 @@ export default {
       isNavInDisplay: false,
       showRequestForm: false,
       isReviewFormOpen: false,
+      window: {
+        width: 0,
+        height: 0
+      }
     };
   },
   created() {
@@ -103,6 +94,9 @@ export default {
         vm.narrowNav(false);
       }
     });
+
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize();
   },
   computed: {
     currUser() {
@@ -110,6 +104,9 @@ export default {
     },
     loggedUser() {
       return this.$store.getters.loggedUser;
+    },
+    test() {
+      console.log('window size:',window.screen.width); 
     }
   },
   methods: {
@@ -144,7 +141,15 @@ export default {
     },
     reviewFormOff() {
       this.isReviewFormOpen = false;
+    },
+    handleResize() {
+      this.window.width = window.innerWidth;
+      this.window.height = window.innerHeight;
     }
+    
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize)
   },
   watch: {
     "$route.params.userId"(userId) {
@@ -274,17 +279,6 @@ export default {
     .cmps {
       overflow: unset;
       height: unset;
-    }
-  }
-  .mobile {
-    display: none;
-  }
-  @media (max-width: 768px) {
-    .mobile {
-      display: unset;
-    }
-    .desktop {
-      display: none;
     }
   }
 }

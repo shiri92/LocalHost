@@ -1,5 +1,5 @@
 <template>
-  <section class="references">
+  <section class="references" v-if="loggedUser">
     <div>
       <h3 class="header-box">REFERENCES</h3>
       <hr style="margin: 0">
@@ -120,7 +120,7 @@ export default {
     },
     readMore(reference) {
       reference.isClicked = !reference.isClicked;
-    }
+    },
   }
 };
 </script>
