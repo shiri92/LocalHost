@@ -9,7 +9,7 @@
         <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
         <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
           <div>
-            <button @click="requestFormOn" class="btn">
+            <button v-if="loggedUser && currUser.isHosting" @click="requestFormOn" class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request!
             </button>
           </div>
@@ -117,6 +117,7 @@ export default {
     },
     async sendRequest(requestInfo) {
       let request = {
+        isAccepted: false,
         info: requestInfo,
         sender: {
           id: this.loggedUser._id,

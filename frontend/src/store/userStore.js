@@ -55,6 +55,13 @@ export default {
       );
       state.loggedUser.requests.splice(idx, 1);
     },
+    toggleIsAccepted(state, { _id }) {
+      let idx = state.loggedUser.requests.findIndex(request => request._id === _id);
+      // state.loggedUser.requests[idx].isAccepted = true;
+      let newReq = JSON.parse(JSON.stringify(state.loggedUser.requests[idx]));
+      newReq.isAccepted = true;
+      state.loggedUser.requests.splice(idx, 1, newReq);
+    },
     updateUser(state, { user }) {
       var idx = state.currUsers.findIndex(
         currUser => currUser._id === user._id
@@ -106,13 +113,12 @@ export default {
       let { _id } = request;
       let { recipient } = request;
       await userService.removeRequest(recipient.id, _id);
-      context.commit({ type: "removeRequest", _id });
+      context.commit({ type: 'toggleIsAccepted', _id });
       // TODO: show sweet alert...
     },
     async bookGuest(context, { request }) {
       let { sender, recipient } = request;
       await userService.bookGuest(sender, recipient);
-      await userService.removeRequest(sender, recipient);
       // TODO: update frontend...
       // TODO: show sweet alert...
     },

@@ -1,9 +1,9 @@
 <template>
   <section class="user-inbox" v-if="user">
     <h2>MY INBOX</h2>
-    {{user.requests}}
     <div
       class="request flex flex-row space-between align-center"
+      :class="{'animation':request.isAccepted, 'fadeOutLeft':request.isAccepted}"
       :key="idx"
       v-for="(request, idx) in user.requests"
     >
@@ -24,6 +24,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      showAnimation: false,
+    }
+  },
   created() {
 
   },
@@ -33,13 +38,17 @@ export default {
     },
   },
   methods: {
-    acceptRequest(request) {
-      //   this.$store.dispatch({ type: 'bookGuest', request })
-      //     .then(() => console.log('Successfuly Registered The Guest'))
-      //   this.$store.dispatch({ type: 'bookHost', request })
-      //     .then(() => console.log('Successfuly Registered The Host'))
-      this.$store.dispatch({ type: 'removeRequest', request })
-        .then(() => console.log('success remove the request'));
+    async acceptRequest(request) {
+      await this.$store.dispatch({ type: 'removeRequest', request });
+      setTimeout(() => {
+        let { _id } = request;
+        this.$store.commit({ type: 'removeRequest', _id });
+      }, 1000);
+      await this.$store.dispatch({ type: 'bookGuest', request });
+      console.log('Successfuly Regisered The Guest!');
+      await this.$store.dispatch({ type: 'bookHost', request });
+      console.log('Successfuly Regisered The Host!');
+
 
     },
     declineRequest(request) {
@@ -60,7 +69,7 @@ export default {
     padding: 20px;
     border-radius: 5px;
     margin-bottom: 5px;
-    animation-duration: 2s;
+    animation-duration: 1s;
   }
 }
 </style>
