@@ -19,7 +19,9 @@
 
     <div class="users-title" v-if="$route.path !== '/'">
       <h2 style="font-size: 4vw">{{currPageCountry}}</h2>
-      <h1 style="font-size: 8.5vw; margin-bottom: 60px; font-family: 'BebasNeueRegular';">{{currPageCity}}</h1>
+      <h1
+        style="font-size: 8.5vw; margin-bottom: 60px; font-family: 'BebasNeueRegular';"
+      >{{currPageCity}}</h1>
     </div>
   </section>
 </template>
@@ -63,7 +65,7 @@ export default {
 .main-header {
   background-repeat: no-repeat;
   background-size: cover;
-  // background-position: center center;
+  background-position: center center;
   height: 100vh;
   background-attachment: fixed;
 }
@@ -82,7 +84,7 @@ h1 {
 }
 
 h2 {
-  color: white;   
+  color: white;
 }
 
 .btn-join {
