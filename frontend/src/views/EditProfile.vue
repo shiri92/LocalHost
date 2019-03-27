@@ -1,12 +1,12 @@
 <template>
   <section class="edit-section flex justify-center" v-if="user">
     <div class="side-profile">
-      <img class="profile-img" :src="user.imgUrl" alt>
+      <img class="profile-img" :src="getLoggedUser.imgUrl" alt>
       <div class="profile-name">{{user.firstName}} {{user.lastName}}</div>
       <div class="profile-loc">{{user.address.city}}, {{user.address.country}}</div>
       <hr>
       <input name="file" id="file" class="input-file" type="file" @change="updateImg">
-      <label for="file">Choose a file</label>
+      <label for="file">Upload Picture</label>
     </div>
     <div class="edit-form form-container flex align-center flex-col">
       <form class="form" action>
@@ -247,18 +247,23 @@ export default {
       z-index: -1;
     }
     .input-file + label {
+      border-radius: 15px;
+      padding: 5px;
       font-size: 1.25em;
       font-weight: 700;
       color: white;
-      background-color: black;
+      background-color: rgb(60, 60, 60);
       display: inline-block;
       cursor: pointer;
+      transition: 0.5s;
     }
     .input-file:focus + label,
     .input-file + label:hover {
-      background-color: red;
-      outline: 1px dotted #000;
-      outline: -webkit-focus-ring-color auto 5px;
+      transform: scale(1.1, 1.1);
+      // box-shadow: inset 0 0px 20px rgb(151, 226, 240),
+      //   0 0px 5px rgb(151, 226, 240);
+      // outline: 1px dotted #000;
+      // outline: -webkit-focus-ring-color auto 5px;
     }
   }
 

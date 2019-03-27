@@ -16,11 +16,15 @@ const addCloudRoutes = require('./routes/cloudRoutes');
 
 /* ----- SERVER -----*/
 
-app.use(cors({ /* ----- FOR GITHUB -----*/
-    origin: ['http://localhost:8080'],
-    credentials: true // enable set cookie
-}));
-// app.use(express.static('public')); /* ----- FOR HEROKU -----*/
+/* ----- FOR GITHUB -----*/
+// app.use(cors({
+//     origin: ['http://localhost:8080'],
+//     credentials: true // enable set cookie
+// }));
+
+/* ----- FOR HEROKU -----*/
+app.use(express.static('public'));
+
 app.use(bodyParser.json())
 app.use(cookieParser());
 app.use(fileUpload());
@@ -37,5 +41,12 @@ addCityRoutes(app);
 addCountryRoutes(app)
 addCloudRoutes(app);
 
+/* ----- FOR GITHUB -----*/
+// const PORT = process.env.PORT || 3003;
+
+/* ----- FOR HEROKU -----*/
 const PORT = process.env.PORT || 3003;
-app.listen(PORT, () => { })
+
+app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}!`)
+})

@@ -44,28 +44,21 @@ export default {
       state.loggedUser.imgUrl = imgUrl;
     },
     removeReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(
-        review => reviewId === review._id
-      );
+      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
       state.currUser.references.splice(idx, 1);
     },
     removeRequest(state, { _id }) {
-      let idx = state.loggedUser.requests.findIndex(
-        request => request._id === _id
-      );
+      let idx = state.loggedUser.requests.findIndex(request => request._id === _id);
       state.loggedUser.requests.splice(idx, 1);
     },
     toggleIsAccepted(state, { _id }) {
       let idx = state.loggedUser.requests.findIndex(request => request._id === _id);
-      // state.loggedUser.requests[idx].isAccepted = true;
       let newReq = JSON.parse(JSON.stringify(state.loggedUser.requests[idx]));
       newReq.isAccepted = true;
       state.loggedUser.requests.splice(idx, 1, newReq);
     },
     updateUser(state, { user }) {
-      var idx = state.currUsers.findIndex(
-        currUser => currUser._id === user._id
-      );
+      var idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
       state.currUsers.splice(idx, 1, user);
     }
   },
@@ -130,7 +123,6 @@ export default {
     },
     async updateUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);
-      // context.commit({ type: 'setCurrUserImg', imgUrl })
       context.commit({ type: "setLoggedUserImg", imgUrl });
     },
     async updateUser(context, { user }) {

@@ -3,8 +3,9 @@ import Axios from "axios";
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
-const BASE_API =
-  process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
+const BASE_API = process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
+
+
 
 // Logged User Check (Session Only)
 async function checkLogged() {
