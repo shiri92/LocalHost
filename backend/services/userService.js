@@ -85,13 +85,13 @@ async function addRequest(request) {
       { _id: new ObjectId(request.recipient.id) },
       { $push: { requests: request } }
     );
-  return review;
+  return request;
 }
 
 // ADD Review
 async function addReview(review) {
-  let db = await mongoService.connect();
   review._id = ObjectId();
+  let db = await mongoService.connect();
   db.collection(USERS_COLLECTION).updateOne(
     { _id: new ObjectId(review.recipient.id) },
     { $push: { references: review } }

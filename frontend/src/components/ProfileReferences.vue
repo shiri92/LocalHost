@@ -24,7 +24,6 @@
       <div v-if="isFromGuestsClicked" class="references-container flex">
         <div class="reference flex flex-col" v-for="(reference, idx) in revFromGuests" :key="idx">
           <hr style="margin-top: 0">
-          {{reference._id}}
           <div
             class="delete-review"
             v-if="loggedUser._id === reference.sender.id"
@@ -43,7 +42,7 @@
               </div>
             </div>
             <div class="content">{{reference.description}}</div>
-            <div class="read-more">Read more</div>
+            <div class="read-more" @click="readMore">Read more</div>
           </div>
         </div>
       </div>
@@ -68,7 +67,7 @@
               </div>
             </div>
             <div class="content">{{reference.description}}</div>
-            <div class="read-more">Read more</div>
+            <div class="read-more" @click="readMore">Read more</div>
           </div>
         </div>
       </div>
@@ -83,7 +82,7 @@ export default {
   data() {
     return {
       isFromGuestsClicked: true,
-      isFromHostsClicked: false
+      isFromHostsClicked: false,
     }
   },
   components: {
@@ -111,7 +110,9 @@ export default {
       if (confirm('Are you sure you want to remove this review?')) {
         this.$store.dispatch({ type: 'removeReview', currUserId, reviewId })
       }
-
+    },
+    readMore() {
+      console.log('hey')
     }
   }
 };
@@ -176,7 +177,10 @@ export default {
           }
         }
         .content {
-          margin: 30px 40px 30px 110px;
+          margin: 30px 50px 30px 110px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .read-more {
           text-align: right;
