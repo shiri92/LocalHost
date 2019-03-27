@@ -241,6 +241,7 @@ export default {
   flex-grow: 1;
   margin: 5px 15px 5px 0;
   max-width: 1000px;
+  overflow: hidden;
   position: relative;
   .main-desc-nav {
     background-color: #fff;

@@ -1,7 +1,7 @@
 <template>
   <section
     class="main-header flex flex-col align-center justify-center"
-    :style="'background-image:linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(' + backImg + ')'"
+    :style="'background-image:linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.63)), url(' + backImg + ')'"
     :class="{'users-head': $route.path !== '/'}"
   >
     <div class="header-title" v-if="$route.path === '/'">
@@ -18,8 +18,8 @@
     >
 
     <div class="users-title" v-if="$route.path !== '/'">
-      <h2>{{currPageCountry}}</h2>
-      <h1>{{currPageCity}}</h1>
+      <h2 style="font-size: 4vw">{{currPageCountry}}</h2>
+      <h1 style="font-size: 8.5vw; margin-bottom: 60px; font-family: 'BebasNeueRegular';">{{currPageCity}}</h1>
     </div>
   </section>
 </template>
@@ -64,21 +64,24 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
-  // box-shadow: 2px 2px 10px black;
+  background-attachment: fixed;
 }
 
 .users-head {
-  height: 80vh;
+  height: 60vh;
+  justify-content: flex-end;
+}
+
+.users-title {
+  text-align: center;
 }
 
 h1 {
   color: white;
-  font-size: 2.5rem;
 }
 
 h2 {
-  color: white;
-  font-size: 1rem;
+  color: white;   
 }
 
 .btn-join {
@@ -89,7 +92,7 @@ h2 {
 
 .arrow-down {
   position: absolute;
-  top: 23%;
+  top: 26%;
   width: 90px;
   height: 90px;
   cursor: pointer;
