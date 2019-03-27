@@ -44,12 +44,22 @@ export default {
       state.loggedUser.imgUrl = imgUrl;
     },
     removeReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
+      let idx = state.currUser.references.findIndex(
+        review => reviewId === review._id
+      );
       state.currUser.references.splice(idx, 1);
     },
     removeRequest(state, { _id }) {
-      let idx = state.loggedUser.requests.findIndex(request => request._id === _id);
+      let idx = state.loggedUser.requests.findIndex(
+        request => request._id === _id
+      );
       state.loggedUser.requests.splice(idx, 1);
+    },
+    updateUser(state, { user }) {
+      var idx = state.currUsers.findIndex(
+        currUser => currUser._id === user._id
+      );
+      state.currUsers.splice(idx, 1, user);
     }
   },
   actions: {
@@ -89,14 +99,14 @@ export default {
     },
     async removeReview(context, { currUserId, reviewId }) {
       await userService.removeReview(currUserId, reviewId);
-      context.commit({ type: 'removeReview', reviewId });
+      context.commit({ type: "removeReview", reviewId });
       // TODO: show sweet alert...
     },
     async removeRequest(context, { request }) {
       let { _id } = request;
       let { recipient } = request;
       await userService.removeRequest(recipient.id, _id);
-      context.commit({ type: 'removeRequest', _id });
+      context.commit({ type: "removeRequest", _id });
       // TODO: show sweet alert...
     },
     async bookGuest(context, { request }) {
@@ -116,6 +126,10 @@ export default {
       await userService.updateUserImg(imgUrl, userId);
       // context.commit({ type: 'setCurrUserImg', imgUrl })
       context.commit({ type: "setLoggedUserImg", imgUrl });
+    },
+    async updateUser(context, { user }) {
+      await userService.updateUser(user);
+      context.commit({ type: "updateUser", user });
     }
   }
 };
