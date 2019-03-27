@@ -25,9 +25,12 @@
           </div>
           <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
         </div>
-        <div v-else>
+        <div v-else class="flex flex-col">
           <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
             <button class="btn">Edit My Profile</button>
+          </router-link>
+          <router-link :to="'/userProfile/' + currUser._id + '/inbox'">
+            <button class="btn">My Inbox</button>
           </router-link>
         </div>
       </div>

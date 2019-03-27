@@ -26,7 +26,7 @@
           <hr style="margin-top: 0">
           <div
             class="delete-review"
-            v-if="loggedUser._id === reference.sender.id"
+            v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
             @click="removeReview(reference._id, user._id)"
           >&times;</div>
           <div class="review-container">
@@ -50,12 +50,12 @@
         </div>
       </div>
 
-      <div v-else class="references-container flex">
+      <div v-if="isFromHostsClicked" class="references-container flex">
         <div class="reference flex flex-col" v-for="(reference, idx) in revFromHosts" :key="idx">
           <hr style="margin-top: 0">
           <div
             class="delete-review"
-            v-if="loggedUser._id === reference.sender.id"
+            v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
             @click="removeReview(reference._id, user._id)"
           >&times;</div>
           <div class="review-container">
