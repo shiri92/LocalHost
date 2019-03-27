@@ -20,7 +20,7 @@ module.exports = {
   removeReview,
   removeRequest,
   updateUserImg,
-  updateUser
+  update
 };
 
 FillDB();
@@ -137,7 +137,7 @@ function removeRequest(currUserId, requestId) {
 }
 
 // UPDATE User
-async function updateUser(user) {
+async function update(user) {
   user._id = new ObjectId(user._id);
   let db = await mongoService.connect();
   db.collection(USERS_COLLECTION).updateOne({ _id: user._id }, { $set: user });

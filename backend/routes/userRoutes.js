@@ -80,7 +80,7 @@ function addRoutes(app) {
   // UPDATE User
   app.put(`${BASE}/:id`, (req, res) => {
     const user = req.body;
-    userService.updateUser(user).then(() => res.json());
+    userService.update(user).then(() => res.json());
   });
 
   // UPDATE Profile Image, return ImgUrl
