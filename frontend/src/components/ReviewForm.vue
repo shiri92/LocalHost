@@ -56,6 +56,7 @@ export default {
         createdAt: Date.now(),
         rating: 0,
         description: '',
+        isClicked: false
       }
     }
   },

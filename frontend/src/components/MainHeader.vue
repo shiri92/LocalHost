@@ -46,13 +46,14 @@ export default {
   computed: {
     backImg() {
       if (this.$route.path === '/') {
-        return 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/header.jpg';
+        return 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/bg-imgs/main-header.jpg';
       } else {
         let cityName = this.$route.params.city.toLowerCase();
         if (cityName.indexOf(' ') !== -1) {
           cityName = cityName.replace(/\s/g, "%20");
         }
-        return ('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/ons/cities/' + cityName + '.jpg');
+        console.log(cityName)
+        return ('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/city-imgs/' + cityName + '.jpg');
       }
     },
   }
