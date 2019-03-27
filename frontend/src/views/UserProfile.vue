@@ -17,8 +17,9 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn" @click="openReview">More
-              <font-awesome-icon icon="sort-down"/>
+            <button class="btn" @click="openReview">
+              Add Review
+              <!-- <font-awesome-icon icon="sort-down"/> -->
             </button>
           </div>
           <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
@@ -43,7 +44,12 @@
         <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
         <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
         <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-        <profile-references class="detail-section" :user="currUser" id="references"></profile-references>
+        <profile-references
+          class="detail-section"
+          :loggedUser="loggedUser"
+          :user="currUser"
+          id="references"
+        ></profile-references>
       </div>
     </div>
     <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
@@ -72,7 +78,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);

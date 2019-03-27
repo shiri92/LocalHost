@@ -17,6 +17,7 @@ module.exports = {
   add,
   addRequest,
   addReview,
+  removeReview,
   updateUserImg
   // update
 };
@@ -78,21 +79,34 @@ async function add(credentials) {
 // ADD Guest Request
 async function addRequest(request) {
   let db = await mongoService.connect();
-  await db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(request.recipient.id) },
-    { $push: { requests: request } }
-  );
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(request.recipient.id) },
+      { $push: { requests: request } }
+    );
   return review;
 }
 
 // ADD Review
 async function addReview(review) {
   let db = await mongoService.connect();
+  review._id = ObjectId();
   db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(review.givenToId) },
+    { _id: new ObjectId(review.recipient.id) },
     { $push: { references: review } }
   );
   return review;
+}
+
+function removeReview(currUserId, reviewId) {
+  return mongoService.connect().then(db => {
+    const collection = db.collection("users");
+    return collection.updateOne(
+      { _id: new ObjectId(currUserId) },
+      { $pull: { references: { _id: new ObjectId(reviewId) } } }
+    );
+  });
 }
 
 // UPDATE User
@@ -155,7 +169,7 @@ function _createUser(
     },
     /* ----- Social Details -----*/
     pictures: [],
-    references: [],
+    references: []
   };
 }
 

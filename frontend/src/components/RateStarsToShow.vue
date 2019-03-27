@@ -44,6 +44,9 @@ export default {
   //       this.$emit('rate', ev.target.value);
   //     }
   //   },
+  computed: {
+
+  },
   methods: {
     /*
      * Behaviour of the stars on mouseover.
@@ -73,7 +76,6 @@ export default {
      */
     set: function (value) {
       var self = this;
-
       if (!this.disabled) {
         this.temp_value = value;
         return this.value = value;
