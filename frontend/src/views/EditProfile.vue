@@ -1,20 +1,20 @@
 <template>
-  <section class="edit-section flex justify-center" v-if="getUser">
+  <section class="edit-section flex justify-center" v-if="currUser">
     <div class="side-profile">
-      <img class="profile-img" :src="getUser.imgUrl" alt>
-      <div class="profile-name">{{getUser.firstName}} {{getUser.lastName}}</div>
-      <div class="profile-loc">{{getUser.city}}, {{getUser.country}}</div>
+      <img class="profile-img" :src="currUser.imgUrl" alt>
+      <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
+      <div class="profile-loc">{{currUser.city}}, {{currUser.country}}</div>
       <hr>
       <input name="file" id="file" class="input-file" type="file" @change="updateImg">
       <label for="file">Choose a file</label>
     </div>
     <div class="edit-form form-container flex align-center flex-col">
       <form class="form" action>
-        <h2>{{getUser.firstName}} {{getUser.lastName}}</h2>
+        <h2>{{currUser.firstName}} {{currUser.lastName}}</h2>
         <div class="about-edit">
           <div class="form-item flex space-between">
             <label for="hosting">Hosting Availability:&nbsp;</label>
-            <select class="form-input" v-model="getUser.isHosting">
+            <select class="form-input" v-model="currUser.isHosting">
               <option value="true">Accepting Guests</option>
               <option value="false">Not Accepting Guests</option>
             </select>
@@ -28,7 +28,7 @@
                 class="form-input"
                 type="text"
                 placeholder="Enter languages"
-                v-model="getUser.language"
+                v-model="currUser.language"
               >
             </div>
             <div class="form-item flex space-between">
@@ -37,12 +37,17 @@
                 class="form-input"
                 type="text"
                 placeholder="Enter country"
-                v-model="getUser.country"
+                v-model="currUser.country"
               >
             </div>
             <div class="form-item flex space-between">
               <label for="city">City:&nbsp;</label>
-              <input class="form-input" type="text" placeholder="Enter city" v-model="getUser.city">
+              <input
+                class="form-input"
+                type="text"
+                placeholder="Enter city"
+                v-model="currUser.city"
+              >
             </div>
             <div class="form-item flex space-between">
               <label for="occupation">Occupation:&nbsp;</label>
@@ -50,7 +55,7 @@
                 class="form-input"
                 type="text"
                 placeholder="Enter occupation"
-                v-model="getUser.occupation"
+                v-model="currUser.occupation"
               >
             </div>
             <div class="form-item flex space-between">
@@ -59,12 +64,12 @@
                 class="form-input"
                 type="text"
                 placeholder="Enter education"
-                v-model="getUser.education"
+                v-model="currUser.education"
               >
             </div>
             <div class="form-item flex space-between">
               <label for="gender">Gender:&nbsp;</label>
-              <select class="form-input" v-model="getUser.gender">
+              <select class="form-input" v-model="currUser.gender">
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
@@ -75,7 +80,7 @@
         <div class="home-edit">
           <div class="form-item flex space-between">
             <label for="room">Max Number of Guests:&nbsp;</label>
-            <select class="form-input" v-model="getUser.placeDetails.guestCapacity">
+            <select class="form-input" v-model="currUser.placeDetails.guestCapacity">
               <option value="0">0</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -91,7 +96,7 @@
           </div>
           <div class="form-item flex space-between">
             <label for="room">Gender preference:&nbsp;</label>
-            <select class="form-input" v-model="getUser.placeDetails.guestGenderPref">
+            <select class="form-input" v-model="currUser.placeDetails.guestGenderPref">
               <option value="Any">Any</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -104,30 +109,30 @@
             </label>
             <ul class="clean-list">
               <li>
-                <input type="checkbox" value="pet" v-model="getUser.placeDetails.isPetFriendly"> Pet Friendly
+                <input type="checkbox" value="pet" v-model="currUser.placeDetails.isPetFriendly"> Pet Friendly
               </li>
               <li>
-                <input type="checkbox" value="kids" v-model="getUser.placeDetails.isKidFriendly"> Kid Friendly
+                <input type="checkbox" value="kids" v-model="currUser.placeDetails.isKidFriendly"> Kid Friendly
               </li>
               <li>
                 <input
                   type="checkbox"
                   value="smoking"
-                  v-model="getUser.placeDetails.isSmokingAllowed"
+                  v-model="currUser.placeDetails.isSmokingAllowed"
                 > Smoking Allowed
               </li>
               <li>
                 <input
                   type="checkbox"
                   value="disabled"
-                  v-model="getUser.placeDetails.isDisabledAccessible"
+                  v-model="currUser.placeDetails.isDisabledAccessible"
                 > Disabled accessible
               </li>
             </ul>
           </div>
           <div class="form-item flex space-between">
             <label for="room">How many pets?:&nbsp;</label>
-            <select class="form-input" v-model="getUser.placeDetails.pets">
+            <select class="form-input" v-model="currUser.placeDetails.pets">
               <option value="0">None</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -137,7 +142,7 @@
           </div>
           <div class="form-item flex space-between">
             <label for="room">How many kids?:&nbsp;</label>
-            <select class="form-input" v-model="getUser.placeDetails.kids">
+            <select class="form-input" v-model="currUser.placeDetails.kids">
               <option value="0">None</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -148,7 +153,7 @@
         </div>
         <hr>
         <el-button @click="onSave" type="success" class="el-btn el-btn-success">Save</el-button>
-        <el-button type="success" plain>Cancel</el-button>
+        <el-button type="success" @click="$router.push('/userProfile/' + currUser._id)" plain>Cancel</el-button>
       </form>
     </div>
   </section>
@@ -167,7 +172,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId }).then();
   },
   computed: {
-    getUser() {
+    currUser() {
       return this.$store.getters.currUser;
     }
   },
@@ -184,7 +189,7 @@ export default {
         userId
       });
     },
-    onSave() {}
+    onSave() { }
   }
 };
 </script>
