@@ -1,6 +1,5 @@
 <template>
   <section class="profile-container flex justify-center" v-if="currUser">
-    <!-- {{test}} -->
     <div class="side-profile">
       <img class="profile-img" :src="currUser.imgUrl" alt>
       <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
@@ -148,8 +147,7 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-    }
-    
+    }  
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize)
