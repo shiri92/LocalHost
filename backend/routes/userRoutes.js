@@ -53,12 +53,15 @@ function addRoutes(app) {
     return res.json();
   });
 
-  //ADD Review
+  // ADD Guest Review
   app.put(`${BASE}/review`, async (req, res) => {
     const review = req.body;
     await userService.addReview(review);
     return res.json();
   });
+
+  // DELETE Guest Request
+  // app.delete()
 
   // UPDATE User
   // app.put(`${BASE}/:id`, (req, res) => {
@@ -79,13 +82,15 @@ function addRoutes(app) {
     const { id } = req.params;
     const sender = req.body;
     await userService.bookGuest(id, sender);
+    return res.json();
   });
 
   // (UPDATE GUEST USER) Book Host
   app.put(`${BASE}/:id/bookHost`, async (req, res) => {
     const { id } = req.params;
     const recipient = req.body;
-    // await userService.bookHost(id, recipient);
+    await userService.bookHost(id, recipient);
+    return res.json();
   });
 }
 
