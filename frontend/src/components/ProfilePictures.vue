@@ -40,6 +40,7 @@ export default {
 
   .user-info {
     padding: 20px;
+    height: 1000px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
     gap: 10px;

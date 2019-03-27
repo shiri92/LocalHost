@@ -31,13 +31,30 @@
       </div>
     </div>
     <div class="main-desc">
-      <div class="cmps">
+      
+      <!-- ON DESKTOP -->
+      <div class="cmps desktop" id="cmps">
         <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
           <div class="profile-nav flex flex-row justify-center">
-            <a class="nav-item" href="#" v-scroll-to="'#about'">Overview</a>
-            <a class="nav-item" href="#" v-scroll-to="'#home'">Home</a>
-            <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
-            <a class="nav-item" href="#" v-scroll-to="'#references'">References</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: '#cmps'}">Overview</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: '#cmps'}">Home</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: '#cmps'}">Pictures</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#references', container: '#cmps'}">References</a>
+          </div>
+        </nav>
+        <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
+        <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
+        <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
+        <profile-references class="detail-section" :user="currUser" id="references"></profile-references>
+      </div>
+      <!-- ON MOBILE -->
+      <div class="cmps mobile" id="cmps">
+        <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
+          <div class="profile-nav flex flex-row justify-center">
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: 'body'}">Pictures</a>
+            <a class="nav-item" href="#" v-scroll-to="{ el: '#references', container: 'body'}">References</a>
           </div>
         </nav>
         <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
@@ -64,7 +81,7 @@ export default {
     return {
       isNavInDisplay: false,
       showRequestForm: false,
-      isReviewFormOpen: false
+      isReviewFormOpen: false,
     };
   },
   created() {
@@ -144,7 +161,7 @@ export default {
 .profile-container {
   margin-top: 10px;
 }
-@media (max-width: 568px) {
+@media (max-width: 768px) {
   .profile-container {
     flex-direction: column;
     margin-top: 0;
@@ -177,7 +194,7 @@ export default {
   }
 }
 
-@media (max-width: 568px) {
+@media (max-width: 768px) {
   .side-profile {
     max-width: 98%;
     width: 92%;
@@ -251,6 +268,17 @@ export default {
     .cmps {
       overflow: unset;
       height: unset;
+    }
+  }
+  .mobile {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .mobile {
+      display: unset;
+    }
+    .desktop {
+      display: none;
     }
   }
 }
