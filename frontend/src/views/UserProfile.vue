@@ -5,42 +5,52 @@
       <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
       <div class="profile-loc">{{currUser.city}}, {{currUser.country}}</div>
       <hr>
-    </div>
-    <div class="main-desc">
-      <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-        <div class="flex justify-center align-center" v-if="loggedUser">
-          <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
-          <div v-if="loggedUser._id !== currUser._id">
+      <div class="flex justify-center align-center flex-col">
+        <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
+        <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
+          <div>
             <button @click="requestFormOn" class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request!
             </button>
+          </div>
+          <div class="flex flex-row">
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
             <button class="btn" @click="openReview">
-              More
-              <font-awesome-icon icon="sort-down"/>
+              Add Review
+              <!-- <font-awesome-icon icon="sort-down"/> -->
             </button>
-            <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
           </div>
-          <div v-else>
-            <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
-              <button class="btn">Edit My Profile</button>
-            </router-link>
+          <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
+        </div>
+        <div v-else>
+          <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
+            <button class="btn">Edit My Profile</button>
+          </router-link>
+        </div>
+      </div>
+    </div>
+    <div class="main-desc">
+      <div class="cmps">
+        <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
+          <div class="profile-nav flex flex-row justify-center">
+            <a class="nav-item" href="#" v-scroll-to="'#about'">Overview</a>
+            <a class="nav-item" href="#" v-scroll-to="'#home'">Home</a>
+            <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
+            <a class="nav-item" href="#" v-scroll-to="'#references'">References</a>
           </div>
-        </div>
-        <hr style="margin: 0">
-        <div class="profile-nav flex flex-row justify-center">
-          <a class="nav-item" href="#" v-scroll-to="'#about'">About Me</a>
-          <a class="nav-item" href="#" v-scroll-to="'#home'">My Home</a>
-          <a class="nav-item" href="#" v-scroll-to="'#pics'">Pictures</a>
-          <a class="nav-item" href="#" v-scroll-to="'#references'">References</a>
-        </div>
-      </nav>
-      <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
-      <profile-myHome class="detail-section" :user="currUser" id="home"></profile-myHome>
-      <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-      <profile-references class="detail-section" :user="currUser" id="references"></profile-references>
+        </nav>
+        <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
+        <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
+        <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
+        <profile-references
+          class="detail-section"
+          :loggedUser="loggedUser"
+          :user="currUser"
+          id="references"
+        ></profile-references>
+      </div>
     </div>
     <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
   </section>
@@ -48,15 +58,14 @@
 
 <script>
 import ProfileAbout from "../components/ProfileAbout.vue";
-import ProfileMyHome from '../components/ProfileMyHome.vue';
-import ProfilePictures from '../components/ProfilePictures.vue';
-import ProfileReferences from '../components/ProfileReferences.vue';
-import GuestRequest from '../components/GuestRequest.vue';
-import ReviewForm from '../components/ReviewForm.vue';
-
+import ProfileMyHome from "../components/ProfileMyHome.vue";
+import ProfilePictures from "../components/ProfilePictures.vue";
+import ProfileReferences from "../components/ProfileReferences.vue";
+import GuestRequest from "../components/GuestRequest.vue";
+import ReviewForm from "../components/ReviewForm.vue";
 
 export default {
-  name: 'user-profile',
+  name: "user-profile",
   data() {
     return {
       isNavInDisplay: false,
@@ -104,7 +113,7 @@ export default {
           lastName: this.currUser.lastName
         }
       };
-      await this.$store.dispatch({ type: 'addRequest', request: request });
+      await this.$store.dispatch({ type: "addRequest", request: request });
       this.requestFormOff();
     },
     requestFormOn() {
@@ -121,8 +130,8 @@ export default {
     }
   },
   watch: {
-    '$route.params.userId'(userId) {
-      this.$store.dispatch({ type: 'loadUser', userId });
+    "$route.params.userId"(userId) {
+      this.$store.dispatch({ type: "loadUser", userId });
     }
   },
   components: {
@@ -139,11 +148,12 @@ export default {
 
 <style lang="scss" scoped>
 .profile-container {
-  margin-top: 50px;
+  margin-top: 10px;
 }
 @media (max-width: 568px) {
   .profile-container {
     flex-direction: column;
+    margin-top: 0;
   }
 }
 
@@ -152,7 +162,6 @@ export default {
   max-width: 320px;
   min-width: 260px;
   border-bottom: 2px solid rgba(0, 0, 0, 0.15);
-  height: 80vh;
   margin: 5px 15px;
   background-color: white;
   padding: 15px;
@@ -209,8 +218,11 @@ export default {
   flex-grow: 1;
   margin: 5px 15px 5px 0;
   max-width: 1000px;
+  position: relative;
   .main-desc-nav {
     background-color: #fff;
+    position: absolute;
+    width: 100%;
   }
   .display {
     top: 71px;
@@ -218,7 +230,7 @@ export default {
     width: 100%;
     background-color: #fff;
     position: fixed;
-    z-index: 10;
+    z-index: 0;
     transition: 0.3s;
   }
   .profile-nav {
@@ -236,6 +248,16 @@ export default {
   }
   .detail-section {
     margin: 20px 0;
+  }
+  .cmps {
+    overflow: auto;
+    height: 79vh;
+  }
+  @media (max-width: 768px) {
+    .cmps {
+      overflow: unset;
+      height: unset;
+    }
   }
 }
 @media (max-width: 568px) {

@@ -38,6 +38,7 @@ export default {
       this.$emit('closeWindow');
     },
     goToInbox() {
+      this.$emit('closeWindow');
       this.$router.push('/userProfile/' + this.getLoggedUser._id + '/inbox');
     }
   },
@@ -48,10 +49,16 @@ export default {
 .user-window {
   position: fixed;
   top: 70px;
-  right: 60px;
+  right: 5px;
   background-color: white;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
   z-index: 1;
+}
+
+@media (max-width: 568px) {
+  .user-window {
+    right: 2px;
+  }
 }
 
 .top {

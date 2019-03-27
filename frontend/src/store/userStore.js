@@ -34,14 +34,20 @@ export default {
     addRequest(state, { request }) {
       state.currUser.requests.push(request);
     },
-    addReview(state, { review }) {
-      state.currUser.references.push(review);
+    addReview(state, { res }) {
+      state.currUser.references.push(res);
     },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
     },
     setLoggedUserImg(state, { imgUrl }) {
       state.loggedUser.imgUrl = imgUrl;
+    },
+    removeReview(state, { reviewId }) {
+      let currReviewIdx = state.currUser.references.findIndex(
+        review => reviewId === review._id
+      );
+      state.currUser.references.splice(currReviewIdx, 1);
     }
   },
   actions: {
@@ -75,9 +81,12 @@ export default {
       // TODO: show sweet alert...
     },
     async addReview(context, { review }) {
-      await userService.addReview(review);
-      context.commit({ type: "addReview", review });
-      // TODO: show sweet alert...
+      let res = await userService.addReview(review);
+      context.commit({ type: "addReview", res });
+    },
+    async removeReview(context, { currUserId, reviewId }) {
+      await userService.removeReview(currUserId, reviewId);
+      context.commit({ type: "removeReview", reviewId });
     },
     async removeRequest(context, guestId) {
       // TODO: update backend...
@@ -100,8 +109,7 @@ export default {
     async updateUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);
       // context.commit({ type: 'setCurrUserImg', imgUrl })
-      context.commit({ type: 'setLoggedUserImg', imgUrl })
-    },
-
+      context.commit({ type: "setLoggedUserImg", imgUrl });
+    }
   }
 };

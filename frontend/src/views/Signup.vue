@@ -148,6 +148,12 @@ export default {
     color: white;
   }
 }
+
+@media (max-width: 700px) {
+  .signup {
+    padding-top: 10px;
+  }
+}
 .steps {
   margin: 0 auto;
   max-width: 40%;
@@ -159,7 +165,7 @@ export default {
 form {
   max-width: 60%;
   margin: 0 auto;
-  padding: 80px 130px 80px 130px;
+  padding: 80px 130px;
   margin-top: 40px;
   margin-bottom: 40px;
   border: 1px solid rgb(199, 193, 193);
@@ -169,8 +175,32 @@ form {
   opacity: 0.9;
 }
 
+@media (max-width: 900px) {
+  form {
+    padding: 80px;
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 700px) {
+  form {
+    max-width: 90%;
+    padding: 20px;
+    margin-top: 5px;
+  }
+  .name-container {
+    flex-direction: column;
+  }
+}
+
 .small-input {
   width: 45%;
+}
+
+@media (max-width: 700px) {
+  .small-input {
+    width: 100%;
+  }
 }
 
 .bday-container,

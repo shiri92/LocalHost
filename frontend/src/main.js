@@ -1,3 +1,4 @@
+
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -8,12 +9,12 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import BootstrapVue from 'bootstrap-vue';
 import AnimateCSS from 'animate.css';
+
 // import 'custom.scss'
 
-
 // scrolling
-var VueScrollTo = require('vue-scrollto');
-Vue.use(VueScrollTo)
+var VueScrollTo = require("vue-scrollto");
+Vue.use(VueScrollTo);
 Vue.use(VueScrollTo, {
     container: "body",
     duration: 500,
@@ -26,7 +27,7 @@ Vue.use(VueScrollTo, {
     onCancel: false,
     x: false,
     y: true
-})
+});
 
 // font-awesome related
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -60,6 +61,7 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(BootstrapVue);
 Vue.use(ElementUI);
 Vue.use(AnimateCSS);
+Vue.use(require('vue-moment'));
 
 Vue.config.productionTip = false;
 

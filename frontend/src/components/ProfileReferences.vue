@@ -3,23 +3,73 @@
     <div>
       <h3 class="header-box">REFERENCES</h3>
       <hr style="margin: 0">
-      <div class="reference" v-for="(reference, idx) in user.references" :key="idx">
-        <hr>
-        <div class="review-container">
-          <div class="given-details flex">
-            <img :src="reference.givenByImgUrl">
-            <div class="dry-details flex space-between">
-              <div>
-                <h5>{{reference.givenBy}}</h5>
-                <div>{{reference.givenLocation}}</div>
+      <div class="filter flex">
+        <h3
+          class="from-guests flex align-center"
+          :class="{'clicked':isFromGuestsClicked}"
+          @click="fromGuestsToShow"
+        >
+          From Guests
+          <div class="num-from-guests">{{revFromGuests.length}}</div>
+        </h3>
+        <h3
+          class="from-hosts flex align-center"
+          :class="{'clicked':isFromHostsClicked}"
+          @click="fromHostsToShow"
+        >
+          From Hosts
+          <div class="num-from-hosts">{{revFromHosts.length}}</div>
+        </h3>
+      </div>
+      <div v-if="isFromGuestsClicked" class="references-container flex">
+        <div class="reference flex flex-col" v-for="(reference, idx) in revFromGuests" :key="idx">
+          <hr style="margin-top: 0">
+          {{reference._id}}
+          <div
+            class="delete-review"
+            v-if="loggedUser._id === reference.sender.id"
+            @click="removeReview(reference._id, user._id)"
+          >&times;</div>
+          <div class="review-container">
+            <div class="given-details flex">
+              <img :src="reference.sender.imgUrl">
+              <div class="dry-details flex space-between">
+                <div>
+                  <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
+                  <div>{{reference.sender.city}}, {{reference.sender.country}}</div>
+                  <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
+                </div>
+                <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
               </div>
-              <div>{{reference.createdAt}}</div>
             </div>
+            <div class="content">{{reference.description}}</div>
+            <div class="read-more">Read more</div>
           </div>
-          <rate-stars></rate-stars>
-
-          <div>{{reference.rating}}</div>
-          <div>{{reference.description}}</div>
+        </div>
+      </div>
+      <div v-else class="references-container flex">
+        <div class="reference flex flex-col" v-for="(reference, idx) in revFromHosts" :key="idx">
+          <hr style="margin-top: 0">
+          <div
+            class="delete-review"
+            v-if="loggedUser._id === reference.sender.id"
+            @click="removeReview(reference._id, user._id)"
+          >&times;</div>
+          <div class="review-container">
+            <div class="given-details flex">
+              <img :src="reference.sender.imgUrl">
+              <div class="dry-details flex space-between">
+                <div>
+                  <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
+                  <div>{{reference.sender.city}}, {{reference.sender.country}}</div>
+                  <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
+                </div>
+                <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
+              </div>
+            </div>
+            <div class="content">{{reference.description}}</div>
+            <div class="read-more">Read more</div>
+          </div>
         </div>
       </div>
     </div>
@@ -27,11 +77,42 @@
 </template>
 
 <script>
-import RateStars from '../../src/components/RateStars'
+import StarsToshow from '../../src/components/RateStarsToShow'
 export default {
-  props: ['user'],
+  props: ['user', 'loggedUser'],
+  data() {
+    return {
+      isFromGuestsClicked: true,
+      isFromHostsClicked: false
+    }
+  },
   components: {
-    RateStars
+    StarsToshow
+  },
+  computed: {
+    revFromGuests() {
+      return this.user.references.filter(rev => rev.getAsAHost);
+    },
+    revFromHosts() {
+      return this.user.references.filter(rev => rev.getAsAGuest);
+    }
+  },
+  methods: {
+    fromGuestsToShow() {
+      this.isFromGuestsClicked = true;
+      this.isFromHostsClicked = false;
+
+    },
+    fromHostsToShow() {
+      this.isFromHostsClicked = true;
+      this.isFromGuestsClicked = false;
+    },
+    removeReview(reviewId, currUserId) {
+      if (confirm('Are you sure you want to remove this review?')) {
+        this.$store.dispatch({ type: 'removeReview', currUserId, reviewId })
+      }
+
+    }
   }
 };
 </script>
@@ -42,6 +123,9 @@ export default {
   border-bottom: 2px solid rgba(0, 0, 0, 0.15);
   background-color: #fff;
   div {
+    .references-container {
+      flex-direction: column-reverse;
+    }
     .header-box {
       padding: 20px;
       margin: 0px;
@@ -49,23 +133,83 @@ export default {
       font-weight: bold;
       font-size: 1em;
     }
+    .filter {
+      padding: 20px;
+      .from-guests,
+      .from-hosts {
+        font-size: 1em;
+        margin: 0 10px 0 30px;
+        cursor: pointer;
+        transition: 0.2s;
+        &:hover {
+          color: orangered;
+        }
+        &:hover div {
+          background-color: orangered;
+        }
+      }
+    }
     .reference {
+      .delete-review {
+        cursor: pointer;
+        font-size: 2rem;
+        color: rgb(175, 169, 169);
+        align-self: flex-end;
+        justify-self: center;
+        margin-right: 30px;
+      }
       .review-container {
         padding: 20px;
         .given-details {
           width: 100%;
           img {
-            width: 60px;
-            height: 60px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
             margin: 0 20px 20px 20px;
+          }
+          .created-at {
+            padding-right: 20px;
           }
           .dry-details {
             width: 100%;
           }
         }
+        .content {
+          margin: 30px 40px 30px 110px;
+        }
+        .read-more {
+          text-align: right;
+          padding-right: 20px;
+          margin-bottom: 20px;
+          cursor: pointer;
+          font-weight: bold;
+          transition: 0.2s;
+          &:hover {
+            color: orangered;
+          }
+        }
       }
     }
+  }
+}
+.num-from-guests,
+.num-from-hosts {
+  background-color: #2f3e4e;
+  color: white;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  margin-left: 10px;
+  padding-top: 4px;
+  transition: 0.2s;
+}
+
+.clicked {
+  color: orangered;
+  div {
+    background-color: orangered;
   }
 }
 </style>

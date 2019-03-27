@@ -32,8 +32,6 @@
         </div>
       </div>
       <rate-stars @rate="setRate"></rate-stars>
-      <!-- <rate-stars></rate-stars> -->
-
       <label>Youre Review:</label>
       <textarea v-model="review.description" cols="30" rows="8"></textarea>
       <div class="btn-container flex justify-center">
@@ -53,25 +51,24 @@ export default {
       review: {
         getAsAHost: false,
         getAsAGuest: false,
-        givenBy: '',
-        givenByImgUrl: '',
-        givenTo: '',
-        givenToId: '',
+        sender: { id: '', firstName: '', lastName: '', imgUrl: '', country: '', city: '' },
+        recipient: { id: '', firstName: '', lastName: '' },
         createdAt: Date.now(),
-        givenLocation: '',
         rating: 0,
         description: '',
       }
     }
   },
   created() {
-    // this.$store.dispatch({ type: 'loadUser', userId: this.$route.params });
-    // this.$store.dispatch({ type: 'checkLogged', userId: this.$route.params });
-    this.review.givenBy = this.loggedUser.firstName + ' ' + this.loggedUser.lastName;
-    this.review.givenByImgUrl = this.loggedUser.imgUrl;
-    this.review.givenTo = this.currUser.firstName + ' ' + this.currUser.lastName;
-    this.review.givenToId = this.currUser._id;
-    this.review.givenLocation = this.currUser.city + ', ' + this.currUser.country;
+    this.review.sender.id = this.loggedUser._id;
+    this.review.sender.firstName = this.loggedUser.firstName;
+    this.review.sender.lastName = this.loggedUser.lastName;
+    this.review.sender.country = this.loggedUser.country;
+    this.review.sender.city = this.loggedUser.city;
+    this.review.sender.imgUrl = this.loggedUser.imgUrl;
+    this.review.recipient.firstName = this.currUser.firstName;
+    this.review.recipient.lastName = this.currUser.lastName;
+    this.review.recipient.id = this.currUser._id;
   },
   computed: {
     currUser() {
@@ -84,12 +81,16 @@ export default {
   methods: {
     checkHost() {
       this.$refs.inputGuest.checked = false;
+      this.review.getAsAHost = true;
+      this.review.getAsAGuest = false;
     },
     setRate(num) {
       this.review.rating = num;
     },
     checkGuest() {
       this.$refs.inputHost.checked = false;
+      this.review.getAsAHost = false;
+      this.review.getAsAGuest = true;
     },
     setReview() {
       if ((this.review.getAsAHost || this.review.getAsAGuest) && this.review.description && this.review.rating) {

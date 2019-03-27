@@ -53,11 +53,19 @@ function addRoutes(app) {
     return res.json();
   });
 
-  // ADD Guest Review
+  //ADD review to user
   app.put(`${BASE}/review`, async (req, res) => {
     const review = req.body;
-    await userService.addReview(review);
-    return res.json();
+    let result = await userService.addReview(review);
+    return res.json(result);
+  });
+
+  // DELETE review
+  app.delete(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
+    const currUserId = req.params.currUserId;
+    const reviewId = req.params.reviewId;
+    await userService.removeReview(currUserId, reviewId);
+    return res.end(`Review ${reviewId} Deleted`);
   });
 
   // DELETE Guest Request

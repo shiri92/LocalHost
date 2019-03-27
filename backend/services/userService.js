@@ -12,10 +12,13 @@ const FEMALE_IMG =
 
 module.exports = {
   login,
-  query, getById,
-  add, addRequest, addReview,
-  updateUserImg,
-  bookGuest, bookHost,
+  query,
+  getById,
+  add,
+  addRequest,
+  addReview,
+  removeReview,
+  updateUserImg
   // update
 };
 
@@ -77,25 +80,34 @@ async function add(credentials) {
 async function addRequest(request) {
   request._id = new ObjectId();
   let db = await mongoService.connect();
-  let res = await db.collection(USERS_COLLECTION).updateOne
-    (
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
       { _id: new ObjectId(request.recipient.id) },
       { $push: { requests: request } }
     );
-  // db.collection(tripsCollection).findOneAndUpdate
-  // console.log(res);
-  // res._id = res.insertedId;
-  // request._id = insertedId (id with no Object)
+  return request;
 }
 
 // ADD User Review
 async function addReview(review) {
+  review._id = ObjectId();
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne
-    (
-      { _id: new ObjectId(review.givenToId) },
-      { $push: { references: review } }
+  db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(review.recipient.id) },
+    { $push: { references: review } }
+  );
+  return review;
+}
+
+function removeReview(currUserId, reviewId) {
+  return mongoService.connect().then(db => {
+    const collection = db.collection("users");
+    return collection.updateOne(
+      { _id: new ObjectId(currUserId) },
+      { $pull: { references: { _id: new ObjectId(reviewId) } } }
     );
+  });
 }
 
 // UPDATE User
@@ -178,7 +190,7 @@ function _createUser(
     },
     /* ----- Social Details -----*/
     pictures: [],
-    references: [],
+    references: []
   };
 }
 
