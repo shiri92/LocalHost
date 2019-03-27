@@ -17,7 +17,7 @@ module.exports = {
   add,
   addRequest,
   addReview,
-  removeReview,
+  removeReview, removeRequest,
   updateUserImg
   // update
 };
@@ -100,12 +100,24 @@ async function addReview(review) {
   return review;
 }
 
+// DELETE User Review
 function removeReview(currUserId, reviewId) {
   return mongoService.connect().then(db => {
-    const collection = db.collection("users");
+    const collection = db.collection(USERS_COLLECTION);
     return collection.updateOne(
       { _id: new ObjectId(currUserId) },
       { $pull: { references: { _id: new ObjectId(reviewId) } } }
+    );
+  });
+}
+
+// DELETE User Request
+function removeRequest(currUserId, requestId) {
+  return mongoService.connect().then(db => {
+    const collection = db.collection(USERS_COLLECTION);
+    return collection.updateOne(
+      { _id: new ObjectId(currUserId) },
+      { $pull: { requests: { _id: new ObjectId(requestId) } } }
     );
   });
 }

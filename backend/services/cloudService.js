@@ -4,7 +4,7 @@ const cloudinary = require('cloudinary');
 
 /* ----- CONST -----*/
 const CLOUD_NAME = 'dcl4oabi3';
-const UPLOAD_PRESET = 'jhqr9o4c';
+// const UPLOAD_PRESET = 'jhqr9o4c';
 const API_KEY = '835468792983949'
 const API_SECRET = 'djgVO14O1DSteDPTimrKaq7E1Bo'
 

@@ -44,7 +44,8 @@ async function add(credentials) {
 
 // ADD User Request
 async function addRequest(request) {
-  await axios.put(`${BASE_API}/request`, request);
+  let res = await axios.put(`${BASE_API}/request`, request);
+  return res.data;
 }
 
 // ADD User Review
@@ -54,8 +55,8 @@ async function addReview(review) {
 }
 
 // DELETE User Request 
-async function removeRequest(sender, recipient) {
-  await axios.delete(`${BASE_API}/${recipient.id}`, { sender })
+async function removeRequest(recipientId, requestId) {
+  await axios.delete(`${BASE_API}/${recipientId}/request/${requestId}`)
 }
 
 // DELETE User Review
@@ -83,8 +84,6 @@ async function bookHost(sender, recipient) {
   const { id } = sender;
   await axios.put(`${BASE_API}/${id}/bookHost`, { recipient });
 }
-
-
 
 
 export default {
