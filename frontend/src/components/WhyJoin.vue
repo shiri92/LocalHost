@@ -5,7 +5,7 @@
       <b-card
         class="card"
         title="Community"
-        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333051/ons/why-join-1.jpg"
+        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566197/bg-imgs/why-join-1.jpg"
         img-alt="Image"
         img-top
       >
@@ -16,7 +16,7 @@
       <b-card
         class="card"
         title="Guesting"
-        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333101/ons/why-join-2.jpg"
+        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566200/bg-imgs/why-join-2.jpg"
         img-alt="Image"
         img-top
       >
@@ -27,7 +27,7 @@
       <b-card
         class="card"
         title="Hosting"
-        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553333102/ons/why-join-3.jpg"
+        img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566198/bg-imgs/why-join-3.jpg"
         img-alt="Image"
         img-top
       >
@@ -81,7 +81,6 @@ export default {
     .cards-container {
       flex-direction: column;
       max-width: 100%;
-      
     }
   }
 }

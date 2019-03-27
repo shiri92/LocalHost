@@ -52,7 +52,6 @@ export default {
         if (cityName.indexOf(' ') !== -1) {
           cityName = cityName.replace(/\s/g, "%20");
         }
-        console.log(cityName)
         return ('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/city-imgs/' + cityName + '.jpg');
       }
     },
