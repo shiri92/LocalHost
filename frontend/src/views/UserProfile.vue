@@ -161,7 +161,7 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-    }
+    },
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize)

@@ -71,6 +71,22 @@ function addRoutes(app) {
     return res.end(`Review ${reviewId} Deleted`);
   });
 
+  // GET User review
+  // app.get(`${BASE}/:id`, async (req, res) => {
+  //   const userId = req.params.id;
+  //   let user = await userService.getReviewById(userId);
+  //   return res.json(user);
+  // });
+
+  // UPDATE User Review
+  // app.put(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
+  //   const currUserId = req.params.currUserId;
+  //   // const reviewId = req.params.reviewId;
+  //   const review = req.body;
+  //   await userService.updateReview(currUserId, review);
+  //   return res.end(`Review ${reviewId} Updated`);
+  // });
+
   // DELETE Guest Request
   app.delete(`${BASE}/:currUserId/request/:requestId`, async (req, res) => {
     const currUserId = req.params.currUserId;
