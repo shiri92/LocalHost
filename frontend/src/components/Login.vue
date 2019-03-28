@@ -1,13 +1,14 @@
 <template>
   <section class="login">
-    <div class="top flex space-between align-center">
-      <H1>Login</H1>
+    <div class="top flex space-between align-center justify-center">
+      <h1>Sign In</h1>
       <span @click="$emit('loginOff')">&times;</span>
     </div>
     <hr>
     <div class="content flex flex-col">
       <el-form :inline="false" :model="credentials" class="demo-form-inline flex flex-col">
         <b-form-group class="input" required>
+          <font-awesome-icon class="input-icon" icon="user"/>
           <b-form-input
             type="email"
             v-model="credentials.email"
@@ -17,16 +18,17 @@
         </b-form-group>
 
         <b-form-group class="input" required>
+          <font-awesome-icon class="input-icon" icon="lock"/>
           <b-form-input
             type="password"
             v-model="credentials.password"
-            required
             placeholder="Enter Password..."
+            required
           />
         </b-form-group>
 
         <div class="btn-container flex justify-center">
-          <el-button class="btn-login" type="warning" @click="tryLogin">Log in</el-button>
+          <button class="btn-login" @click="tryLogin">SIGN IN</button>
         </div>
       </el-form>
     </div>
@@ -41,17 +43,24 @@ export default {
       credentials: {
         email: "",
         password: ""
-      }
+      },
     };
   },
   methods: {
     tryLogin() {
+      if (!this.checkForm) return;
       this.$store
         .dispatch({ type: "login", credentials: this.credentials })
         .then(() => {
           this.$router.push(this.$route.path);
           this.$emit("loginOff");
         });
+    },
+    checkForm: function (e) {
+      if (this.credentials.email && this.credentials.password) {
+        return true;
+      }
+      e.preventDefault();
     }
   }
 };
@@ -70,15 +79,20 @@ export default {
   background-color: white;
   color: rgb(62, 62, 62);
   .top {
-    padding: 10px 30px 10px 30px;
+    padding: 15px 30px;
+    background-color: #67c23a;
+    border-radius: 5px 5px 0 0;
     h1 {
       font-size: 1.5rem;
       margin: 0;
+      color: white
     }
     span {
       cursor: pointer;
       font-size: 2.5rem;
-      color: rgb(175, 169, 169);
+      color: #fff;
+      position: absolute;
+      right: 10px;
     }
   }
   .content {
@@ -101,19 +115,39 @@ export default {
   }
 }
 
+@media (max-width: 400px) {
+  .login {
+    width: 90%;
+  }
+}
+
 hr {
   margin: 0;
 }
 
 .input {
   margin: 0 30px 30px 30px;
+  // padding-left: 15px;
+  position: relative;
+  .input-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
 }
 .btn-container {
-  margin: 30px;
+  margin: 0 30px 30px 30px;
   .btn-login {
     justify-self: center;
-    width: 100px;
-    background-color: rgb(29, 47, 206);
+    width: 100%;
+    background-color: #67c23a;
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 4px;
+    line-height: 1;
+    border: 1px;
+    color: #fff;
   }
 }
 </style>

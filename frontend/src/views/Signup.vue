@@ -1,5 +1,10 @@
 <template>
   <section class="signup flex flex-col">
+    <div class="logo">
+      <router-link to="/">
+        <img src="../../public/img/logo3.png" alt>
+      </router-link>
+    </div>
     <h1 class="title">Sign Up</h1>
     <div class="forms-container">
       <el-steps class="steps" :active="active" finish-status="success">
@@ -31,7 +36,7 @@
             style="margin-top: 12px;"
             @click="next"
             type="warning"
-          >Nest Step</el-button>
+          >Next Step</el-button>
         </b-form>
 
         <b-form v-if="active === 1" class="flex flex-col">
@@ -84,50 +89,59 @@
 
 <script>
 export default {
-  name: 'sign-up',
+  name: "sign-up",
   data() {
     return {
       active: 0,
       form: {
-        fName: '',
-        lName: '',
-        email: '',
-        password: '',
-        birthdate: { day: '', month: '', year: '' },
+        fName: "",
+        lName: "",
+        email: "",
+        password: "",
+        birthdate: { day: "", month: "", year: "" },
         address: {}
       },
-      genders: ['Male', 'Female', 'Other'],
-      searchWord: '',
-    }
+      genders: ["Male", "Female", "Other"],
+      searchWord: ""
+    };
   },
 
   methods: {
     next() {
+      if (!this.checkForm) return;
       if (this.active === 1) {
-        this.$store.dispatch({ type: 'signup', credentials: this.form })
-          .then(() => this.$router.push('/userProfile/' + this.getLoggedUser._id));
+        this.$store
+          .dispatch({ type: "signup", credentials: this.form })
+          .then(() =>
+            this.$router.push("/userProfile/" + this.getLoggedUser._id)
+          );
       }
       if (this.active++ > 1) this.active = 0;
     },
     querySearchAsync(queryString, cb) {
       if (this.searchWord) {
-        this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord })
+        this.$store
+          .dispatch({ type: "loadCities", searchWord: this.searchWord })
           .then(cities => {
             var results = cities.map(city => {
-              return { value: city.name + ', ' + city.country }
+              return { value: city.name + ", " + city.country };
             });
             cb(results);
-          })
+          });
       }
     },
     setAddres(ev) {
-      let idx = ev.indexOf(',');
+      let idx = ev.indexOf(",");
       let currCity = ev.substr(0, idx);
       let currCountry = ev.substr(idx + 2, ev.length - 1);
       this.form.address = { city: currCity, country: currCountry };
     },
     stepBack() {
       this.active = 0;
+    },
+    checkForm: function (e) {
+      if (this.form.fName && this.form.lName && this.form.email && this.form.password) return true;
+      e.preventDefault();
     }
   },
   computed: {
@@ -138,17 +152,26 @@ export default {
       return this.$store.getters.cities;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
+.logo {
+  width: 150px;
+  height: 50px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .signup {
   margin-top: -70px;
   background-color: white;
   color: black;
   font-weight: bold;
   background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.95),
       rgba(0, 0, 0, 0.7)
     ),
     url("../../public/img/signup.jpg");
