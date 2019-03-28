@@ -108,6 +108,8 @@ export default {
 
   methods: {
     next() {
+      console.log('form check: ',this.checkForm);
+      
       if (!this.checkForm) return;
       if (this.active === 1) {
         this.$store
