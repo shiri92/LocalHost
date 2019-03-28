@@ -32,7 +32,7 @@ export default {
   .profile-list {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 0.4fr));
+    grid-template-columns: repeat(auto-fit, minmax(290px, 0.4fr));
     gap: 20px;
     .profile-list-item {
       list-style: none;

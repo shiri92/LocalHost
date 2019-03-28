@@ -1,7 +1,7 @@
 <template>
   <section class="users flex flex-col">
     <main-header></main-header>
-    <div class="main-title">Local Hosts</div>
+    <div class="main-title">Hosts In The Area</div>
     <div class="users-container">
       <user-list :users="getUsers"></user-list>
     </div>
@@ -38,6 +38,7 @@ export default {
     font-size: 2rem;
     font-weight: bold;
     align-self: center;
+    margin-top: 50px;
   }
 }
 </style>
