@@ -1,6 +1,6 @@
 <template>
   <li>
-    <div class="card-container flex space-between flex-col ">
+    <div class="card-container flex space-between flex-col">
       <div class="card">
         <div class="hero"></div>
         <div class="main">
@@ -12,6 +12,7 @@
                 <font-awesome-icon icon="map-marker-alt"/>
                 <span>&nbsp;{{profile.address.city}}, {{profile.address.country}}</span>
               </span>
+              <stars-toshow :value="rateAverage" :disabled="true"></stars-toshow>
             </div>
           </div>
         </div>
@@ -21,9 +22,20 @@
 </template>
 
 <script>
+import StarsToshow from '../components/RateStarsToShow'
 export default {
   props: ["profile"],
-  methods: {}
+  components: {
+    StarsToshow
+  },
+  computed: {
+    rateAverage() {
+      return this.profile.references.reduce((acc, review) => {
+        acc += review.rating;
+        return acc;
+      }, 0)
+    }
+  }
 };
 </script>
 
