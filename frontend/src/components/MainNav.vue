@@ -2,7 +2,9 @@
   <section v-if="showNav" class="main-nav flex space-between align-center">
     <div class="nav-container flex space-between align-center">
       <div class="links-container flex space-around">
-        <router-link to="/"><div class="logo"></div></router-link>
+        <router-link to="/">
+          <div class="logo"></div>
+        </router-link>
       </div>
 
       <div class="buttons-container">
@@ -89,7 +91,7 @@ export default {
 .logo {
   height: 40px;
   width: 150px;
-  background-image: url('../../public/img/logo.png');
+  background-image: url("https://res.cloudinary.com/dcl4oabi3/image/upload/v1553720329/logo/logo.png");
   background-size: cover;
 }
 
@@ -115,5 +117,4 @@ export default {
     padding: 10px;
   }
 }
-
 </style>

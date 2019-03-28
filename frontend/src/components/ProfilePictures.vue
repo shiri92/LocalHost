@@ -6,7 +6,7 @@
       <div class="user-info">
         <div
           class="display-images"
-          v-for="(img, idx) in user.imgs"
+          v-for="(img, idx) in user.pictures"
           :key="idx"
           :style="'background-image: url(' + img + ')'"
         ></div>
