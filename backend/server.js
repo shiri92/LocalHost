@@ -1,4 +1,4 @@
-/* ----- DEPENDENCIES -----*/
+/* ----- DEPEND -----*/
 const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -16,13 +16,13 @@ const addCloudRoutes = require('./routes/cloudRoutes');
 
 /* ----- SERVER -----*/
 
-/* ----- FOR GITHUB -----*/
-// app.use(cors({
-//     origin: ['http://localhost:8080'],
-//     credentials: true // enable set cookie
-// }));
+/* ----- SERVER PORT -----*/
+const PORT = process.env.PORT || 3003;
 
-/* ----- FOR HEROKU -----*/
+/* ----- ENABLE APP ON LOCALHOST SERVER -----*/
+app.use(cors({ origin: ['http://localhost:8080'], credentials: true /* enable set cookie*/ }));
+
+/* ----- ENABLE APP ON WEBHOST SERVER -----*/
 app.use(express.static('public'));
 
 app.use(bodyParser.json())
@@ -41,11 +41,6 @@ addCityRoutes(app);
 addCountryRoutes(app)
 addCloudRoutes(app);
 
-/* ----- FOR GITHUB -----*/
-// const PORT = process.env.PORT || 3003;
-
-/* ----- FOR HEROKU -----*/
-const PORT = process.env.PORT || 3003;
 
 app.listen(PORT, () => {
     console.log(`App listening on port ${PORT}!`)
