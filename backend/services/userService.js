@@ -20,7 +20,9 @@ module.exports = {
   removeReview,
   removeRequest,
   updateUserImg,
-  updateUser
+  bookGuest,
+  bookHost,
+  update
 };
 
 FillDB();
@@ -107,37 +109,39 @@ async function addRequest(request) {
 async function addReview(review) {
   review._id = ObjectId();
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(review.recipient.id) },
-    { $push: { references: review } }
-  );
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(review.recipient.id) },
+      { $push: { references: review } }
+    );
   return review;
 }
 
 // DELETE User Review
-function removeReview(currUserId, reviewId) {
-  return mongoService.connect().then(db => {
-    const collection = db.collection(USERS_COLLECTION);
-    return collection.updateOne(
+async function removeReview(currUserId, reviewId) {
+  let db = await mongoService.connect();
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
       { _id: new ObjectId(currUserId) },
       { $pull: { references: { _id: new ObjectId(reviewId) } } }
     );
-  });
 }
 
 // DELETE User Request
-function removeRequest(currUserId, requestId) {
-  return mongoService.connect().then(db => {
-    const collection = db.collection(USERS_COLLECTION);
-    return collection.updateOne(
+async function removeRequest(currUserId, requestId) {
+  let db = await mongoService.connect();
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
       { _id: new ObjectId(currUserId) },
       { $pull: { requests: { _id: new ObjectId(requestId) } } }
     );
-  });
 }
 
 // UPDATE User
-async function updateUser(user) {
+async function update(user) {
   user._id = new ObjectId(user._id);
   let db = await mongoService.connect();
   db.collection(USERS_COLLECTION).updateOne({ _id: user._id }, { $set: user });
@@ -147,28 +151,31 @@ async function updateUser(user) {
 // UPDATE Profile Image Url
 async function updateUserImg(imgUrl, userId) {
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(userId) },
-    { $set: { imgUrl: imgUrl } }
-  );
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne({ _id: new ObjectId(userId) }, { $set: { imgUrl: imgUrl } });
 }
 
 // (UPDATE HOST USER) Book Guest
 async function bookGuest(hostId, newGuest) {
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(hostId) },
-    { $push: { guests: newGuest } }
-  );
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(hostId) },
+      { $addToSet: { guests: newGuest } }
+    );
 }
 
 // (UPDATE GUEST USER) Book Host
-async function bookHost(guestId, host) {
+async function bookHost(guestId, newHost) {
   let db = await mongoService.connect();
-  db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(guestId) },
-    { $push: { hosts: host } }
-  );
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(guestId) },
+      { $addToSet: { hosts: newHost } }
+    );
 }
 
 // Create User
@@ -179,7 +186,8 @@ function _createUser(
   lastName,
   gender,
   birthdate,
-  address
+  address,
+  imgurl
 ) {
   return {
     /* ----- Personal Details -----*/
@@ -192,7 +200,7 @@ function _createUser(
     languages: [],
     occupation: "",
     education: "",
-    imgUrl: gender === "Male" ? MALE_IMG : FEMALE_IMG,
+    imgUrl: imgurl ? imgurl : gender === "Male" ? MALE_IMG : FEMALE_IMG,
     /* ----- Location Details -----*/
     address,
     /* ----- Surfing Details -----*/
@@ -229,7 +237,7 @@ function _createUsers() {
       "Saar",
       "Male",
       { day: 24, month: 09, year: 1997 },
-      { city: "Bangkok", country: "Thailand" }
+      { city: "Berlin", country: "Germany" }
     )
   );
   users.push(
@@ -262,7 +270,8 @@ function _createUsers() {
       "Turner",
       "Female",
       { day: 08, month: 09, year: 1990 },
-      { city: "Barcelona", country: "Spain" }
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612551/profile-imgs/jessica-turner/jessica-turner.jpg"
     )
   );
   users.push(
@@ -273,7 +282,8 @@ function _createUsers() {
       "County",
       "Female",
       { day: 30, month: 10, year: 1992 },
-      { city: "Barcelona", country: "Spain" }
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612506/profile-imgs/riley-county/riley-county.jpg"
     )
   );
   users.push(
@@ -284,7 +294,8 @@ function _createUsers() {
       "Edwards",
       "Female",
       { day: 11, month: 07, year: 1994 },
-      { city: "Barcelona", country: "Spain" }
+      { city: "Paris", country: "France" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717922/profile-imgs/chloe-edwards/chloe-edwards.jpg"
     )
   );
   users.push(
@@ -295,7 +306,8 @@ function _createUsers() {
       "Nelson",
       "Male",
       { day: 14, month: 06, year: 1988 },
-      { city: "Barcelona", country: "Spain" }
+      { city: "Rome", country: "Italy" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718495/profile-imgs/rob-nelson/rob-nelson.jpg"
     )
   );
   users.push(
@@ -306,7 +318,8 @@ function _createUsers() {
       "Powell",
       "Male",
       { day: 05, month: 02, year: 1980 },
-      { city: "Barcelona", country: "Spain" }
+      { city: "Paris", country: "France" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718458/profile-imgs/rickey-powell/rickey-powell.jpg"
     )
   );
   users.push(
@@ -317,7 +330,8 @@ function _createUsers() {
       "Turner",
       "Male",
       { day: 08, month: 09, year: 1985 },
-      { city: "Bangkok", country: "Thailand" }
+      { city: "Rome", country: "Italy" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718169/profile-imgs/kory-turner/kory-turner.jpg"
     )
   );
   users.push(
@@ -328,7 +342,8 @@ function _createUsers() {
       "Smith",
       "Male",
       { day: 12, month: 09, year: 1989 },
-      { city: "Barcelona", country: "Spain" }
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718146/profile-imgs/karl-smith/karl-smith.jpg"
     )
   );
   users.push(
@@ -339,7 +354,164 @@ function _createUsers() {
       "Harrison",
       "Female",
       { day: 18, month: 09, year: 1980 },
-      { city: "Bangkok", country: "Thailand" }
+      { city: "Berlin", country: "Germany" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718438/profile-imgs/penelope-harrison/penelope-harrison.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "nora@gmail.com",
+      "1111",
+      "Nora",
+      "Gray",
+      "Female",
+      { day: 19, month: 10, year: 1980 },
+      { city: "Berlin", country: "Germany" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718390/profile-imgs/nora-gray/nora-gray.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "oscar@gmail.com",
+      "1111",
+      "Oscar",
+      "Brooks",
+      "Male",
+      { day: 15, month: 07, year: 1985 },
+      { city: "Rome", country: "Italy" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718410/profile-imgs/oscar-brooks/oscar-brooks.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "audrey@gmail.com",
+      "1111",
+      "Audrey",
+      "Collins",
+      "Female",
+      { day: 09, month: 05, year: 1982 },
+      { city: "Paris", country: "France" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717869/profile-imgs/audrey-collins/audrey-collins.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "walton@gmail.com",
+      "1111",
+      "Walton",
+      "Rice",
+      "Male",
+      { day: 09, month: 09, year: 1975 },
+      { city: "Madrid", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718539/profile-imgs/walton-rice/walton-rice.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "neil@gmail.com",
+      "1111",
+      "Neil",
+      "Hayes",
+      "Male",
+      { day: 21, month: 09, year: 1988 },
+      { city: "Madrid", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718305/profile-imgs/neil-hayes/neil-hayes.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "larry@gmail.com",
+      "1111",
+      "Larry",
+      "Shaw",
+      "Male",
+      { day: 23, month: 01, year: 1989 },
+      { city: "Madrid", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718198/profile-imgs/larry-shaw/larry-shaw.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "louis@gmail.com",
+      "1111",
+      "Louis",
+      "Page",
+      "Male",
+      { day: 30, month: 02, year: 1993 },
+      { city: "New York", country: "NY, USA" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718217/profile-imgs/louis-page/louis-page.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "robie@gmail.com",
+      "1111",
+      "Robie",
+      "Lee",
+      "Female",
+      { day: 25, month: 02, year: 1994 },
+      { city: "New York", country: "NY, USA" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718516/profile-imgs/robie-lee/robie-lee.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "claire@gmail.com",
+      "1111",
+      "Claire",
+      "Fisher",
+      "Female",
+      { day: 27, month: 03, year: 1990 },
+      { city: "New York", country: "NY, USA" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718067/profile-imgs/claire-fisher/claire-fisher.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "aurora@gmail.com",
+      "1111",
+      "Aurora",
+      "Reed",
+      "Female",
+      { day: 16, month: 11, year: 1992 },
+      { city: "New York", country: "NY, USA" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717888/profile-imgs/aurora-reed/aurora-reed.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "anna@gmail.com",
+      "1111",
+      "Anna",
+      "Howard",
+      "Female",
+      { day: 07, month: 12, year: 1981 },
+      { city: "London", country: "England" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612474/profile-imgs/anna-howard/anna-howard.jpg"
+    )
+  );
+  users.push(
+    _createUser(
+      "loyd@gmail.com",
+      "1111",
+      "Loyd",
+      "Jackson",
+      "Male",
+      { day: 13, month: 10, year: 1991 },
+      { city: "London", country: "England" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718246/profile-imgs/loyd-jackson/loyd-jackson.png"
+    )
+  );
+  users.push(
+    _createUser(
+      "lucy@gmail.com",
+      "1111",
+      "Lucy",
+      "Arnolds",
+      "Male",
+      { day: 17, month: 10, year: 1992 },
+      { city: "London", country: "England" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718289/profile-imgs/lucy-arnolds/lucy-arnolds.png"
     )
   );
 

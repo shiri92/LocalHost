@@ -174,7 +174,7 @@ export default {
       rgba(255, 255, 255, 0.95),
       rgba(0, 0, 0, 0.7)
     ),
-    url("../../public/img/signup.jpg");
+    url("https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566201/bg-imgs/signup.jpg");
   background-size: cover;
   height: 100vh;
   padding-top: 20px;

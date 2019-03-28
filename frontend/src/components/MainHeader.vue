@@ -14,12 +14,14 @@
       class="arrow-down"
       href="#"
       v-scroll-to="'#whyjoin'"
-      src="../../public/img/arrow-down.png"
+      src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566367/fav-icons/arrow-down.png"
     >
 
     <div class="users-title" v-if="$route.path !== '/'">
       <h2 style="font-size: 4vw">{{currPageCountry}}</h2>
-      <h1 style="font-size: 8.5vw; margin-bottom: 60px; font-family: 'BebasNeueRegular';">{{currPageCity}}</h1>
+      <h1
+        style="font-size: 8.5vw; margin-bottom: 60px; font-family: 'BebasNeueRegular';"
+      >{{currPageCity}}</h1>
     </div>
   </section>
 </template>
@@ -82,7 +84,7 @@ h1 {
 }
 
 h2 {
-  color: white;   
+  color: white;
 }
 
 .btn-join {
@@ -93,7 +95,7 @@ h2 {
 
 .arrow-down {
   position: absolute;
-  top: 26%;
+  top: 25%;
   width: 90px;
   height: 90px;
   cursor: pointer;

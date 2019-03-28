@@ -15,8 +15,8 @@
           <div class="form-item flex space-between">
             <label for="hosting">Hosting Availability:&nbsp;</label>
             <select class="form-input" v-model="user.isHosting">
-              <option value="true">Accepting Guests</option>
-              <option value="false">Not Accepting Guests</option>
+              <option :value="true">Accepting Guests</option>
+              <option :value="false">Not Accepting Guests</option>
             </select>
           </div>
           <hr>
