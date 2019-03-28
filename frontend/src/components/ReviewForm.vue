@@ -94,6 +94,10 @@ export default {
       this.review.getAsAGuest = true;
     },
     setReview() {
+      if (!this.loggedUser) {
+        console.log('Only registered users can send reviews!');
+        return;
+      }
       if ((this.review.getAsAHost || this.review.getAsAGuest) && this.review.description && this.review.rating) {
         this.$emit('closeReviewForm');
         this.$store.dispatch({ type: 'addReview', review: this.review })

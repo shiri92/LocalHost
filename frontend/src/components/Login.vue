@@ -159,8 +159,9 @@ hr {
     border-color: #85ce61;
   }
   p {
-    span {
+    .signup-btn {
       color: blue;
+      text-decoration: underline;
     }
   }
 }
