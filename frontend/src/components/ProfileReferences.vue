@@ -198,8 +198,19 @@ export default {
           .created-at {
             padding-right: 20px;
           }
+          @media (max-width: 568px) {
+            .created-at {
+              padding-right: 0;
+              text-align: center;
+            }
+          }
           .dry-details {
             width: 100%;
+          }
+        }
+        @media (max-width: 568px) {
+          .given-details {
+            flex-direction: column;
           }
         }
         .content {
@@ -207,6 +218,11 @@ export default {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+        @media (max-width: 568px) {
+          .content {
+            margin: 10px;
+          }
         }
         .read-more-clicked {
           white-space: normal;

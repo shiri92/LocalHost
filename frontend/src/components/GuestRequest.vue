@@ -48,6 +48,10 @@ export default {
   },
   methods: {
     onSubmit() {
+      if (!this.getLoggedUser) {
+        console.log("Only registered users can send requests!");
+        return;
+      }
       this.$emit('sendRequest', this.requestInfo)
     }
   },

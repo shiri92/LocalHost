@@ -56,7 +56,7 @@
           </div>
 
           <label>Gender:</label>
-          <el-select class="gender-selsct" v-model="form.gender" placeholder="Gender">
+          <el-select class="gender-select" v-model="form.gender" placeholder="Gender">
             <el-option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</el-option>
           </el-select>
 
@@ -108,9 +108,7 @@ export default {
 
   methods: {
     next() {
-      console.log('form check: ',this.checkForm);
-      
-      if (!this.checkForm) return;
+      // if (!this.checkForm()) return;
       if (this.active === 1) {
         this.$store
           .dispatch({ type: "signup", credentials: this.form })
@@ -141,10 +139,10 @@ export default {
     stepBack() {
       this.active = 0;
     },
-    checkForm: function (e) {
-      if (this.form.fName && this.form.lName && this.form.email && this.form.password) return true;
-      e.preventDefault();
-    }
+    // checkForm(e) {
+    //   if ((this.form.fName && this.form.lName && this.form.email && this.form.password) || (this.form.birthdate)) return true;
+    //   else return false;
+    // }
   },
   computed: {
     getLoggedUser() {
@@ -241,7 +239,7 @@ form {
 }
 
 .bday-container,
-.gender-selsct {
+.gender-select {
   margin-bottom: 15px;
 }
 
