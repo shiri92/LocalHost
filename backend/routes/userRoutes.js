@@ -4,11 +4,13 @@ const userService = require("../services/userService.js");
 /* ----- CONST -----*/
 const BASE = "/user";
 
+
 function addRoutes(app) {
   // Logged User Check (Session Only)
   app.put(`${BASE}/checkLogged`, async (req, res) => {
     if (req.session.user) {
       let user = await userService.getById(req.session.user._id);
+
       return res.json(user);
     } else return res.json();
   });
@@ -120,3 +122,4 @@ module.exports = addRoutes;
 //     }
 //     next();
 // }
+

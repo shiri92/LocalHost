@@ -1,15 +1,18 @@
 /* ----- DEPEND -----*/
 import Axios from "axios";
+// const ioClient = require('socket.io-client');
+import ioClient from 'socket.io-client';
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
 const BASE_API = process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
 
-
+// var socket = ioClient('http://localhost:3003');
 
 // Logged User Check (Session Only)
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
+  // if (res.data) 
   return res.data;
 }
 
