@@ -14,7 +14,7 @@
       class="arrow-down"
       href="#"
       v-scroll-to="'#whyjoin'"
-      src="../../public/img/arrow-down.png"
+      src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566367/fav-icons/arrow-down.png"
     >
 
     <div class="users-title" v-if="$route.path !== '/'">

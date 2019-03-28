@@ -17,7 +17,7 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn" @click="openReview">
+            <button class="btn" @click="openReview" v-if="loggedUser">
               Add Review
               <!-- <font-awesome-icon icon="sort-down"/> -->
             </button>
@@ -35,27 +35,40 @@
       </div>
     </div>
     <div class="main-desc">
-      <div class="cmps" id="cmps" >
+      <div class="cmps" id="cmps">
         <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
           <!-- ON DESKTOP -->
           <div class="profile-nav flex flex-row justify-center" v-if="window.width > 768">
             <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: '#cmps'}">Overview</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: '#cmps'}">Home</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: '#cmps'}">Pictures</a>
-            <a class="nav-item" href="#" v-scroll-to="{ el: '#references', container: '#cmps'}">References</a>
+            <a
+              class="nav-item"
+              href="#"
+              v-scroll-to="{ el: '#references', container: '#cmps'}"
+            >References</a>
           </div>
           <!-- ON MOBILE -->
           <div class="profile-nav flex flex-row justify-center" v-else>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
             <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: 'body'}">Pictures</a>
-            <a class="nav-item" href="#" v-scroll-to="{ el: '#references', container: 'body'}">References</a>
+            <a
+              class="nav-item"
+              href="#"
+              v-scroll-to="{ el: '#references', container: 'body'}"
+            >References</a>
           </div>
         </nav>
         <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
         <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
         <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-        <profile-references class="detail-section" :user="currUser" :loggedUser="loggedUser" id="references"></profile-references>
+        <profile-references
+          class="detail-section"
+          :user="currUser"
+          :loggedUser="loggedUser"
+          id="references"
+        ></profile-references>
       </div>
     </div>
     <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
@@ -108,7 +121,7 @@ export default {
       return this.$store.getters.loggedUser;
     },
     test() {
-      console.log('window size:',window.screen.width); 
+      console.log('window size:', window.screen.width);
     }
   },
   methods: {
@@ -148,7 +161,7 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-    }  
+    },
   },
   destroyed() {
     window.removeEventListener('resize', this.handleResize)

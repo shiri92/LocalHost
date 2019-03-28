@@ -42,6 +42,8 @@ import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
 import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faCoffee);
@@ -55,6 +57,8 @@ library.add(faQuoteLeft);
 library.add(faBriefcase);
 library.add(faBook);
 library.add(faMapMarkerAlt);
+library.add(faLock);
+library.add(faUser);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

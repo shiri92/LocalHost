@@ -25,10 +25,12 @@
         <div class="reference flex flex-col" v-for="(reference, idx) in revFromGuests" :key="idx">
           <hr style="margin-top: 0">
           <div
-            class="delete-review"
+            class="edit-delete-container flex"
             v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
-            @click="removeReview(reference._id, user._id)"
-          >&times;</div>
+          >
+            <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button>
+            <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div>
+          </div>
           <div class="review-container">
             <div class="given-details flex">
               <img :src="reference.sender.imgUrl">
@@ -54,10 +56,12 @@
         <div class="reference flex flex-col" v-for="(reference, idx) in revFromHosts" :key="idx">
           <hr style="margin-top: 0">
           <div
-            class="delete-review"
+            class="edit-delete-container flex"
             v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
-            @click="removeReview(reference._id, user._id)"
-          >&times;</div>
+          >
+            <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button>
+            <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div>
+          </div>
           <div class="review-container">
             <div class="given-details flex">
               <img :src="reference.sender.imgUrl">
@@ -74,7 +78,10 @@
               class="content"
               :class="{'read-more-clicked': reference.isClicked}"
             >{{reference.description}}</div>
-            <div class="read-more" @click="readMore(reference), read = !read">{{(read)? 'Read more':'Read less'}}</div>
+            <div
+              class="read-more"
+              @click="readMore(reference), read = !read"
+            >{{(read)? 'Read more':'Read less'}}</div>
           </div>
         </div>
       </div>
@@ -122,6 +129,11 @@ export default {
     readMore(reference) {
       reference.isClicked = !reference.isClicked;
     },
+    editReview(review, currUserId) {
+      console.log('edit coming soon');
+      // this.$store.dispatch({ type: 'loadReview', currUserId, review })
+      // .then(() => this.$emit('openReviewToEdit', review));
+    }
   }
 };
 </script>
@@ -159,13 +171,21 @@ export default {
       }
     }
     .reference {
-      .delete-review {
-        cursor: pointer;
-        font-size: 2rem;
-        color: rgb(175, 169, 169);
+      .edit-delete-container {
+        align-items: center;
         align-self: flex-end;
         justify-self: center;
         margin-right: 30px;
+        .btn-edit {
+          width: 40px;
+          height: 30px;
+          margin: 20px;
+        }
+        .delete-review {
+          cursor: pointer;
+          font-size: 2rem;
+          color: rgb(175, 169, 169);
+        }
       }
       .review-container {
         padding: 20px;
