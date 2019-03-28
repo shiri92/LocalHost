@@ -75,6 +75,7 @@ async function getById(id) {
 
 // ADD User
 async function add(credentials) {
+  console.log(credentials);
   let db = await mongoService.connect();
   let res = await db
     .collection(USERS_COLLECTION)
@@ -82,12 +83,11 @@ async function add(credentials) {
       _createUser(
         credentials.email,
         credentials.password,
-        credentials.firstName,
-        credentials.lastName,
-        gender,
-        birthdate,
-        city,
-        country
+        credentials.fName,
+        credentials.lName,
+        credentials.gender,
+        credentials.birthdate,
+        credentials.address
       )
     );
   credentials._id = res.insertedId;

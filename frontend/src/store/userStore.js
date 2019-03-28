@@ -44,7 +44,9 @@ export default {
       state.loggedUser.imgUrl = imgUrl;
     },
     removeReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
+      let idx = state.currUser.references.findIndex(
+        review => reviewId === review._id
+      );
       state.currUser.references.splice(idx, 1);
     },
     // editReview(state, { reviewId }) {
@@ -54,7 +56,9 @@ export default {
     // state.currUser.references.splice(idx, 1);
     // },
     removeRequest(state, { _id }) {
-      let idx = state.loggedUser.requests.findIndex(request => request._id === _id);
+      let idx = state.loggedUser.requests.findIndex(
+        request => request._id === _id
+      );
       state.loggedUser.requests.splice(idx, 1);
     },
     toggleIsAccepted(state, { _id }) {
@@ -67,7 +71,9 @@ export default {
       state.loggedUser.requests.splice(idx, 1, newReq);
     },
     updateUser(state, { user }) {
-      var idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
+      var idx = state.currUsers.findIndex(
+        currUser => currUser._id === user._id
+      );
       state.currUsers.splice(idx, 1, user);
     }
   },
@@ -86,7 +92,12 @@ export default {
     },
     async signup(context, { credentials }) {
       let user = await userService.add(credentials);
-      context.commit({ type: "setLoggedUser", user });
+      let { email } = user;
+      let { password } = user;
+      await context.dispatch({
+        type: "login",
+        credentials: { email, password }
+      });
     },
     async loadUsers(context, { city, country }) {
       let users = await userService.query(city, country);
@@ -143,7 +154,7 @@ export default {
       context.commit({ type: "setLoggedUserImg", imgUrl });
     },
     async updateUser(context, { user }) {
-      await userService.updateUser(user);
+      await userService.update(user);
       context.commit({ type: "updateUser", user });
     }
   }
