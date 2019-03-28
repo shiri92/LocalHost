@@ -4,7 +4,6 @@ const userService = require("../services/userService.js");
 /* ----- CONST -----*/
 const BASE = "/user";
 
-
 function addRoutes(app) {
   // Logged User Check (Session Only)
   app.put(`${BASE}/checkLogged`, async (req, res) => {
@@ -138,4 +137,3 @@ module.exports = addRoutes;
 //     }
 //     next();
 // }
-

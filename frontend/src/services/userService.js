@@ -5,14 +5,15 @@ import Axios from "axios";
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
-const BASE_API = process.env.NODE_ENV !== "development" ? '/user' : "//localhost:3003/user";
+const BASE_API =
+  process.env.NODE_ENV !== "development" ? "/user" : "//localhost:3003/user";
 
 // var socket = ioClient('http://localhost:3003');
 
 // Logged User Check (Session Only)
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
-  // if (res.data) 
+  // if (res.data)
   return res.data;
 }
 
@@ -80,7 +81,7 @@ async function updateReview(currUserId, review) {
 }
 
 // UPDATE User
-async function updateUser(user) {
+async function update(user) {
   let res = await axios.put(`${BASE_API}/${user._id}`, user);
   return res.data;
 }
@@ -116,6 +117,6 @@ export default {
   getReviewById,
   updateReview,
   removeRequest,
-  updateUser,
+  update,
   updateUserImg
 };

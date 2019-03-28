@@ -98,6 +98,7 @@ export default {
         lName: "",
         email: "",
         password: "",
+        gender: '',
         birthdate: { day: "", month: "", year: "" },
         address: {}
       },
@@ -108,13 +109,14 @@ export default {
 
   methods: {
     next() {
-      if (!this.checkForm) return;
+      // if (!this.checkForm) return;
       if (this.active === 1) {
         this.$store
           .dispatch({ type: "signup", credentials: this.form })
-          .then(() =>
+          .then(() => {
+            console.log(this.getLoggedUser);
             this.$router.push("/userProfile/" + this.getLoggedUser._id)
-          );
+          });
       }
       if (this.active++ > 1) this.active = 0;
     },
@@ -139,10 +141,10 @@ export default {
     stepBack() {
       this.active = 0;
     },
-    checkForm: function (e) {
-      if (this.form.fName && this.form.lName && this.form.email && this.form.password) return true;
-      e.preventDefault();
-    }
+    // checkForm: function (e) {
+    //   if (this.form.fName && this.form.lName && this.form.email && this.form.password) return true;
+    //   e.preventDefault();
+    // }
   },
   computed: {
     getLoggedUser() {

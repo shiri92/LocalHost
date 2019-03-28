@@ -47,7 +47,10 @@
               class="content"
               :class="{'read-more-clicked': reference.isClicked}"
             >{{reference.description}}</div>
-            <div class="read-more" @click="readMore(reference)">{{(read) ? 'Read more':'Read less'}}</div>
+            <div
+              class="read-more"
+              @click="readMore(reference)"
+            >{{(reference.isClicked) ? 'Read less':'Read more'}}</div>
           </div>
         </div>
       </div>
@@ -78,7 +81,10 @@
               class="content"
               :class="{'read-more-clicked': reference.isClicked}"
             >{{reference.description}}</div>
-            <div class="read-more" @click="readMore(reference)">{{(read) ? 'Read more':'Read less'}}</div>
+            <div
+              class="read-more"
+              @click="readMore(reference)"
+            >{{(reference.isClicked) ? 'Read less':'Read more'}}</div>
           </div>
         </div>
       </div>
@@ -94,7 +100,6 @@ export default {
     return {
       isFromGuestsClicked: true,
       isFromHostsClicked: false,
-      read: true,
     }
   },
   components: {
