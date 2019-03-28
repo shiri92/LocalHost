@@ -6,9 +6,9 @@ const ObjectId = require("mongodb").ObjectId;
 /* ----- CONST -----*/
 const USERS_COLLECTION = "users";
 const MALE_IMG =
-  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430377/male-profile.png";
+  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566744/profile-imgs/default-male.png";
 const FEMALE_IMG =
-  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553430382/female-profile.png";
+  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566744/profile-imgs/default-female.png";
 
 module.exports = {
   login,
