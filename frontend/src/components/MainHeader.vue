@@ -65,7 +65,6 @@ export default {
 .main-header {
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center center;
   height: 100vh;
   background-attachment: fixed;
 }
@@ -73,6 +72,7 @@ export default {
 .users-head {
   height: 60vh;
   justify-content: flex-end;
+  background-position: center center;
 }
 
 .users-title {
