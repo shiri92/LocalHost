@@ -11,7 +11,7 @@
         <div v-if="!getLoggedUser" class="join-container">
           <span class="welcome">Welcome guest!</span>
           <el-button class="el-button" type="success" @click="signUp">Join</el-button>
-          <el-button class="el-button" type="success" plain @click="loginFormOn">Log in</el-button>
+          <el-button class="el-button" type="success" plain @click="loginFormOn">Sign In</el-button>
         </div>
         <div v-else>
           <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
@@ -89,7 +89,7 @@ export default {
 }
 
 .logo {
-  height: 40px;
+  height: 47px;
   width: 150px;
   background-image: url("https://res.cloudinary.com/dcl4oabi3/image/upload/v1553720329/logo/logo.png");
   background-size: cover;

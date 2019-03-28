@@ -62,6 +62,7 @@ li {
             border-radius: 50%;
             border: 3px solid #fff;
             position: relative;
+            background-position: center center;
             top: -50px;
           }
           .user-details {
