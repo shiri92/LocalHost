@@ -98,6 +98,7 @@ export default {
         lName: "",
         email: "",
         password: "",
+        gender: '',
         birthdate: { day: "", month: "", year: "" },
         address: {}
       },
@@ -112,9 +113,10 @@ export default {
       if (this.active === 1) {
         this.$store
           .dispatch({ type: "signup", credentials: this.form })
-          .then(() =>
+          .then(() => {
+            console.log(this.getLoggedUser);
             this.$router.push("/userProfile/" + this.getLoggedUser._id)
-          );
+          });
       }
       if (this.active++ > 1) this.active = 0;
     },
