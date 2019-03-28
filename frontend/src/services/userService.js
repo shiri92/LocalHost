@@ -64,6 +64,17 @@ async function removeReview(currUserId, reviewId) {
   await axios.delete(`${BASE_API}/${currUserId}/review/${reviewId}`);
 }
 
+// GET User Review By Id
+async function getReviewById(id) {
+  // let res = await axios.get(`${BASE_API}/${id}`);
+  // return res.data;
+}
+
+// EDIT User Review
+async function updateReview(currUserId, review) {
+  // await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
+}
+
 // UPDATE User
 async function updateUser(user) {
   let res = await axios.put(`${BASE_API}/${user._id}`, user);
@@ -98,6 +109,8 @@ export default {
   bookGuest,
   bookHost,
   removeReview,
+  getReviewById,
+  updateReview,
   removeRequest,
   updateUser,
   updateUserImg
