@@ -9,7 +9,7 @@
         <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
         <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
           <div>
-            <button v-if="loggedUser && currUser.isHosting" @click="requestFormOn" class="btn">
+            <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request!
             </button>
           </div>
@@ -17,7 +17,7 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn" @click="openReview" v-if="loggedUser">
+            <button class="btn" @click="openReview">
               Add Review
               <!-- <font-awesome-icon icon="sort-down"/> -->
             </button>

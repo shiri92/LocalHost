@@ -27,8 +27,13 @@
           />
         </b-form-group>
 
-        <div class="btn-container flex justify-center">
+        <div class="btn-container flex justify-center flex-col">
           <button class="btn-login" @click="tryLogin">SIGN IN</button>
+          <p>Not a Member?
+            <router-link to="/signup">
+              <span class="signup-btn" @click="$emit('loginOff')">Sign Up</span>
+            </router-link>
+          </p>
         </div>
       </el-form>
     </div>
@@ -43,7 +48,7 @@ export default {
       credentials: {
         email: "",
         password: ""
-      },
+      }
     };
   },
   methods: {
@@ -56,7 +61,7 @@ export default {
           this.$emit("loginOff");
         });
     },
-    checkForm: function (e) {
+    checkForm: function(e) {
       if (this.credentials.email && this.credentials.password) {
         return true;
       }
@@ -85,7 +90,7 @@ export default {
     h1 {
       font-size: 1.5rem;
       margin: 0;
-      color: white
+      color: white;
     }
     span {
       cursor: pointer;
@@ -127,7 +132,6 @@ hr {
 
 .input {
   margin: 0 30px 30px 30px;
-  // padding-left: 15px;
   position: relative;
   .input-icon {
     position: absolute;
@@ -148,6 +152,15 @@ hr {
     line-height: 1;
     border: 1px;
     color: #fff;
+  }
+  .btn-login:hover {
+    background: #85ce61;
+    border-color: #85ce61;
+  }
+  p {
+    span {
+      color: blue;
+    }
   }
 }
 </style>
