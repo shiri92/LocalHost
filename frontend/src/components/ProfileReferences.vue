@@ -47,7 +47,7 @@
               class="content"
               :class="{'read-more-clicked': reference.isClicked}"
             >{{reference.description}}</div>
-            <div class="read-more" @click="readMore(reference)">Read more</div>
+            <div class="read-more" @click="readMore(reference)">{{(read) ? 'Read more':'Read less'}}</div>
           </div>
         </div>
       </div>
@@ -78,10 +78,7 @@
               class="content"
               :class="{'read-more-clicked': reference.isClicked}"
             >{{reference.description}}</div>
-            <div
-              class="read-more"
-              @click="readMore(reference), read = !read"
-            >{{(read)? 'Read more':'Read less'}}</div>
+            <div class="read-more" @click="readMore(reference)">{{(read) ? 'Read more':'Read less'}}</div>
           </div>
         </div>
       </div>
@@ -128,6 +125,7 @@ export default {
     },
     readMore(reference) {
       reference.isClicked = !reference.isClicked;
+      this.read = !this.read;
     },
     editReview(review, currUserId) {
       console.log('edit coming soon');
