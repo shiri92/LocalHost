@@ -1,14 +1,18 @@
 /* ----- DEPEND -----*/
 import Axios from "axios";
+// const ioClient = require('socket.io-client');
+// import ioClient from 'socket.io-client';
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
-const BASE_API =
-  process.env.NODE_ENV !== "development" ? "" : "//localhost:3003/user";
+const BASE_API = process.env.NODE_ENV !== "development" ? '/user' : "//localhost:3003/user";
+
+// var socket = ioClient('http://localhost:3003');
 
 // Logged User Check (Session Only)
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
+  // if (res.data) 
   return res.data;
 }
 
@@ -64,6 +68,17 @@ async function removeReview(currUserId, reviewId) {
   await axios.delete(`${BASE_API}/${currUserId}/review/${reviewId}`);
 }
 
+// GET User Review By Id
+async function getReviewById(id) {
+  // let res = await axios.get(`${BASE_API}/${id}`);
+  // return res.data;
+}
+
+// EDIT User Review
+async function updateReview(currUserId, review) {
+  // await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
+}
+
 // UPDATE User
 async function updateUser(user) {
   let res = await axios.put(`${BASE_API}/${user._id}`, user);
@@ -98,6 +113,8 @@ export default {
   bookGuest,
   bookHost,
   removeReview,
+  getReviewById,
+  updateReview,
   removeRequest,
   updateUser,
   updateUserImg

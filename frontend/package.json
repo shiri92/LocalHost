@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
+        "build": "vue-cli-service build --dest ../backend/public",
         "test:unit": "vue-cli-service test:unit"
     },
     "dependencies": {
@@ -19,6 +19,7 @@
         "element-ui": "^2.6.1",
         "font-awesome": "^4.7.0",
         "register-service-worker": "^1.6.2",
+        "socket.io": "^2.2.0",
         "vue": "^2.6.10",
         "vue-moment": "^4.0.0",
         "vue-router": "^3.0.1",
