@@ -47,7 +47,10 @@
               class="content"
               :class="{'read-more-clicked': reference.isClicked}"
             >{{reference.description}}</div>
-            <div class="read-more" @click="readMore(reference)">{{(read) ? 'Read more':'Read less'}}</div>
+            <div
+              class="read-more"
+              @click="readMore(reference)"
+            >{{(reference.isClicked) ? 'Read less':'Read more'}}</div>
           </div>
         </div>
       </div>
@@ -78,7 +81,10 @@
               class="content"
               :class="{'read-more-clicked': reference.isClicked}"
             >{{reference.description}}</div>
-            <div class="read-more" @click="readMore(reference)">{{(read) ? 'Read more':'Read less'}}</div>
+            <div
+              class="read-more"
+              @click="readMore(reference)"
+            >{{(reference.isClicked) ? 'Read less':'Read more'}}</div>
           </div>
         </div>
       </div>
@@ -94,7 +100,6 @@ export default {
     return {
       isFromGuestsClicked: true,
       isFromHostsClicked: false,
-      read: true,
     }
   },
   components: {
@@ -198,8 +203,19 @@ export default {
           .created-at {
             padding-right: 20px;
           }
+          @media (max-width: 568px) {
+            .created-at {
+              padding-right: 0;
+              text-align: center;
+            }
+          }
           .dry-details {
             width: 100%;
+          }
+        }
+        @media (max-width: 568px) {
+          .given-details {
+            flex-direction: column;
           }
         }
         .content {
@@ -207,6 +223,11 @@ export default {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
+        }
+        @media (max-width: 568px) {
+          .content {
+            margin: 10px;
+          }
         }
         .read-more-clicked {
           white-space: normal;

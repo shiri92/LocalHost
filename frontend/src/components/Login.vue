@@ -29,7 +29,8 @@
 
         <div class="btn-container flex justify-center flex-col">
           <button class="btn-login" @click="tryLogin">SIGN IN</button>
-          <p>Not a Member?
+          <p>
+            Not a Member?
             <router-link to="/signup">
               <span class="signup-btn" @click="$emit('loginOff')">Sign Up</span>
             </router-link>
@@ -61,7 +62,7 @@ export default {
           this.$emit("loginOff");
         });
     },
-    checkForm: function(e) {
+    checkForm: function (e) {
       if (this.credentials.email && this.credentials.password) {
         return true;
       }
@@ -158,8 +159,9 @@ hr {
     border-color: #85ce61;
   }
   p {
-    span {
+    .signup-btn {
       color: blue;
+      text-decoration: underline;
     }
   }
 }

@@ -98,6 +98,7 @@ export default {
 }
 
 .star-rating {
+  min-width: 130px;
   &__star {
     display: inline-block;
     padding: 3px;
