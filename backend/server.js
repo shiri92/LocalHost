@@ -4,8 +4,8 @@ const express = require('express');
 const app = express();
 
 // for socket
-const http = require('http').Server(express);
-const io = require('socket.io')(http);
+// const http = require('http').Server(express);
+// const io = require('socket.io')(http);
 // const server = require('http').createServer(app);
 // const io = require('socket.io')(server);
 
@@ -52,19 +52,19 @@ app.get('/', (req, res) => res.send('Hello From Server'))
 //     console.log('a user connected!');
 // });
 
-io.on('connection', function (socket) {
-    console.log('a user connected!');
-    // connectedSockets.push(socket);
-    socket.on('disconnect', function () {
-        console.log('user disconnected');
-    });
+// io.on('connection', function (socket) {
+//     console.log('a user connected!');
+//     // connectedSockets.push(socket);
+//     socket.on('disconnect', function () {
+//         console.log('user disconnected');
+//     });
 
-    // socket.on('disconnect', function () {
-    //     console.log('user disconnected');
-    //     connectedSockets = connectedSockets.filter(s => s.nickName !== socket.nickName)
-    // });
+// socket.on('disconnect', function () {
+//     console.log('user disconnected');
+//     connectedSockets = connectedSockets.filter(s => s.nickName !== socket.nickName)
+// });
 
-});
+// });
 
 /* ----- SERVER PORT -----*/
 const PORT = process.env.PORT || 3003;
