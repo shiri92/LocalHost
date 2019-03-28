@@ -3,7 +3,7 @@ import Axios from 'axios';
 var axios = Axios.create({ withCredentials: true });
 
 /* ----- CONSTANTS -----*/
-const BASE_URL = process.env.NODE_ENV !== 'development' ? '' : '//localhost:3003/country'
+const BASE_URL = process.env.NODE_ENV !== 'development' ? '/country' : '//localhost:3003/country'
 
 
 function queryCountries(searchWord) {
