@@ -30,8 +30,11 @@ export default {
   },
   computed: {
     rateAverage() {
+      let sum = 0;
+      let divider = this.profile.references.length;
       return this.profile.references.reduce((acc, review) => {
-        acc += review.rating;
+        sum += (+review.rating);
+        acc = sum / divider;
         return acc;
       }, 0)
     }

@@ -51,8 +51,12 @@ export default {
 
 
     },
-    declineRequest(request) {
-      console.log(request);
+    async declineRequest(request) {
+      await this.$store.dispatch({ type: 'removeRequest', request });
+      setTimeout(() => {
+        let { _id } = request;
+        this.$store.commit({ type: 'removeRequest', _id });
+      }, 1000);
     }
   },
 }
