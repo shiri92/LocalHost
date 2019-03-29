@@ -11,6 +11,11 @@ function addRoutes(app) {
     let users = await cityService.query(searchWord);
     return res.json(users);
   });
+
+  // GET TOP CITIES
+  app.get(BASE + "/top", (req, res) => {
+    cityService.queryTopDests().then(topDests => res.json(topDests));
+  });
 }
 
 module.exports = addRoutes;
