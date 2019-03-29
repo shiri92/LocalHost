@@ -79,6 +79,7 @@ export default {
     // );
     // state.currUser.references.splice(idx, 1);
     // },
+
     toggleIsAccepted(state, { _id }) {
       let idx = state.loggedUser.requests.findIndex(request => request._id === _id);
       let newReq = JSON.parse(JSON.stringify(state.loggedUser.requests[idx]));
@@ -157,11 +158,16 @@ export default {
       // context.commit({ type: "addReview", res });
       // TODO: show sweet alert...
     },
-
     async removeReview(context, { currUserId, reviewId }) {
       await userService.removeReview(currUserId, reviewId);
       context.commit({ type: "removeReview", reviewId });
       // TODO: show sweet alert...
+    },
+
+
+    async updateReview(context, { currUserId, review }) {
+      await userService.updateReview(currUserId, review);
+      // context.commit({ type: "updateReview", review });
     },
 
     async bookGuest(context, { request }) {

@@ -1,7 +1,10 @@
 <template>
   <section class="profile-container flex justify-center" v-if="currUser">
     <div class="side-profile">
-      <div class="profile-img" :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"></div>
+      <div
+        class="profile-img"
+        :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"
+      ></div>
       <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
       <div class="profile-loc">{{currUser.address.city}}, {{currUser.address.country}}</div>
       <hr>
@@ -16,7 +19,11 @@
           <div class="flex flex-row">
             <button class="btn" @click="openReview">Add Review</button>
           </div>
-          <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
+          <review-form
+            :currReviewToEdit="currReviewToEdit"
+            @closeReviewForm="reviewFormOff"
+            v-if="isReviewFormOpen"
+          ></review-form>
         </div>
         <div v-else class="flex flex-col">
           <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
@@ -62,6 +69,7 @@
           :user="currUser"
           :loggedUser="loggedUser"
           id="references"
+          @openReviewToEdit="openReviewToEdit"
         ></profile-references>
       </div>
     </div>
@@ -87,7 +95,8 @@ export default {
       window: {
         width: 0,
         height: 0
-      }
+      },
+      currReviewToEdit: null
     };
   },
   created() {
@@ -95,7 +104,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);
@@ -148,6 +157,11 @@ export default {
     },
     openReview() {
       this.isReviewFormOpen = true;
+      this.currReviewToEdit = null;
+    },
+    openReviewToEdit(review) {
+      this.isReviewFormOpen = true;
+      this.currReviewToEdit = review;
     },
     reviewFormOff() {
       this.isReviewFormOpen = false;

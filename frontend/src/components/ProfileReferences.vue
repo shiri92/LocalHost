@@ -29,7 +29,6 @@
             class="edit-delete-container flex"
             v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
           >
-            <!-- <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button> -->
             <img
               class="btn-edit"
               @click="editReview(reference, user._id)"
@@ -43,15 +42,19 @@
               title="
             remove"
             >
-            <!-- <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div> -->
           </div>
           <div class="review-container">
             <div class="given-details flex">
-              <div class="profile-img" :style="'background-image: url(' + reference.sender.imgUrl + ')'"></div>              
-              <!-- <img :src="reference.sender.imgUrl">  -->
+              <div
+                @click="$router.push('/userProfile/' + reference.sender.id)"
+                class="profile-img"
+                :style="'background-image: url(' + reference.sender.imgUrl + ')'"
+              ></div>
               <div class="dry-details flex space-between">
                 <div>
-                  <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
+                  <h5
+                    @click="$router.push('/userProfile/' + reference.sender.id)"
+                  >{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
                   <div>{{reference.sender.address}}</div>
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
@@ -77,7 +80,6 @@
             class="edit-delete-container flex"
             v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
           >
-            <!-- <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button> -->
             <img
               class="btn-edit"
               @click="editReview(reference, user._id)"
@@ -91,15 +93,19 @@
               title="
             remove"
             >
-            <!-- <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div> -->
           </div>
           <div class="review-container">
             <div class="given-details flex">
-              <div class="profile-img" :style="'background-image: url(' + reference.sender.imgUrl + ')'"></div>
-              <!-- <img :src="reference.sender.imgUrl"> -->
+              <div
+                @click="$router.push('/userProfile/' + reference.sender.id)"
+                class="profile-img"
+                :style="'background-image: url(' + reference.sender.imgUrl + ')'"
+              ></div>
               <div class="dry-details flex space-between">
                 <div>
-                  <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
+                  <h5
+                    @click="$router.push('/userProfile/' + reference.sender.id)"
+                  >{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
                   <div>{{reference.sender.address}}</div>
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
@@ -162,9 +168,7 @@ export default {
       this.read = !this.read;
     },
     editReview(review, currUserId) {
-      console.log('edit coming soon');
-      // this.$store.dispatch({ type: 'loadReview', currUserId, review })
-      // .then(() => this.$emit('openReviewToEdit', review));
+      this.$emit('openReviewToEdit', review);
     }
   }
 };
@@ -227,10 +231,14 @@ export default {
           .profile-img {
             min-width: 70px;
             height: 70px;
+            cursor: pointer;
             border-radius: 50%;
             margin: 0 20px 20px 20px;
             background-size: cover;
             background-repeat: no-repeat;
+          }
+          h5 {
+            cursor: pointer;
           }
           .created-at {
             padding-right: 20px;
