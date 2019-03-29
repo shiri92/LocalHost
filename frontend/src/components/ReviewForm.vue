@@ -46,7 +46,6 @@ import RateStars from '../components/RateStars'
 export default {
   name: 'review-form',
   data() {
-    //   good would stay again/ bad would not? vs host or guest? WTF?
     return {
       review: {
         getAsAHost: false,
