@@ -18,7 +18,6 @@ module.exports = {
   addRequest,
   addReview,
   removeReview,
-  getReviewById,
   updateReview,
   removeRequest,
   updateUserImg,
@@ -131,26 +130,17 @@ async function removeReview(currUserId, reviewId) {
     );
 }
 
-// GET User Review By Id
-async function getReviewById(id) {
-  // const _id = new ObjectId(id);
-  // let db = await mongoService.connect();
-  // let user = await db.collection(USERS_COLLECTION).findOne({ _id });
-  // let img = await cloudService.loadImg(user.imgUrl);
-  // user.img = img;
-  // return user;
-}
-
 // UPDATE User Review
 async function updateReview(currUserId, review) {
-  // let db = await mongoService.connect();
-  // await db
-  //   .collection(USERS_COLLECTION)
-  //   .updateOne(
-  //     { _id: new ObjectId(currUserId) },
-  //     { references: { _id: new ObjectId(review._id) } }
-  //   );
-  // return review;
+  let db = await mongoService.connect();
+  await db.collection(USERS_COLLECTION).updateOne(
+    {
+      _id: new ObjectId(currUserId),
+      "references._id": new ObjectId(review._id)
+    },
+    { $set: { references: { _id: new ObjectId(reviewId) } } }
+  );
+  return review;
 }
 
 // DELETE User Request

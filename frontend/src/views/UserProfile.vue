@@ -17,12 +17,13 @@
             <button class="btn">
               <font-awesome-icon icon="envelope"/>
             </button>
-            <button class="btn" @click="openReview">
-              Add Review
-              <!-- <font-awesome-icon icon="sort-down"/> -->
-            </button>
+            <button class="btn" @click="openReview">Add Review</button>
           </div>
-          <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
+          <review-form
+            :currReviewToEdit="currReviewToEdit"
+            @closeReviewForm="reviewFormOff"
+            v-if="isReviewFormOpen"
+          ></review-form>
         </div>
         <div v-else class="flex flex-col">
           <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
@@ -68,6 +69,7 @@
           :user="currUser"
           :loggedUser="loggedUser"
           id="references"
+          @openReviewToEdit="openReviewToEdit"
         ></profile-references>
       </div>
     </div>
@@ -93,7 +95,8 @@ export default {
       window: {
         width: 0,
         height: 0
-      }
+      },
+      currReviewToEdit: null
     };
   },
   created() {
@@ -154,6 +157,11 @@ export default {
     },
     openReview() {
       this.isReviewFormOpen = true;
+      this.currReviewToEdit = null;
+    },
+    openReviewToEdit(review) {
+      this.isReviewFormOpen = true;
+      this.currReviewToEdit = review;
     },
     reviewFormOff() {
       this.isReviewFormOpen = false;
