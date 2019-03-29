@@ -44,7 +44,6 @@ export default {
   computed: {
     topDests() {
       let allCities = this.$store.getters.cities;
-      console.log(allCities)
       return allCities.filter(city => city.isTopDest);
     }
   },
