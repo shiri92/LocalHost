@@ -1,5 +1,5 @@
 /* ----- DEPEND -----*/
-import userService from "../services/userService.js";
+import userService from '../services/userService.js';
 import socketService from '../services/socketService.js';
 
 export default {
@@ -39,15 +39,14 @@ export default {
     },
     logout(state) {
       state.loggedUser = null;
+      state.currSocket.disconnect();
+      state.currSocket = null;;
     },
     setCurrUsers(state, { users }) {
       state.currUsers = users;
     },
     setCurrUser(state, { user }) {
       state.currUser = user;
-    },
-    setLoggedUser(state, { user }) {
-      state.loggedUser = user;
     },
     // updateCurrUser(state, { user }) {
     //   var idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
@@ -90,18 +89,21 @@ export default {
   },
   actions: {
     async checkLogged(context) {
+
       let user = await userService.checkLogged();
       context.commit({ type: "setLoggedUser", user });
+      return user;
 
     },
     async login(context, { credentials }) {
       let user = await userService.login(credentials);
       context.commit({ type: "setLoggedUser", user });
+      return user;
     },
     async logout(context) {
       await userService.logout();
       context.commit({ type: "logout" });
-      socket.disconnect();
+
     },
     async signup(context, { credentials }) {
       let user = await userService.add(credentials);
@@ -163,7 +165,6 @@ export default {
       context.commit({ type: "removeReview", reviewId });
       // TODO: show sweet alert...
     },
-
 
     async updateReview(context, { currUserId, review }) {
       await userService.updateReview(currUserId, review);

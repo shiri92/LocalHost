@@ -105,8 +105,20 @@ export default {
       if ((this.review.getAsAHost || this.review.getAsAGuest) && this.review.description && this.review.rating) {
         this.$emit('closeReviewForm');
         if (!this.currReviewToEdit) {
-          this.$store.dispatch({ type: 'addReview', review: this.review });
-        } else {
+          this.$store.dispatch({ type: 'addReview', review: this.review })
+            .then(() => {
+              const Toast = this.$swal.mixin({
+                toast: true,
+                position: 'bottom-start',
+                showConfirmButton: false,
+                timer: 3000
+              });
+
+              Toast.fire({ type: 'success', title: `You Have Added New Review` })
+            })
+
+        }
+        else {
           this.$store.dispatch({ type: 'updateReview', currUserId: this.currUser._id, review: this.review });
         }
       }

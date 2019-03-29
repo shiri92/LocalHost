@@ -14,7 +14,9 @@
           <button class="btn btn-empty" @click="loginFormOn">Sign In</button>
         </div>
         <div v-else>
-          <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
+          <span class="welcome">
+            <!--{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}-->
+          </span>
           <img class="user-img" @click="toggleUserWindow" :src="getLoggedUser.imgUrl">
         </div>
       </div>

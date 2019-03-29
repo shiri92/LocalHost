@@ -131,22 +131,8 @@ export default {
     narrowNav(state) {
       this.isNavInDisplay = state;
     },
-    async sendRequest(requestInfo) {
-      let request = {
-        isAccepted: false,
-        info: requestInfo,
-        sender: {
-          id: this.loggedUser._id,
-          firstName: this.loggedUser.firstName,
-          lastName: this.loggedUser.lastName
-        },
-        recipient: {
-          id: this.currUser._id,
-          firstName: this.currUser.firstName,
-          lastName: this.currUser.lastName
-        }
-      };
-      await this.$store.dispatch({ type: "addRequest", request: request });
+    sendRequest() {
+
       this.requestFormOff();
     },
     requestFormOn() {
