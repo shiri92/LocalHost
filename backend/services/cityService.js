@@ -40,6 +40,15 @@ async function query(searchWord) {
   return res;
 }
 
+async function queryTopDests() {
+  let db = await mongoService.connect();
+  let res = await db
+    .collection(CITIES_COLLECTION)
+    .find({ $or: [{ isTopDest: true }] })
+    .toArray();
+  return res;
+}
+
 var citiesDB = [
   {
     name: "Bangkok",
@@ -140,5 +149,6 @@ var citiesDB = [
 ];
 
 module.exports = {
-  query
+  query,
+  queryTopDests
 };

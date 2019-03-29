@@ -32,7 +32,7 @@ export default {
     return {};
   },
   created() {
-    this.$store.dispatch({ type: "loadCities" });
+    this.$store.dispatch({ type: "loadTopDests" });
   },
   methods: {
     moveToUsers(dest) {
@@ -43,8 +43,9 @@ export default {
   },
   computed: {
     topDests() {
-      let allCities = this.$store.getters.cities;
-      return allCities.filter(city => city.isTopDest);
+      // let allCities = this.$store.getters.cities;
+      // return allCities.filter(city => city.isTopDest);
+      return this.$store.getters.topDests;
     }
   },
   components: {

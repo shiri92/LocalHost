@@ -12,6 +12,12 @@ async function queryCities(searchWord) {
   return res.data;
 }
 
+async function queryTopDests() {
+  let { data } = await axios.get(`${BASE_URL}/top`);
+  return data;
+}
+
 export default {
-  queryCities
+  queryCities,
+  queryTopDests
 };
