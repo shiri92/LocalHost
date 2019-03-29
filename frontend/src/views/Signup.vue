@@ -2,7 +2,7 @@
   <section class="signup flex flex-col">
     <div class="logo">
       <router-link to="/">
-        <img src="../../public/img/logo/logo.png" alt>
+        <img src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553873765/logo/logo.png" alt>
       </router-link>
     </div>
     <h1 class="title">Sign Up</h1>
@@ -31,11 +31,7 @@
             <b-form-input type="password" v-model="form.password" required/>
           </b-form-group>
 
-          <button
-            class="btn signup-btn"
-            style="margin-top: 12px;"
-            @click="next"
-          >Next Step</button>
+          <button class="btn signup-btn" style="margin-top: 12px;" @click="next">Next Step</button>
         </b-form>
 
         <b-form v-if="active === 1" class="flex flex-col">
@@ -72,11 +68,7 @@
               style="margin-top: 12px;"
               @click.native="stepBack"
             >Previous Step</button>
-            <button
-              class="btn signup-btn"
-              style="margin-top: 12px;"
-              @click="next"
-            >Sign Up</button>
+            <button class="btn signup-btn" style="margin-top: 12px;" @click="next">Sign Up</button>
           </div>
         </b-form>
       </div>

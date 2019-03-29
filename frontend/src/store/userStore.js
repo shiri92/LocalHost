@@ -37,24 +37,18 @@ export default {
     addReview(state, { res }) {
       state.currUser.references.push(res);
     },
-    setCurrUserImg(state, { imgUrl }) {
-      state.currUser.imgUrl = imgUrl;
-    },
-    setLoggedUserImg(state, { imgUrl }) {
-      state.loggedUser.imgUrl = imgUrl;
-    },
     removeReview(state, { reviewId }) {
       let idx = state.currUser.references.findIndex(
         review => reviewId === review._id
       );
       state.currUser.references.splice(idx, 1);
     },
-    // editReview(state, { reviewId }) {
-    // let idx = state.currUser.references.findIndex(
-    //   review => reviewId === review._id
-    // );
-    // state.currUser.references.splice(idx, 1);
-    // },
+    setCurrUserImg(state, { imgUrl }) {
+      state.currUser.imgUrl = imgUrl;
+    },
+    setLoggedUserImg(state, { imgUrl }) {
+      state.loggedUser.imgUrl = imgUrl;
+    },
     removeRequest(state, { _id }) {
       let idx = state.loggedUser.requests.findIndex(
         request => request._id === _id
@@ -117,14 +111,10 @@ export default {
       context.commit({ type: "addReview", res });
       // TODO: show sweet alert...
     },
-    // async loadReview(context, { currUserId, review }) {
-    //   await userService.queryReview(currUserId, review);
-    //   context.commit({ type: "editReview", review });
-    // },
-    // async updateReview(context, { currUserId, review }) {
-    //   await userService.updateReview(currUserId, review);
-    //   context.commit({ type: "editReview", review });
-    // },
+    async updateReview(context, { currUserId, review }) {
+      await userService.updateReview(currUserId, review);
+      // context.commit({ type: "updateReview", review });
+    },
     async removeReview(context, { currUserId, reviewId }) {
       await userService.removeReview(currUserId, reviewId);
       context.commit({ type: "removeReview", reviewId });

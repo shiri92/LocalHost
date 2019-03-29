@@ -53,15 +53,15 @@ async function addRequest(request) {
   return res.data;
 }
 
+// DELETE User Request
+async function removeRequest(recipientId, requestId) {
+  await axios.delete(`${BASE_API}/${recipientId}/request/${requestId}`);
+}
+
 // ADD User Review
 async function addReview(review) {
   let res = await axios.put(`${BASE_API}/review`, review);
   return res.data;
-}
-
-// DELETE User Request
-async function removeRequest(recipientId, requestId) {
-  await axios.delete(`${BASE_API}/${recipientId}/request/${requestId}`);
 }
 
 // DELETE User Review
@@ -69,15 +69,9 @@ async function removeReview(currUserId, reviewId) {
   await axios.delete(`${BASE_API}/${currUserId}/review/${reviewId}`);
 }
 
-// GET User Review By Id
-async function getReviewById(id) {
-  // let res = await axios.get(`${BASE_API}/${id}`);
-  // return res.data;
-}
-
 // EDIT User Review
 async function updateReview(currUserId, review) {
-  // await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
+  await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
 }
 
 // UPDATE User
@@ -114,7 +108,6 @@ export default {
   bookGuest,
   bookHost,
   removeReview,
-  getReviewById,
   updateReview,
   removeRequest,
   update,
