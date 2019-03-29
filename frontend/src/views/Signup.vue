@@ -15,11 +15,11 @@
         <b-form v-if="active === 0" class="flex flex-col">
           <div class="name-container flex space-between">
             <b-form-group class="small-input" label="First Name:">
-              <b-form-input type="email" v-model="form.fName" required/>
+              <b-form-input type="text" v-model="form.fName" required/>
             </b-form-group>
 
             <b-form-group class="small-input" label="Last Name:">
-              <b-form-input type="email" v-model="form.lName" required/>
+              <b-form-input type="text" v-model="form.lName" required/>
             </b-form-group>
           </div>
 
@@ -31,18 +31,19 @@
             <b-form-input type="password" v-model="form.password" required/>
           </b-form-group>
 
-          <button
-            class="btn signup-btn"
-            style="margin-top: 12px;"
-            @click="next"
-          >Next Step</button>
+          <button class="btn signup-btn" style="margin-top: 12px;" @click="next">Next Step</button>
         </b-form>
 
         <b-form v-if="active === 1" class="flex flex-col">
           <div class="bday-container">
             <label>Birthday:</label>
             <div class="selects-container flex space-between">
-              <el-select class="bday-selsct" v-model="form.birthdate.day" placeholder="Day">
+              <el-select
+                class="bday-selsct"
+                v-model="form.birthdate.day"
+                placeholder="Day"
+                required
+              >
                 <el-option v-for="num in 31" :key="num" :value="num">{{num}}</el-option>
               </el-select>
               <el-select class="bday-selsct" v-model="form.birthdate.month" placeholder="Month">
@@ -55,7 +56,8 @@
           </div>
 
           <label>Gender:</label>
-          <el-select class="gender-select" v-model="form.gender" placeholder="Gender">
+          <el-select class="gender-select" v-model="form.gender" placeholder="Gender" required>
+            <el-option value>Select Gender</el-option>
             <el-option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</el-option>
           </el-select>
 
@@ -67,16 +69,8 @@
           ></el-autocomplete>
 
           <div class="btns-container flex">
-            <button
-              class="btn signup-btn"
-              style="margin-top: 12px;"
-              @click.native="stepBack"
-            >Previous Step</button>
-            <button
-              class="btn signup-btn"
-              style="margin-top: 12px;"
-              @click="next"
-            >Sign Up</button>
+            <button class="btn signup-btn" style="margin-top: 12px;" @click="stepBack">Previous Step</button>
+            <button class="btn signup-btn" style="margin-top: 12px;" @click="next">Sign Up</button>
           </div>
         </b-form>
       </div>
@@ -95,7 +89,7 @@ export default {
         lName: "",
         email: "",
         password: "",
-        gender: '',
+        gender: "",
         birthdate: { day: "", month: "", year: "" },
         address: {}
       },
@@ -106,13 +100,16 @@ export default {
 
   methods: {
     next() {
-      // if (!this.checkForm()) return;
+      if (!this.checkForm()) return;
+
       if (this.active === 1) {
+        if (!this.checkForm2()) return;
+
         this.$store
           .dispatch({ type: "signup", credentials: this.form })
           .then(() => {
             console.log(this.getLoggedUser);
-            this.$router.push("/userProfile/" + this.getLoggedUser._id)
+            this.$router.push("/userProfile/" + this.getLoggedUser._id);
           });
       }
       if (this.active++ > 1) this.active = 0;
@@ -138,10 +135,23 @@ export default {
     stepBack() {
       this.active = 0;
     },
-    // checkForm(e) {
-    //   if ((this.form.fName && this.form.lName && this.form.email && this.form.password) || (this.form.birthdate)) return true;
-    //   else return false;
-    // }
+    checkForm() {
+      return (
+        this.form.fName &&
+        this.form.lName &&
+        this.form.email &&
+        this.form.password
+      );
+    },
+    checkForm2() {
+      return (
+        this.form.gender &&
+        this.form.birthdate.day &&
+        this.form.birthdate.month &&
+        this.form.birthdate.year &&
+        this.form.address
+      );
+    }
   },
   computed: {
     getLoggedUser() {
@@ -155,16 +165,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logo {
-  width: 155px;
-  height: 35px;
-  margin-left: 5px;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-}
-
 .signup {
   margin-top: -70px;
   background-color: white;
@@ -178,6 +178,15 @@ export default {
   background-size: cover;
   height: 100vh;
   padding-top: 20px;
+  .logo {
+    width: 155px;
+    height: 35px;
+    margin-left: 5px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
   .title {
     align-self: center;
     color: white;
@@ -201,8 +210,8 @@ form {
   max-width: 60%;
   margin: 0 auto;
   padding: 80px 130px;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   border: 1px solid rgb(199, 193, 193);
   border-radius: 3px;
   text-align: left;
@@ -225,6 +234,12 @@ form {
   }
   .name-container {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 360px) {
+  .form-group {
+    margin-bottom: 0.3rem;
   }
 }
 

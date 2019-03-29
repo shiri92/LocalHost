@@ -90,17 +90,21 @@ export default {
       .welcome {
         padding-right: 20px;
       }
-      @media (max-width: 568px) {
-        .welcome {
-          display: none;
-        }
-      }
       .btn {
         margin: 5px;
       }
       @media (max-width: 568px) {
+        .welcome {
+          display: none;
+        }
         .btn {
           padding: 10px;
+        }
+      }
+      
+      @media (max-width: 340px) {
+        .btn {
+          padding: 7px;
         }
       }
       .user-img {

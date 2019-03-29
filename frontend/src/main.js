@@ -8,6 +8,7 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import BootstrapVue from "bootstrap-vue";
 import AnimateCSS from "animate.css";
+import VueCarousel from 'vue-carousel';
 
 // import 'custom.scss'
 
@@ -67,6 +68,7 @@ Vue.use(BootstrapVue);
 Vue.use(ElementUI);
 Vue.use(AnimateCSS);
 Vue.use(require("vue-moment"));
+Vue.use(VueCarousel);
 
 Vue.config.productionTip = false;
 

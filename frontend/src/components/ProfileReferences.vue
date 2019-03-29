@@ -3,23 +3,25 @@
     <div>
       <h3 class="header-box">REFERENCES</h3>
       <hr style="margin: 0">
-      <div class="filter flex">
-        <h3
-          class="from-guests flex align-center"
-          :class="{'filter-clicked':isFromGuestsClicked}"
-          @click="fromGuestsToShow"
-        >
-          From Guests
-          <div class="num-from-guests">{{revFromGuests.length}}</div>
-        </h3>
-        <h3
-          class="from-hosts flex align-center"
-          :class="{'filter-clicked':isFromHostsClicked}"
-          @click="fromHostsToShow"
-        >
-          From Hosts
-          <div class="num-from-hosts">{{revFromHosts.length}}</div>
-        </h3>
+      <div class="filter flex space-between">
+        <div class="flex">
+          <h3
+            class="from-guests flex align-center"
+            :class="{'filter-clicked':isFromGuestsClicked}"
+            @click="fromGuestsToShow"
+          >From Guests
+            <div class="num-from-guests">{{revFromGuests.length}}</div>
+          </h3>
+          <h3
+            class="from-hosts flex align-center"
+            :class="{'filter-clicked':isFromHostsClicked}"
+            @click="fromHostsToShow"
+          >From Hosts
+            <div class="num-from-hosts">{{revFromHosts.length}}</div>
+          </h3>
+        </div>
+        <button class="btn" @click="openReview">Add Review</button>
+        <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
       </div>
 
       <div v-if="isFromGuestsClicked" class="references-container flex">
@@ -46,9 +48,11 @@
             <!-- <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div> -->
           </div>
           <div class="review-container">
-            <div class="given-details flex">
-              <div class="profile-img" :style="'background-image: url(' + reference.sender.imgUrl + ')'"></div>              
-              <!-- <img :src="reference.sender.imgUrl">  -->
+            <div class="given-details flex align-center">
+              <div
+                class="profile-img"
+                :style="'background-image: url(' + reference.sender.imgUrl + ')'"
+              ></div>
               <div class="dry-details flex space-between">
                 <div>
                   <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
@@ -94,9 +98,11 @@
             <!-- <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div> -->
           </div>
           <div class="review-container">
-            <div class="given-details flex">
-              <div class="profile-img" :style="'background-image: url(' + reference.sender.imgUrl + ')'"></div>
-              <!-- <img :src="reference.sender.imgUrl"> -->
+            <div class="given-details flex align-center">
+              <div
+                class="profile-img"
+                :style="'background-image: url(' + reference.sender.imgUrl + ')'"
+              ></div>
               <div class="dry-details flex space-between">
                 <div>
                   <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
@@ -122,17 +128,21 @@
 </template>
 
 <script>
-import StarsToshow from '../../src/components/RateStarsToShow'
+import StarsToshow from "../../src/components/RateStarsToShow";
+import ReviewForm from "../components/ReviewForm.vue";
+
 export default {
-  props: ['user', 'loggedUser'],
+  props: ["user", "loggedUser"],
   data() {
     return {
       isFromGuestsClicked: true,
       isFromHostsClicked: false,
-    }
+      isReviewFormOpen: false
+    };
   },
   components: {
-    StarsToshow
+    StarsToshow,
+    ReviewForm
   },
   computed: {
     revFromGuests() {
@@ -146,23 +156,28 @@ export default {
     fromGuestsToShow() {
       this.isFromGuestsClicked = true;
       this.isFromHostsClicked = false;
-
     },
     fromHostsToShow() {
       this.isFromHostsClicked = true;
       this.isFromGuestsClicked = false;
     },
     removeReview(reviewId, currUserId) {
-      if (confirm('Are you sure you want to remove this review?')) {
-        this.$store.dispatch({ type: 'removeReview', currUserId, reviewId })
+      if (confirm("Are you sure you want to remove this review?")) {
+        this.$store.dispatch({ type: "removeReview", currUserId, reviewId });
       }
     },
     readMore(reference) {
       reference.isClicked = !reference.isClicked;
       this.read = !this.read;
     },
+    openReview() {
+      this.isReviewFormOpen = true;
+    },
+    reviewFormOff() {
+      this.isReviewFormOpen = false;
+    },
     editReview(review, currUserId) {
-      console.log('edit coming soon');
+      console.log("edit coming soon");
       // this.$store.dispatch({ type: 'loadReview', currUserId, review })
       // .then(() => this.$emit('openReviewToEdit', review));
     }
@@ -201,6 +216,12 @@ export default {
           background-color: orangered;
         }
       }
+      @media (max-width: 568px) {
+        .from-guests, .from-hosts {
+          font-size: 0.9em;
+          margin: 0 10px 0 0;
+        }
+      }
     }
     .reference {
       .edit-delete-container {
@@ -226,6 +247,7 @@ export default {
           width: 100%;
           .profile-img {
             min-width: 70px;
+            width: 70px;
             height: 70px;
             border-radius: 50%;
             margin: 0 20px 20px 20px;
@@ -251,7 +273,7 @@ export default {
           }
         }
         .content {
-          margin: 30px 50px 30px 110px;
+          margin: 0px 50px 10px 110px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -270,7 +292,7 @@ export default {
           float: right;
           width: 110px;
           padding-right: 20px;
-          margin-bottom: 20px;
+          margin-bottom: 5px;
           cursor: pointer;
           font-weight: bold;
           transition: 0.2s;

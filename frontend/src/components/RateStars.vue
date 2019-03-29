@@ -83,11 +83,22 @@ label {
 .rate-stars {
   margin-bottom: 30px;
 }
+@media (max-width: 400px) {
+  .rate-stars {
+    margin-bottom: 0;
+  }
+}
 .rating {
   border: none;
   float: left;
   max-width: 50%;
   margin-left: 30px;
+}
+@media (max-width: 568px) {
+  .rating {
+    max-width: unset;
+    margin-left: 10px;
+  }
 }
 
 .rating > input {
