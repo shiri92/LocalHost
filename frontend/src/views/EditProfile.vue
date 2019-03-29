@@ -204,7 +204,7 @@ export default {
         imgFile: ev.target.files[0]
       });
       await this.$store.dispatch({
-        type: "updateUserImg",
+        type: "updateLoggedUserImg",
         imgUrl: imgUrl,
         userId
       });
@@ -215,7 +215,9 @@ export default {
       // } else {
       //   this.user.languages = this.user.languages.split(', ');
       // }
-      this.$store.dispatch({ type: 'updateUser', user: this.user })
+
+      //TODO: change to logged user
+      this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
         .then(() => this.$router.push('/userProfile/' + this.user._id))
     },
     // setLang() {

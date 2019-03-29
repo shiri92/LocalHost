@@ -1,19 +1,32 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import store from "./store/store";
-import "./registerServiceWorker";
-import css from "../src/assets/css/main.scss";
-import ElementUI from "element-ui";
-import "element-ui/lib/theme-chalk/index.css";
-import BootstrapVue from "bootstrap-vue";
-import AnimateCSS from "animate.css";
+/* ----- DEPEND -----*/
+import Vue from 'vue';
+import VueBootstrap from 'bootstrap-vue';
+import VueMoment from 'vue-moment';
+import VueScrollTo from 'vue-scrollto';
+import VueSweetalert2 from 'vue-sweetalert2';
+import App from './App.vue';
+import router from './router';
+import store from './store/store';
+import css from '../src/assets/css/main.scss';
+import './registerServiceWorker';
+import 'element-ui/lib/theme-chalk/index.css';
+import AnimateCSS from 'animate.css';
+import ElementUI from 'element-ui';
+
 
 // import 'custom.scss'
 
-// scrolling
-var VueScrollTo = require("vue-scrollto");
-Vue.use(VueScrollTo);
+const options = {
+  confirmButtonColor: '#41b882',
+  cancelButtonColor: '#ff7674',
+  // popup: 'animated tada'
+}
+
+Vue.use(ElementUI);
+Vue.use(AnimateCSS);
+Vue.use(VueBootstrap);
+Vue.use(VueMoment);
+Vue.use(VueSweetalert2, options);
 Vue.use(VueScrollTo, {
   container: "body",
   duration: 500,
@@ -28,7 +41,7 @@ Vue.use(VueScrollTo, {
   y: true
 });
 
-// font-awesome related
+// Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { faCouch } from '@fortawesome/free-solid-svg-icons';
@@ -61,13 +74,7 @@ library.add(faLock);
 library.add(faUser);
 library.add(faSearch);
 
-Vue.component("font-awesome-icon", FontAwesomeIcon);
-
-Vue.use(BootstrapVue);
-Vue.use(ElementUI);
-Vue.use(AnimateCSS);
-Vue.use(require("vue-moment"));
-
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 
 new Vue({
