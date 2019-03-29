@@ -29,21 +29,22 @@ Vue.use(VueScrollTo, {
 });
 
 // font-awesome related
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { faCouch } from "@fortawesome/free-solid-svg-icons";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
-import { faSortDown } from "@fortawesome/free-solid-svg-icons";
-import { faComment } from "@fortawesome/free-solid-svg-icons";
-import { faVenusMars } from "@fortawesome/free-solid-svg-icons";
-import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
-import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
-import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
-import { faBook } from "@fortawesome/free-solid-svg-icons";
-import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { faCouch } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faSortDown } from '@fortawesome/free-solid-svg-icons';
+import { faComment } from '@fortawesome/free-solid-svg-icons';
+import { faVenusMars } from '@fortawesome/free-solid-svg-icons';
+import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
+import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
+import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faCoffee);
 library.add(faCouch);
@@ -58,6 +59,7 @@ library.add(faBook);
 library.add(faMapMarkerAlt);
 library.add(faLock);
 library.add(faUser);
+library.add(faSearch);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

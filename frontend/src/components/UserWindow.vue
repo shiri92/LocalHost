@@ -5,44 +5,43 @@
       <div class="details">
         <div class="name">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
         <div>{{getLoggedUser.email}}</div>
-        <el-button @click="goToInbox" class="inbox-btn">Inbox</el-button>
+        <button @click="goToInbox" class="btn inbox-btn">Inbox</button>
       </div>
     </div>
     <div class="bottom flex space-between">
-      <el-button class="profile-btn" @click="goToProfile">Profile</el-button>
-      <el-button class="logout-btn" @click="logOut">Log out</el-button>
+      <button class="btn profile-btn" @click="goToProfile">Profile</button>
+      <button class="btn logout-btn" @click="logOut">Log out</button>
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'user-window',
+  name: "user-window",
   data() {
-    return {
-    }
+    return {};
   },
   computed: {
     getLoggedUser() {
       return this.$store.getters.loggedUser;
-    },
+    }
   },
   methods: {
     logOut() {
-      this.$store.dispatch({ type: 'logout' });
-      this.$emit('closeWindow');
-      this.$router.push('/');
+      this.$store.dispatch({ type: "logout" });
+      this.$emit("closeWindow");
+      this.$router.push("/");
     },
     goToProfile() {
-      this.$router.push('/userProfile/' + this.getLoggedUser._id);
-      this.$emit('closeWindow');
+      this.$router.push("/userProfile/" + this.getLoggedUser._id);
+      this.$emit("closeWindow");
     },
     goToInbox() {
-      this.$emit('closeWindow');
-      this.$router.push('/userProfile/' + this.getLoggedUser._id + '/inbox');
+      this.$emit("closeWindow");
+      this.$router.push("/userProfile/" + this.getLoggedUser._id + "/inbox");
     }
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -89,6 +88,13 @@ export default {
 .profile-btn,
 .inbox-btn {
   margin: 20px;
+  background: #fff;
+  border: 1px solid #dcdfe6;
+  color: #606266;
+  line-height: 1;
+  font-weight: 500;
+  padding: 12px 20px;
+  font-size: 14px;
 }
 </style>
 

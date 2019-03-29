@@ -10,8 +10,8 @@
       <div class="buttons-container">
         <div v-if="!getLoggedUser" class="join-container">
           <span class="welcome">Welcome guest!</span>
-          <el-button class="el-button" type="success" @click="signUp">Join</el-button>
-          <el-button class="el-button" type="success" plain @click="loginFormOn">Sign In</el-button>
+          <button class="btn" @click="signUp">Join</button>
+          <button class="btn btn-empty" @click="loginFormOn">Sign In</button>
         </div>
         <div v-else>
           <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
@@ -25,29 +25,29 @@
 </template>
 
 <script>
-import userWindow from './UserWindow';
+import userWindow from "./UserWindow";
 
 export default {
-  name: 'main-nav',
+  name: "main-nav",
   components: {
     userWindow
   },
   methods: {
     signUp() {
-      this.$router.push('/signup');
+      this.$router.push("/signup");
     },
     loginFormOn() {
-      this.$emit('loginOn')
+      this.$emit("loginOn");
     },
     toggleUserWindow() {
-      this.showUserWindow = !this.showUserWindow
+      this.showUserWindow = !this.showUserWindow;
     }
   },
 
   data() {
     return {
-      showUserWindow: false,
-    }
+      showUserWindow: false
+    };
   },
   computed: {
     getLoggedUser() {
@@ -55,14 +55,14 @@ export default {
     },
     showNav() {
       let isRouteWithNav = true;
-      if (this.$route.path !== '/signup') {
+      if (this.$route.path !== "/signup") {
         return true;
       } else {
         return false;
       }
-    },
-  },
-}
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -78,45 +78,45 @@ export default {
   left: 0;
   .nav-container {
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #7ebf50;
+    .links-container {
+      .logo {
+        height: 35px;
+        width: 155px;
+        background-image: url("../../public/img/logo/logo.png");
+        background-size: cover;
+      }
+    }
+    .buttons-container {
+      .welcome {
+        padding-right: 20px;
+      }
+      @media (max-width: 568px) {
+        .welcome {
+          display: none;
+        }
+      }
+      .btn {
+        margin: 5px;
+      }
+      @media (max-width: 568px) {
+        .btn {
+          padding: 10px;
+        }
+      }
+      .user-img {
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
     }
   }
-}
-
-.logo {
-  height: 47px;
-  width: 150px;
-  background-image: url("https://res.cloudinary.com/dcl4oabi3/image/upload/v1553720329/logo/logo.png");
-  background-size: cover;
-}
-
-.welcome {
-  padding-right: 20px;
-}
-
-@media (max-width: 568px) {
-  .welcome {
-    display: none;
-  }
-}
-
-.user-img {
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-@media (max-width: 568px) {
-  .el-button {
-    padding: 10px;
-  }
+  // a {
+  //   font-weight: bold;
+  //   color: #2c3e50;
+  //   &.router-link-exact-active {
+  //     color: #7ebf50;
+  //   }
+  // }
 }
 </style>
