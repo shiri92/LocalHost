@@ -13,6 +13,31 @@ a:-webkit-any-link {
   text-decoration: none;
 }
 
-button {
+.btn {
+  background-color: #1dbf73;
+  border: 1px solid #1dbf73;
+  border-radius: 4px;
+  line-height: 1;
+  color: #fff;
   cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 12px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+.btn:hover {
+  background: #3fca89;
+  border-color: #3fca89;
+  color: #fff;
+}
+
+.btn-empty {
+  background-color: #fff;
+  color: #1dbf73;
+}
+.btn-empty:hover {
+  background-color: #3fca89;
+  color: #fff;
 }

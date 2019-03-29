@@ -2,7 +2,7 @@
   <section class="signup flex flex-col">
     <div class="logo">
       <router-link to="/">
-        <img src="../../public/img/logo3.png" alt>
+        <img src="../../public/img/logo/logo.png" alt>
       </router-link>
     </div>
     <h1 class="title">Sign Up</h1>
@@ -31,12 +31,11 @@
             <b-form-input type="password" v-model="form.password" required/>
           </b-form-group>
 
-          <el-button
-            class="signup-btn"
+          <button
+            class="btn signup-btn"
             style="margin-top: 12px;"
             @click="next"
-            type="warning"
-          >Next Step</el-button>
+          >Next Step</button>
         </b-form>
 
         <b-form v-if="active === 1" class="flex flex-col">
@@ -68,18 +67,16 @@
           ></el-autocomplete>
 
           <div class="btns-container flex">
-            <el-button
-              class="signup-btn"
+            <button
+              class="btn signup-btn"
               style="margin-top: 12px;"
-              type="warning"
               @click.native="stepBack"
-            >Previous Step</el-button>
-            <el-button
-              class="signup-btn"
+            >Previous Step</button>
+            <button
+              class="btn signup-btn"
               style="margin-top: 12px;"
               @click="next"
-              type="warning"
-            >Sign Up</el-button>
+            >Sign Up</button>
           </div>
         </b-form>
       </div>
@@ -159,8 +156,9 @@ export default {
 
 <style lang="scss" scoped>
 .logo {
-  width: 150px;
-  height: 50px;
+  width: 155px;
+  height: 35px;
+  margin-left: 5px;
   img {
     width: 100%;
     height: 100%;
@@ -248,9 +246,10 @@ form {
 .btns-container {
   align-self: center;
 }
-.el-button {
-  width: 130px;
+.btn {
+  // width: 130px;
   align-self: center;
+  margin: 5px;
 }
 
 .bday-selsct {

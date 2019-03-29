@@ -6,11 +6,16 @@
       <div class="user-info flex">
         <div class="side flex flex-col">
           <div class="info-item">
-            <font-awesome-icon icon="quote-left"/>&nbsp;0 References
+            <font-awesome-icon icon="quote-left"/>
+            &nbsp;{{user.references.length}} References
           </div>
           <div class="info-item">
-            <font-awesome-icon icon="comment"/>&nbsp;Fluent in
-            <span v-for="(language, idx) in user.languages" :key="idx">{{language}}</span>
+            <font-awesome-icon icon="comment"/>
+            &nbsp; {{(user.languages.length === [''] || user.languages.length === 0) ? 'No languages listed' : 'Fluent in'}}
+            <span
+              v-for="(language, idx) in user.languages"
+              :key="idx"
+            >{{language}}</span>
           </div>
           <div class="info-item">
             <font-awesome-icon icon="venus-mars"/>

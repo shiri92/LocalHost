@@ -22,14 +22,28 @@
           <hr>
           <div>
             <div class="form-item flex space-between">
-              <label for="language">Language:&nbsp;</label>
-              <!-- TODO: ability to add multiple languages -->
-              <input
+              <label for="language">Language/s:&nbsp;</label>
+              <!-- <div v-if="user.languages">
+                {{user.languages}}
+                <span class="remove-lang">&times;</span>
+              </div>-->
+
+              <!-- <input
                 class="form-input"
                 type="text"
                 placeholder="Enter languages"
                 v-model="user.languages"
-              >
+              >-->
+
+              <input class="form-input" v-model="user.languages" list="languages" name="language">
+              <datalist id="languages" multiple size="5">
+                <option
+                  @select="user.languages += lang"
+                  v-for="(lang, idx) in languages"
+                  :value="lang.name"
+                  :key="idx"
+                >{{lang.name}}</option>
+              </datalist>
             </div>
 
             <div class="form-item flex space-between">
@@ -75,17 +89,7 @@
           <div class="form-item flex space-between">
             <label for="room">Max Number of Guests:&nbsp;</label>
             <select class="form-input" v-model="user.placeDetails.guestCapacity">
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
+              <option v-for="num in 10" :value="num" :key="num">{{num}}</option>
             </select>
           </div>
           <div class="form-item flex space-between">
@@ -132,7 +136,7 @@
           </div>
           <div class="form-item flex space-between">
             <label for="room">How many kids?:&nbsp;</label>
-            <select class="form-input" v-model="user.placeDetails.kids">
+            <select class="form-input" v-model="user.placeDetails.children">
               <option value="0">None</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -142,23 +146,26 @@
           </div>
         </div>
         <hr>
-        <el-button @click="onSave" type="success" class="el-btn el-btn-success">Save</el-button>
-        <el-button type="success" @click="$router.push('/userProfile/' + user._id)" plain>Cancel</el-button>
+        <button @click="onSave" class="btn">Save</button>
+        <button @click="$router.push('/userProfile/' + user._id)" class="btn btn-empty">Cancel</button>
       </form>
     </div>
   </section>
 </template>
 
 <script>
+var langs = require("langs");
+
 export default {
   name: "edit-profile",
   data() {
     return {
       user: null,
-      searchWord: ''
+      searchWord: '',
     };
   },
   created() {
+    this.languages = langs.all();
     this.user = JSON.parse(JSON.stringify(this.getLoggedUser));
   },
   computed: {
@@ -203,9 +210,17 @@ export default {
       });
     },
     onSave() {
+      // if (this.user.languages === ['']) {
+      //   this.user.languages = [];
+      // } else {
+      //   this.user.languages = this.user.languages.split(', ');
+      // }
       this.$store.dispatch({ type: 'updateUser', user: this.user })
         .then(() => this.$router.push('/userProfile/' + this.user._id))
-    }
+    },
+    // setLang() {
+
+    // }
   }
 };
 </script>
@@ -296,6 +311,9 @@ export default {
         .form-input:focus {
           background-color: lightgrey;
         }
+      }
+      .btn {
+        margin-right: 5px;
       }
     }
   }

@@ -32,10 +32,10 @@
         </div>
       </div>
       <rate-stars @rate="setRate"></rate-stars>
-      <label>Youre Review:</label>
+      <label>Your Review:</label>
       <textarea v-model="review.description" cols="30" rows="8"></textarea>
       <div class="btn-container flex justify-center">
-        <el-button class="btn-send" type="warning" @click="setReview">Send Review</el-button>
+        <button class="btn btn-send" @click="setReview">Send Review</button>
       </div>
     </div>
   </section>
@@ -46,7 +46,6 @@ import RateStars from '../components/RateStars'
 export default {
   name: 'review-form',
   data() {
-    //   good would stay again/ bad would not? vs host or guest? WTF?
     return {
       review: {
         getAsAHost: false,

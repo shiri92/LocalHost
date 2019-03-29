@@ -7,8 +7,7 @@
       placeholder="Where do you want to go?"
       :fetch-suggestions="querySearchAsync"
     ></el-autocomplete>
-    <el-button class="btn" type="success" slot="append" icon="el-icon-search" plain>Search</el-button>
-    <el-button class="btn-empty" type="success" slot="append" icon="el-icon-search" plain></el-button>
+    <button class="btn"><font-awesome-icon icon="search"/></button>
   </section>
 </template>
 
@@ -59,14 +58,6 @@ export default {
   width: 400px;
 }
 
-.btn {
-  width: 110px;
-}
-
-.btn-empty {
-  display: none;
-  margin: 0;
-}
 @media (max-width: 1000px) {
   .input {
     width: 50%;
@@ -76,13 +67,6 @@ export default {
 @media (max-width: 800px) {
   .input {
     width: 60%;
-  }
-  .btn {
-    display: none;
-  }
-  .btn-empty {
-    display: block;
-    margin: 0;
   }
 }
 </style>

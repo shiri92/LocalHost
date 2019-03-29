@@ -1,7 +1,7 @@
 <template>
   <section class="guest-request">
     <div class="top flex space-between align-center">
-      <h1>Request Booking</h1>
+      <h1>Request To Stay</h1>
       <span @click="$emit('requestOff')">&times;</span>
     </div>
     <hr>
@@ -25,7 +25,7 @@
         </b-form-group>
 
         <div class="btn-container flex justify-center">
-          <el-button class="btn-login" type="warning" @click="onSubmit">Send Request</el-button>
+          <button class="btn" @click="onSubmit">Send Request</button>
         </div>
 
         <div v-if="getLoggedUser">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>

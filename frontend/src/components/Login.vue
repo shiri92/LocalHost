@@ -28,7 +28,7 @@
         </b-form-group>
 
         <div class="btn-container flex justify-center flex-col">
-          <button class="btn-login" @click="tryLogin">SIGN IN</button>
+          <button class="btn btn-login" @click="tryLogin">SIGN IN</button>
           <p>
             Not a Member?
             <router-link to="/signup">
@@ -86,7 +86,7 @@ export default {
   color: rgb(62, 62, 62);
   .top {
     padding: 15px 30px;
-    background-color: #67c23a;
+    background-color: #1dbf73;
     border-radius: 5px 5px 0 0;
     h1 {
       font-size: 1.5rem;
@@ -143,22 +143,15 @@ hr {
 .btn-container {
   margin: 0 30px 30px 30px;
   .btn-login {
-    justify-self: center;
     width: 100%;
-    background-color: #67c23a;
     padding: 12px 20px;
     font-size: 18px;
-    font-weight: bold;
-    border-radius: 4px;
     line-height: 1;
     border: 1px;
     color: #fff;
   }
-  .btn-login:hover {
-    background: #85ce61;
-    border-color: #85ce61;
-  }
   p {
+    text-align: center;
     .signup-btn {
       color: blue;
       text-decoration: underline;
