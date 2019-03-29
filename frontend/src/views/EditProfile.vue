@@ -146,8 +146,8 @@
           </div>
         </div>
         <hr>
-        <el-button @click="onSave" type="success" class="el-btn el-btn-success">Save</el-button>
-        <el-button type="success" @click="$router.push('/userProfile/' + user._id)" plain>Cancel</el-button>
+        <button @click="onSave" class="btn">Save</button>
+        <button @click="$router.push('/userProfile/' + user._id)" class="btn btn-empty">Cancel</button>
       </form>
     </div>
   </section>
@@ -311,6 +311,9 @@ export default {
         .form-input:focus {
           background-color: lightgrey;
         }
+      }
+      .btn {
+        margin-right: 5px;
       }
     }
   }

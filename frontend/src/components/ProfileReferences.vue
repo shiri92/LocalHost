@@ -21,6 +21,7 @@
           <div class="num-from-hosts">{{revFromHosts.length}}</div>
         </h3>
       </div>
+
       <div v-if="isFromGuestsClicked" class="references-container flex">
         <div class="reference flex flex-col" v-for="(reference, idx) in revFromGuests" :key="idx">
           <hr style="margin-top: 0">
@@ -44,10 +45,11 @@
           </div>
           <div class="review-container">
             <div class="given-details flex">
-              <img
+              <div
                 @click="$router.push('/userProfile/' + reference.sender.id)"
-                :src="reference.sender.imgUrl"
-              >
+                class="profile-img"
+                :style="'background-image: url(' + reference.sender.imgUrl + ')'"
+              ></div>
               <div class="dry-details flex space-between">
                 <div>
                   <h5
@@ -94,10 +96,11 @@
           </div>
           <div class="review-container">
             <div class="given-details flex">
-              <img
+              <div
                 @click="$router.push('/userProfile/' + reference.sender.id)"
-                :src="reference.sender.imgUrl"
-              >
+                class="profile-img"
+                :style="'background-image: url(' + reference.sender.imgUrl + ')'"
+              ></div>
               <div class="dry-details flex space-between">
                 <div>
                   <h5
@@ -225,12 +228,14 @@ export default {
         padding: 20px;
         .given-details {
           width: 100%;
-          img {
-            width: 70px;
+          .profile-img {
+            min-width: 70px;
             height: 70px;
             cursor: pointer;
             border-radius: 50%;
             margin: 0 20px 20px 20px;
+            background-size: cover;
+            background-repeat: no-repeat;
           }
           h5 {
             cursor: pointer;
@@ -290,7 +295,7 @@ export default {
   background-color: #2f3e4e;
   color: white;
   border-radius: 50%;
-  width: 25px;
+  min-width: 25px;
   height: 25px;
   text-align: center;
   margin-left: 10px;

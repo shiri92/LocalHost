@@ -6,8 +6,8 @@
   >
     <div class="header-title" v-if="$route.path === '/'">
       <h1>Find a Place To Stay On Your Trip</h1>
-      <h2>Improve Your Travel Experience!</h2>
-      <el-button class="btn-join" type="success" @click="$router.push('/signup')" round>Join</el-button>
+      <h2>The Ultimate Travel Experience!</h2>
+      <button class="btn" type="success" @click="$router.push('/signup')" round>Join</button>
     </div>
     <img
       v-if="$route.path === '/'"
@@ -27,38 +27,44 @@
 </template>
 
 <script>
-
 export default {
-  name: 'main-header',
+  name: "main-header",
   data() {
     return {
-      currPageCity: '',
-      currPageCountry: ''
-    }
+      currPageCity: "",
+      currPageCountry: ""
+    };
   },
   created() {
     let cutString = this.$route.path.substring(1, this.$route.path.length);
 
-    let idxSlash = cutString.indexOf('/');
-    let idxAnd = cutString.indexOf('&');
+    let idxSlash = cutString.indexOf("/");
+    let idxAnd = cutString.indexOf("&");
 
-    this.currPageCountry = cutString.substr(idxSlash + 1, idxAnd - idxSlash - 1);
+    this.currPageCountry = cutString.substr(
+      idxSlash + 1,
+      idxAnd - idxSlash - 1
+    );
     this.currPageCity = cutString.substr(idxAnd + 1, cutString.length);
   },
   computed: {
     backImg() {
-      if (this.$route.path === '/') {
-        return 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/bg-imgs/main-header.jpg';
+      if (this.$route.path === "/") {
+        return "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/bg-imgs/main-header.jpg";
       } else {
         let cityName = this.$route.params.city.toLowerCase();
-        if (cityName.indexOf(' ') !== -1) {
+        if (cityName.indexOf(" ") !== -1) {
           cityName = cityName.replace(/\s/g, "%20");
         }
-        return ('https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/city-imgs/' + cityName + '.jpg');
+        return (
+          "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/city-imgs/" +
+          cityName +
+          ".jpg"
+        );
       }
-    },
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -87,10 +93,12 @@ h2 {
   color: white;
 }
 
-.btn-join {
-  font-size: 1.2rem;
-  width: 150px;
+.btn {
+  font-size: 1.5rem;
+  width: 200px;
   margin: 10px;
+  border-radius: 40px;
+  padding: 12px 23px;
 }
 
 .arrow-down {

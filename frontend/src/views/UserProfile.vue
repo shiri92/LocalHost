@@ -1,7 +1,10 @@
 <template>
   <section class="profile-container flex justify-center" v-if="currUser">
     <div class="side-profile">
-      <img class="profile-img" :src="currUser.imgUrl" alt>
+      <div
+        class="profile-img"
+        :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"
+      ></div>
       <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
       <div class="profile-loc">{{currUser.address.city}}, {{currUser.address.country}}</div>
       <hr>
@@ -14,9 +17,6 @@
             </button>
           </div>
           <div class="flex flex-row">
-            <button class="btn">
-              <font-awesome-icon icon="envelope"/>
-            </button>
             <button class="btn" @click="openReview">Add Review</button>
           </div>
           <review-form
@@ -113,7 +113,7 @@ export default {
       }
     });
 
-    window.addEventListener('resize', this.handleResize)
+    window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
   computed: {
@@ -124,7 +124,7 @@ export default {
       return this.$store.getters.loggedUser;
     },
     test() {
-      console.log('window size:', window.screen.width);
+      console.log("window size:", window.screen.width);
     }
   },
   methods: {
@@ -169,10 +169,10 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
-    },
+    }
   },
   destroyed() {
-    window.removeEventListener('resize', this.handleResize)
+    window.removeEventListener("resize", this.handleResize);
   },
   watch: {
     "$route.params.userId"(userId) {
@@ -212,19 +212,24 @@ export default {
   padding: 15px;
   text-align: center;
   .profile-img {
-    width: 100%;
     max-width: 225px;
     height: 40%;
     max-height: 225px;
     border-radius: 50%;
     box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.75);
-    margin-bottom: 15px;
+    margin: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
   }
   .profile-name {
     font-size: 1.5em;
+    margin-top: 15px;
   }
   hr {
     margin: 20px;
+  }
+  .btn {
+    margin: 5px;
   }
 }
 
@@ -233,30 +238,6 @@ export default {
     max-width: 98%;
     width: 92%;
   }
-}
-
-.btn {
-  margin: 5px;
-  background-color: #67c23a;
-  border: 1px solid #67c23a;
-  border-radius: 3px;
-  color: #fff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 1.5;
-  max-width: 240px;
-  padding: 8px 12px;
-  text-align: center;
-  text-decoration: none;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  white-space: normal;
-}
-.btn:hover {
-  background: #85ce61;
-  border-color: #85ce61;
-  color: #fff;
 }
 
 .main-desc {

@@ -34,6 +34,7 @@ export default {
     width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(290px, 0.4fr));
     gap: 20px;
+    justify-content: center;
     .profile-list-item {
       list-style: none;
       width: 100%;

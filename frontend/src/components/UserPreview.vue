@@ -5,7 +5,7 @@
         <div class="hero"></div>
         <div class="main">
           <div class="user">
-            <img class="avatar" :src="profile.imgUrl" alt width="100" height="100">
+            <div class="avatar" :style="'background-image: url(' + profile.imgUrl + ')'"></div>
             <div class="user-details">
               <h3>{{profile.firstName}} {{profile.lastName}}</h3>
               <span class="location">
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import StarsToshow from '../components/RateStarsToShow'
+import StarsToshow from "../components/RateStarsToShow";
 export default {
   props: ["profile"],
   components: {
@@ -33,10 +33,10 @@ export default {
       let sum = 0;
       let divider = this.profile.references.length;
       return this.profile.references.reduce((acc, review) => {
-        sum += (+review.rating);
+        sum += +review.rating;
         acc = sum / divider;
         return acc;
-      }, 0)
+      }, 0);
     }
   }
 };
@@ -62,10 +62,13 @@ li {
           display: flex;
           margin-bottom: 5px;
           .avatar {
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             border: 3px solid #fff;
             position: relative;
-            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
             top: -50px;
           }
           .user-details {
