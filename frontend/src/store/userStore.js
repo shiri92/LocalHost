@@ -20,12 +20,22 @@ export default {
       return state.loggedUser;
     }
   },
-  ready() {
 
-  },
   mutations: {
     setLoggedUser(state, { user }) {
       state.loggedUser = user;
+      if (user) {
+        let { _id } = user;
+        state.currSocket = socketService.connect(_id);
+        state.currSocket.on('sendRequest', (request) => {
+          this.commit({ type: "addRequest", request });
+        });
+        state.currSocket.on('sendReview', (review) => {
+          // if user on the profile of the one got reviewd
+          if (state.currUser._id === review.recipient.id)
+            this.commit({ type: "addReview", review });
+        });
+      }
     },
     logout(state) {
       state.loggedUser = null;
@@ -36,22 +46,31 @@ export default {
     setCurrUser(state, { user }) {
       state.currUser = user;
     },
-    addRequest(state, { request }) {
-      state.loggedUser.requests.push(request);
+    setLoggedUser(state, { user }) {
+      state.loggedUser = user;
     },
-    addReview(state, { res }) {
-      state.currUser.references.push(res);
-    },
+    // updateCurrUser(state, { user }) {
+    //   var idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
+    //   state.currUsers.splice(idx, 1, user);
+    // },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
     },
     setLoggedUserImg(state, { imgUrl }) {
       state.loggedUser.imgUrl = imgUrl;
     },
+    addRequest(state, { request }) {
+      state.loggedUser.requests.push(request);
+    },
+    addReview(state, { review }) {
+      state.currUser.references.push(review);
+    },
+    removeRequest(state, { _id }) {
+      let idx = state.loggedUser.requests.findIndex(request => request._id === _id);
+      state.loggedUser.requests.splice(idx, 1);
+    },
     removeReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(
-        review => reviewId === review._id
-      );
+      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
       state.currUser.references.splice(idx, 1);
     },
     // editReview(state, { reviewId }) {
@@ -60,55 +79,23 @@ export default {
     // );
     // state.currUser.references.splice(idx, 1);
     // },
-    removeRequest(state, { _id }) {
-      let idx = state.loggedUser.requests.findIndex(
-        request => request._id === _id
-      );
-      state.loggedUser.requests.splice(idx, 1);
-    },
     toggleIsAccepted(state, { _id }) {
-      let idx = state.loggedUser.requests.findIndex(
-        request => request._id === _id
-      );
-      // state.loggedUser.requests[idx].isAccepted = true;
+      let idx = state.loggedUser.requests.findIndex(request => request._id === _id);
       let newReq = JSON.parse(JSON.stringify(state.loggedUser.requests[idx]));
       newReq.isAccepted = true;
       state.loggedUser.requests.splice(idx, 1, newReq);
     },
-    updateUser(state, { user }) {
-      var idx = state.currUsers.findIndex(
-        currUser => currUser._id === user._id
-      );
-      state.currUsers.splice(idx, 1, user);
-    }
+
   },
   actions: {
-    helloWord(context) {
-      console.log('hello world');
-    },
     async checkLogged(context) {
       let user = await userService.checkLogged();
       context.commit({ type: "setLoggedUser", user });
-      if (user) {
-        let { _id } = user;
-        context.state.currSocket = socketService.connect(_id);
-        context.state.currSocket.on('sendRequest', (request) => {
-          context.commit({ type: "addRequest", request });
 
-        })
-      }
     },
     async login(context, { credentials }) {
       let user = await userService.login(credentials);
       context.commit({ type: "setLoggedUser", user });
-      if (user) {
-        let { _id } = user;
-        context.state.currSocket = socketService.connect(_id);
-        context.state.currSocket.on('sendRequest', (request) => {
-          context.commit({ type: "addRequest", request });
-
-        })
-      }
     },
     async logout(context) {
       await userService.logout();
@@ -120,8 +107,7 @@ export default {
       let { email } = user;
       let { password } = user;
       await context.dispatch({
-        type: "login",
-        credentials: { email, password }
+        type: "login", credentials: { email, password }
       });
     },
     async loadUsers(context, { city, country }) {
@@ -132,16 +118,28 @@ export default {
       let user = await userService.getById(userId);
       context.commit({ type: "setCurrUser", user });
     },
+    async updateLoggedUser(context, { user }) {
+      await userService.update(user);
+      context.commit({ type: "setLoggedUser", user });
+    },
+    // async updateCurrUser(context, { user }) {
+    //   await userService.update(user);
+    //   context.commit({ type: "updateCurrUser", user });
+    // },
+    async updateLoggedUserImg(context, { imgUrl, userId }) {
+      await userService.updateUserImg(imgUrl, userId);
+      context.commit({ type: "setLoggedUserImg", imgUrl });
+    },
     async addRequest(context, { request }) {
       let res = await userService.addRequest(request);
       context.state.currSocket.emit('sendRequest', res);
-
-      // context.commit({ type: "addRequest", res });
       // TODO: show sweet alert...
     },
-    async addReview(context, { review }) {
-      let res = await userService.addReview(review);
-      context.commit({ type: "addReview", res });
+    async removeRequest(context, { request }) {
+      let { _id } = request;
+      let { recipient } = request;
+      await userService.removeRequest(recipient.id, _id);
+      context.commit({ type: "toggleIsAccepted", _id });
       // TODO: show sweet alert...
     },
     // async loadReview(context, { currUserId, review }) {
@@ -152,18 +150,20 @@ export default {
     //   await userService.updateReview(currUserId, review);
     //   context.commit({ type: "editReview", review });
     // },
+    async addReview(context, { review }) {
+      let res = await userService.addReview(review);
+      let { _id } = context.state.currUser;
+      context.state.currSocket.emit('sendReview', res, _id);
+      // context.commit({ type: "addReview", res });
+      // TODO: show sweet alert...
+    },
+
     async removeReview(context, { currUserId, reviewId }) {
       await userService.removeReview(currUserId, reviewId);
       context.commit({ type: "removeReview", reviewId });
       // TODO: show sweet alert...
     },
-    async removeRequest(context, { request }) {
-      let { _id } = request;
-      let { recipient } = request;
-      await userService.removeRequest(recipient.id, _id);
-      context.commit({ type: "toggleIsAccepted", _id });
-      // TODO: show sweet alert...
-    },
+
     async bookGuest(context, { request }) {
       let { sender, recipient } = request;
       await userService.bookGuest(sender, recipient);
@@ -176,13 +176,6 @@ export default {
       // TODO: update frontend...
       // TODO: show sweet alert...
     },
-    async updateUserImg(context, { imgUrl, userId }) {
-      await userService.updateUserImg(imgUrl, userId);
-      context.commit({ type: "setLoggedUserImg", imgUrl });
-    },
-    async updateUser(context, { user }) {
-      await userService.update(user);
-      context.commit({ type: "updateUser", user });
-    }
+
   }
 };
