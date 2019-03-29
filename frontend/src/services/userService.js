@@ -11,21 +11,27 @@ const BASE_API =
 // Logged User Check (Session Only)
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
-  if (res.data) socketService.connect();
+  // if (res.data) {
+  //   let { _id } = res.data;
+  //   socketService.connect(_id);
+  // }
   return res.data;
 }
 
 // Login User
 async function login(credentials) {
   let res = await axios.put(`${BASE_API}/login`, credentials);
-  socketService.connect();
+  // if (res.data) {
+  //   let { _id } = res.data;
+  //   socketService.connect(_id);
+  // }
   return res.data;
 }
 
 // Logout User
 async function logout() {
   await axios.put(`${BASE_API}/logout`);
-  socketService.disconnect();
+  // socketService.disconnect();
 }
 
 // GET Users By Address
@@ -50,6 +56,7 @@ async function add(credentials) {
 // ADD User Request
 async function addRequest(request) {
   let res = await axios.put(`${BASE_API}/request`, request);
+  // socketService.sendRequest(res.data.recipient.id);
   return res.data;
 }
 

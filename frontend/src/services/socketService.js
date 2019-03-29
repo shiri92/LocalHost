@@ -3,16 +3,29 @@ import io from 'socket.io-client';
 
 var socket = null;
 
-function connect() {
-    userId = '123';
-    socket = io('http://localhost:3003', userId);
+// function connect(userId) {
+//     socket = io('http://localhost:3003', { query: `userId=${userId}` });
+
+//     socket.on('sendRequest', () => {
+//         console.log('target got requesttttt');
+//     })
+// }
+
+function connect(userId) {
+    return io('http://localhost:3003', { query: `userId=${userId}` });
 }
 
-function disconnect() {
-    socket.disconnect();
-}
+// function sendRequest(targetId) {
+//     socket.emit('sendRequest', targetId);
+//     console.log(targetId);
+// }
+
+// function disconnect() {
+//     socket.disconnect();
+// }
 
 export default {
     connect,
-    disconnect
+    // disconnect,
+    // sendRequest
 }

@@ -5,6 +5,7 @@
       <nav>
         <div class="nav-item">Requests</div>
         <div class="nav-item">My Calendar</div>
+        {{user.requests}}
       </nav>
       <div class="main-content">
         <div
@@ -37,7 +38,7 @@ export default {
       showAnimation: false
     };
   },
-  created() {},
+  created() { },
   computed: {
     user() {
       return this.$store.getters.loggedUser;

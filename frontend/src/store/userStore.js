@@ -1,8 +1,10 @@
 /* ----- DEPEND -----*/
 import userService from "../services/userService.js";
+import socketService from '../services/socketService.js';
 
 export default {
   state: {
+    currSocket: [],
     currUsers: [],
     currUser: null,
     loggedUser: null
@@ -18,6 +20,9 @@ export default {
       return state.loggedUser;
     }
   },
+  ready() {
+
+  },
   mutations: {
     setLoggedUser(state, { user }) {
       state.loggedUser = user;
@@ -31,8 +36,8 @@ export default {
     setCurrUser(state, { user }) {
       state.currUser = user;
     },
-    addRequest(state, { res }) {
-      state.currUser.requests.push(res);
+    addRequest(state, { request }) {
+      state.loggedUser.requests.push(request);
     },
     addReview(state, { res }) {
       state.currUser.references.push(res);
@@ -78,17 +83,37 @@ export default {
     }
   },
   actions: {
+    helloWord(context) {
+      console.log('hello world');
+    },
     async checkLogged(context) {
       let user = await userService.checkLogged();
       context.commit({ type: "setLoggedUser", user });
+      if (user) {
+        let { _id } = user;
+        context.state.currSocket = socketService.connect(_id);
+        context.state.currSocket.on('sendRequest', (request) => {
+          context.commit({ type: "addRequest", request });
+
+        })
+      }
     },
     async login(context, { credentials }) {
       let user = await userService.login(credentials);
       context.commit({ type: "setLoggedUser", user });
+      if (user) {
+        let { _id } = user;
+        context.state.currSocket = socketService.connect(_id);
+        context.state.currSocket.on('sendRequest', (request) => {
+          context.commit({ type: "addRequest", request });
+
+        })
+      }
     },
     async logout(context) {
       await userService.logout();
       context.commit({ type: "logout" });
+      socket.disconnect();
     },
     async signup(context, { credentials }) {
       let user = await userService.add(credentials);
@@ -109,7 +134,9 @@ export default {
     },
     async addRequest(context, { request }) {
       let res = await userService.addRequest(request);
-      context.commit({ type: "addRequest", res });
+      context.state.currSocket.emit('sendRequest', res);
+
+      // context.commit({ type: "addRequest", res });
       // TODO: show sweet alert...
     },
     async addReview(context, { review }) {

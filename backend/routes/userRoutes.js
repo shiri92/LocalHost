@@ -17,7 +17,7 @@ function addRoutes(app) {
   app.put(`${BASE}/login`, async (req, res) => {
     const credentials = req.body;
     let user = await userService.login(credentials);
-    if (!user) res.status(401).send("Something broke!");
+    if (!user) res.status(401).send('User Not Found');
     req.session.user = user;
     res.json(user);
   });
