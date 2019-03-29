@@ -43,6 +43,8 @@ export default {
   },
   computed: {
     topDests() {
+      // let allCities = this.$store.getters.cities;
+      // return allCities.filter(city => city.isTopDest);
       return this.$store.getters.topDests;
     }
   },

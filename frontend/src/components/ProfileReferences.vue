@@ -29,8 +29,21 @@
             class="edit-delete-container flex"
             v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
           >
-            <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button>
-            <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div>
+            <!-- <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button> -->
+            <img
+              class="btn-edit"
+              @click="editReview(reference, user._id)"
+              src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/edit.png"
+              title="Edit"
+            >
+            <img
+              class="delete-review"
+              @click="removeReview(reference._id, user._id)"
+              src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/trash.png"
+              title="
+            remove"
+            >
+            <!-- <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div> -->
           </div>
           <div class="review-container">
             <div class="given-details flex">
@@ -64,8 +77,21 @@
             class="edit-delete-container flex"
             v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
           >
-            <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button>
-            <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div>
+            <!-- <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button> -->
+            <img
+              class="btn-edit"
+              @click="editReview(reference, user._id)"
+              src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/edit.png"
+              title="Edit"
+            >
+            <img
+              class="delete-review"
+              @click="removeReview(reference._id, user._id)"
+              src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/trash.png"
+              title="
+            remove"
+            >
+            <!-- <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div> -->
           </div>
           <div class="review-container">
             <div class="given-details flex">
@@ -183,9 +209,10 @@ export default {
         justify-self: center;
         margin-right: 30px;
         .btn-edit {
-          width: 40px;
+          width: 30px;
           height: 30px;
           margin: 20px;
+          cursor: pointer;
         }
         .delete-review {
           cursor: pointer;

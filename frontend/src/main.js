@@ -1,14 +1,13 @@
-
-import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import store from './store/store';
-import './registerServiceWorker';
-import css from '../src/assets/css/main.scss';
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
-import BootstrapVue from 'bootstrap-vue';
-import AnimateCSS from 'animate.css';
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./router";
+import store from "./store/store";
+import "./registerServiceWorker";
+import css from "../src/assets/css/main.scss";
+import ElementUI from "element-ui";
+import "element-ui/lib/theme-chalk/index.css";
+import BootstrapVue from "bootstrap-vue";
+import AnimateCSS from "animate.css";
 
 // import 'custom.scss'
 
@@ -16,17 +15,17 @@ import AnimateCSS from 'animate.css';
 var VueScrollTo = require("vue-scrollto");
 Vue.use(VueScrollTo);
 Vue.use(VueScrollTo, {
-    container: "body",
-    duration: 500,
-    easing: "ease",
-    offset: 0,
-    force: true,
-    cancelable: true,
-    onStart: false,
-    onDone: false,
-    onCancel: false,
-    x: false,
-    y: true
+  container: "body",
+  duration: 500,
+  easing: "ease",
+  offset: 0,
+  force: true,
+  cancelable: true,
+  onStart: false,
+  onDone: false,
+  onCancel: false,
+  x: false,
+  y: true
 });
 
 // font-awesome related
@@ -62,20 +61,18 @@ library.add(faLock);
 library.add(faUser);
 library.add(faSearch);
 
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.use(BootstrapVue);
 Vue.use(ElementUI);
 Vue.use(AnimateCSS);
-Vue.use(require('vue-moment'));
+Vue.use(require("vue-moment"));
 
 Vue.config.productionTip = false;
 
-new Vue(
-    {
-        router,
-        store,
-        css,
-        render: h => h(App)
-    }
-).$mount('#app')
+new Vue({
+  router,
+  store,
+  css,
+  render: h => h(App)
+}).$mount("#app");
