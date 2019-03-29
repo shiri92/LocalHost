@@ -133,7 +133,7 @@ h1 {
   .img-container:last-child {
     grid-column: span 1;
     grid-row: span 1;
-    background-color: #7ebf50;
+    background-color: #1dbf73;
   }
 }
 

@@ -44,6 +44,7 @@ import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 library.add(faCoffee);
@@ -59,6 +60,7 @@ library.add(faBook);
 library.add(faMapMarkerAlt);
 library.add(faLock);
 library.add(faUser);
+library.add(faSearch);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
