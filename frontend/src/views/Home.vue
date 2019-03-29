@@ -7,6 +7,7 @@
     <h1>Top Destinations</h1>
 
     <city-search></city-search>
+    <!-- <city-search-1></city-search-1> -->
 
     <div class="cities-gallery grid">
       <div
@@ -23,10 +24,17 @@
 
 <script>
 import MainHeader from "@/components/MainHeader";
-import CitySearch from "../components/CitySearch";
-import WhyJoin from "../components/WhyJoin";
+import CitySearch from "@/components/CitySearch";
+import CitySearch1 from "@/components/CitySearch1";
+import WhyJoin from "@/components/WhyJoin";
 
 export default {
+  components: {
+    MainHeader,
+    CitySearch,
+    WhyJoin,
+    CitySearch1
+  },
   name: "home",
   data() {
     return {};
@@ -46,11 +54,7 @@ export default {
       return this.$store.getters.topDests;
     }
   },
-  components: {
-    MainHeader,
-    CitySearch,
-    WhyJoin
-  }
+
 };
 </script>
 
@@ -73,6 +77,7 @@ h1 {
   grid-gap: 20px;
   margin-top: 40px;
   .img-container {
+    opacity: 0.8;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -80,6 +85,10 @@ h1 {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+    transition: 0.3s;
+    &:hover {
+      opacity: 1;
+    }
   }
   .Bangkok {
     grid-column: span 1;
@@ -201,5 +210,6 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
+  // opacity: 0.6;
 }
 </style>

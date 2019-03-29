@@ -9,7 +9,6 @@ function addRoutes(app) {
   app.put(`${BASE}/checkLogged`, async (req, res) => {
     if (req.session.user) {
       let user = await userService.getById(req.session.user._id);
-
       return res.json(user);
     } else return res.json();
   });
@@ -128,12 +127,3 @@ function addRoutes(app) {
 }
 
 module.exports = addRoutes;
-
-// function checkAdmin(req, res, next) {
-//     console.log('INSIDE MIDDLEWARE: ', req.session.user);
-//     if (!req.session.user || !req.session.user.isAdmin) {
-//         res.status(401).end('Unauthorized');
-//         return;
-//     }
-//     next();
-// }

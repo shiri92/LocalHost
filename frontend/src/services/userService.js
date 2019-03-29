@@ -1,31 +1,31 @@
 /* ----- DEPEND -----*/
-import Axios from "axios";
-// const ioClient = require('socket.io-client');
-// import ioClient from 'socket.io-client';
+import socketService from './socketService';
+import Axios from 'axios';
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
 const BASE_API =
   process.env.NODE_ENV !== "development" ? "/user" : "//localhost:3003/user";
 
-// var socket = ioClient('http://localhost:3003');
 
 // Logged User Check (Session Only)
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
-  // if (res.data)
+  if (res.data) socketService.connect();
   return res.data;
 }
 
 // Login User
 async function login(credentials) {
   let res = await axios.put(`${BASE_API}/login`, credentials);
+  socketService.connect();
   return res.data;
 }
 
 // Logout User
 async function logout() {
   await axios.put(`${BASE_API}/logout`);
+  socketService.disconnect();
 }
 
 // GET Users By Address
