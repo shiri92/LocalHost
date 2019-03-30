@@ -1,13 +1,9 @@
 <template>
   <section class="city-search flex justify-center">
-    <el-autocomplete
-      class="input"
-      v-model="searchWord"
-      @select="chooseCity"
-      placeholder="Where do you want to go?"
-      :fetch-suggestions="querySearchAsync"
-    ></el-autocomplete>
-    <button class="btn"><font-awesome-icon icon="search"/></button>
+    <gmap-autocomplete @place_changed="chooseCity" class="google-search"></gmap-autocomplete>
+    <button class="btn">
+      <font-awesome-icon icon="search"/>
+    </button>
   </section>
 </template>
 
@@ -27,18 +23,8 @@ export default {
     }
   },
   methods: {
-    querySearchAsync(queryString, cb) {
-      if (this.searchWord) {
-        this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord })
-          .then(cities => {
-            this.cities = cities
-            let results = cities.map(city => { return { value: city.name + ', ' + city.country } });
-            cb(results);
-          })
-      }
-    },
     chooseCity(ev) {
-      let inputRes = JSON.parse(JSON.stringify(ev)).value;
+      let inputRes = JSON.parse(JSON.stringify(ev.formatted_address));
       let idx = inputRes.indexOf(',');
       let currCity = inputRes.substr(0, idx)
       let currCountry = inputRes.substr(idx + 2, inputRes.length)
@@ -54,18 +40,35 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.input {
+.google-search {
+  padding-right: 30px;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: inherit;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  padding: 0 15px;
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   width: 400px;
 }
 
+.btn {
+  height: 40px;
+  margin-left: 10px;
+}
+
 @media (max-width: 1000px) {
-  .input {
+  .google-search {
     width: 50%;
   }
 }
 
 @media (max-width: 800px) {
-  .input {
+  .google-search {
     width: 60%;
   }
 }

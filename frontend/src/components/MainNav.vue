@@ -84,7 +84,7 @@ export default {
       .logo {
         height: 35px;
         width: 155px;
-        background-image: url("https://res.cloudinary.com/dcl4oabi3/image/upload/v1553873765/logo/logo.png");
+        background-image: url("https://res.cloudinary.com/dcl4oabi3/image/upload/v1553958499/logo/logo.png");
         background-size: cover;
       }
     }
@@ -103,7 +103,7 @@ export default {
           padding: 10px;
         }
       }
-      
+
       @media (max-width: 340px) {
         .btn {
           padding: 7px;

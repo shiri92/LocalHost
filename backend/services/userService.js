@@ -5,8 +5,10 @@ const ObjectId = require("mongodb").ObjectId;
 
 /* ----- CONST -----*/
 const USERS_COLLECTION = "users";
-const MALE_IMG = "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566744/profile-imgs/default-male.png";
-const FEMALE_IMG = "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566744/profile-imgs/default-female.png";
+const MALE_IMG =
+  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566744/profile-imgs/default-male.png";
+const FEMALE_IMG =
+  "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566744/profile-imgs/default-female.png";
 
 module.exports = {
   login,
@@ -134,9 +136,9 @@ async function updateReview(currUserId, review) {
   await db.collection(USERS_COLLECTION).updateOne(
     {
       _id: new ObjectId(currUserId),
-      "references._id": new ObjectId(review._id)
+      references: { $elemMatch: { _id: new ObjectId(review._id) } }
     },
-    { $set: { references: { _id: new ObjectId(reviewId) } } }
+    { $set: { "references.$": review } }
   );
   return review;
 }

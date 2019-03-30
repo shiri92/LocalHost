@@ -11,10 +11,10 @@
     </div>
     <img
       v-if="$route.path === '/'"
-      class="arrow-down"
+      class="arrow-down bounce"
       href="#"
       v-scroll-to="'#whyjoin'"
-      src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566367/fav-icons/arrow-down.png"
+      src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553953172/fav-icons/arrow-down.png"
     >
 
     <div class="users-title" v-if="$route.path !== '/'">
@@ -107,6 +107,26 @@ h2 {
   width: 90px;
   height: 90px;
   cursor: pointer;
+}
+
+.bounce {
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-30px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
 }
 
 @media (max-width: 1200px) {
