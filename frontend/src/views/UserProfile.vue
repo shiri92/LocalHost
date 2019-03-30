@@ -38,6 +38,9 @@
             <router-link :to="'/userProfile/' + currUser._id + '/inbox'">
               <button class="btn">My Inbox</button>
             </router-link>
+            <router-link :to="'/userProfile/' + currUser._id + '/scheduleManager'">
+              <button class="btn">Personal Manager</button>
+            </router-link>
           </div>
         </div>
       </div>
