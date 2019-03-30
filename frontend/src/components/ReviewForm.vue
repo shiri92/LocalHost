@@ -171,7 +171,7 @@ export default {
     textarea {
       padding: 10px;
     }
-    @media (max-width: 400px){
+    @media (max-width: 400px) {
       textarea {
         height: 7em;
       }
