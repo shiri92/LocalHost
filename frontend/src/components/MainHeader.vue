@@ -57,7 +57,7 @@ export default {
           cityName = cityName.replace(/\s/g, "%20");
         }
         return (
-          "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/city-imgs/" +
+          "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553965831/city-imgs/" +
           cityName +
           ".jpg"
         );
