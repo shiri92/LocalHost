@@ -59,13 +59,9 @@ export default {
           firstName: this.getLoggedUser.firstName,
           lastName: this.getLoggedUser.lastName,
           address: JSON.parse(JSON.stringify(this.getLoggedUser.address)),
-<<<<<<< HEAD
           imgUrl: this.getLoggedUser.imgUrl,
           startDate: this.requestInfo.startDate,
           endDate: this.requestInfo.endDate
-=======
-          imgUrl: this.getLoggedUser.imgUrl
->>>>>>> 8ecda865b61182ad214c22494cd32dd0bff45d88
         },
         recipient: {
           id: this.getCurrUser._id,
