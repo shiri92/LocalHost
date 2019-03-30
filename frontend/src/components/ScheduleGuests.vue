@@ -26,6 +26,8 @@
 
 <script>
 import UserPreviewGuest from './UserPreviewGuest.vue';
+import '../filters.js';
+
 
 export default {
   components: {
