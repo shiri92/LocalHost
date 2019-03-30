@@ -2,7 +2,7 @@
   <section class="signup flex flex-col">
     <div class="logo">
       <router-link to="/">
-        <img src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553873765/logo/logo.png" alt>
+        <img src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553958499/logo/logo.png" alt>
       </router-link>
     </div>
     <h1 class="title">Sign Up</h1>
@@ -62,11 +62,7 @@
           </el-select>
 
           <label>Location:</label>
-          <el-autocomplete
-            @input="setAddres"
-            v-model="searchWord"
-            :fetch-suggestions="querySearchAsync"
-          ></el-autocomplete>
+          <gmap-autocomplete @place_changed="setAddres" class="google-search"></gmap-autocomplete>
 
           <div class="btns-container flex">
             <button class="btn signup-btn" style="margin-top: 12px;" @click="stepBack">Previous Step</button>
@@ -114,22 +110,10 @@ export default {
       }
       if (this.active++ > 1) this.active = 0;
     },
-    querySearchAsync(queryString, cb) {
-      if (this.searchWord) {
-        this.$store
-          .dispatch({ type: "loadCities", searchWord: this.searchWord })
-          .then(cities => {
-            var results = cities.map(city => {
-              return { value: city.name + ", " + city.country };
-            });
-            cb(results);
-          });
-      }
-    },
     setAddres(ev) {
-      let idx = ev.indexOf(",");
-      let currCity = ev.substr(0, idx);
-      let currCountry = ev.substr(idx + 2, ev.length - 1);
+      let idx = ev.formatted_address.indexOf(",");
+      let currCity = ev.formatted_address.substr(0, idx);
+      let currCountry = ev.formatted_address.substr(idx + 2, ev.length - 1);
       this.form.address = { city: currCity, country: currCountry };
     },
     stepBack() {
@@ -217,6 +201,22 @@ form {
   text-align: left;
   background-color: #fff;
   opacity: 0.9;
+}
+
+.google-search {
+  padding-right: 30px;
+  border-radius: 4px;
+  border: 1px solid #dcdfe6;
+  box-sizing: border-box;
+  color: #606266;
+  display: inline-block;
+  font-size: inherit;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  padding: 0 15px;
+  transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  width: 100%;
 }
 
 @media (max-width: 900px) {
