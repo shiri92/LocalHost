@@ -47,7 +47,7 @@
 
       <div class="main-desc">
         <div class="cmps" id="cmps">
-          <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
+          <nav class="main-desc-nav">
             <div class="profile-nav flex flex-row justify-center">
               <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
               <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
@@ -255,6 +255,8 @@ export default {
   .profile-nav {
     width: 100%;
     border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+    // position: sticky;
+    // top: 0;
     .nav-item {
       width: 100px;
       color: #1dbf73;
