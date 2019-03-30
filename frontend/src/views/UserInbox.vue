@@ -37,7 +37,7 @@ export default {
       showAnimation: false
     };
   },
-  created() {},
+  created() { },
   computed: {
     user() {
       return this.$store.getters.loggedUser;

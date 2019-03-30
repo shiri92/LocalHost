@@ -1,3 +1,4 @@
+/* ----- DEPEND -----*/
 import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
@@ -9,12 +10,22 @@ import "element-ui/lib/theme-chalk/index.css";
 import BootstrapVue from "bootstrap-vue";
 import AnimateCSS from "animate.css";
 import VueCarousel from 'vue-carousel';
+// import VueBootstrap from 'bootstrap-vue';
+import VueScrollTo from 'vue-scrollto';
+import VueSweetalert2 from 'vue-sweetalert2';
 
 // import 'custom.scss'
 
-// scrolling
-var VueScrollTo = require("vue-scrollto");
-Vue.use(VueScrollTo);
+const options = {
+  confirmButtonColor: '#41b882',
+  cancelButtonColor: '#ff7674',
+  // popup: 'animated tada'
+}
+
+Vue.use(ElementUI);
+Vue.use(AnimateCSS);
+Vue.use(BootstrapVue);
+Vue.use(VueSweetalert2, options);
 Vue.use(VueScrollTo, {
   container: "body",
   duration: 500,
@@ -29,7 +40,7 @@ Vue.use(VueScrollTo, {
   y: true
 });
 
-// font-awesome related
+// Font Awesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { faCouch } from '@fortawesome/free-solid-svg-icons';

@@ -21,7 +21,7 @@
           </h3>
         </div>
         <button class="btn" @click="openReview">Add Review</button>
-        <review-form @closeReviewForm="reviewFormOff" v-if="isReviewFormOpen"></review-form>
+        <review-form @closeReviewForm="reviewFormOff" :currReviewToEdit="currReviewToEdit" v-if="isReviewFormOpen"></review-form>
       </div>
 
       <div v-if="isFromGuestsClicked" class="references-container flex">
@@ -31,10 +31,9 @@
             class="edit-delete-container flex"
             v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
           >
-            <!-- <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button> -->
             <img
               class="btn-edit"
-              @click="editReview(reference, user._id)"
+              @click="openReviewToEdit(reference, user._id)"
               src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/edit.png"
               title="Edit"
             >
@@ -45,17 +44,19 @@
               title="
             remove"
             >
-            <!-- <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div> -->
           </div>
           <div class="review-container">
             <div class="given-details flex align-center">
               <div
+                @click="$router.push('/userProfile/' + reference.sender.id)"
                 class="profile-img"
                 :style="'background-image: url(' + reference.sender.imgUrl + ')'"
               ></div>
               <div class="dry-details flex space-between">
                 <div>
-                  <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
+                  <h5
+                    @click="$router.push('/userProfile/' + reference.sender.id)"
+                  >{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
                   <div>{{reference.sender.address}}</div>
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
@@ -81,10 +82,9 @@
             class="edit-delete-container flex"
             v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
           >
-            <!-- <button class="btn-edit" @click="editReview(reference, user._id)">Edit</button> -->
             <img
               class="btn-edit"
-              @click="editReview(reference, user._id)"
+              @click="openReviewToEdit(reference, user._id)"
               src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/edit.png"
               title="Edit"
             >
@@ -95,17 +95,19 @@
               title="
             remove"
             >
-            <!-- <div class="delete-review" @click="removeReview(reference._id, user._id)">&times;</div> -->
           </div>
           <div class="review-container">
             <div class="given-details flex align-center">
               <div
+                @click="$router.push('/userProfile/' + reference.sender.id)"
                 class="profile-img"
                 :style="'background-image: url(' + reference.sender.imgUrl + ')'"
               ></div>
               <div class="dry-details flex space-between">
                 <div>
-                  <h5>{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
+                  <h5
+                    @click="$router.push('/userProfile/' + reference.sender.id)"
+                  >{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
                   <div>{{reference.sender.address}}</div>
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
@@ -137,7 +139,8 @@ export default {
     return {
       isFromGuestsClicked: true,
       isFromHostsClicked: false,
-      isReviewFormOpen: false
+      isReviewFormOpen: false,
+      currReviewToEdit: null
     };
   },
   components: {
@@ -172,15 +175,15 @@ export default {
     },
     openReview() {
       this.isReviewFormOpen = true;
+      this.currReviewToEdit = null;
+    },
+    openReviewToEdit(review) {
+      this.isReviewFormOpen = true;
+      this.currReviewToEdit = review;
     },
     reviewFormOff() {
       this.isReviewFormOpen = false;
     },
-    editReview(review, currUserId) {
-      console.log("edit coming soon");
-      // this.$store.dispatch({ type: 'loadReview', currUserId, review })
-      // .then(() => this.$emit('openReviewToEdit', review));
-    }
   }
 };
 </script>
@@ -249,10 +252,14 @@ export default {
             min-width: 70px;
             width: 70px;
             height: 70px;
+            cursor: pointer;
             border-radius: 50%;
             margin: 0 20px 20px 20px;
             background-size: cover;
             background-repeat: no-repeat;
+          }
+          h5 {
+            cursor: pointer;
           }
           .created-at {
             padding-right: 20px;

@@ -25,7 +25,7 @@
         </b-form-group>
 
         <div class="btn-container flex justify-center">
-          <button class="btn" @click="onSubmit">Send Request</button>
+          <button class="btn" @click="onSendRequest">Send Request</button>
         </div>
 
         <div v-if="getLoggedUser">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
@@ -47,17 +47,46 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    async onSendRequest() {
       if (!this.getLoggedUser) {
         console.log("Only registered users can send requests!");
         return;
       }
-      this.$emit('sendRequest', this.requestInfo)
+      let request = {
+        isAccepted: false,
+        info: this.requestInfo,
+        sender: {
+          id: this.getLoggedUser._id,
+          firstName: this.getLoggedUser.firstName,
+          lastName: this.getLoggedUser.lastName
+        },
+        recipient: {
+          id: this.getCurrUser._id,
+          firstName: this.getCurrUser.firstName,
+          lastName: this.getCurrUser.lastName
+        }
+      };
+      this.$emit('sendRequest')
+      await this.$store.dispatch({ type: "addRequest", request: request })
+        .then(() => {
+          const Toast = this.$swal.mixin({
+            toast: true,
+            position: 'bottom-start',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+          Toast.fire({ type: 'success', title: `The Request Was Sent Successfully` })
+        })
+
     }
   },
   computed: {
     getLoggedUser() {
       return this.$store.getters.loggedUser;
+    },
+    getCurrUser() {
+      return this.$store.getters.currUser;
     }
   }
 

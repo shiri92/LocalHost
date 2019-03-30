@@ -1,31 +1,37 @@
 /* ----- DEPEND -----*/
-import Axios from "axios";
-// const ioClient = require('socket.io-client');
-// import ioClient from 'socket.io-client';
+import socketService from './socketService';
+import Axios from 'axios';
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
 const BASE_API =
   process.env.NODE_ENV !== "development" ? "/user" : "//localhost:3003/user";
 
-// var socket = ioClient('http://localhost:3003');
 
 // Logged User Check (Session Only)
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
-  // if (res.data)
+  // if (res.data) {
+  //   let { _id } = res.data;
+  //   socketService.connect(_id);
+  // }
   return res.data;
 }
 
 // Login User
 async function login(credentials) {
   let res = await axios.put(`${BASE_API}/login`, credentials);
+  // if (res.data) {
+  //   let { _id } = res.data;
+  //   socketService.connect(_id);
+  // }
   return res.data;
 }
 
 // Logout User
 async function logout() {
   await axios.put(`${BASE_API}/logout`);
+  // socketService.disconnect();
 }
 
 // GET Users By Address
@@ -50,12 +56,7 @@ async function add(credentials) {
 // ADD User Request
 async function addRequest(request) {
   let res = await axios.put(`${BASE_API}/request`, request);
-  return res.data;
-}
-
-// ADD User Review
-async function addReview(review) {
-  let res = await axios.put(`${BASE_API}/review`, review);
+  // socketService.sendRequest(res.data.recipient.id);
   return res.data;
 }
 
@@ -64,20 +65,20 @@ async function removeRequest(recipientId, requestId) {
   await axios.delete(`${BASE_API}/${recipientId}/request/${requestId}`);
 }
 
+// ADD User Review
+async function addReview(review) {
+  let res = await axios.put(`${BASE_API}/review`, review);
+  return res.data;
+}
+
 // DELETE User Review
 async function removeReview(currUserId, reviewId) {
   await axios.delete(`${BASE_API}/${currUserId}/review/${reviewId}`);
 }
 
-// GET User Review By Id
-async function getReviewById(id) {
-  // let res = await axios.get(`${BASE_API}/${id}`);
-  // return res.data;
-}
-
 // EDIT User Review
 async function updateReview(currUserId, review) {
-  // await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
+  await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
 }
 
 // UPDATE User
@@ -114,7 +115,6 @@ export default {
   bookGuest,
   bookHost,
   removeReview,
-  getReviewById,
   updateReview,
   removeRequest,
   update,

@@ -2,7 +2,7 @@
   <section class="signup flex flex-col">
     <div class="logo">
       <router-link to="/">
-        <img src="../../public/img/logo/logo.png" alt>
+        <img src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553873765/logo/logo.png" alt>
       </router-link>
     </div>
     <h1 class="title">Sign Up</h1>

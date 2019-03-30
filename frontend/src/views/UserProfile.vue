@@ -41,8 +41,14 @@
               <button class="btn">My Inbox</button>
             </router-link>
           </div>
+          <!-- <review-form
+            :currReviewToEdit="currReviewToEdit"
+            @closeReviewForm="reviewFormOff"
+            v-if="isReviewFormOpen"
+          ></review-form>-->
         </div>
       </div>
+
       <div class="main-desc">
         <div class="cmps" id="cmps">
           <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
@@ -83,8 +89,12 @@
             id="references"
           ></profile-references>
         </div>
+        <guest-request
+          @requestOff="requestFormOff"
+          v-if="showRequestForm"
+          @sendRequest="sendRequest"
+        ></guest-request>
       </div>
-      <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
     </div>
   </section>
 </template>
@@ -106,7 +116,7 @@ export default {
       window: {
         width: 0,
         height: 0
-      }
+      },
     };
   },
   created() {
@@ -138,22 +148,7 @@ export default {
     narrowNav(state) {
       this.isNavInDisplay = state;
     },
-    async sendRequest(requestInfo) {
-      let request = {
-        isAccepted: false,
-        info: requestInfo,
-        sender: {
-          id: this.loggedUser._id,
-          firstName: this.loggedUser.firstName,
-          lastName: this.loggedUser.lastName
-        },
-        recipient: {
-          id: this.currUser._id,
-          firstName: this.currUser.firstName,
-          lastName: this.currUser.lastName
-        }
-      };
-      await this.$store.dispatch({ type: "addRequest", request: request });
+    sendRequest() {
       this.requestFormOff();
     },
     requestFormOn() {

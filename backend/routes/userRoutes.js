@@ -9,7 +9,6 @@ function addRoutes(app) {
   app.put(`${BASE}/checkLogged`, async (req, res) => {
     if (req.session.user) {
       let user = await userService.getById(req.session.user._id);
-
       return res.json(user);
     } else return res.json();
   });
@@ -18,7 +17,7 @@ function addRoutes(app) {
   app.put(`${BASE}/login`, async (req, res) => {
     const credentials = req.body;
     let user = await userService.login(credentials);
-    if (!user) res.status(401).send("Something broke!");
+    if (!user) res.status(401).send('User Not Found');
     req.session.user = user;
     res.json(user);
   });
@@ -72,21 +71,14 @@ function addRoutes(app) {
     return res.end(`Review ${reviewId} Deleted`);
   });
 
-  // GET User review
-  // app.get(`${BASE}/:id`, async (req, res) => {
-  //   const userId = req.params.id;
-  //   let user = await userService.getReviewById(userId);
-  //   return res.json(user);
-  // });
-
   // UPDATE User Review
-  // app.put(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
-  //   const currUserId = req.params.currUserId;
-  //   // const reviewId = req.params.reviewId;
-  //   const review = req.body;
-  //   await userService.updateReview(currUserId, review);
-  //   return res.end(`Review ${reviewId} Updated`);
-  // });
+  app.put(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
+    const currUserId = req.params.currUserId;
+    const reviewId = req.params.reviewId;
+    const review = req.body;
+    await userService.updateReview(currUserId, review);
+    return res.end(`Review ${reviewId} Updated`);
+  });
 
   // DELETE Guest Request
   app.delete(`${BASE}/:currUserId/request/:requestId`, async (req, res) => {
@@ -128,12 +120,3 @@ function addRoutes(app) {
 }
 
 module.exports = addRoutes;
-
-// function checkAdmin(req, res, next) {
-//     console.log('INSIDE MIDDLEWARE: ', req.session.user);
-//     if (!req.session.user || !req.session.user.isAdmin) {
-//         res.status(401).end('Unauthorized');
-//         return;
-//     }
-//     next();
-// }

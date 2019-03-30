@@ -14,7 +14,9 @@
           <button class="btn btn-empty" @click="loginFormOn">Sign In</button>
         </div>
         <div v-else>
-          <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
+          <span class="welcome">
+            <!--{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}-->
+          </span>
           <img class="user-img" @click="toggleUserWindow" :src="getLoggedUser.imgUrl">
         </div>
       </div>
@@ -82,7 +84,7 @@ export default {
       .logo {
         height: 35px;
         width: 155px;
-        background-image: url("../../public/img/logo/logo.png");
+        background-image: url("https://res.cloudinary.com/dcl4oabi3/image/upload/v1553873765/logo/logo.png");
         background-size: cover;
       }
     }

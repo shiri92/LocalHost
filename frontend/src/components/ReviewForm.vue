@@ -45,6 +45,7 @@
 import RateStars from '../components/RateStars'
 export default {
   name: 'review-form',
+  props: ['currReviewToEdit'],
   data() {
     return {
       review: {
@@ -60,15 +61,19 @@ export default {
     }
   },
   created() {
-    this.review.sender.id = this.loggedUser._id;
-    this.review.sender.firstName = this.loggedUser.firstName;
-    this.review.sender.lastName = this.loggedUser.lastName;
-    this.review.sender.country = this.loggedUser.country;
-    this.review.sender.city = this.loggedUser.city;
-    this.review.sender.imgUrl = this.loggedUser.imgUrl;
-    this.review.recipient.firstName = this.currUser.firstName;
-    this.review.recipient.lastName = this.currUser.lastName;
-    this.review.recipient.id = this.currUser._id;
+    if (this.currReviewToEdit) {
+      this.review = this.currReviewToEdit
+    } else {
+      this.review.sender.id = this.loggedUser._id;
+      this.review.sender.firstName = this.loggedUser.firstName;
+      this.review.sender.lastName = this.loggedUser.lastName;
+      this.review.sender.country = this.loggedUser.country;
+      this.review.sender.city = this.loggedUser.city;
+      this.review.sender.imgUrl = this.loggedUser.imgUrl;
+      this.review.recipient.firstName = this.currUser.firstName;
+      this.review.recipient.lastName = this.currUser.lastName;
+      this.review.recipient.id = this.currUser._id;
+    }
   },
   computed: {
     currUser() {
@@ -99,7 +104,23 @@ export default {
       }
       if ((this.review.getAsAHost || this.review.getAsAGuest) && this.review.description && this.review.rating) {
         this.$emit('closeReviewForm');
-        this.$store.dispatch({ type: 'addReview', review: this.review })
+        if (!this.currReviewToEdit) {
+          this.$store.dispatch({ type: 'addReview', review: this.review })
+            .then(() => {
+              const Toast = this.$swal.mixin({
+                toast: true,
+                position: 'bottom-start',
+                showConfirmButton: false,
+                timer: 3000
+              });
+
+              Toast.fire({ type: 'success', title: `You Have Added New Review` })
+            })
+
+        }
+        else {
+          this.$store.dispatch({ type: 'updateReview', currUserId: this.currUser._id, review: this.review });
+        }
       }
     }
   },
