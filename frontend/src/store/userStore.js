@@ -48,10 +48,6 @@ export default {
     setCurrUser(state, { user }) {
       state.currUser = user;
     },
-    // updateCurrUser(state, { user }) {
-    //   var idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
-    //   state.currUsers.splice(idx, 1, user);
-    // },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
     },
@@ -78,7 +74,12 @@ export default {
       newReq.isAccepted = true;
       state.loggedUser.requests.splice(idx, 1, newReq);
     },
-
+    updateCurrUser(state, { user }) {
+      var idx = state.currUsers.findIndex(
+        currUser => currUser._id === user._id
+      );
+      state.currUsers.splice(idx, 1, user);
+    }
   },
   actions: {
     async checkLogged(context) {
@@ -114,14 +115,6 @@ export default {
       let user = await userService.getById(userId);
       context.commit({ type: "setCurrUser", user });
     },
-    async updateLoggedUser(context, { user }) {
-      await userService.update(user);
-      context.commit({ type: "setLoggedUser", user });
-    },
-    // async updateCurrUser(context, { user }) {
-    //   await userService.update(user);
-    //   context.commit({ type: "updateCurrUser", user });
-    // },
     async updateLoggedUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);
       context.commit({ type: "setLoggedUserImg", imgUrl });
@@ -168,6 +161,13 @@ export default {
       // TODO: update frontend...
       // TODO: show sweet alert...
     },
-
+    async updateUserImg(context, { imgUrl, userId }) {
+      await userService.updateUserImg(imgUrl, userId);
+      context.commit({ type: "setLoggedUserImg", imgUrl });
+    },
+    async updateCurrUser(context, { user }) {
+      await userService.update(user);
+      context.commit({ type: "updateCurrUser", user });
+    }
   }
 };

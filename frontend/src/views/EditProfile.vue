@@ -48,13 +48,22 @@
 
             <div class="form-item flex space-between">
               <label>Address:&nbsp;</label>
-              <el-autocomplete
+              <!-- <el-autocomplete
                 placeholder="Enter city name"
                 class="form-autocomplete"
                 @select="setAddres"
                 v-model="searchWord"
                 :fetch-suggestions="querySearchAsync"
-              ></el-autocomplete>
+              ></el-autocomplete>-->
+              <!-- <input id="search_term" type="text"> -->
+
+              <!-- <vue-google-autocomplete
+                id="map"
+                class="form-control"
+                placeholder="Please type your address"
+                v-on:placechanged="getAddressData"
+                country="sg"
+              ></vue-google-autocomplete>-->
             </div>
 
             <div class="form-item flex space-between">
@@ -155,6 +164,7 @@
 
 <script>
 var langs = require("langs");
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
 
 export default {
   name: "edit-profile",
@@ -162,6 +172,7 @@ export default {
     return {
       user: null,
       searchWord: '',
+      address: ''
     };
   },
   created() {
@@ -179,6 +190,15 @@ export default {
     }
   },
   methods: {
+    /**
+    * When the location found
+    * @param {Object} addressData Data of the found location
+    * @param {Object} placeResultData PlaceResult object
+    * @param {String} id Input container ID
+    */
+    getAddressData: function (addressData, placeResultData, id) {
+      this.address = addressData;
+    },
     querySearchAsync(queryString, cb) {
       if (this.searchWord) {
         this.$store.dispatch({ type: 'loadCities', searchWord: this.searchWord })
@@ -215,15 +235,17 @@ export default {
       // } else {
       //   this.user.languages = this.user.languages.split(', ');
       // }
-
-      //TODO: change to logged user
-      this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
+      this.$store.dispatch({ type: 'updateCurrUser', user: this.user })
         .then(() => this.$router.push('/userProfile/' + this.user._id))
     },
     // setLang() {
 
     // }
-  }
+    // getAddressData(addressData, placeResultData, id) {
+    //   this.address = addressData;
+    // }
+  },
+  components: { VueGoogleAutocomplete },
 };
 </script>
 

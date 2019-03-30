@@ -23,6 +23,7 @@
         "socket.io": "^2.2.0",
         "vue": "^2.6.10",
         "vue-carousel": "^0.18.0",
+        "vue-google-autocomplete": "^1.1.0",
         "vue-moment": "^4.0.0",
         "vue-router": "^3.0.1",
         "vue-scrollto": "^2.15.0",
