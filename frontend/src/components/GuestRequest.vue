@@ -27,8 +27,6 @@
         <div class="btn-container flex justify-center">
           <button class="btn" @click="onSendRequest">Send Request</button>
         </div>
-
-        <div v-if="getLoggedUser">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
       </el-form>
     </div>
   </section>
@@ -36,15 +34,15 @@
 
 <script>
 export default {
-  name: 'guest-request',
+  name: "guest-request",
   data() {
     return {
       requestInfo: {
-        startDate: '',
-        endDate: '',
-        message: ''
+        startDate: "",
+        endDate: "",
+        message: ""
       }
-    }
+    };
   },
   methods: {
     async onSendRequest() {
@@ -52,6 +50,7 @@ export default {
         console.log("Only registered users can send requests!");
         return;
       }
+      if (!this.checkForm()) return;
       let request = {
         isAccepted: false,
         info: this.requestInfo,
@@ -60,9 +59,13 @@ export default {
           firstName: this.getLoggedUser.firstName,
           lastName: this.getLoggedUser.lastName,
           address: JSON.parse(JSON.stringify(this.getLoggedUser.address)),
+<<<<<<< HEAD
           imgUrl: this.getLoggedUser.imgUrl,
           startDate: this.requestInfo.startDate,
           endDate: this.requestInfo.endDate
+=======
+          imgUrl: this.getLoggedUser.imgUrl
+>>>>>>> 8ecda865b61182ad214c22494cd32dd0bff45d88
         },
         recipient: {
           id: this.getCurrUser._id,
@@ -70,20 +73,30 @@ export default {
           lastName: this.getCurrUser.lastName
         }
       };
-      this.$emit('sendRequest')
-      await this.$store.dispatch({ type: "addRequest", request: request })
+      this.$emit("sendRequest");
+      await this.$store
+        .dispatch({ type: "addRequest", request: request })
         .then(() => {
           const Toast = this.$swal.mixin({
             toast: true,
-            position: 'bottom-start',
+            position: "bottom-start",
             showConfirmButton: false,
             timer: 3000
           });
 
-          Toast.fire({ type: 'success', title: `The Request Was Sent Successfully` })
-        })
-
-    }
+          Toast.fire({
+            type: "success",
+            title: `The Request Was Sent Successfully`
+          });
+        });
+    },
+    checkForm() {
+      return (
+        this.requestInfo.startDate &&
+        this.requestInfo.endDate &&
+        this.requestInfo.messagee
+      );
+    },
   },
   computed: {
     getLoggedUser() {
@@ -93,8 +106,7 @@ export default {
       return this.$store.getters.currUser;
     }
   }
-
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -110,14 +122,32 @@ export default {
   background-color: white;
   color: rgb(62, 62, 62);
 }
+@media (max-width: 1200px) {
+  .guest-request {
+    width: 40%;
+  }
+}
+@media (max-width: 768px) {
+  .guest-request {
+    width: 60%;
+  }
+}
+@media (max-width: 568px) {
+  .guest-request {
+    width: 90%;
+  }
+}
 
 .top {
   padding: 10px 30px 10px 30px;
+  background-color: #1dbf73;
+  border-radius: 5px 5px 0 0;
 }
 
 h1 {
   font-size: 1.5rem;
   margin: 0;
+  color: #fff;
 }
 
 hr {
@@ -127,7 +157,7 @@ hr {
 span {
   cursor: pointer;
   font-size: 2.5rem;
-  color: rgb(175, 169, 169);
+  color: #fff;
 }
 
 .content {
@@ -140,5 +170,8 @@ span {
 
 .btn-container {
   margin: 30px;
+  .btn {
+    width: 100%;
+  }
 }
 </style>

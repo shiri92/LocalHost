@@ -60,7 +60,7 @@ export default {
     max-width: 300px;
     margin-bottom: 20px;
   }
-  .flex-container > *:not(:last-child) {
-  }
+  // .flex-container > *:not(:last-child) {
+  // }
 }
 </style>

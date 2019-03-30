@@ -1,7 +1,7 @@
 <template>
   <section class="review-form">
     <div class="top flex space-between align-center">
-      <H1>Your review about {{currUser.firstName}}</H1>
+      <h1>Your review about {{currUser.firstName}}</h1>
       <span @click="$emit('closeReviewForm')">&times;</span>
     </div>
     <hr>
@@ -33,7 +33,7 @@
       </div>
       <rate-stars @rate="setRate"></rate-stars>
       <label>Your Review:</label>
-      <textarea v-model="review.description" cols="30" rows="8"></textarea>
+      <textarea v-model="review.description" cols="30" rows="8" required></textarea>
       <div class="btn-container flex justify-center">
         <button class="btn btn-send" @click="setReview">Send Review</button>
       </div>
@@ -116,13 +116,12 @@ export default {
 
               Toast.fire({ type: 'success', title: `You Have Added New Review` })
             })
-
         }
         else {
           this.$store.dispatch({ type: 'updateReview', currUserId: this.currUser._id, review: this.review });
         }
       }
-    }
+    },
   },
   components: {
     RateStars
@@ -146,6 +145,9 @@ export default {
   font-size: 1.1rem;
   .top {
     padding: 0 30px;
+    background-color: #1dbf73;
+    border-radius: 5px 5px 0 0;
+    color: #fff;
     h1 {
       font-size: 1.5rem;
       margin: 0;
@@ -153,7 +155,7 @@ export default {
     span {
       cursor: pointer;
       font-size: 2.5rem;
-      color: rgb(175, 169, 169);
+      color: #fff;
     }
   }
   @media (max-width: 400px) {
@@ -169,7 +171,7 @@ export default {
     textarea {
       padding: 10px;
     }
-    @media (max-width: 400px){
+    @media (max-width: 400px) {
       textarea {
         height: 7em;
       }
@@ -179,6 +181,7 @@ export default {
       .btn-send {
         justify-self: center;
         min-width: 120px;
+        width: 100%;
       }
     }
   }

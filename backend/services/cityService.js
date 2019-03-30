@@ -114,7 +114,7 @@ var citiesDB = [
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566360/city-imgs/new%20york.jpg"
   },
   {
-    name: "Rio",
+    name: "Rio De Janeiro",
     country: "Brazil",
     isTopDest: true,
     imgUrl:

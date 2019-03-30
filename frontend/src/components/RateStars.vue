@@ -92,6 +92,7 @@ label {
   border: none;
   float: left;
   max-width: 50%;
+  min-width: 155px;
   margin-left: 30px;
 }
 @media (max-width: 568px) {
