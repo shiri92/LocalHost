@@ -50,6 +50,7 @@ Vue.use(VueScrollTo, {
 
 // Font Awesome
 import { library } from "@fortawesome/fontawesome-svg-core";
+import { faJs, faVuejs } from "@fortawesome/free-brands-svg-icons";
 import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { faCouch } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
@@ -64,9 +65,11 @@ import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faCoffee);
+// library.add(faCoffee);
+library.add(faCoffee, faJs, faVuejs);
 library.add(faCouch);
 library.add(faEnvelope);
 library.add(faSortDown);
@@ -80,6 +83,7 @@ library.add(faMapMarkerAlt);
 library.add(faLock);
 library.add(faUser);
 library.add(faSearch);
+library.add(faFacebook);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 

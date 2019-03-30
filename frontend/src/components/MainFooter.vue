@@ -1,8 +1,10 @@
 <template>
   <section v-if="showNav" class="main-footer">
     <router-link to="/about">About</router-link>
-    <div>I AM A FOOTER</div> 
-    </section>
+    <div>CONNECT WITH US</div>
+    <!-- <i class="fab fa-facebook"></i> -->
+    <div>© 1999 - 2019 LocalHost International, Inc.</div>
+  </section>
 </template>
 
 <script>
@@ -25,10 +27,17 @@ export default {
 
 <style lang="scss" scoped>
 .main-footer {
+  color: white;
   padding: 10px;
-  background-color: #fff;
-  border-top: 2px solid rgba(0, 0, 0, 0.15);
+  background-color: #363c41;
   text-align: center;
+  div {
+    .fab {
+      color: white;
+      width: 20px;
+      height: 50px;
+    }
+  }
 }
 </style>
 
