@@ -27,11 +27,9 @@
         <div class="flex justify-center align-center flex-col">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-            <div>
-              <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
-                <font-awesome-icon icon="couch"/>&nbsp;Send Request!
-              </button>
-            </div>
+            <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
+              <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+            </button>
           </div>
           <div v-else class="flex flex-col">
             <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
@@ -44,34 +42,13 @@
               <button class="btn">Personal Manager</button>
             </router-link>
           </div>
-          <!-- <review-form
-            :currReviewToEdit="currReviewToEdit"
-            @closeReviewForm="reviewFormOff"
-            v-if="isReviewFormOpen"
-          ></review-form>-->
         </div>
       </div>
 
       <div class="main-desc">
         <div class="cmps" id="cmps">
           <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-            <!-- ON DESKTOP -->
-            <div class="profile-nav flex flex-row justify-center" v-if="window.width > 768">
-              <a
-                class="nav-item"
-                href="#"
-                v-scroll-to="{ el: '#about', container: '#cmps'}"
-              >Overview</a>
-              <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: '#cmps'}">Home</a>
-              <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: '#cmps'}">Pictures</a>
-              <a
-                class="nav-item"
-                href="#"
-                v-scroll-to="{ el: '#references', container: '#cmps'}"
-              >References</a>
-            </div>
-            <!-- ON MOBILE -->
-            <div class="profile-nav flex flex-row justify-center" v-else>
+            <div class="profile-nav flex flex-row justify-center">
               <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
               <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
               <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: 'body'}">Pictures</a>
@@ -119,7 +96,7 @@ export default {
       window: {
         width: 0,
         height: 0
-      },
+      }
     };
   },
   created() {
@@ -129,7 +106,7 @@ export default {
     var vm = this;
     var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
-      if (scrollPos > 110) {
+      if (scrollPos > 310) {
         vm.narrowNav(true);
       } else {
         vm.narrowNav(false);
@@ -188,7 +165,7 @@ export default {
 
 <style lang="scss" scoped>
 .profile-container {
-  margin-top: 10px;
+  position: relative;
 }
 @media (max-width: 768px) {
   .profile-container {
@@ -196,11 +173,11 @@ export default {
     margin-top: 0;
   }
 }
+
 .carousel {
   padding: 15px;
-  margin-top: 25px;
   .carousel-img {
-    height: 30vh;
+    height: 35vh;
     width: 100%;
     background-size: cover;
     background-repeat: no-repeat;
@@ -212,11 +189,15 @@ export default {
   width: 30vw;
   max-width: 320px;
   min-width: 260px;
+  height: fit-content;
   border-bottom: 2px solid rgba(0, 0, 0, 0.15);
   margin: 5px 15px;
   background-color: white;
   padding: 15px;
   text-align: center;
+  order: 1;
+  position: sticky;
+  top: 120px;
   .profile-img {
     width: 225px;
     max-width: 225px;
@@ -237,6 +218,8 @@ export default {
   }
   .btn {
     margin: 5px;
+    min-width: 220px;
+    font-size: 20px;
   }
 }
 
@@ -245,18 +228,20 @@ export default {
     max-width: unset;
     width: auto;
     margin: 0 15px;
+    order: unset;
+    position: unset;
   }
 }
 
 .main-desc {
   flex-grow: 1;
-  margin: 5px 15px 5px 0;
+  margin: 5px 0px 5px 15px;
   max-width: 1000px;
   overflow: hidden;
   position: relative;
   .main-desc-nav {
     background-color: #fff;
-    position: absolute;
+    margin-bottom: 20px;
     width: 100%;
   }
   .display {
@@ -282,17 +267,7 @@ export default {
     }
   }
   .detail-section {
-    margin: 20px 0;
-  }
-  .cmps {
-    overflow: auto;
-    height: 79vh;
-  }
-  @media (max-width: 768px) {
-    .cmps {
-      overflow: unset;
-      height: unset;
-    }
+    margin: 0 0 20px 0;
   }
 }
 @media (max-width: 768px) {
