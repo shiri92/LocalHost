@@ -40,6 +40,9 @@
             <router-link :to="'/userProfile/' + currUser._id + '/inbox'">
               <button class="btn">My Inbox</button>
             </router-link>
+            <router-link :to="'/userProfile/' + currUser._id + '/scheduleManager'">
+              <button class="btn">Personal Manager</button>
+            </router-link>
           </div>
           <!-- <review-form
             :currReviewToEdit="currReviewToEdit"
@@ -124,7 +127,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);

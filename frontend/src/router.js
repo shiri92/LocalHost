@@ -7,6 +7,10 @@ import Signup from "./views/Signup.vue";
 import UserProfile from "./views/UserProfile.vue";
 import EditProfile from "./views/EditProfile.vue";
 import UserInbox from "./views/UserInbox.vue";
+import UserScheduleManager from "./views/ScheduleManager.vue";
+import ShcheduleGuests from "./components/ScheduleGuests.vue";
+import ShcheduleHosts from "./components/ScheduleHosts.vue";
+import ShcheduleDetails from "./components/ScheduleDetails.vue";
 
 Vue.use(Router);
 
@@ -47,6 +51,19 @@ export default new Router({
       path: "/userProfile/:userId/inbox",
       name: "userInbox",
       component: UserInbox
-    }
+    },
+    {
+      path: "/userProfile/:userId/scheduleManager",
+      name: "userScheduleManager",
+      component: UserScheduleManager,
+      children:
+        [
+          { path: 'scheduleGuests', component: ShcheduleGuests },
+          { path: 'scheduleHosts', component: ShcheduleHosts },
+          { path: 'scheduleDetails', component: ShcheduleDetails },
+
+        ]
+    },
+
   ]
 });

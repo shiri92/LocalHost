@@ -58,7 +58,9 @@ export default {
         sender: {
           id: this.getLoggedUser._id,
           firstName: this.getLoggedUser.firstName,
-          lastName: this.getLoggedUser.lastName
+          lastName: this.getLoggedUser.lastName,
+          address: JSON.parse(JSON.stringify(this.getLoggedUser.address)),
+          imgUrl: this.getLoggedUser.imgUrl,
         },
         recipient: {
           id: this.getCurrUser._id,
