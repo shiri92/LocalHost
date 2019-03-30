@@ -9,7 +9,7 @@
         v-for="(currGuest, idx) in currUser.guests"
         :to="'/userProfile/' + currGuest._id"
       >
-        {{currGuest}}
+        <!-- {{currGuest}} -->
         <user-preview-guest :profile="currGuest" :idx="idx+1"></user-preview-guest>
       </router-link>
       <!-- <user-preview-guest v-for="(guest, idx) in currUser.guests" :to="'/userProfile/' + guest._id"></user-preview-guest> -->
@@ -26,6 +26,8 @@
 
 <script>
 import UserPreviewGuest from './UserPreviewGuest.vue';
+import '../filters.js';
+
 
 export default {
   components: {

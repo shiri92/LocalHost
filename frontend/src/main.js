@@ -14,6 +14,7 @@ import VueCarousel from "vue-carousel";
 import VueScrollTo from "vue-scrollto";
 import VueSweetalert2 from "vue-sweetalert2";
 import * as VueGoogleMaps from "vue2-google-maps";
+// import './filters.js';
 
 // import 'custom.scss'
 
