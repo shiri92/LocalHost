@@ -224,7 +224,7 @@ export default {
         imgFile: ev.target.files[0]
       });
       await this.$store.dispatch({
-        type: "updateUserImg",
+        type: "updateLoggedUserImg",
         imgUrl: imgUrl,
         userId
       });

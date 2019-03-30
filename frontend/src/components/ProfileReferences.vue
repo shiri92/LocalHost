@@ -3,23 +3,25 @@
     <div>
       <h3 class="header-box">REFERENCES</h3>
       <hr style="margin: 0">
-      <div class="filter flex">
-        <h3
-          class="from-guests flex align-center"
-          :class="{'filter-clicked':isFromGuestsClicked}"
-          @click="fromGuestsToShow"
-        >
-          From Guests
-          <div class="num-from-guests">{{revFromGuests.length}}</div>
-        </h3>
-        <h3
-          class="from-hosts flex align-center"
-          :class="{'filter-clicked':isFromHostsClicked}"
-          @click="fromHostsToShow"
-        >
-          From Hosts
-          <div class="num-from-hosts">{{revFromHosts.length}}</div>
-        </h3>
+      <div class="filter flex space-between">
+        <div class="flex">
+          <h3
+            class="from-guests flex align-center"
+            :class="{'filter-clicked':isFromGuestsClicked}"
+            @click="fromGuestsToShow"
+          >From Guests
+            <div class="num-from-guests">{{revFromGuests.length}}</div>
+          </h3>
+          <h3
+            class="from-hosts flex align-center"
+            :class="{'filter-clicked':isFromHostsClicked}"
+            @click="fromHostsToShow"
+          >From Hosts
+            <div class="num-from-hosts">{{revFromHosts.length}}</div>
+          </h3>
+        </div>
+        <button class="btn" @click="openReview">Add Review</button>
+        <review-form @closeReviewForm="reviewFormOff" :currReviewToEdit="currReviewToEdit" v-if="isReviewFormOpen"></review-form>
       </div>
 
       <div v-if="isFromGuestsClicked" class="references-container flex">
@@ -31,7 +33,7 @@
           >
             <img
               class="btn-edit"
-              @click="editReview(reference, user._id)"
+              @click="openReviewToEdit(reference, user._id)"
               src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/edit.png"
               title="Edit"
             >
@@ -44,7 +46,7 @@
             >
           </div>
           <div class="review-container">
-            <div class="given-details flex">
+            <div class="given-details flex align-center">
               <div
                 @click="$router.push('/userProfile/' + reference.sender.id)"
                 class="profile-img"
@@ -82,7 +84,7 @@
           >
             <img
               class="btn-edit"
-              @click="editReview(reference, user._id)"
+              @click="openReviewToEdit(reference, user._id)"
               src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/edit.png"
               title="Edit"
             >
@@ -95,7 +97,7 @@
             >
           </div>
           <div class="review-container">
-            <div class="given-details flex">
+            <div class="given-details flex align-center">
               <div
                 @click="$router.push('/userProfile/' + reference.sender.id)"
                 class="profile-img"
@@ -128,17 +130,22 @@
 </template>
 
 <script>
-import StarsToshow from '../../src/components/RateStarsToShow'
+import StarsToshow from "../../src/components/RateStarsToShow";
+import ReviewForm from "../components/ReviewForm.vue";
+
 export default {
-  props: ['user', 'loggedUser'],
+  props: ["user", "loggedUser"],
   data() {
     return {
       isFromGuestsClicked: true,
       isFromHostsClicked: false,
-    }
+      isReviewFormOpen: false,
+      currReviewToEdit: null
+    };
   },
   components: {
-    StarsToshow
+    StarsToshow,
+    ReviewForm
   },
   computed: {
     revFromGuests() {
@@ -152,24 +159,31 @@ export default {
     fromGuestsToShow() {
       this.isFromGuestsClicked = true;
       this.isFromHostsClicked = false;
-
     },
     fromHostsToShow() {
       this.isFromHostsClicked = true;
       this.isFromGuestsClicked = false;
     },
     removeReview(reviewId, currUserId) {
-      if (confirm('Are you sure you want to remove this review?')) {
-        this.$store.dispatch({ type: 'removeReview', currUserId, reviewId })
+      if (confirm("Are you sure you want to remove this review?")) {
+        this.$store.dispatch({ type: "removeReview", currUserId, reviewId });
       }
     },
     readMore(reference) {
       reference.isClicked = !reference.isClicked;
       this.read = !this.read;
     },
-    editReview(review, currUserId) {
-      this.$emit('openReviewToEdit', review);
-    }
+    openReview() {
+      this.isReviewFormOpen = true;
+      this.currReviewToEdit = null;
+    },
+    openReviewToEdit(review) {
+      this.isReviewFormOpen = true;
+      this.currReviewToEdit = review;
+    },
+    reviewFormOff() {
+      this.isReviewFormOpen = false;
+    },
   }
 };
 </script>
@@ -205,6 +219,12 @@ export default {
           background-color: orangered;
         }
       }
+      @media (max-width: 568px) {
+        .from-guests, .from-hosts {
+          font-size: 0.9em;
+          margin: 0 10px 0 0;
+        }
+      }
     }
     .reference {
       .edit-delete-container {
@@ -230,6 +250,7 @@ export default {
           width: 100%;
           .profile-img {
             min-width: 70px;
+            width: 70px;
             height: 70px;
             cursor: pointer;
             border-radius: 50%;
@@ -259,7 +280,7 @@ export default {
           }
         }
         .content {
-          margin: 30px 50px 30px 110px;
+          margin: 0px 50px 10px 110px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -278,7 +299,7 @@ export default {
           float: right;
           width: 110px;
           padding-right: 20px;
-          margin-bottom: 20px;
+          margin-bottom: 5px;
           cursor: pointer;
           font-weight: bold;
           transition: 0.2s;

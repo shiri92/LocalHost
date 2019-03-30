@@ -1,79 +1,101 @@
 <template>
-  <section class="profile-container flex justify-center" v-if="currUser">
-    <div class="side-profile">
-      <div
-        class="profile-img"
-        :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"
-      ></div>
-      <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
-      <div class="profile-loc">{{currUser.address.city}}, {{currUser.address.country}}</div>
-      <hr>
-      <div class="flex justify-center align-center flex-col">
-        <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
-        <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-          <div>
-            <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
-              <font-awesome-icon icon="couch"/>&nbsp;Send Request!
-            </button>
+  <section class="profile-container flex flex-col justify-center" v-if="currUser">
+    <carousel
+      class="carousel flex justify-center"
+      :per-page="3"
+      :mouse-drag="true"
+      :autoplay="true"
+      :loop="true"
+      :autoplayTimeout="4000"
+      :perPageCustom="[[300, 1], [700, 2], [1200, 3]]"
+      :speed="1000"
+      :paginationEnabled="false"
+    >
+      <slide v-for="(img, idx) in currUser.pictures" :key="idx">
+        <div class="carousel-img" :style="'background-image: url(' + img + ')'"></div>
+      </slide>
+    </carousel>
+    <div class="profile-container flex justify-center">
+      <div class="side-profile">
+        <div
+          class="profile-img"
+          :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"
+        ></div>
+        <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
+        <div class="profile-loc">{{currUser.address.city}}, {{currUser.address.country}}</div>
+        <hr>
+        <div class="flex justify-center align-center flex-col">
+          <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
+          <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
+            <div>
+              <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
+                <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+              </button>
+            </div>
           </div>
-          <div class="flex flex-row">
-            <button class="btn" @click="openReview">Add Review</button>
+          <div v-else class="flex flex-col">
+            <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
+              <button class="btn">Edit My Profile</button>
+            </router-link>
+            <router-link :to="'/userProfile/' + currUser._id + '/inbox'">
+              <button class="btn">My Inbox</button>
+            </router-link>
           </div>
-          <review-form
+          <!-- <review-form
             :currReviewToEdit="currReviewToEdit"
             @closeReviewForm="reviewFormOff"
             v-if="isReviewFormOpen"
-          ></review-form>
-        </div>
-        <div v-else class="flex flex-col">
-          <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
-            <button class="btn">Edit My Profile</button>
-          </router-link>
-          <router-link :to="'/userProfile/' + currUser._id + '/inbox'">
-            <button class="btn">My Inbox</button>
-          </router-link>
+          ></review-form>-->
         </div>
       </div>
-    </div>
-    <div class="main-desc">
-      <div class="cmps" id="cmps">
-        <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
-          <!-- ON DESKTOP -->
-          <div class="profile-nav flex flex-row justify-center" v-if="window.width > 768">
-            <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: '#cmps'}">Overview</a>
-            <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: '#cmps'}">Home</a>
-            <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: '#cmps'}">Pictures</a>
-            <a
-              class="nav-item"
-              href="#"
-              v-scroll-to="{ el: '#references', container: '#cmps'}"
-            >References</a>
-          </div>
-          <!-- ON MOBILE -->
-          <div class="profile-nav flex flex-row justify-center" v-else>
-            <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
-            <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
-            <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: 'body'}">Pictures</a>
-            <a
-              class="nav-item"
-              href="#"
-              v-scroll-to="{ el: '#references', container: 'body'}"
-            >References</a>
-          </div>
-        </nav>
-        <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
-        <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
-        <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
-        <profile-references
-          class="detail-section"
-          :user="currUser"
-          :loggedUser="loggedUser"
-          id="references"
-          @openReviewToEdit="openReviewToEdit"
-        ></profile-references>
+
+      <div class="main-desc">
+        <div class="cmps" id="cmps">
+          <nav class="main-desc-nav" :class="{display: isNavInDisplay}">
+            <!-- ON DESKTOP -->
+            <div class="profile-nav flex flex-row justify-center" v-if="window.width > 768">
+              <a
+                class="nav-item"
+                href="#"
+                v-scroll-to="{ el: '#about', container: '#cmps'}"
+              >Overview</a>
+              <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: '#cmps'}">Home</a>
+              <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: '#cmps'}">Pictures</a>
+              <a
+                class="nav-item"
+                href="#"
+                v-scroll-to="{ el: '#references', container: '#cmps'}"
+              >References</a>
+            </div>
+            <!-- ON MOBILE -->
+            <div class="profile-nav flex flex-row justify-center" v-else>
+              <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
+              <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
+              <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: 'body'}">Pictures</a>
+              <a
+                class="nav-item"
+                href="#"
+                v-scroll-to="{ el: '#references', container: 'body'}"
+              >References</a>
+            </div>
+          </nav>
+          <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
+          <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
+          <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
+          <profile-references
+            class="detail-section"
+            :user="currUser"
+            :loggedUser="loggedUser"
+            id="references"
+          ></profile-references>
+        </div>
+        <guest-request
+          @requestOff="requestFormOff"
+          v-if="showRequestForm"
+          @sendRequest="sendRequest"
+        ></guest-request>
       </div>
     </div>
-    <guest-request @requestOff="requestFormOff" v-if="showRequestForm" @sendRequest="sendRequest"></guest-request>
   </section>
 </template>
 
@@ -83,7 +105,7 @@ import ProfileMyHome from "../components/ProfileMyHome.vue";
 import ProfilePictures from "../components/ProfilePictures.vue";
 import ProfileReferences from "../components/ProfileReferences.vue";
 import GuestRequest from "../components/GuestRequest.vue";
-import ReviewForm from "../components/ReviewForm.vue";
+import { Carousel, Slide } from "vue-carousel";
 
 export default {
   name: "user-profile",
@@ -91,12 +113,10 @@ export default {
     return {
       isNavInDisplay: false,
       showRequestForm: false,
-      isReviewFormOpen: false,
       window: {
         width: 0,
         height: 0
       },
-      currReviewToEdit: null
     };
   },
   created() {
@@ -104,7 +124,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function (e) {
+    var val = window.addEventListener("scroll", function(e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);
@@ -122,31 +142,13 @@ export default {
     },
     loggedUser() {
       return this.$store.getters.loggedUser;
-    },
-    test() {
-      console.log("window size:", window.screen.width);
     }
   },
   methods: {
     narrowNav(state) {
       this.isNavInDisplay = state;
     },
-    async sendRequest(requestInfo) {
-      let request = {
-        isAccepted: false,
-        info: requestInfo,
-        sender: {
-          id: this.loggedUser._id,
-          firstName: this.loggedUser.firstName,
-          lastName: this.loggedUser.lastName
-        },
-        recipient: {
-          id: this.currUser._id,
-          firstName: this.currUser.firstName,
-          lastName: this.currUser.lastName
-        }
-      };
-      await this.$store.dispatch({ type: "addRequest", request: request });
+    sendRequest() {
       this.requestFormOff();
     },
     requestFormOn() {
@@ -154,17 +156,6 @@ export default {
     },
     requestFormOff() {
       this.showRequestForm = false;
-    },
-    openReview() {
-      this.isReviewFormOpen = true;
-      this.currReviewToEdit = null;
-    },
-    openReviewToEdit(review) {
-      this.isReviewFormOpen = true;
-      this.currReviewToEdit = review;
-    },
-    reviewFormOff() {
-      this.isReviewFormOpen = false;
     },
     handleResize() {
       this.window.width = window.innerWidth;
@@ -185,7 +176,8 @@ export default {
     ProfilePictures,
     ProfileReferences,
     GuestRequest,
-    ReviewForm
+    Carousel,
+    Slide
   }
 };
 </script>
@@ -201,6 +193,17 @@ export default {
     margin-top: 0;
   }
 }
+.carousel {
+  padding: 15px;
+  margin-top: 25px;
+  .carousel-img {
+    height: 30vh;
+    width: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+}
 
 .side-profile {
   width: 30vw;
@@ -212,8 +215,9 @@ export default {
   padding: 15px;
   text-align: center;
   .profile-img {
+    width: 225px;
     max-width: 225px;
-    height: 40%;
+    height: 225px;
     max-height: 225px;
     border-radius: 50%;
     box-shadow: 2px 2px 15px -1px rgba(0, 0, 0, 0.75);
@@ -235,8 +239,9 @@ export default {
 
 @media (max-width: 768px) {
   .side-profile {
-    max-width: 98%;
-    width: 92%;
+    max-width: unset;
+    width: auto;
+    margin: 0 15px;
   }
 }
 
@@ -265,7 +270,7 @@ export default {
     border-bottom: 2px solid rgba(0, 0, 0, 0.15);
     .nav-item {
       width: 100px;
-      border: 1px 0 1px 0 solid black;
+      color: #1dbf73;
       padding: 10px;
       cursor: pointer;
     }
@@ -287,7 +292,7 @@ export default {
     }
   }
 }
-@media (max-width: 568px) {
+@media (max-width: 768px) {
   .main-desc {
     margin: 5px 15px;
   }

@@ -57,7 +57,17 @@ export default {
       if (!this.checkForm) return;
       this.$store
         .dispatch({ type: "login", credentials: this.credentials })
-        .then(() => {
+        .then(user => {
+          if (user) {
+            const Toast = this.$swal.mixin({
+              toast: true,
+              position: 'bottom-start',
+              showConfirmButton: false,
+              timer: 3000
+            });
+
+            Toast.fire({ type: 'success', title: `Welcome ${user.firstName} ${user.lastName}!` })
+          }
           this.$router.push(this.$route.path);
           this.$emit("loginOff");
         });

@@ -14,7 +14,9 @@
           <button class="btn btn-empty" @click="loginFormOn">Sign In</button>
         </div>
         <div v-else>
-          <span class="welcome">Welcome {{getLoggedUser.firstName}} {{getLoggedUser.lastName}}!</span>
+          <span class="welcome">
+            <!--{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}-->
+          </span>
           <img class="user-img" @click="toggleUserWindow" :src="getLoggedUser.imgUrl">
         </div>
       </div>
@@ -90,17 +92,21 @@ export default {
       .welcome {
         padding-right: 20px;
       }
-      @media (max-width: 568px) {
-        .welcome {
-          display: none;
-        }
-      }
       .btn {
         margin: 5px;
       }
       @media (max-width: 568px) {
+        .welcome {
+          display: none;
+        }
         .btn {
           padding: 10px;
+        }
+      }
+      
+      @media (max-width: 340px) {
+        .btn {
+          padding: 7px;
         }
       }
       .user-img {

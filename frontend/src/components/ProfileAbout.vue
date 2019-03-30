@@ -94,7 +94,7 @@ export default {
       }
     }
   }
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .user-info {
       flex-direction: column;
       .side {
@@ -107,9 +107,9 @@ export default {
   }
 }
 
-@media (max-width: 568px) {
+@media (max-width: 768px) {
   .overview {
-    margin-top: unset;
+    margin-top: 0;
   }
 }
 .info-item {

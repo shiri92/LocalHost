@@ -2,12 +2,8 @@
 const cors = require('cors');
 const express = require('express');
 const app = express();
-
-// for socket
-// const http = require('http').Server(express);
-// const io = require('socket.io')(http);
-// const server = require('http').createServer(app);
-// const io = require('socket.io')(server);
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
 
 const session = require('express-session');
 const bodyParser = require('body-parser');
@@ -19,6 +15,7 @@ const addUserRoutes = require('./routes/userRoutes');
 const addCityRoutes = require('./routes/cityRoutes');
 const addCountryRoutes = require('./routes/countryRoutes');
 const addCloudRoutes = require('./routes/cloudRoutes');
+const addSocketRoutes = require('./routes/socketRoutes');
 
 
 /* ----- SERVER -----*/
@@ -43,29 +40,15 @@ addUserRoutes(app)
 addCityRoutes(app);
 addCountryRoutes(app)
 addCloudRoutes(app);
+addSocketRoutes(io);
 
 
 app.get('/', (req, res) => res.send('Hello From Server'))
 
 /* ----- SOCKET -----*/
-// io.on('connect', function (socket) {
-//     console.log('a user connected!');
-// });
 
-// io.on('connection', function (socket) {
-//     console.log('a user connected!');
-//     // connectedSockets.push(socket);
-//     socket.on('disconnect', function () {
-//         console.log('user disconnected');
-//     });
 
-// socket.on('disconnect', function () {
-//     console.log('user disconnected');
-//     connectedSockets = connectedSockets.filter(s => s.nickName !== socket.nickName)
-// });
-
-// });
 
 /* ----- SERVER PORT -----*/
 const PORT = process.env.PORT || 3003;
-app.listen(PORT, () => console.log(`App listening on port ${PORT}!`))
+http.listen(PORT, () => console.log(`App listening on port ${PORT}!`))

@@ -89,7 +89,7 @@ export default {
         }
       }
     }
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .pref-info {
         flex-direction: column;
         .pref-list {

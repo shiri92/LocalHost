@@ -105,8 +105,20 @@ export default {
       if ((this.review.getAsAHost || this.review.getAsAGuest) && this.review.description && this.review.rating) {
         this.$emit('closeReviewForm');
         if (!this.currReviewToEdit) {
-          this.$store.dispatch({ type: 'addReview', review: this.review });
-        } else {
+          this.$store.dispatch({ type: 'addReview', review: this.review })
+            .then(() => {
+              const Toast = this.$swal.mixin({
+                toast: true,
+                position: 'bottom-start',
+                showConfirmButton: false,
+                timer: 3000
+              });
+
+              Toast.fire({ type: 'success', title: `You Have Added New Review` })
+            })
+
+        }
+        else {
           this.$store.dispatch({ type: 'updateReview', currUserId: this.currUser._id, review: this.review });
         }
       }
@@ -133,7 +145,7 @@ export default {
   box-shadow: 1px 1px 10px rgb(82, 81, 81);
   font-size: 1.1rem;
   .top {
-    padding: 0 30px 0 30px;
+    padding: 0 30px;
     h1 {
       font-size: 1.5rem;
       margin: 0;
@@ -144,21 +156,43 @@ export default {
       color: rgb(175, 169, 169);
     }
   }
+  @media (max-width: 400px) {
+    .top {
+      padding: 0 10px;
+    }
+  }
   .content {
     padding: 20px 40px 20px 40px;
     .checkbox {
-      margin: 10px 10px 30px 30px;
+      margin: 10px 10px 10px 30px;
     }
     textarea {
       padding: 10px;
+    }
+    @media (max-width: 400px){
+      textarea {
+        height: 7em;
+      }
     }
     .btn-container {
       margin: 30px 30px 20px 30px;
       .btn-send {
         justify-self: center;
-        width: 120px;
+        min-width: 120px;
       }
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .review-form {
+    width: 60%;
+  }
+}
+
+@media (max-width: 568px) {
+  .review-form {
+    width: 95%;
   }
 }
 
