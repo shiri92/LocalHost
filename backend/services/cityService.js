@@ -140,12 +140,12 @@ var citiesDB = [
     isTopDest: false,
     imgUrl:
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553720034/city-imgs/mexico%20city.jpg"
-  },
-  {
-    name: "All Top Destinations...",
-    isTopDest: true,
-    imgUrl: ""
   }
+  // {
+  //   name: "All Top Destinations...",
+  //   isTopDest: true,
+  //   imgUrl: ""
+  // }
 ];
 
 module.exports = {

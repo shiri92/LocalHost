@@ -41,11 +41,6 @@
               <button class="btn">My Inbox</button>
             </router-link>
           </div>
-          <!-- <review-form
-            :currReviewToEdit="currReviewToEdit"
-            @closeReviewForm="reviewFormOff"
-            v-if="isReviewFormOpen"
-          ></review-form>-->
         </div>
       </div>
 
@@ -124,7 +119,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 110) {
         vm.narrowNav(true);

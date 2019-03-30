@@ -9,18 +9,26 @@ import ElementUI from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import BootstrapVue from "bootstrap-vue";
 import AnimateCSS from "animate.css";
-import VueCarousel from 'vue-carousel';
+import VueCarousel from "vue-carousel";
 // import VueBootstrap from 'bootstrap-vue';
-import VueScrollTo from 'vue-scrollto';
-import VueSweetalert2 from 'vue-sweetalert2';
+import VueScrollTo from "vue-scrollto";
+import VueSweetalert2 from "vue-sweetalert2";
+import * as VueGoogleMaps from "vue2-google-maps";
 
 // import 'custom.scss'
 
 const options = {
-  confirmButtonColor: '#41b882',
-  cancelButtonColor: '#ff7674',
+  confirmButtonColor: "#41b882",
+  cancelButtonColor: "#ff7674"
   // popup: 'animated tada'
-}
+};
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyDMJmYLMFI-0rNvWoZ7KrGpryIsUXOivms",
+    libraries: "places"
+  }
+});
 
 Vue.use(ElementUI);
 Vue.use(AnimateCSS);
@@ -41,22 +49,22 @@ Vue.use(VueScrollTo, {
 });
 
 // Font Awesome
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCoffee } from '@fortawesome/free-solid-svg-icons';
-import { faCouch } from '@fortawesome/free-solid-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { faSortDown } from '@fortawesome/free-solid-svg-icons';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { faVenusMars } from '@fortawesome/free-solid-svg-icons';
-import { faWindowClose } from '@fortawesome/free-solid-svg-icons';
-import { faQuoteLeft } from '@fortawesome/free-solid-svg-icons';
-import { faBriefcase } from '@fortawesome/free-solid-svg-icons';
-import { faBook } from '@fortawesome/free-solid-svg-icons';
-import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCoffee } from "@fortawesome/free-solid-svg-icons";
+import { faCouch } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { faVenusMars } from "@fortawesome/free-solid-svg-icons";
+import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import { faQuoteLeft } from "@fortawesome/free-solid-svg-icons";
+import { faBriefcase } from "@fortawesome/free-solid-svg-icons";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(faCoffee);
 library.add(faCouch);

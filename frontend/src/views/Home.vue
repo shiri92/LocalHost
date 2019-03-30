@@ -126,15 +126,15 @@ h1 {
   }
 
   .Rio {
-    grid-column: span 1;
+    grid-column: span 2;
     grid-row: span 1;
   }
 
-  .img-container:last-child {
-    grid-column: span 1;
-    grid-row: span 1;
-    background-color: #1dbf73;
-  }
+  // .img-container:last-child {
+  //   grid-column: span 1;
+  //   grid-row: span 1;
+  //   background-color: #1dbf73;
+  // }
 }
 
 @media (max-width: 1200px) {
@@ -186,6 +186,9 @@ h1 {
       grid-column: span 1;
     }
     .New {
+      grid-column: span 1;
+    }
+    .Rio {
       grid-column: span 1;
     }
   }
