@@ -24,9 +24,28 @@
         name=msapplication-TileColor content=#000000>
 </head>
 
-<body><noscript><strong>We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to
-            continue.</strong></noscript>
-    <div id=app></div>
+<body>
+    <noscript>
+        <strong>
+            We're sorry but frontend doesn't work properly without JavaScript enabled. Please enable it to
+            continue.
+        </strong>
+    </noscript>
+    <div id=app>
+
+    </div>
 
 
-    <script src=/js/chunk-vendors.86d0f6b1.js> </script> <script src=/js/app.6f28fc70.js> </script> </body> </html>
+    <script src=/js/chunk-vendors.86d0f6b1.js> </script>
+    <script src=/js/app.6f28fc70.js> </script>
+    <!-- <script>
+        function activatePlacesSearch(){
+            let input = document.getElementById('search_term');
+            let autocomplete = new google.maps.places.Autocomplete(input);
+        }
+    </script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaQVlcIeYewnFSmm3xkL2d3HHy9xhYbz4&libraries=places&callback=activatePlacesSearch"></script> -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaQVlcIeYewnFSmm3xkL2d3HHy9xhYbz4&libraries=places"></script>
+
+</body>
+</html>

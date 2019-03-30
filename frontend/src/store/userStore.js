@@ -64,7 +64,7 @@ export default {
       newReq.isAccepted = true;
       state.loggedUser.requests.splice(idx, 1, newReq);
     },
-    updateUser(state, { user }) {
+    updateCurrUser(state, { user }) {
       var idx = state.currUsers.findIndex(
         currUser => currUser._id === user._id
       );
@@ -143,9 +143,9 @@ export default {
       await userService.updateUserImg(imgUrl, userId);
       context.commit({ type: "setLoggedUserImg", imgUrl });
     },
-    async updateUser(context, { user }) {
+    async updateCurrUser(context, { user }) {
       await userService.update(user);
-      context.commit({ type: "updateUser", user });
+      context.commit({ type: "updateCurrUser", user });
     }
   }
 };
