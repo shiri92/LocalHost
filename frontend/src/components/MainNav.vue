@@ -80,6 +80,8 @@ export default {
   left: 0;
   .nav-container {
     width: 100%;
+    max-width: 1500px;
+    margin: 0 auto;
     .links-container {
       .logo {
         height: 35px;

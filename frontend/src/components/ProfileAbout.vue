@@ -76,7 +76,7 @@ export default {
   background-color: #fff;
 }
 .overview {
-  margin-top: 50px;
+  margin-top: 0;
   .header-box {
     padding: 20px;
     margin: 0px;
