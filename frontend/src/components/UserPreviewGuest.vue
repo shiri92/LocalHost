@@ -5,12 +5,12 @@
         <!-- <div class="hero"></div> -->
         <div class="main">
           <div class="user">
-            <div class="avatar" :style="'background-image: url(' + profile.imgUrl + ')'"></div>
+            <div class="avatar" :style="'background-image: url(' + profile.sender.imgUrl + ')'"></div>
             <div class="user-details">
-              <h3>{{profile.firstName}} {{profile.lastName}}</h3>
+              <h3>{{profile.sender.firstName}} {{profile.sender.lastName}}</h3>
               <span class="location">
                 <!-- <font-awesome-icon icon="map-marker-alt"/> -->
-                <span>{{profile.address.city}}, {{profile.address.country}}</span>
+                <span>{{profile.sender.address.city}}, {{profile.sender.address.country}}</span>
               </span>
               <span class="date">
                 <span>Check In: 01/01/2019</span>
