@@ -1,14 +1,13 @@
 <template>
   <div class="home">
     <main-header></main-header>
-    <div class="home-users">
-      <h1>Meet Some Of Our Top Hosts</h1>
-      <user-list :users="homeUsers"></user-list>
-    </div>
+
+    <h1 class="user-list-title">Meet Some Of Our Top Hosts</h1>
+    <user-list :users="homeUsers"></user-list>
+
     <why-join></why-join>
 
     <h1>Top Destinations</h1>
-
     <city-search></city-search>
 
     <div class="cities-gallery grid">
@@ -87,13 +86,12 @@ export default {
   margin-top: -70px;
   padding-bottom: 50px;
   text-align: center;
-  .home-users {
+  .user-list-title {
     margin-top: 50px;
   }
-}
-
-h1 {
-  margin-bottom: 40px;
+  h1 {
+    margin-bottom: 40px;
+  }
 }
 
 .cities-gallery {
