@@ -22,7 +22,7 @@
             <div class="num-from-hosts">{{revFromHosts.length}}</div>
           </h3>
         </div>
-        <button class="btn" @click="openReview">Add Review</button>
+        <button class="btn" @click="openReview" v-if="checkUser">Add Review</button>
         <review-form
           @closeReviewForm="reviewFormOff"
           :currReviewToEdit="currReviewToEdit"
@@ -159,7 +159,16 @@ export default {
     },
     revFromHosts() {
       return this.user.references.filter(rev => rev.getAsAGuest);
-    }
+    },
+    checkUser() {
+      if (this.loggedUser && this.user) {
+        if (this.user._id === this.loggedUser._id) {
+          return false;
+        }
+        return true;
+      }
+      return true;
+    },
   },
   methods: {
     fromGuestsToShow() {
@@ -180,22 +189,8 @@ export default {
       this.read = !this.read;
     },
     openReview() {
-      if (this.loggedUser) {
-        this.isReviewFormOpen = true;
-        this.currReviewToEdit = null;
-        return;
-      }
-      const Toast = this.$swal.mixin({
-        toast: true,
-        position: "bottom-start",
-        showConfirmButton: false,
-        timer: 3000
-      });
-
-      Toast.fire({
-        type: "info",
-        title: `Please Sign In To Add Review...`
-      });
+      this.isReviewFormOpen = true;
+      this.currReviewToEdit = null;
     },
     openReviewToEdit(review) {
       this.isReviewFormOpen = true;

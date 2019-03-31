@@ -47,7 +47,17 @@ export default {
   methods: {
     async onSendRequest() {
       if (!this.getLoggedUser) {
-        console.log("Only registered users can send requests!");
+        const Toast = this.$swal.mixin({
+          toast: true,
+          position: "bottom-start",
+          showConfirmButton: false,
+          timer: 3000
+        });
+
+        Toast.fire({
+          type: "info",
+          title: `Please Sign In To Send Request...`
+        });
         return;
       }
       if (!this.checkForm()) return;

@@ -17,7 +17,6 @@ const addCountryRoutes = require('./routes/countryRoutes');
 const addCloudRoutes = require('./routes/cloudRoutes');
 const addSocketRoutes = require('./routes/socketRoutes');
 
-
 /* ----- SERVER -----*/
 
 /* ----- ENABLE APP ON LOCALHOST SERVER -----*/
@@ -44,10 +43,6 @@ addSocketRoutes(io);
 
 
 app.get('/', (req, res) => res.send('Hello From Server'))
-
-/* ----- SOCKET -----*/
-
-
 
 /* ----- SERVER PORT -----*/
 const PORT = process.env.PORT || 3003;

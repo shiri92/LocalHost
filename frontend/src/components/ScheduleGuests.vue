@@ -1,22 +1,20 @@
 <template>
   <section class="schedule-guests">
-    <!-- <h1>Schedule Guests!</h1> -->
     <h3>THIS MONTH</h3>
     <div class="flex-container clean-list" v-if="currUser">
+      <h2 v-if="currUser.guests.length===0">No Guests Yet</h2>
       <router-link
+        v-else
         class="guest-list-item"
         :key="currGuest._id"
         v-for="(currGuest, idx) in currUser.guests"
-        :to="'/userProfile/' + currGuest._id"
+        :to="'/userProfile/' + currGuest.sender.id"
       >
         <user-preview-guest :profile="currGuest" :idx="idx+1"></user-preview-guest>
       </router-link>
     </div>
-    <h4>Capacity: 0/3</h4>
-    <!-- <h3>APRIL</h3> -->
-    <!-- <div class="flex-container clean-list"> -->
-    <!-- <user-preview-guest v-if="currUser" :profile="currUser"></user-preview-guest> -->
-    <!-- </div> -->
+    <!-- TODO: Guest Capacity -->
+    <!-- <h4>Capacity: {{loggedUser.placeDetails.guestCapacity}}</h4> -->
   </section>
 </template>
 
@@ -40,6 +38,9 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+h2 {
+  text-align: center;
+}
 h3 {
   box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
     0 5px 15px 0 rgba(0, 0, 0, 0.08);
