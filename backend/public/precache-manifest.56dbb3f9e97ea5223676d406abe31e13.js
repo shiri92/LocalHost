@@ -68,12 +68,12 @@ self.__precacheManifest = [
     "url": "/img/fav-icons/edit.png"
   },
   {
-    "revision": "ca9f0a9fcaad97498cdf5c59f4b3b615",
-    "url": "/img/fav-icons/hamburger.png"
-  },
-  {
     "revision": "c463b5677673d70709f3c6075c1b0843",
     "url": "/img/fav-icons/trash.png"
+  },
+  {
+    "revision": "ca9f0a9fcaad97498cdf5c59f4b3b615",
+    "url": "/img/fav-icons/hamburger.png"
   },
   {
     "revision": "b3ad671258389fc9aebe725c3526a5f4",
@@ -136,12 +136,12 @@ self.__precacheManifest = [
     "url": "/img/profile-images/karl-smith/karl-smith.jpg"
   },
   {
-    "revision": "60240911102ea1fa27d7a0640ee6b449",
-    "url": "/img/profile-images/nora-gray/nora-gray.jpg"
-  },
-  {
     "revision": "1d5a24041f2a89e74f32ac289cf72398",
     "url": "/img/profile-images/riley-county/riley2.jpg"
+  },
+  {
+    "revision": "60240911102ea1fa27d7a0640ee6b449",
+    "url": "/img/profile-images/nora-gray/nora-gray.jpg"
   },
   {
     "revision": "311fe221005758d8021f2be09f5cd01c",
@@ -208,12 +208,12 @@ self.__precacheManifest = [
     "url": "/img/profile-images/neil-hayes/neil-hayes.jpg"
   },
   {
-    "revision": "8e4dc0823db7142783dc6ff2f129d031",
-    "url": "/img/city-imgs/barcelona.jpg"
-  },
-  {
     "revision": "e4ece554d38a012990d6bc431064ccd9",
     "url": "/img/city-imgs/madrid.jpg"
+  },
+  {
+    "revision": "8e4dc0823db7142783dc6ff2f129d031",
+    "url": "/img/city-imgs/barcelona.jpg"
   },
   {
     "revision": "34779c4af044d7fff902d5e09c2cd73c",
@@ -244,16 +244,16 @@ self.__precacheManifest = [
     "url": "/img/bg-imgs/why-join-3.jpeg"
   },
   {
-    "revision": "7f690e503a254e0b8349aec0177e07aa",
-    "url": "/fonts/Lato-Regular.7f690e50.ttf"
+    "revision": "2c22fca2e6627676b0cd60ec1be3beb2",
+    "url": "/fonts/Inconsolata-Regular.2c22fca2.ttf"
   },
   {
     "revision": "e20fce2ec4df1ad50303bef43d395546",
     "url": "/img/bg-imgs/why-join-1.jpeg"
   },
   {
-    "revision": "2c22fca2e6627676b0cd60ec1be3beb2",
-    "url": "/fonts/Inconsolata-Regular.2c22fca2.ttf"
+    "revision": "5152b5a652b84e8572c5d527aa590e82",
+    "url": "/fonts/Monaco-Regular.5152b5a6.ttf"
   },
   {
     "revision": "3c8f9a7bcbadcb318120c9984bebd367",
@@ -284,8 +284,8 @@ self.__precacheManifest = [
     "url": "/fonts/Roboto-Regular.3e1af3ef.ttf"
   },
   {
-    "revision": "5152b5a652b84e8572c5d527aa590e82",
-    "url": "/fonts/Monaco-Regular.5152b5a6.ttf"
+    "revision": "7f690e503a254e0b8349aec0177e07aa",
+    "url": "/fonts/Lato-Regular.7f690e50.ttf"
   },
   {
     "revision": "cbd50882df82be5fce046e52b302e316",
