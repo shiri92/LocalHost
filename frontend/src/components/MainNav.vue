@@ -84,8 +84,8 @@ export default {
     margin: 0 auto;
     .links-container {
       .logo {
-        height: 50px;
-        width: 215px;
+        height: 37px;
+        width: 160px;
         background-image: url("https://res.cloudinary.com/dcl4oabi3/image/upload/v1553958499/logo/logo.png");
         background-size: cover;
       }

@@ -9,19 +9,25 @@
             class="from-guests flex align-center"
             :class="{'filter-clicked':isFromGuestsClicked}"
             @click="fromGuestsToShow"
-          >From Guests
+          >
+            From Guests
             <div class="num-from-guests">{{revFromGuests.length}}</div>
           </h3>
           <h3
             class="from-hosts flex align-center"
             :class="{'filter-clicked':isFromHostsClicked}"
             @click="fromHostsToShow"
-          >From Hosts
+          >
+            From Hosts
             <div class="num-from-hosts">{{revFromHosts.length}}</div>
           </h3>
         </div>
         <button class="btn" @click="openReview">Add Review</button>
-        <review-form @closeReviewForm="reviewFormOff" :currReviewToEdit="currReviewToEdit" v-if="isReviewFormOpen"></review-form>
+        <review-form
+          @closeReviewForm="reviewFormOff"
+          :currReviewToEdit="currReviewToEdit"
+          v-if="isReviewFormOpen"
+        ></review-form>
       </div>
 
       <div v-if="isFromGuestsClicked" class="references-container flex">
@@ -174,8 +180,22 @@ export default {
       this.read = !this.read;
     },
     openReview() {
-      this.isReviewFormOpen = true;
-      this.currReviewToEdit = null;
+      if (this.loggedUser) {
+        this.isReviewFormOpen = true;
+        this.currReviewToEdit = null;
+        return;
+      }
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "bottom-start",
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+      Toast.fire({
+        type: "info",
+        title: `Please Sign In To Add Review...`
+      });
     },
     openReviewToEdit(review) {
       this.isReviewFormOpen = true;
@@ -220,7 +240,8 @@ export default {
         }
       }
       @media (max-width: 568px) {
-        .from-guests, .from-hosts {
+        .from-guests,
+        .from-hosts {
           font-size: 0.9em;
           margin: 0 10px 0 0;
         }

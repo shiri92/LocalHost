@@ -34,16 +34,16 @@ export default {
     this.currPage = this.$route.path;
     this.$store.dispatch({ type: 'checkLogged' })
       .then(user => {
-        if (user) {
-          const Toast = this.$swal.mixin({
-            toast: true,
-            position: 'bottom-start',
-            showConfirmButton: false,
-            timer: 3000
-          });
+        // if (user) {
+        //   const Toast = this.$swal.mixin({
+        //     toast: true,
+        //     position: 'bottom-start',
+        //     showConfirmButton: false,
+        //     timer: 3000
+        //   });
 
-          Toast.fire({ type: 'success', title: `Welcome ${user.firstName} ${user.lastName}!` })
-        }
+        //   Toast.fire({ type: 'success', title: `Welcome ${user.firstName} ${user.lastName}!` })
+        // }
       });
   },
   methods: {

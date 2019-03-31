@@ -90,7 +90,7 @@ export default {
       return (
         this.requestInfo.startDate &&
         this.requestInfo.endDate &&
-        this.requestInfo.messagee
+        this.requestInfo.message
       );
     },
   },

@@ -41,6 +41,11 @@ export default {
       return this.$store.getters.currUser;
     }
   },
+  watch: {
+    getCurrUser(newVal, oldVal) {
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/scheduleManager/scheduleGuests');
+    }
+  }
 }
 </script>
 

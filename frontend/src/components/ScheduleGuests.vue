@@ -7,20 +7,13 @@
         class="guest-list-item"
         :key="currGuest._id"
         v-for="(currGuest, idx) in currUser.guests"
-        :to="'/userProfile/' + currGuest._id"
+        :to="'/userProfile/' + currGuest.sender.id"
       >
-        <!-- {{currGuest}} -->
         <user-preview-guest :profile="currGuest" :idx="idx+1"></user-preview-guest>
       </router-link>
-      <!-- <user-preview-guest v-for="(guest, idx) in currUser.guests" :to="'/userProfile/' + guest._id"></user-preview-guest> -->
-      <!-- <user-preview :profile="currProfile" :idx="idx+1"></user-preview>:profile="currProfile" :idx="idx+1"> -->
-
-      <!-- <user-preview-guest v-if="currUser" :profile="currUser"></user-preview-guest> -->
     </div>
-    <h3>APRIL</h3>
-    <div class="flex-container clean-list">
-      <!-- <user-preview-guest v-if="currUser" :profile="currUser"></user-preview-guest> -->
-    </div>
+    <!-- TODO: Guest Capacity -->
+    <!-- <h4>Capacity: {{loggedUser.placeDetails.guestCapacity}}</h4> -->
   </section>
 </template>
 
@@ -44,6 +37,13 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+h3 {
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+    0 5px 15px 0 rgba(0, 0, 0, 0.08);
+  text-align: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
 .schedule-guests {
   display: flex;
   flex-direction: column;
@@ -54,10 +54,11 @@ export default {
     display: flex;
     flex-wrap: wrap;
     flex-grow: 1;
+    padding: 10px;
   }
 
   .flex-container > * {
-    max-width: 300px;
+    min-width: 300px;
     margin-bottom: 20px;
   }
   // .flex-container > *:not(:last-child) {

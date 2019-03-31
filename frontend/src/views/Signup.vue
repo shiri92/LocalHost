@@ -104,8 +104,18 @@ export default {
         this.$store
           .dispatch({ type: "signup", credentials: this.form })
           .then(() => {
-            console.log(this.getLoggedUser);
             this.$router.push("/userProfile/" + this.getLoggedUser._id);
+            const Toast = this.$swal.mixin({
+              toast: true,
+              position: "bottom-start",
+              showConfirmButton: false,
+              timer: 3000
+            });
+
+            Toast.fire({
+              type: "success",
+              title: `You Have Signed Up Successfully`
+            });
           });
       }
       if (this.active++ > 1) this.active = 0;
