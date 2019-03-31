@@ -1,6 +1,5 @@
 <template>
   <li>
-    {{profile}}
     <div class="card-container flex space-between flex-col">
       <div class="card">
         <div class="main">
@@ -11,16 +10,20 @@
               <span class="location">
                 <span>{{profile.sender.address.city}}, {{profile.sender.address.country}}</span>
               </span>
+
               <span class="date">
                 <!-- // TODO SHIRI: GET THE startDate and endDate 'Sunday, 1 April, 2019' -->
                 <!-- // THE DATE COMES FROM THE REQUEST FORM IN STRING FORMAT ex.: 1-1-2019 -->
 
                 <!-- <span>Arrival Date: {{profile.sender.startDate | moment("calendar")}}</span> -->
                 <!-- <span>Arrival Date: {{getDateFormatted}}</span> -->
-                <span>{{ 1553967058 | time }}</span>
+                <!-- <span>{{ 1553967058 | time }}</span> -->
               </span>
               <span class="date">
-                <!-- <span>Leaving Date: {{profile.sender.endDate}}</span> -->
+                <span>Arrival Date: {{profile.sender.endDate}}</span>
+              </span>
+              <span class="date">
+                <span>Leaving Date: {{profile.sender.endDate}}</span>
               </span>
             </div>
           </div>
@@ -65,9 +68,10 @@ export default {
 li {
   .card-container {
     .card {
+      padding: 10px;
       border-radius: 5px;
       box-shadow: 2px 5px 10px #ccc;
-      background: white;
+      background: rgb(79, 92, 92);
       .hero {
         height: 100px;
         background: url("https://images.unsplash.com/photo-1425321395722-b1dd54a97cf3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=6bb26c224def312127d93e664ec5d03d");
@@ -90,8 +94,6 @@ li {
             background-repeat: no-repeat;
             box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
               0 5px 15px 0 rgba(0, 0, 0, 0.08);
-
-            // top: -50px;
           }
           .user-details {
             display: flex;
@@ -101,10 +103,16 @@ li {
               margin: 0;
               font-size: 1.17em;
               font-weight: bold;
+              color: rgb(128, 194, 209);
             }
-            .location,
+            .location {
+              font-weight: bold;
+              color: rgb(179, 128, 121);
+              font-size: 0.9em;
+            }
             .date {
-              color: #444;
+              font-weight: bold;
+              color: gold;
               font-size: 0.9em;
             }
           }
