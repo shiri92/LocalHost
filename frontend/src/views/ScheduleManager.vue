@@ -4,13 +4,13 @@
       <div class="nav-container">
         <div class="nav" v-if="getCurrUser">
           <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleGuests'">
-            <div class="nav-item">Guest</div>
+            <div class="nav-item">Guests</div>
           </router-link>
           <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleHosts'">
             <div class="nav-item">Hosts</div>
           </router-link>
           <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleDetails'">
-            <div class="nav-item">Detail</div>
+            <div class="nav-item">Details</div>
           </router-link>
         </div>
       </div>
@@ -30,6 +30,8 @@ export default {
   created() {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
+    if (this, getCurrUser)
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/scheduleManager/scheduleGuests');
   },
   methods: {
     handleSelect(key, keyPath) {
