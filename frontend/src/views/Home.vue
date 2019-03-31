@@ -88,7 +88,7 @@ export default {
   padding-bottom: 50px;
   text-align: center;
   .home-users {
-    margin-top: 30px;
+    margin-top: 50px;
   }
 }
 
