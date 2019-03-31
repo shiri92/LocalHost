@@ -1,24 +1,27 @@
 <template>
   <li>
+    {{profile}}
     <div class="card-container flex space-between flex-col">
       <div class="card">
-        <!-- <div class="hero"></div> -->
         <div class="main">
           <div class="user">
-            <div class="avatar" :style="'background-image: url(' + profile.imgUrl + ')'"></div>
+            <div class="avatar" :style="'background-image: url(' + profile.sender.imgUrl + ')'"></div>
             <div class="user-details">
-              <h3>{{profile.firstName}} {{profile.lastName}}</h3>
+              <h3>{{profile.sender.firstName}} {{profile.sender.lastName}}</h3>
               <span class="location">
-                <!-- <font-awesome-icon icon="map-marker-alt"/> -->
-                <span>{{profile.address.city}}, {{profile.address.country}}</span>
+                <span>{{profile.sender.address.city}}, {{profile.sender.address.country}}</span>
               </span>
               <span class="date">
-                <span>Check In: 01/01/2019</span>
+                <!-- // TODO SHIRI: GET THE startDate and endDate 'Sunday, 1 April, 2019' -->
+                <!-- // THE DATE COMES FROM THE REQUEST FORM IN STRING FORMAT ex.: 1-1-2019 -->
+
+                <!-- <span>Arrival Date: {{profile.sender.startDate | moment("calendar")}}</span> -->
+                <!-- <span>Arrival Date: {{getDateFormatted}}</span> -->
+                <span>{{ 1553967058 | time }}</span>
               </span>
               <span class="date">
-                <span>Check Out: 01/02/2019</span>
+                <!-- <span>Leaving Date: {{profile.sender.endDate}}</span> -->
               </span>
-              <!-- <stars-toshow :value="rateAverage" :disabled="true"></stars-toshow> -->
             </div>
           </div>
         </div>
@@ -43,8 +46,18 @@ export default {
         acc = sum / divider;
         return acc;
       }, 0);
+    },
+    getDateFormatted() {
+      return moment.locale("12-25-1995");
+    }
+  },
+  filters: {
+    time(timestamp) {
+      // return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+      // return moment(timestamp).fromNow();
     }
   }
+
 };
 </script>
 
