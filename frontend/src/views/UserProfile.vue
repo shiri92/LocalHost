@@ -109,7 +109,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 310) {
         vm.narrowNav(true);
@@ -137,7 +137,21 @@ export default {
       this.requestFormOff();
     },
     requestFormOn() {
-      this.showRequestForm = true;
+      if (this.loggedUser) {
+        this.showRequestForm = true;
+        return;
+      }
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: "bottom-start",
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+      Toast.fire({
+        type: "info",
+        title: `Please Sign In To Send Request...`
+      });
     },
     requestFormOff() {
       this.showRequestForm = false;
