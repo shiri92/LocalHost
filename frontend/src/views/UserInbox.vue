@@ -90,7 +90,6 @@ h2 {
         max-width: 150px;
         padding: 10px;
         background-color: #fff;
-        margin-bottom: 20px;
         border-radius: 10px;
         text-align: left;
         transition: 0.3s;

@@ -53,7 +53,7 @@ export default {
       state.currUser = user;
     },
     setHomeUser(state, { user }) {
-      state.homeUsers.push(user); 
+      if (state.homeUsers.length < 4) state.homeUsers.push(user); 
     },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;

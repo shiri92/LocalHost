@@ -87,7 +87,7 @@ export default {
   padding-bottom: 50px;
   text-align: center;
   .user-list-title {
-    margin-top: 30px;
+    margin-top: 50px;
   }
   h1 {
     margin-bottom: 40px;
