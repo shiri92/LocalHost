@@ -60,20 +60,20 @@ self.__precacheManifest = [
     "url": "/img/schedule-manager.jpg"
   },
   {
-    "revision": "63f02d7ad914deb12cda39d0931513ce",
-    "url": "/img/fav-icons/arrow-down.png"
-  },
-  {
-    "revision": "c463b5677673d70709f3c6075c1b0843",
-    "url": "/img/fav-icons/trash.png"
-  },
-  {
     "revision": "694f86b6d3aeb2a90797f9f7e328e21e",
     "url": "/img/fav-icons/edit.png"
   },
   {
+    "revision": "63f02d7ad914deb12cda39d0931513ce",
+    "url": "/img/fav-icons/arrow-down.png"
+  },
+  {
     "revision": "ca9f0a9fcaad97498cdf5c59f4b3b615",
     "url": "/img/fav-icons/hamburger.png"
+  },
+  {
+    "revision": "c463b5677673d70709f3c6075c1b0843",
+    "url": "/img/fav-icons/trash.png"
   },
   {
     "revision": "b3ad671258389fc9aebe725c3526a5f4",
@@ -180,12 +180,12 @@ self.__precacheManifest = [
     "url": "/img/profile-images/penelope-harrison/penelope-harrison.jpg"
   },
   {
-    "revision": "38294ca68d806fbc69a7857b279d292e",
-    "url": "/img/city-imgs/london.jpg"
-  },
-  {
     "revision": "3da5a57a18ac6047a8a2e15d8b03fa4d",
     "url": "/img/city-imgs/rome.jpg"
+  },
+  {
+    "revision": "38294ca68d806fbc69a7857b279d292e",
+    "url": "/img/city-imgs/london.jpg"
   },
   {
     "revision": "9570cfd549a89a00f9e26144b84b9d31",
@@ -204,12 +204,12 @@ self.__precacheManifest = [
     "url": "/img/inbox-background.png"
   },
   {
-    "revision": "8e4dc0823db7142783dc6ff2f129d031",
-    "url": "/img/city-imgs/barcelona.jpg"
-  },
-  {
     "revision": "67c36462354182caffb3690a4423660d",
     "url": "/img/profile-images/neil-hayes/neil-hayes.jpg"
+  },
+  {
+    "revision": "8e4dc0823db7142783dc6ff2f129d031",
+    "url": "/img/city-imgs/barcelona.jpg"
   },
   {
     "revision": "e4ece554d38a012990d6bc431064ccd9",
@@ -228,8 +228,8 @@ self.__precacheManifest = [
     "url": "/img/city-imgs/buenos aires.jpg"
   },
   {
-    "revision": "7f690e503a254e0b8349aec0177e07aa",
-    "url": "/fonts/Lato-Regular.7f690e50.ttf"
+    "revision": "e33d9863206f59a624fa95f7433ec5be",
+    "url": "/img/city-imgs/amsterdam.jpg"
   },
   {
     "revision": "d4759501764ba88544f3c93fbb12d3cd",
@@ -256,16 +256,16 @@ self.__precacheManifest = [
     "url": "/img/bg-imgs/world.jpg"
   },
   {
-    "revision": "e33d9863206f59a624fa95f7433ec5be",
-    "url": "/img/city-imgs/amsterdam.jpg"
-  },
-  {
     "revision": "b39afe4a04caa099a5b91141d4362deb",
     "url": "/fonts/ConcertOne-Regular.b39afe4a.ttf"
   },
   {
     "revision": "3e1af3ef546b9e6ecef9f3ba197bf7d2",
     "url": "/fonts/Roboto-Regular.3e1af3ef.ttf"
+  },
+  {
+    "revision": "bfe21a43baccff1fd6bbb1b8e6dd8111",
+    "url": "/img/bg-imgs/1.jpg"
   },
   {
     "revision": "3c8f9a7bcbadcb318120c9984bebd367",
@@ -280,12 +280,12 @@ self.__precacheManifest = [
     "url": "/fonts/element-icons.6f0a7632.ttf"
   },
   {
-    "revision": "bfe21a43baccff1fd6bbb1b8e6dd8111",
-    "url": "/img/bg-imgs/1.jpg"
-  },
-  {
     "revision": "5152b5a652b84e8572c5d527aa590e82",
     "url": "/fonts/Monaco-Regular.5152b5a6.ttf"
+  },
+  {
+    "revision": "7f690e503a254e0b8349aec0177e07aa",
+    "url": "/fonts/Lato-Regular.7f690e50.ttf"
   },
   {
     "revision": "cbd50882df82be5fce046e52b302e316",
