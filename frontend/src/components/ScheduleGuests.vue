@@ -7,16 +7,13 @@
         class="guest-list-item"
         :key="currGuest._id"
         v-for="(currGuest, idx) in currUser.guests"
-        :to="'/userProfile/' + currGuest._id"
+        :to="'/userProfile/' + currGuest.sender.id"
       >
         <user-preview-guest :profile="currGuest" :idx="idx+1"></user-preview-guest>
       </router-link>
     </div>
-    <h4>Capacity: 0/3</h4>
-    <!-- <h3>APRIL</h3> -->
-    <!-- <div class="flex-container clean-list"> -->
-    <!-- <user-preview-guest v-if="currUser" :profile="currUser"></user-preview-guest> -->
-    <!-- </div> -->
+    <!-- TODO: Guest Capacity -->
+    <!-- <h4>Capacity: {{loggedUser.placeDetails.guestCapacity}}</h4> -->
   </section>
 </template>
 
