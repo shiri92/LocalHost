@@ -39,7 +39,7 @@ export default {
     .user-info {
       padding: 20px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(185px, 0.4fr));
+      grid-template-columns: repeat(auto-fit, minmax(165px, auto));
       gap: 10px;
       .display-images {
         margin: 0;

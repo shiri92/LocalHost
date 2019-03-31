@@ -121,9 +121,9 @@ export default {
       if (this.active++ > 1) this.active = 0;
     },
     setAddres(ev) {
-      let idx = ev.formatted_address.indexOf(",");
+      let idx = ev.formatted_address.indexOf(", ");
       let currCity = ev.formatted_address.substr(0, idx);
-      let currCountry = ev.formatted_address.substr(idx + 2, ev.length - 1);
+      let currCountry = ev.formatted_address.substr(idx + 2, ev.formatted_address.length - 1);
       this.form.address = { city: currCity, country: currCountry };
     },
     stepBack() {
