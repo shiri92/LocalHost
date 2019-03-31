@@ -48,7 +48,7 @@
       <div class="main-desc">
         <div class="cmps" id="cmps">
           <nav class="main-desc-nav">
-            <div class="profile-nav flex flex-row justify-center">
+            <div class="profile-nav flex flex-row justify-center" :class="{display:isNavInDisplay}">
               <a class="nav-item" href="#" v-scroll-to="{ el: '#about', container: 'body'}">Overview</a>
               <a class="nav-item" href="#" v-scroll-to="{ el: '#home', container: 'body'}">Home</a>
               <a class="nav-item" href="#" v-scroll-to="{ el: '#pics', container: 'body'}">Pictures</a>
@@ -75,6 +75,11 @@
           @sendRequest="sendRequest"
         ></guest-request>
       </div>
+    </div>
+    <div class="mobile" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
+      <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
+        <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+      </button>
     </div>
   </section>
 </template>
@@ -244,7 +249,7 @@ export default {
     width: 100%;
   }
   .display {
-    top: 71px;
+    top: 75px;
     left: 0;
     width: 100%;
     background-color: #fff;
@@ -274,6 +279,26 @@ export default {
 @media (max-width: 768px) {
   .main-desc {
     margin: 5px 15px;
+  }
+}
+
+.mobile {
+  display: none;
+}
+@media (max-width: 768px) {
+  .mobile {
+    display: block;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background-color: #fff;
+    text-align: center;
+    padding: 15px;
+    border-top: 2px solid rgba(0, 0, 0, 0.15);
+    .btn {
+      min-width: 220px;
+      font-size: 20px;
+    }
   }
 }
 </style>
