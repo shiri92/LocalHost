@@ -93,7 +93,6 @@ h2 {
         background-color: #fff;
         border-radius: 10px;
         text-align: left;
-        transition: 0.3s;
         &:hover {
           background-color: rgb(131, 131, 131);
         }
