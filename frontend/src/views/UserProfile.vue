@@ -137,21 +137,7 @@ export default {
       this.requestFormOff();
     },
     requestFormOn() {
-      if (this.loggedUser) {
-        this.showRequestForm = true;
-        return;
-      }
-      const Toast = this.$swal.mixin({
-        toast: true,
-        position: "bottom-start",
-        showConfirmButton: false,
-        timer: 3000
-      });
-
-      Toast.fire({
-        type: "info",
-        title: `Please Sign In To Send Request...`
-      });
+      this.showRequestForm = true;
     },
     requestFormOff() {
       this.showRequestForm = false;
