@@ -1,5 +1,5 @@
 <template>
   <section class="schedule-details">
-    <h1>Schedule Details!</h1>
+    <h1>Coming Soon...</h1>
   </section>
 </template>

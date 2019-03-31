@@ -1,5 +1,5 @@
 <template>
   <section class="schedule-hosts">
-    <h1>Schedule Hosts!</h1>
+    <h1>Coming Soon...</h1>
   </section>
 </template>
