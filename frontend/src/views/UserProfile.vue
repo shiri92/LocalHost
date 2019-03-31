@@ -263,7 +263,7 @@ export default {
     width: 100%;
   }
   .display {
-    top: 75px;
+    top: 80px;
     left: 0;
     width: 100%;
     background-color: #fff;
