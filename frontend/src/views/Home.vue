@@ -2,10 +2,12 @@
   <div class="home">
     <main-header></main-header>
 
+    <h1 class="user-list-title">Meet Some Of Our Top Hosts</h1>
+    <user-list :users="homeUsers"></user-list>
+
     <why-join></why-join>
 
     <h1>Top Destinations</h1>
-
     <city-search></city-search>
 
     <div class="cities-gallery grid">
@@ -25,14 +27,35 @@
 import MainHeader from "@/components/MainHeader";
 import CitySearch from "../components/CitySearch";
 import WhyJoin from "../components/WhyJoin";
+import UserList from "../components/UserList";
 
 export default {
   name: "home",
   data() {
-    return {};
+    return {
+      users: null
+    };
   },
   created() {
     this.$store.dispatch({ type: "loadTopDests" });
+    let arr = [
+      this.$store.dispatch({
+        type: "loadHomeUser",
+        userId: "5c9bf92867d3be5ab05a3193"
+      }),
+      this.$store.dispatch({
+        type: "loadHomeUser",
+        userId: "5c9bf92867d3be5ab05a3192"
+      }),
+      this.$store.dispatch({
+        type: "loadHomeUser",
+        userId: "5c9bf92867d3be5ab05a3195"
+      }),
+      this.$store.dispatch({
+        type: "loadHomeUser",
+        userId: "5c9bf92867d3be5ab05a31a0"
+      })
+    ];
   },
   methods: {
     moveToUsers(dest) {
@@ -44,12 +67,16 @@ export default {
   computed: {
     topDests() {
       return this.$store.getters.topDests;
+    },
+    homeUsers() {
+      return this.$store.getters.homeUsers;
     }
   },
   components: {
     MainHeader,
     CitySearch,
-    WhyJoin
+    WhyJoin,
+    UserList
   }
 };
 </script>
@@ -59,10 +86,12 @@ export default {
   margin-top: -70px;
   padding-bottom: 50px;
   text-align: center;
-}
-
-h1 {
-  margin-bottom: 40px;
+  .user-list-title {
+    margin-top: 30px;
+  }
+  h1 {
+    margin-bottom: 40px;
+  }
 }
 
 .cities-gallery {
@@ -175,7 +204,7 @@ h1 {
 @media (max-width: 568px) {
   .cities-gallery {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(11, 180px);
+    grid-template-rows: repeat(10, 180px);
     grid-gap: 5px;
     margin: 5px;
     .Paris {

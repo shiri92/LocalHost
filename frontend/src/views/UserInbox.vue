@@ -7,7 +7,9 @@
         <div class="nav-item">Calendar</div>
       </nav>
       <div class="main-content">
+        <h3 v-if="user && user.requests.length===0">Your Inbox Is Empty...</h3>
         <div
+          v-else
           class="request flex flex-row space-between align-center"
           :class="{'animation':request.isAccepted, 'fadeOutLeft':request.isAccepted}"
           :key="idx"
@@ -85,6 +87,7 @@ h2 {
       flex-grow: 1;
       margin-right: 20px;
       .nav-item {
+        max-width: 150px;
         padding: 10px;
         background-color: #fff;
         margin-bottom: 20px;
