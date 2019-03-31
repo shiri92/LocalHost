@@ -4,13 +4,13 @@
       <div class="nav-container">
         <div class="nav" v-if="getCurrUser">
           <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleGuests'">
-            <div class="nav-item">Guest</div>
+            <div class="nav-item">Guests</div>
           </router-link>
           <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleHosts'">
             <div class="nav-item">Hosts</div>
           </router-link>
           <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleDetails'">
-            <div class="nav-item">Detail</div>
+            <div class="nav-item">Details</div>
           </router-link>
         </div>
       </div>
@@ -30,11 +30,14 @@ export default {
   created() {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
+    if (this.getCurrUser)
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/scheduleManager/scheduleGuests');
   },
   methods: {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
-    }
+    },
+
   },
   computed: {
     getCurrUser() {
@@ -63,15 +66,15 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 25vh;
+  height: 40vh;
   background-image: url("../../public/img/schedule-manager.jpg");
   background-size: cover;
   background-position: center center;
   .nav-container {
     display: flex;
     align-items: center;
-    height: 30%;
-    padding: 10px;
+    // height: 30%;
+    // padding: 10px;
     margin-bottom: 5px;
     background-color: rgb(66, 66, 66);
     opacity: 0.9;
@@ -79,7 +82,7 @@ export default {
       display: flex;
       justify-content: space-between;
       width: 70%;
-      padding: 10px;
+      // padding: 10px;
       margin: 0 auto;
       color: white;
       .nav-item {

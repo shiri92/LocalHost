@@ -5,8 +5,8 @@
     :class="{'users-head': $route.path !== '/'}"
   >
     <div class="header-title" v-if="$route.path === '/'">
-      <h1>Find a Place To Stay On Your Trip</h1>
-      <h2>The Ultimate Travel Experience!</h2>
+      <h1 class="big-title-home">Find a Place To Stay On Your Trip</h1>
+      <h2 class="small-title-home">The Ultimate Travel Experience!</h2>
       <button class="btn" type="success" @click="$router.push('/signup')" round>Join</button>
     </div>
     <img
@@ -95,7 +95,9 @@ h2 {
 
 .btn {
   font-size: 1.5rem;
+  // font-size: 1.5vw;
   width: 200px;
+  // width: 12vw;
   margin: 10px;
   border-radius: 40px;
   padding: 12px 23px;
@@ -159,6 +161,16 @@ h2 {
 @media (max-width: 400px) {
   .main-header {
     background-position: top center;
+    .big-title-home {
+      font-size: 1.3rem;
+    }
+    .small-title-home {
+      font-size: 0.8rem;
+    }
+    .btn {
+      font-size: 1rem;
+      width: 100px;
+    }
   }
 }
 </style>

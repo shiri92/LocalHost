@@ -99,7 +99,17 @@ export default {
     },
     setReview() {
       if (!this.loggedUser) {
-        console.log('Only registered users can send reviews!');
+        const Toast = this.$swal.mixin({
+          toast: true,
+          position: "bottom-start",
+          showConfirmButton: false,
+          timer: 3000
+        });
+
+        Toast.fire({
+          type: "info",
+          title: `Please Sign In To Add Review...`
+        });
         return;
       }
       if ((this.review.getAsAHost || this.review.getAsAGuest) && this.review.description && this.review.rating) {
