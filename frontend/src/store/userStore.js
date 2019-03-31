@@ -6,6 +6,7 @@ export default {
   state: {
     currSocket: [],
     currUsers: [],
+    homeUsers: [],
     currUser: null,
     loggedUser: null
   },
@@ -18,6 +19,9 @@ export default {
     },
     loggedUser(state) {
       return state.loggedUser;
+    },
+    homeUsers(state) {
+      return state.homeUsers;
     }
   },
 
@@ -42,11 +46,14 @@ export default {
       state.currSocket.disconnect();
       state.currSocket = null;
     },
-    setCurrUsers(state, { users }) {
+    setCurrUsers(state, { users }) {      
       state.currUsers = users;
     },
     setCurrUser(state, { user }) {
       state.currUser = user;
+    },
+    setHomeUser(state, { user }) {
+      state.homeUsers.push(user); 
     },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
@@ -118,6 +125,10 @@ export default {
     async loadUser(context, { userId }) {
       let user = await userService.getById(userId);
       context.commit({ type: "setCurrUser", user });
+    },
+    async loadHomeUser(context, { userId }) {      
+      let user = await userService.getById(userId);
+      context.commit({ type: "setHomeUser", user });
     },
     async updateLoggedUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);

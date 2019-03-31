@@ -47,8 +47,13 @@ export default {
 
 <style lang="scss" scoped>
 .why-join {
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding: 50px 0;
+  margin: 50px 0;
+  // background-color: rgb(104, 96, 96);
+  background-image: url(https://images.pexels.com/photos/45848/kumamoto-japan-aso-cloud-45848.jpeg?cs=srgb&dl=clouds-light-mountains-45848.jpg&fm=jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
   h1 {
     margin-bottom: 20px;
   }
