@@ -103,10 +103,15 @@ h2 {
 
 .arrow-down {
   position: absolute;
-  top: 25%;
+  top: 85vh;
   width: 90px;
   height: 90px;
   cursor: pointer;
+}
+@media (max-width: 1050px) {
+  .arrow-down {
+    display: none;
+  }
 }
 
 .bounce {
