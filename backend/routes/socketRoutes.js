@@ -19,13 +19,16 @@ function addRoutes(io) {
             }
         });
 
-        socket.on('sendRequest', (request) => {
-            let targetId = request.recipient.id;
+        socket.on('sendRequest', (targetId, request) => {
             let targetSocket = findSocketByUserId(targetId);
-            if (targetSocket) {
-                targetSocket.emit('sendRequest', request);
-            }
+            if (targetSocket) targetSocket.emit('sendRequest', request);
         });
+
+        socket.on('sendResponse', (targetId, response) => {
+            let targetSocket = findSocketByUserId(targetId);
+            if (targetSocket) targetSocket.emit('sendResponse', response);
+        });
+
         socket.on('sendReview', (review) => {
             io.sockets.emit('sendReview', review);
         });

@@ -27,7 +27,7 @@
         <div class="flex justify-center align-center flex-col">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-            <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
+            <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request!
             </button>
           </div>
@@ -69,15 +69,11 @@
             id="references"
           ></profile-references>
         </div>
-        <guest-request
-          @requestOff="requestFormOff"
-          v-if="showRequestForm"
-          @sendRequest="sendRequest"
-        ></guest-request>
+        <guest-request v-if="showRequestForm" @hideRequestForm="hideRequestForm"></guest-request>
       </div>
     </div>
     <div class="mobile" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-      <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
+      <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
         <font-awesome-icon icon="couch"/>&nbsp;Send Request!
       </button>
     </div>
@@ -113,9 +109,9 @@ export default {
       var scrollPos = window.scrollY;
       if (scrollPos > 310) {
         vm.narrowNav(true);
-      } else {
-        vm.narrowNav(false);
+        return;
       }
+      vm.narrowNav(false);
     });
 
     window.addEventListener("resize", this.handleResize);
@@ -133,13 +129,10 @@ export default {
     narrowNav(state) {
       this.isNavInDisplay = state;
     },
-    sendRequest() {
-      this.requestFormOff();
-    },
-    requestFormOn() {
+    revealRequestForm() {
       this.showRequestForm = true;
     },
-    requestFormOff() {
+    hideRequestForm() {
       this.showRequestForm = false;
     },
     handleResize() {

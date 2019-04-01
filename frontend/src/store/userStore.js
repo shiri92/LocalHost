@@ -1,14 +1,16 @@
 /* ----- DEPEND -----*/
 import userService from "../services/userService.js";
 import socketService from "../services/socketService.js";
+import utilService from '../services/utilService.js';
 
 export default {
   state: {
-    currSocket: [],
+    currSocket: null,
+    loggedUser: null,
+    currUser: null,
     currUsers: [],
     homeUsers: [],
-    currUser: null,
-    loggedUser: null
+    currRequests: [],
   },
   getters: {
     currUsers(state) {
@@ -22,38 +24,52 @@ export default {
     },
     homeUsers(state) {
       return state.homeUsers;
+    },
+    emptyRequest(state) {
+      return {
+        isAccepted: false,
+        source: {
+          id: state.loggedUser._id,
+          firstName: state.loggedUser.firstName,
+          lastName: state.loggedUser.lastName,
+          imgUrl: state.loggedUser.imgUrl,
+          address: state.loggedUser.address,
+        }
+      }
+    },
+    emptyResponse(state) {
+      return {
+        isAccepted: true,
+        source: {
+          id: state.loggedUser._id,
+          firstName: state.loggedUser.firstName,
+          lastName: state.loggedUser.lastName,
+          imgUrl: state.loggedUser.imgUrl,
+          address: state.loggedUser.address,
+          placeDetails: state.loggedUser.placeDetails,
+        }
+      }
+    },
+    currRequests(state) {
+      return state.currRequests;
     }
   },
 
   mutations: {
     setLoggedUser(state, { user }) {
       state.loggedUser = user;
-      if (user) {
-        let { _id } = user;
-        state.currSocket = socketService.connect(_id);
-        state.currSocket.on("sendRequest", request => {
-          this.commit({ type: "addRequest", request });
-        });
-        state.currSocket.on("sendReview", review => {
-          // if user on the profile of the one got reviewd
-          if (state.currUser._id === review.recipient.id)
-            this.commit({ type: "addReview", review });
-        });
-      }
     },
     logout(state) {
       state.loggedUser = null;
-      state.currSocket.disconnect();
-      state.currSocket = null;
     },
-    setCurrUsers(state, { users }) {      
+    setCurrUsers(state, { users }) {
       state.currUsers = users;
     },
     setCurrUser(state, { user }) {
       state.currUser = user;
     },
     setHomeUser(state, { user }) {
-      if (state.homeUsers.length < 4) state.homeUsers.push(user); 
+      if (state.homeUsers.length < 4) state.homeUsers.push(user);
     },
     setCurrUserImg(state, { imgUrl }) {
       state.currUser.imgUrl = imgUrl;
@@ -61,62 +77,79 @@ export default {
     setLoggedUserImg(state, { imgUrl }) {
       state.loggedUser.imgUrl = imgUrl;
     },
-    addRequest(state, { request }) {
-      state.loggedUser.requests.push(request);
+    addPendingRequest(state, { request }) {
+      state.loggedUser.pendingRequests.push(request);
+    },
+    addAcceptedRequest(state, { request }) {
+      state.loggedUser.acceptedRequests.push(request);
+    },
+    addAcceptedResponse(state, { response }) {
+      state.loggedUser.acceptedResponses.push(response);
     },
     addReview(state, { review }) {
       state.currUser.references.push(review);
     },
-    removeRequest(state, { _id }) {
-      let idx = state.loggedUser.requests.findIndex(
-        request => request._id === _id
-      );
-      state.loggedUser.requests.splice(idx, 1);
+    deletePendingRequest(state, { requestId }) {
+      let idx = state.loggedUser.pendingRequests.findIndex(request => request._id === requestId);
+      state.loggedUser.pendingRequests.splice(idx, 1);
     },
     removeReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(
-        review => reviewId === review._id
-      );
+      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
       state.currUser.references.splice(idx, 1);
     },
-    toggleIsAccepted(state, { _id }) {
-      let idx = state.loggedUser.requests.findIndex(
-        request => request._id === _id
-      );
-      let newReq = JSON.parse(JSON.stringify(state.loggedUser.requests[idx]));
-      newReq.isAccepted = true;
-      state.loggedUser.requests.splice(idx, 1, newReq);
-    },
     updateLoggedUser(state, { user }) {
-      var idx = state.currUsers.findIndex(
-        currUser => currUser._id === user._id
-      );
+      let idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
       state.currUsers.splice(idx, 1, user);
+    },
+    initCurrSocket(state, { user }) {
+      if (user) {
+        let { _id } = user;
+        state.currSocket = socketService.connect(_id);
+
+        state.currSocket.on("sendRequest", request => {
+          this.commit({ type: "addPendingRequest", request });
+          // TODO: show swal 'You Got New Request Check Inobx...!'
+        });
+        state.currSocket.on("sendResponse", response => {
+          this.commit({ type: "addAcceptedResponse", response });
+          // TODO: show swal '~user Approved Your Request, check host details to know more... (link)'
+        });
+        state.currSocket.on("sendReview", review => {
+          // if user on the profile of the one got reviewd
+          if (state.currUser._id === review.recipient.id)
+            this.commit({ type: "addReview", review });
+        });
+      }
     }
   },
   actions: {
     async checkLogged(context) {
       let user = await userService.checkLogged();
-      context.commit({ type: "setLoggedUser", user });
+      if (user) {
+        context.commit({ type: 'setLoggedUser', user });
+        context.commit({ type: 'initCurrSocket', user });
+      }
       return user;
     },
     async login(context, { credentials }) {
       let user = await userService.login(credentials);
-      context.commit({ type: "setLoggedUser", user });
+      if (user) {
+        context.commit({ type: 'setLoggedUser', user });
+        context.commit({ type: 'initCurrSocket', user });
+      }
       return user;
     },
     async logout(context) {
       await userService.logout();
       context.commit({ type: "logout" });
+      context.state.currSocket.disconnect();
+      context.state.currSocket = null;
     },
     async signup(context, { credentials }) {
       let user = await userService.add(credentials);
       let { email } = user;
       let { password } = user;
-      await context.dispatch({
-        type: "login",
-        credentials: { email, password }
-      });
+      await context.dispatch({ type: "login", credentials: { email, password } });
     },
     async loadUsers(context, { city, country }) {
       let users = await userService.query(city, country);
@@ -126,7 +159,7 @@ export default {
       let user = await userService.getById(userId);
       context.commit({ type: "setCurrUser", user });
     },
-    async loadHomeUser(context, { userId }) {      
+    async loadHomeUser(context, { userId }) {
       let user = await userService.getById(userId);
       context.commit({ type: "setHomeUser", user });
     },
@@ -134,17 +167,30 @@ export default {
       await userService.updateUserImg(imgUrl, userId);
       context.commit({ type: "setLoggedUserImg", imgUrl });
     },
-    async addRequest(context, { request }) {
-      let res = await userService.addRequest(request);
-      context.state.currSocket.emit("sendRequest", res);
-      // TODO: show sweet alert...
+    async sendRequest(context, { request, targetId }) {
+      request.arrivalDate = utilService.getTimeStamp(request.arrivalDate);
+      request.leavingDate = utilService.getTimeStamp(request.leavingDate);
+      let res = await userService.sendRequest(request, targetId);
+      context.state.currSocket.emit('sendRequest', targetId, res);
     },
-    async removeRequest(context, { request }) {
-      let { _id } = request;
-      let { recipient } = request;
-      await userService.removeRequest(recipient.id, _id);
-      context.commit({ type: "toggleIsAccepted", _id });
-      // TODO: show sweet alert...
+    async acceptRequest(context, { request, targetId }) {
+      await userService.acceptRequest(request, targetId);
+      request.isAccepted = true; // fire the fade animation
+      setTimeout(() => {
+        context.commit({ type: 'deletePendingRequest', requestId: request._id });
+        context.commit({ type: 'addAcceptedRequest', request });
+      }, 1000);
+    },
+    async declineRequest(context, { request, targetId }) {
+      await userService.declineRequest(request._id, targetId);
+      request.isAccepted = true; // fire the fade animation
+      setTimeout(() => {
+        context.commit({ type: 'deletePendingRequest', requestId: request._id });
+      }, 1000);
+    },
+    async sendResponse(context, { response, targetId }) {
+      let res = await userService.sendResponse(response, targetId);
+      context.state.currSocket.emit('sendResponse', targetId, res)
     },
     async addReview(context, { review }) {
       let res = await userService.addReview(review);
@@ -158,23 +204,9 @@ export default {
       context.commit({ type: "removeReview", reviewId });
       // TODO: show sweet alert...
     },
-
     async updateReview(context, { currUserId, review }) {
       await userService.updateReview(currUserId, review);
       // context.commit({ type: "updateReview", review });
-    },
-
-    async bookGuest(context, { request }) {
-      let { sender, recipient } = request;
-      await userService.bookGuest(sender, recipient);
-      // TODO: update frontend...
-      // TODO: show sweet alert...
-    },
-    async bookHost(context, { request }) {
-      let { sender, recipient } = request;
-      await userService.bookHost(sender, recipient);
-      // TODO: update frontend...
-      // TODO: show sweet alert...
     },
     async updateUserImg(context, { imgUrl, userId }) {
       await userService.updateUserImg(imgUrl, userId);
