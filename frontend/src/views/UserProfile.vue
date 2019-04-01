@@ -44,7 +44,6 @@
           </div>
         </div>
       </div>
-
       <div class="main-desc">
         <div class="cmps" id="cmps">
           <nav class="main-desc-nav">

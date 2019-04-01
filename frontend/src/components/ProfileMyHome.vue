@@ -10,10 +10,6 @@
             <span class="ans">{{pref.guestCapacity}}</span>
           </li>
           <li class="info-item">
-            Last-Minute Requests Okay?
-            <span class="ans">{{(pref.isLastMinReq)? 'Yes':'No'}}</span>
-          </li>
-          <li class="info-item">
             Preferred Gender to Host:
             <span class="ans">{{pref.guestGenderPref}}</span>
           </li>
@@ -27,7 +23,7 @@
           </li>
           <li class="info-item">
             Smoking Allowed?
-            <span class="ans">{{(pref.isDisabledAccessible)? 'Yes':'No'}}</span>
+            <span class="ans">{{(pref.isSmokingAllowed)? 'Yes':'No'}}</span>
           </li>
         </ul>
         <ul class="pref-list flex flex-col">

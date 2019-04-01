@@ -3,7 +3,7 @@
     <div class="side-profile">
       <img class="profile-img" :src="getLoggedUser.imgUrl" alt>
       <div class="profile-name">{{user.firstName}} {{user.lastName}}</div>
-      <div class="profile-loc">{{user.address.city}}, {{user.address.country}}</div>
+      <div class="profile-loc">{{(user.address.city) ? user.address.city + ',' : ''}} {{user.address.country}}</div>
       <hr>
       <input name="file" id="file" class="input-file" type="file" @change="updateImg">
       <label for="file">Upload Picture</label>
@@ -125,7 +125,7 @@
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
-              <option value="lot">More than 3</option>
+              <option value="More Than 3">More than 3</option>
             </select>
           </div>
           <div class="form-item flex space-between">
@@ -135,7 +135,7 @@
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
-              <option value="lot">More than 3</option>
+              <option value="More Than 3">More than 3</option>
             </select>
           </div>
         </div>
@@ -176,9 +176,15 @@ export default {
     setAddres(ev) {
       let str = ev.formatted_address;
       let idx = str.indexOf(',');
-      let currCity = str.substr(0, idx);
-      let currCountry = str.substr(idx + 2, str.length - 1);
-      this.user.address = { city: currCity, country: currCountry };
+      if (idx !== -1) {
+        let currCity = str.substr(0, idx);
+        let currCountry = str.substr(idx + 2, str.length - 1);
+        this.user.address = { city: currCity, country: currCountry };
+      } else {
+        let currCity = '';
+        let currCountry = str;
+        this.user.address = { city: currCity, country: currCountry };
+      }
     },
     async updateImg(ev) {
       let { userId } = this.$route.params;
