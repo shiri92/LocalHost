@@ -87,6 +87,7 @@ h2 {
       flex-grow: 1;
       margin-right: 20px;
       .nav-item {
+        margin-bottom: 20px;
         max-width: 150px;
         padding: 10px;
         background-color: #fff;
