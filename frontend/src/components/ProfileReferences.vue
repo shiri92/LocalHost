@@ -143,6 +143,7 @@ export default {
   props: ["user", "loggedUser"],
   data() {
     return {
+      show: false,
       isFromGuestsClicked: true,
       isFromHostsClicked: false,
       isReviewFormOpen: false,

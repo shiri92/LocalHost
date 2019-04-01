@@ -22,7 +22,9 @@
           :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"
         ></div>
         <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
-        <div class="profile-loc">{{currUser.address.city}}, {{currUser.address.country}}</div>
+        <div
+          class="profile-loc"
+        >{{(currUser.address.city) ? currUser.address.city + ',' : ''}} {{currUser.address.country}}</div>
         <hr>
         <div class="flex justify-center align-center flex-col">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>

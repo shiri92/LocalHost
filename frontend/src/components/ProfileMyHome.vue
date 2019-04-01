@@ -35,9 +35,6 @@
             Has Children?
             <span class="ans">{{pref.children}}</span>
           </li>
-          <!-- <li class="info-item">Smoking at Home?
-            <span class="ans">{{(pref.isSmoking)? 'Yes':'No'}}</span>
-          </li>-->
           <li class="info-item">
             Disabled Accessible?
             <span class="ans">{{(pref.isDisabledAccessible)? 'Yes':'No'}}</span>

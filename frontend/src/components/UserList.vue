@@ -29,6 +29,7 @@ export default {
 <style lang="scss" scoped>
 .list-container {
   margin: 20px;
+  text-align: center;
   .profile-list {
     display: grid;
     width: 100%;
@@ -37,7 +38,7 @@ export default {
     justify-content: center;
     .profile-list-item {
       list-style: none;
-      width: 100%;
+      width: 90%;
     }
   }
 }
