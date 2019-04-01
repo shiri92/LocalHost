@@ -7,6 +7,8 @@
     <hr>
     <div class="content flex flex-col">
       <el-form :inline="false" :model="requestInfo" class="demo-form-inline">
+        <label for="date">Choose dates:</label>
+        <v-date-picker mode="range" v-model="selectedDate" show-caps></v-date-picker>
         <b-form-group class="input" required>
           Start Date:
           <b-form-input type="date" v-model="requestInfo.startDate" required/>End Date:
@@ -41,6 +43,10 @@ export default {
         startDate: "",
         endDate: "",
         message: ""
+      },
+      selectedDate: {
+        start: new Date(2019, 3, 9),
+        end: new Date(2019, 3, 18)
       }
     };
   },
@@ -102,7 +108,7 @@ export default {
         this.requestInfo.endDate &&
         this.requestInfo.message
       );
-    },
+    }
   },
   computed: {
     getLoggedUser() {

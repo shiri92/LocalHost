@@ -1,7 +1,7 @@
 <template>
   <section class="user-window flex flex-col align-center">
     <div class="top flex">
-      <img class="user-img" :src="getLoggedUser.imgUrl">
+      <img class="user-img" :style="'background-image: url(' + getLoggedUser.imgUrl +')'">
       <div class="details">
         <div class="name">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
         <div>{{getLoggedUser.email}}</div>
@@ -71,6 +71,7 @@ export default {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  background-size: cover;
 }
 
 .bottom {
