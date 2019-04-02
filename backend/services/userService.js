@@ -15,15 +15,15 @@ module.exports = {
   query,
   getById,
   add,
-  addRequest,
+  addPendingRequest,
+  addAcceptedRequest,
+  addAcceptedResponse,
   addReview,
   removeReview,
   updateReview,
-  removeRequest,
   updateUserImg,
-  bookGuest,
-  bookHost,
-  update
+  update,
+  deletePendingRequest
 };
 
 FillDB();
@@ -37,6 +37,7 @@ async function FillDB() {
     .toArray();
   if (res.length === 0) addMany(_createUsers());
 }
+
 // Fill Mongo Data Base (will be on mongo service)
 async function addMany(users) {
   let db = await mongoService.connect();
@@ -93,17 +94,47 @@ async function add(credentials) {
   return credentials;
 }
 
-// ADD User Request
-async function addRequest(request) {
+// ADD Pending Request
+async function addPendingRequest(targetId, request) {
   request._id = new ObjectId();
+  request.source.id = new ObjectId(request.source.id);
+
   let db = await mongoService.connect();
   await db
     .collection(USERS_COLLECTION)
     .updateOne(
-      { _id: new ObjectId(request.recipient.id) },
-      { $push: { requests: request } }
+      { _id: new ObjectId(targetId) },
+      { $push: { pendingRequests: request } }
     );
   return request;
+}
+
+// ADD Accepted Request
+async function addAcceptedRequest(targetId, request) {
+  request._id = new ObjectId(request._id);
+  request.source.id = new ObjectId(request.source.id);
+
+  let db = await mongoService.connect();
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(targetId) },
+      { $push: { acceptedRequests: request } }
+    );
+}
+
+// ADD Accepted Response
+async function addAcceptedResponse(targetId, response) {
+  response._id = new ObjectId(response._id);
+  response.source.id = new ObjectId(response.source.id);
+  let db = await mongoService.connect();
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(targetId) },
+      { $push: { acceptedResponses: response } }
+    );
+  return response;
 }
 
 // ADD User Review
@@ -117,6 +148,16 @@ async function addReview(review) {
       { $push: { references: review } }
     );
   return review;
+}
+
+// DELETE Pending Request
+async function deletePendingRequest(targetId, requestId) {
+  console.log(targetId, requestId, 'hereee');
+  let db = await mongoService.connect();
+  return await db.collection(USERS_COLLECTION).updateOne(
+    { _id: new ObjectId(targetId) },
+    { $pull: { pendingRequests: { _id: new ObjectId(requestId) } } }
+  );
 }
 
 // DELETE User Review
@@ -143,17 +184,6 @@ async function updateReview(currUserId, review) {
   return review;
 }
 
-// DELETE User Request
-async function removeRequest(currUserId, requestId) {
-  let db = await mongoService.connect();
-  await db
-    .collection(USERS_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(currUserId) },
-      { $pull: { requests: { _id: new ObjectId(requestId) } } }
-    );
-}
-
 // UPDATE User
 async function update(user) {
   user._id = new ObjectId(user._id);
@@ -170,27 +200,6 @@ async function updateUserImg(imgUrl, userId) {
     .updateOne({ _id: new ObjectId(userId) }, { $set: { imgUrl: imgUrl } });
 }
 
-// (UPDATE HOST USER) Book Guest
-async function bookGuest(hostId, newGuest) {
-  let db = await mongoService.connect();
-  await db
-    .collection(USERS_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(hostId) },
-      { $addToSet: { guests: newGuest } }
-    );
-}
-
-// (UPDATE GUEST USER) Book Host
-async function bookHost(guestId, newHost) {
-  let db = await mongoService.connect();
-  await db
-    .collection(USERS_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(guestId) },
-      { $addToSet: { hosts: newHost } }
-    );
-}
 
 // Create User
 function _createUser(
@@ -243,7 +252,7 @@ function _createUser(
   };
 }
 
-// Generate Users Sample
+// CREATE Users
 function _createUsers() {
   let users = [];
   users.push(

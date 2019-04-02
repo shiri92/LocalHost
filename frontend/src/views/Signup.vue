@@ -95,28 +95,13 @@ export default {
   },
 
   methods: {
-    next() {
+    async next() {
       if (!this.checkForm()) return;
-
       if (this.active === 1) {
         if (!this.checkForm2()) return;
-
-        this.$store
-          .dispatch({ type: "signup", credentials: this.form })
-          .then(() => {
-            this.$router.push("/userProfile/" + this.getLoggedUser._id);
-            const Toast = this.$swal.mixin({
-              toast: true,
-              position: "bottom-start",
-              showConfirmButton: false,
-              timer: 3000
-            });
-
-            Toast.fire({
-              type: "success",
-              title: `You Have Signed Up Successfully`
-            });
-          });
+        await this.$store.dispatch({ type: "signup", credentials: this.form })
+        this.$router.push("/userProfile/" + this.getLoggedUser._id);
+        this.popToast('success', 'bottom-start', 3000, 'You Have Successfully Signed Up! ')
       }
       if (this.active++ > 1) this.active = 0;
     },
@@ -146,6 +131,19 @@ export default {
         this.form.address
       );
     }
+  },
+  popToast(type, position, timer, title) {
+    const Toast = this.$swal.mixin({
+      toast: true,
+      position: position,
+      showConfirmButton: false,
+      timer: timer
+    });
+
+    Toast.fire({
+      type: type,
+      title: title
+    });
   },
   computed: {
     getLoggedUser() {

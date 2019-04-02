@@ -11,7 +11,7 @@
             <span>&nbsp;{{profile.address.city}}, {{profile.address.country}}</span>
           </div>
           <stars-toshow :value="rateAverage" :disabled="true"></stars-toshow>
-          <div class="personal-description">Live very close to the gran plase.</div>
+          <div class="personal-description">{{profile.lineDescription}}</div>
           <div>Click for more information...</div>
         </div>
       </div>
