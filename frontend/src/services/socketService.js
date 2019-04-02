@@ -8,10 +8,6 @@ function connect(userId) {
     return io(serverUrl, { query: `userId=${userId}` });
 }
 
-function getSocket() {
-    return socket;
-}
-
 function disconnect() {
     socket.disconnect();
 }
@@ -20,5 +16,4 @@ function disconnect() {
 export default {
     connect,
     disconnect,
-    getSocket
 }

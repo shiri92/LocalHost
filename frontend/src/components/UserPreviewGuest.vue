@@ -4,11 +4,11 @@
       <div class="card">
         <div class="main">
           <div class="user">
-            <div class="avatar" :style="'background-image: url(' + profile.sender.imgUrl + ')'"></div>
+            <div class="avatar" :style="'background-image: url(' + request.source.imgUrl + ')'"></div>
             <div class="user-details">
-              <h3>{{profile.sender.firstName}} {{profile.sender.lastName}}</h3>
+              <h3>{{request.source.firstName}} {{request.source.lastName}}</h3>
               <span class="location">
-                <span>{{profile.sender.address.city}}, {{profile.sender.address.country}}</span>
+                <span>{{request.source.address.city}}, {{request.source.address.country}}</span>
               </span>
 
               <span class="date">
@@ -20,10 +20,10 @@
                 <!-- <span>{{ 1553967058 | time }}</span> -->
               </span>
               <span class="date">
-                <span>Arrival Date: {{profile.sender.endDate}}</span>
+                <span>Arrival Date: {{request.arrivalDate}}</span>
               </span>
               <span class="date">
-                <span>Leaving Date: {{profile.sender.endDate}}</span>
+                <span>Leaving Date: {{request.leavingDate}}</span>
               </span>
             </div>
           </div>
@@ -36,20 +36,11 @@
 <script>
 import StarsToshow from "../components/RateStarsToShow";
 export default {
-  props: ["profile"],
+  props: ['request'],
   components: {
     StarsToshow
   },
   computed: {
-    rateAverage() {
-      let sum = 0;
-      let divider = this.profile.references.length;
-      return this.profile.references.reduce((acc, review) => {
-        sum += +review.rating;
-        acc = sum / divider;
-        return acc;
-      }, 0);
-    },
     getDateFormatted() {
       return moment.locale("12-25-1995");
     }
