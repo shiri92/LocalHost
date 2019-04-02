@@ -33,12 +33,12 @@ export default {
   .profile-list {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 350px));
+    grid-template-columns: repeat(auto-fit, minmax(290px, 275px));
     gap: 20px;
     justify-content: center;
     .profile-list-item {
       list-style: none;
-      width: 90%;
+      width: 100%;
     }
   }
 }

@@ -58,7 +58,7 @@ li {
         background-size: cover;
         background-repeat: no-repeat;
         top: -60px;
-        left: 75px;
+        left: 60px;
         margin-top: 10px;
       }
       .user-details {
