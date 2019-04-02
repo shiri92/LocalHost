@@ -18,6 +18,7 @@
         :style="'background-image: url(' + dest.imgUrl + ')'"
       >
         <div class="city-name" @click="moveToUsers(dest)">{{dest.name}}</div>
+        <div class="overlay">Something</div>
       </div>
     </div>
   </div>
@@ -33,11 +34,12 @@ export default {
   name: "home",
   data() {
     return {
-      users: null
+      users: null,
     };
   },
   created() {
     this.$store.dispatch({ type: "loadTopDests" });
+    this.$store.dispatch({ type: "loadUsers" });
     let arr = [
       this.$store.dispatch({
         type: "loadHomeUser",
@@ -62,7 +64,7 @@ export default {
       let destCountry = dest.country;
       let destCity = dest.name;
       this.$router.push("/users/" + destCountry + "&" + destCity);
-    }
+    },
   },
   computed: {
     topDests() {
@@ -70,7 +72,10 @@ export default {
     },
     homeUsers() {
       return this.$store.getters.homeUsers;
-    }
+    },
+    getUsers() {
+      return this.$store.getters.currUsers;
+    },
   },
   components: {
     MainHeader,
@@ -102,6 +107,7 @@ export default {
   grid-gap: 20px;
   margin-top: 40px;
   .img-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -109,6 +115,13 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+    transition: 0.5s ease;
+    &:hover {
+      opacity: 0.8;
+      .overlay {
+        opacity: 1;
+      }
+    }
   }
   .Bangkok {
     grid-column: span 1;
@@ -164,6 +177,20 @@ export default {
   //   grid-row: span 1;
   //   background-color: #1dbf73;
   // }
+}
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.9);
+  color: #f1f1f1;
+  width: 100%;
+  transition: 0.5s ease;
+  opacity: 0;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
 }
 
 @media (max-width: 1200px) {

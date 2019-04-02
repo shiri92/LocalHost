@@ -6,7 +6,9 @@
     </div>
     <hr>
     <div class="content flex flex-col">
-      <el-form :model="info" :inline="false" class="demo-form-inline">
+      <el-form :inline="false" :model="info" class="demo-form-inline">
+        <label for="date">Choose dates:</label>
+        <v-date-picker mode="range" v-model="info" show-caps></v-date-picker>
         <b-form-group class="input" required>
           Start Date:
           <b-form-input type="date" v-model="info.arrivalDate" required/>End Date:
@@ -39,10 +41,10 @@ export default {
   data() {
     return {
       info: {
-        arrivalDate: null,
-        leavingDate: null,
+        arrivalDate: new Date(),
+        leavingDate: new Date(),
         description: "",
-      }
+      },
     };
   },
   methods: {

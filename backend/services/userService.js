@@ -4,7 +4,7 @@ const cloudService = require("./cloudService");
 const ObjectId = require("mongodb").ObjectId;
 
 /* ----- CONST -----*/
-const USERS_COLLECTION = "usersTEST";
+const USERS_COLLECTION = "users";
 const MALE_IMG =
   "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566744/profile-imgs/default-male.png";
 const FEMALE_IMG =
@@ -201,8 +201,19 @@ async function updateUserImg(imgUrl, userId) {
 }
 
 
-// CREATE User
-function _createUser(email, password, firstName, lastName, gender, birthdate, address, imgurl) {
+// Create User
+function _createUser(
+  email,
+  password,
+  firstName,
+  lastName,
+  gender,
+  birthdate,
+  address,
+  imgurl,
+  pictures,
+  lineDescription
+) {
   return {
     /* ----- Personal Details -----*/
     email,
@@ -235,8 +246,9 @@ function _createUser(email, password, firstName, lastName, gender, birthdate, ad
       children: 0
     },
     /* ----- Social Details -----*/
-    pictures: [],
-    references: []
+    pictures: pictures ? pictures : [],
+    references: [],
+    lineDescription: lineDescription ? lineDescription : ""
   };
 }
 
@@ -251,7 +263,10 @@ function _createUsers() {
       "Saar",
       "Male",
       { day: 24, month: 09, year: 1997 },
-      { city: "Berlin", country: "Germany" }
+      { city: "Berlin", country: "Germany" },
+      "",
+      [],
+      "Lives walking distance from the center."
     )
   );
   users.push(
@@ -262,7 +277,10 @@ function _createUsers() {
       "Ron",
       "Female",
       { day: 09, month: 11, year: 1992 },
-      { city: "Barcelona", country: "Spain" }
+      { city: "Barcelona", country: "Spain" },
+      "",
+      [],
+      "Love museums and go to the beach."
     )
   );
   users.push(
@@ -273,7 +291,10 @@ function _createUsers() {
       "Ratzon",
       "Male",
       { day: 19, month: 02, year: 1993 },
-      { city: "Barcelona", country: "Spain" }
+      { city: "Barcelona", country: "Spain" },
+      "",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -285,7 +306,16 @@ function _createUsers() {
       "Female",
       { day: 08, month: 09, year: 1990 },
       { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612551/profile-imgs/jessica-turner/jessica-turner.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612551/profile-imgs/jessica-turner/jessica-turner.jpg",
+      [
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025049/profile-imgs/jessica-turner/jessica6.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025049/profile-imgs/jessica-turner/jessica5.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025049/profile-imgs/jessica-turner/jessica4.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025048/profile-imgs/jessica-turner/jessica3.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718120/profile-imgs/jessica-turner/jessica2.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718120/profile-imgs/jessica-turner/jessica1.jpg"
+      ],
+      "I'm a Tour guide in 'La Sagrada Familia'."
     )
   );
   users.push(
@@ -297,7 +327,16 @@ function _createUsers() {
       "Female",
       { day: 30, month: 10, year: 1992 },
       { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612506/profile-imgs/riley-county/riley-county.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612506/profile-imgs/riley-county/riley-county.jpg",
+      [
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612536/profile-imgs/riley-county/riley6.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612521/profile-imgs/riley-county/riley1.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612512/profile-imgs/riley-county/riley3.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612508/profile-imgs/riley-county/riley4.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612508/profile-imgs/riley-county/riley2.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612507/profile-imgs/riley-county/riley5.jpg"
+      ],
+      "Like walking in the observation park."
     )
   );
   users.push(
@@ -309,7 +348,9 @@ function _createUsers() {
       "Female",
       { day: 11, month: 07, year: 1994 },
       { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717922/profile-imgs/chloe-edwards/chloe-edwards.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717922/profile-imgs/chloe-edwards/chloe-edwards.jpg",
+      [],
+      "Go to baking department every Saturday."
     )
   );
   users.push(
@@ -321,7 +362,16 @@ function _createUsers() {
       "Male",
       { day: 14, month: 06, year: 1988 },
       { city: "Rome", country: "Italy" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718495/profile-imgs/rob-nelson/rob-nelson.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718495/profile-imgs/rob-nelson/rob-nelson.jpg",
+      [
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025793/profile-imgs/rob-nelson/rob5.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025790/profile-imgs/rob-nelson/rob6.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025790/profile-imgs/rob-nelson/rob3.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025788/profile-imgs/rob-nelson/rob2.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025787/profile-imgs/rob-nelson/rob1.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025787/profile-imgs/rob-nelson/rob4.jpg"
+      ],
+      "Making the perfect home made pasta."
     )
   );
   users.push(
@@ -333,7 +383,9 @@ function _createUsers() {
       "Male",
       { day: 05, month: 02, year: 1980 },
       { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718458/profile-imgs/rickey-powell/rickey-powell.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718458/profile-imgs/rickey-powell/rickey-powell.jpg",
+      [],
+      "Living only 5 minutes walking from the 'Eiffel Tower'."
     )
   );
   users.push(
@@ -345,7 +397,9 @@ function _createUsers() {
       "Male",
       { day: 08, month: 09, year: 1985 },
       { city: "Rome", country: "Italy" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718169/profile-imgs/kory-turner/kory-turner.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718169/profile-imgs/kory-turner/kory-turner.jpg",
+      [],
+      "Living in the hot center."
     )
   );
   users.push(
@@ -357,7 +411,9 @@ function _createUsers() {
       "Male",
       { day: 12, month: 09, year: 1989 },
       { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718146/profile-imgs/karl-smith/karl-smith.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718146/profile-imgs/karl-smith/karl-smith.jpg",
+      [],
+      "Surf it's my favorite thing in the world."
     )
   );
   users.push(
@@ -369,7 +425,9 @@ function _createUsers() {
       "Female",
       { day: 18, month: 09, year: 1980 },
       { city: "Berlin", country: "Germany" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718438/profile-imgs/penelope-harrison/penelope-harrison.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718438/profile-imgs/penelope-harrison/penelope-harrison.jpg",
+      [],
+      "Living near a craft beer place."
     )
   );
   users.push(
@@ -381,7 +439,9 @@ function _createUsers() {
       "Female",
       { day: 19, month: 10, year: 1980 },
       { city: "Berlin", country: "Germany" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718390/profile-imgs/nora-gray/nora-gray.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718390/profile-imgs/nora-gray/nora-gray.jpg",
+      [],
+      "The best place if you like schnitzel."
     )
   );
   users.push(
@@ -393,7 +453,9 @@ function _createUsers() {
       "Male",
       { day: 15, month: 07, year: 1985 },
       { city: "Rome", country: "Italy" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718410/profile-imgs/oscar-brooks/oscar-brooks.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718410/profile-imgs/oscar-brooks/oscar-brooks.jpg",
+      [],
+      ""
     )
   );
   users.push(
@@ -405,7 +467,9 @@ function _createUsers() {
       "Female",
       { day: 09, month: 05, year: 1982 },
       { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717869/profile-imgs/audrey-collins/audrey-collins.jpg"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717869/profile-imgs/audrey-collins/audrey-collins.jpg",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -416,8 +480,10 @@ function _createUsers() {
       "Rice",
       "Male",
       { day: 09, month: 09, year: 1975 },
-      { city: "Madrid", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718539/profile-imgs/walton-rice/walton-rice.jpg"
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718539/profile-imgs/walton-rice/walton-rice.jpg",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -428,8 +494,10 @@ function _createUsers() {
       "Hayes",
       "Male",
       { day: 21, month: 09, year: 1988 },
-      { city: "Madrid", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718305/profile-imgs/neil-hayes/neil-hayes.jpg"
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718305/profile-imgs/neil-hayes/neil-hayes.jpg",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -440,8 +508,10 @@ function _createUsers() {
       "Shaw",
       "Male",
       { day: 23, month: 01, year: 1989 },
-      { city: "Madrid", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718198/profile-imgs/larry-shaw/larry-shaw.jpg"
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718198/profile-imgs/larry-shaw/larry-shaw.jpg",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -452,8 +522,17 @@ function _createUsers() {
       "Page",
       "Male",
       { day: 30, month: 02, year: 1993 },
-      { city: "New York", country: "NY, USA" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718217/profile-imgs/louis-page/louis-page.jpg"
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718217/profile-imgs/louis-page/louis-page.jpg",
+      [
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025266/profile-imgs/louis-page/louis5.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025266/profile-imgs/louis-page/louis6.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025266/profile-imgs/louis-page/louis3.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025265/profile-imgs/louis-page/louis4.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025265/profile-imgs/louis-page/louis1.jpg",
+        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025265/profile-imgs/louis-page/louis2.jpg"
+      ],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -464,8 +543,10 @@ function _createUsers() {
       "Lee",
       "Female",
       { day: 25, month: 02, year: 1994 },
-      { city: "New York", country: "NY, USA" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718516/profile-imgs/robie-lee/robie-lee.jpg"
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718516/profile-imgs/robie-lee/robie-lee.jpg",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -476,8 +557,10 @@ function _createUsers() {
       "Fisher",
       "Female",
       { day: 27, month: 03, year: 1990 },
-      { city: "New York", country: "NY, USA" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718067/profile-imgs/claire-fisher/claire-fisher.jpg"
+      { city: "Barcelona", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718067/profile-imgs/claire-fisher/claire-fisher.jpg",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -488,8 +571,10 @@ function _createUsers() {
       "Reed",
       "Female",
       { day: 16, month: 11, year: 1992 },
-      { city: "New York", country: "NY, USA" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717888/profile-imgs/aurora-reed/aurora-reed.jpg"
+      { city: "Paris", country: "France" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717888/profile-imgs/aurora-reed/aurora-reed.jpg",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -500,8 +585,10 @@ function _createUsers() {
       "Howard",
       "Female",
       { day: 07, month: 12, year: 1981 },
-      { city: "London", country: "England" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612474/profile-imgs/anna-howard/anna-howard.jpg"
+      { city: "Paris", country: "France" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612474/profile-imgs/anna-howard/anna-howard.jpg",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -512,8 +599,10 @@ function _createUsers() {
       "Jackson",
       "Male",
       { day: 13, month: 10, year: 1991 },
-      { city: "London", country: "England" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718246/profile-imgs/loyd-jackson/loyd-jackson.png"
+      { city: "Paris", country: "France" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718246/profile-imgs/loyd-jackson/loyd-jackson.png",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
   users.push(
@@ -524,8 +613,10 @@ function _createUsers() {
       "Arnolds",
       "Male",
       { day: 17, month: 10, year: 1992 },
-      { city: "London", country: "England" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718289/profile-imgs/lucy-arnolds/lucy-arnolds.png"
+      { city: "Rome", country: "Italy" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718289/profile-imgs/lucy-arnolds/lucy-arnolds.png",
+      [],
+      "Know the BEST Tapas place in the city!"
     )
   );
 

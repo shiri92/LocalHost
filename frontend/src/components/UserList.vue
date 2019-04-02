@@ -29,10 +29,11 @@ export default {
 <style lang="scss" scoped>
 .list-container {
   margin: 20px;
+  text-align: center;
   .profile-list {
     display: grid;
     width: 100%;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 350px));
+    grid-template-columns: repeat(auto-fit, minmax(290px, 275px));
     gap: 20px;
     justify-content: center;
     .profile-list-item {
