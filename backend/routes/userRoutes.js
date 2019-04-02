@@ -75,9 +75,10 @@ function addRoutes(app) {
   });
 
   // ADD User Review
-  app.put(`${BASE}/review`, async (req, res) => {
+  app.put(`${BASE}/:id/review`, async (req, res) => {
     const review = req.body;
-    let result = await userService.addReview(review);
+    const { id } = req.params;
+    let result = await userService.addReview(id, review);
     return res.json(result);
   });
 
@@ -94,14 +95,13 @@ function addRoutes(app) {
   app.delete(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
     const currUserId = req.params.currUserId;
     const reviewId = req.params.reviewId;
-    await userService.removeReview(currUserId, reviewId);
+    await userService.deleteReview(currUserId, reviewId);
     return res.end();
   });
 
   // UPDATE User Review
   app.put(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
     const currUserId = req.params.currUserId;
-    const reviewId = req.params.reviewId;
     const review = req.body;
     await userService.updateReview(currUserId, review);
     return res.end();

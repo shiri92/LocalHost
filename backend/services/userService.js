@@ -19,7 +19,7 @@ module.exports = {
   addAcceptedRequest,
   addAcceptedResponse,
   addReview,
-  removeReview,
+  deleteReview,
   updateReview,
   updateUserImg,
   update,
@@ -138,13 +138,14 @@ async function addAcceptedResponse(targetId, response) {
 }
 
 // ADD User Review
-async function addReview(review) {
-  review._id = ObjectId();
+async function addReview(targetId, review) {
+  review._id = new ObjectId();
+  review.source.id = new ObjectId(review.source.id)
   let db = await mongoService.connect();
   await db
     .collection(USERS_COLLECTION)
     .updateOne(
-      { _id: new ObjectId(review.recipient.id) },
+      { _id: new ObjectId(targetId) },
       { $push: { references: review } }
     );
   return review;
@@ -161,7 +162,7 @@ async function deletePendingRequest(targetId, requestId) {
 }
 
 // DELETE User Review
-async function removeReview(currUserId, reviewId) {
+async function deleteReview(currUserId, reviewId) {
   let db = await mongoService.connect();
   await db
     .collection(USERS_COLLECTION)
@@ -173,15 +174,15 @@ async function removeReview(currUserId, reviewId) {
 
 // UPDATE User Review
 async function updateReview(currUserId, review) {
+  review._id = new ObjectId(review._id);
   let db = await mongoService.connect();
   await db.collection(USERS_COLLECTION).updateOne(
     {
       _id: new ObjectId(currUserId),
-      references: { $elemMatch: { _id: new ObjectId(review._id) } }
+      references: { $elemMatch: { _id: review._id } }
     },
     { $set: { "references.$": review } }
   );
-  return review;
 }
 
 // UPDATE User

@@ -1,11 +1,9 @@
 /* ----- DEPEND -----*/
-import socketService from './socketService';
 import Axios from 'axios';
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
-const BASE_API =
-  process.env.NODE_ENV !== "development" ? "/user" : "//localhost:3003/user";
+const BASE_API = process.env.NODE_ENV !== "development" ? "/user" : "//localhost:3003/user";
 
 
 // Logged User Check (Session Only)
@@ -67,24 +65,19 @@ async function sendResponse(response, targetId) {
   return res.data;
 }
 
-// DELETE User Request
-async function removeRequest(recipientId, requestId) {
-  await axios.delete(`${BASE_API}/${recipientId}/request/${requestId}`);
-}
-
 // ADD User Review
-async function addReview(review) {
-  let res = await axios.put(`${BASE_API}/review`, review);
+async function postReview(review, targetId) {
+  let res = await axios.put(`${BASE_API}/${targetId}/review`, review);
   return res.data;
 }
 
 // DELETE User Review
-async function removeReview(currUserId, reviewId) {
+async function unpostReview(currUserId, reviewId) {
   await axios.delete(`${BASE_API}/${currUserId}/review/${reviewId}`);
 }
 
 // EDIT User Review
-async function updateReview(currUserId, review) {
+async function editReview(currUserId, review) {
   await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
 }
 
@@ -95,7 +88,8 @@ async function update(user) {
 }
 
 // UPDATE Profile Image Url
-async function updateUserImg(imgUrl, userId) {
+async function updatePortrait(imgUrl, userId) {
+  console.log('here', imgUrl, userId);
   await axios.put(`${BASE_API}/${userId}/img`, { imgUrl });
 }
 
@@ -108,12 +102,11 @@ export default {
   getById,
   add,
   sendRequest,
-  addReview,
-  removeReview,
-  updateReview,
-  removeRequest,
+  postReview,
+  unpostReview,
+  editReview,
   update,
-  updateUserImg,
+  updatePortrait,
   acceptRequest,
   declineRequest,
   sendResponse

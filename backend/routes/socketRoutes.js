@@ -29,8 +29,16 @@ function addRoutes(io) {
             if (targetSocket) targetSocket.emit('sendResponse', response);
         });
 
-        socket.on('sendReview', (review) => {
-            io.sockets.emit('sendReview', review);
+        socket.on('postReview', (review, targetId) => {
+            io.sockets.emit('postReview', review, targetId);
+        });
+
+        socket.on('unpostReview', (reviewId, targetId) => {
+            io.sockets.emit('unpostReview', reviewId, targetId);
+        });
+
+        socket.on('editReview', (review, targetId) => {
+            io.sockets.emit('editReview', review, targetId);
         });
 
     });
