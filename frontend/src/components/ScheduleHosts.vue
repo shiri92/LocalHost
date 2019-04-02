@@ -1,19 +1,19 @@
 <template>
   <section class="schedule-hosts">
-    <h3>THIS MONTH</h3>
-    <div class="flex-container clean-list" v-if="currUser">
+    <h3>Coming Soon...</h3>
+    <!-- <div class="flex-container clean-list" v-if="currUser">
       <h2 v-if="currUser.hosts.length===0">No Hosts Yet</h2>
       <router-link
         v-else
         class="guest-list-item"
         :key="currHost._id"
         v-for="(currHost, idx) in currUser.hosts"
-        :to="'/userProfile/' + currHost.sender.id"
-        {{currUser}}
+        :to="'/userProfile/' + currHost.recipient.id"
       >
-        <user-preview-guest :profile="currHost" :idx="idx+1"></user-preview-guest>
-      </router-link>
-    </div>
+        <user-preview-guest :profile="currHost.recipient" :idx="idx+1"></user-preview-guest>
+    </router-link>-->
+    <!-- {{currUser}} -->
+    <!-- </div> -->
     <!-- TODO: Guest Capacity -->
     <!-- <h4>Capacity: {{loggedUser.placeDetails.guestCapacity}}</h4> -->
   </section>

@@ -113,7 +113,7 @@
                 <div>
                   <h5
                     @click="$router.push('/userProfile/' + reference.sender.id)"
-                  >{{reference.sender.firstName}}, {{reference.sender.lastName}}</h5>
+                  >{{reference.sender.firstName}} {{reference.sender.lastName}}</h5>
                   <div>{{reference.sender.address}}</div>
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
@@ -143,6 +143,7 @@ export default {
   props: ["user", "loggedUser"],
   data() {
     return {
+      show: false,
       isFromGuestsClicked: true,
       isFromHostsClicked: false,
       isReviewFormOpen: false,

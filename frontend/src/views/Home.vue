@@ -1,14 +1,13 @@
 <template>
   <div class="home">
     <main-header></main-header>
-    <div class="home-users">
-      <h1>Meet Some Of Our Top Hosts</h1>
-      <user-list :users="homeUsers"></user-list>
-    </div>
+
+    <h1 class="user-list-title">Meet Some Of Our Top Hosts</h1>
+    <user-list :users="homeUsers"></user-list>
+
     <why-join></why-join>
 
     <h1>Top Destinations</h1>
-
     <city-search></city-search>
 
     <div class="cities-gallery grid">
@@ -19,6 +18,7 @@
         :style="'background-image: url(' + dest.imgUrl + ')'"
       >
         <div class="city-name" @click="moveToUsers(dest)">{{dest.name}}</div>
+        <div class="overlay">Something</div>
       </div>
     </div>
   </div>
@@ -34,27 +34,28 @@ export default {
   name: "home",
   data() {
     return {
-      users: null
+      users: null,
     };
   },
   created() {
     this.$store.dispatch({ type: "loadTopDests" });
+    this.$store.dispatch({ type: "loadUsers" });
     let arr = [
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3193"
+        userId: "5ca34f72854aef61a09c0d4c"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3192"
+        userId: "5ca34f72854aef61a09c0d4d"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3195"
+        userId: "5ca34f72854aef61a09c0d4f"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a31a0"
+        userId: "5ca34f72854aef61a09c0d5a"
       })
     ];
   },
@@ -63,7 +64,7 @@ export default {
       let destCountry = dest.country;
       let destCity = dest.name;
       this.$router.push("/users/" + destCountry + "&" + destCity);
-    }
+    },
   },
   computed: {
     topDests() {
@@ -71,7 +72,10 @@ export default {
     },
     homeUsers() {
       return this.$store.getters.homeUsers;
-    }
+    },
+    getUsers() {
+      return this.$store.getters.currUsers;
+    },
   },
   components: {
     MainHeader,
@@ -87,13 +91,12 @@ export default {
   margin-top: -70px;
   padding-bottom: 50px;
   text-align: center;
-  .home-users {
+  .user-list-title {
     margin-top: 50px;
   }
-}
-
-h1 {
-  margin-bottom: 40px;
+  h1 {
+    margin-bottom: 40px;
+  }
 }
 
 .cities-gallery {
@@ -104,6 +107,7 @@ h1 {
   grid-gap: 20px;
   margin-top: 40px;
   .img-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -111,6 +115,13 @@ h1 {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
+    transition: 0.5s ease;
+    &:hover {
+      opacity: 0.8;
+      .overlay {
+        opacity: 1;
+      }
+    }
   }
   .Bangkok {
     grid-column: span 1;
@@ -166,6 +177,20 @@ h1 {
   //   grid-row: span 1;
   //   background-color: #1dbf73;
   // }
+}
+.overlay {
+  position: absolute;
+  bottom: 0;
+  background: rgb(0, 0, 0);
+  background: rgba(0, 0, 0, 0.9);
+  color: #f1f1f1;
+  width: 100%;
+  transition: 0.5s ease;
+  opacity: 0;
+  color: white;
+  font-size: 20px;
+  padding: 10px;
+  text-align: center;
 }
 
 @media (max-width: 1200px) {

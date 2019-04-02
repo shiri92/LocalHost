@@ -32,19 +32,13 @@ export default {
   },
   created() {
     this.currPage = this.$route.path;
+    // if (!this.getLoggedUser)
     this.$store.dispatch({ type: 'checkLogged' })
-      .then(user => {
-        // if (user) {
-        //   const Toast = this.$swal.mixin({
-        //     toast: true,
-        //     position: 'bottom-start',
-        //     showConfirmButton: false,
-        //     timer: 3000
-        //   });
-
-        //   Toast.fire({ type: 'success', title: `Welcome ${user.firstName} ${user.lastName}!` })
-        // }
-      });
+  },
+  computed: {
+    getLoggedUser() {
+      return this.$store.getters.loggedUser;
+    }
   },
   methods: {
     loginFormOff() {

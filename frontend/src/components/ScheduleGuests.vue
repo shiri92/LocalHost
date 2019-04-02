@@ -1,16 +1,16 @@
 <template>
   <section class="schedule-guests">
     <h3>THIS MONTH</h3>
-    <div class="flex-container clean-list" v-if="currUser">
-      <h2 v-if="currUser.guests.length===0">No Guests Yet</h2>
+    <div class="flex-container clean-list" v-if="getLoggedUser">
+      <h2 v-if="getLoggedUser.acceptedRequests.length===0">No Guests Yet</h2>
       <router-link
         v-else
         class="guest-list-item"
-        :key="currGuest._id"
-        v-for="(currGuest, idx) in currUser.guests"
-        :to="'/userProfile/' + currGuest.sender.id"
+        :key="currRequest._id"
+        v-for="(currRequest, idx) in getLoggedUser.acceptedRequests"
+        :to="'/userProfile/' + currRequest.source.id"
       >
-        <user-preview-guest :profile="currGuest" :idx="idx+1"></user-preview-guest>
+        <user-preview-guest :request="currRequest" :idx="idx+1"></user-preview-guest>
       </router-link>
       <button @click="addDatesToCal">Test</button>
       <v-calendar :attributes="attrs"></v-calendar>
@@ -54,10 +54,10 @@ export default {
     };
   },
   computed: {
-    currUser() {
+    getCurrUser() {
       return this.$store.getters.currUser;
     },
-    loggedUser() {
+    getLoggedUser() {
       return this.$store.getters.loggedUser;
     }
   },

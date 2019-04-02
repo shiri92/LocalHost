@@ -11,27 +11,18 @@ const BASE_API =
 // Logged User Check (Session Only)
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
-  // if (res.data) {
-  //   let { _id } = res.data;
-  //   socketService.connect(_id);
-  // }
   return res.data;
 }
 
 // Login User
 async function login(credentials) {
   let res = await axios.put(`${BASE_API}/login`, credentials);
-  // if (res.data) {
-  //   let { _id } = res.data;
-  //   socketService.connect(_id);
-  // }
   return res.data;
 }
 
 // Logout User
 async function logout() {
   await axios.put(`${BASE_API}/logout`);
-  // socketService.disconnect();
 }
 
 // GET Users By Address
@@ -53,10 +44,26 @@ async function add(credentials) {
   return res.data;
 }
 
-// ADD User Request
-async function addRequest(request) {
-  let res = await axios.put(`${BASE_API}/request`, request);
-  // socketService.sendRequest(res.data.recipient.id);
+// Send Pending Request
+async function sendRequest(request, targetId) {
+  let res = await axios.put(`${BASE_API}/${targetId}/pendingRequest`, request);
+  return res.data;
+}
+
+// Accept Pending Request
+async function acceptRequest(request, targetId) {
+  await axios.delete(`${BASE_API}/${targetId}/pendingRequest/${request._id}`);
+  await axios.put(`${BASE_API}/${targetId}/acceptedRequest`, request);
+}
+
+// Decline Pending Request
+async function declineRequest(requestId, targetId) {
+  await axios.delete(`${BASE_API}/${targetId}/pendingRequest/${requestId}`);
+}
+
+// Send Response
+async function sendResponse(response, targetId) {
+  let res = await axios.put(`${BASE_API}/${targetId}/acceptedResponse`, response);
   return res.data;
 }
 
@@ -92,16 +99,6 @@ async function updateUserImg(imgUrl, userId) {
   await axios.put(`${BASE_API}/${userId}/img`, { imgUrl });
 }
 
-// (UPDATE HOST USER) Book Guest
-async function bookGuest(sender, recipient) {
-  const { id } = recipient;
-  await axios.put(`${BASE_API}/${id}/bookGuest`, { sender });
-}
-// (UPDATE GUEST USER) Book Host
-async function bookHost(sender, recipient) {
-  const { id } = sender;
-  await axios.put(`${BASE_API}/${id}/bookHost`, { recipient });
-}
 
 export default {
   checkLogged,
@@ -110,13 +107,14 @@ export default {
   query,
   getById,
   add,
-  addRequest,
+  sendRequest,
   addReview,
-  bookGuest,
-  bookHost,
   removeReview,
   updateReview,
   removeRequest,
   update,
-  updateUserImg
+  updateUserImg,
+  acceptRequest,
+  declineRequest,
+  sendResponse
 };

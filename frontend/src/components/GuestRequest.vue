@@ -2,23 +2,23 @@
   <section class="guest-request">
     <div class="top flex space-between align-center">
       <h1>Request To Stay</h1>
-      <span @click="$emit('requestOff')">&times;</span>
+      <span @click="$emit('hideRequestForm')">&times;</span>
     </div>
     <hr>
     <div class="content flex flex-col">
-      <el-form :inline="false" :model="requestInfo" class="demo-form-inline">
+      <el-form :inline="false" :model="info" class="demo-form-inline">
         <label for="date">Choose dates:</label>
-        <v-date-picker mode="range" v-model="selectedDate" show-caps></v-date-picker>
+        <v-date-picker mode="range" v-model="info" show-caps></v-date-picker>
         <b-form-group class="input" required>
           Start Date:
-          <b-form-input type="date" v-model="requestInfo.startDate" required/>End Date:
-          <b-form-input type="date" v-model="requestInfo.endDate" required/>
+          <b-form-input type="date" v-model="info.arrivalDate" required/>End Date:
+          <b-form-input type="date" v-model="info.leavingDate" required/>
         </b-form-group>
 
         <b-form-group class="input" required>
           <b-form-textarea
+            v-model="info.description"
             id="textarea"
-            v-model="requestInfo.message"
             placeholder="Write a Message..."
             rows="3"
             max-rows="6"
@@ -27,7 +27,7 @@
         </b-form-group>
 
         <div class="btn-container flex justify-center">
-          <button class="btn" @click="onSendRequest">Send Request</button>
+          <button class="btn" @click="onSend">Send</button>
         </div>
       </el-form>
     </div>
@@ -35,79 +35,48 @@
 </template>
 
 <script>
+import utilService from '@/services/utilService.js';
 export default {
   name: "guest-request",
   data() {
     return {
-      requestInfo: {
-        startDate: "",
-        endDate: "",
-        message: ""
+      info: {
+        arrivalDate: new Date(),
+        leavingDate: new Date(),
+        description: "",
       },
-      selectedDate: {
-        start: new Date(2019, 3, 9),
-        end: new Date(2019, 3, 18)
-      }
     };
   },
   methods: {
-    async onSendRequest() {
+    async onSend() {
       if (!this.getLoggedUser) {
-        const Toast = this.$swal.mixin({
-          toast: true,
-          position: "bottom-start",
-          showConfirmButton: false,
-          timer: 3000
-        });
-
-        Toast.fire({
-          type: "info",
-          title: `Please Sign In To Send Request...`
-        });
+        this.popToast('info', 'bottom-start', 3000, `Please Sign In To Continue...`)
         return;
       }
-      if (!this.checkForm()) return;
-      let request = {
-        isAccepted: false,
-        info: this.requestInfo,
-        sender: {
-          id: this.getLoggedUser._id,
-          firstName: this.getLoggedUser.firstName,
-          lastName: this.getLoggedUser.lastName,
-          address: JSON.parse(JSON.stringify(this.getLoggedUser.address)),
-          imgUrl: this.getLoggedUser.imgUrl,
-          startDate: this.requestInfo.startDate,
-          endDate: this.requestInfo.endDate
-        },
-        recipient: {
-          id: this.getCurrUser._id,
-          firstName: this.getCurrUser.firstName,
-          lastName: this.getCurrUser.lastName
-        }
-      };
-      this.$emit("sendRequest");
-      await this.$store
-        .dispatch({ type: "addRequest", request: request })
-        .then(() => {
-          const Toast = this.$swal.mixin({
-            toast: true,
-            position: "bottom-start",
-            showConfirmButton: false,
-            timer: 3000
-          });
-
-          Toast.fire({
-            type: "success",
-            title: `The Request Was Sent Successfully`
-          });
-        });
+      if (!this.isFormValid) {
+        this.popToast('info', 'bottom-start', 3000, `Please Complete All Fields To Continue...`)
+        return;
+      }
+      let request = this.$store.getters.emptyRequest;
+      request.arrivalDate = this.info.arrivalDate;
+      request.leavingDate = this.info.leavingDate;
+      request.description = this.info.description;
+      this.$emit('hideRequestForm');
+      await this.$store.dispatch({ type: 'sendRequest', request: request, targetId: this.getCurrUser._id });
+      this.popToast('success', 'bottom-start', 3000, `The Request Was Sent Successfully`);
     },
-    checkForm() {
-      return (
-        this.requestInfo.startDate &&
-        this.requestInfo.endDate &&
-        this.requestInfo.message
-      );
+    popToast(type, position, timer, title) {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer
+      });
+
+      Toast.fire({
+        type: type,
+        title: title
+      });
     }
   },
   computed: {
@@ -116,7 +85,10 @@ export default {
     },
     getCurrUser() {
       return this.$store.getters.currUser;
-    }
+    },
+    isFormValid() {
+      return this.info.arrivalDate && this.info.leavingDate && this.info.description;
+    },
   }
 };
 </script>

@@ -1,26 +1,26 @@
 <template>
-  <section class="user-inbox" v-if="user">
+  <section class="user-inbox">
     <h2>INBOX</h2>
     <div class="inbox-container flex flex-row">
       <nav>
         <div class="nav-item">Requests</div>
         <div class="nav-item">Calendar</div>
       </nav>
-      <div class="main-content">
-        <h3 v-if="user && user.requests.length===0">Your Inbox Is Empty...</h3>
+      <div class="main-content" v-if="getLoggedUser">
+        <h3 v-if="getLoggedUser.pendingRequests.length===0">Your Inbox Is Empty...</h3>
         <div
           v-else
+          v-for="(request, idx) in getLoggedUser.pendingRequests"
+          :key="idx"
           class="request flex flex-row space-between align-center"
           :class="{'animation':request.isAccepted, 'fadeOutLeft':request.isAccepted}"
-          :key="idx"
-          v-for="(request, idx) in user.requests"
         >
           <div class="user-info">
             <div class="request-info">
-              <span>{{request.sender.firstName}} {{request.sender.lastName}}</span>
-              has requested to stay with you from {{request.info.startDate}} To {{request.info.endDate}}
+              <span>{{request.source.firstName}} {{request.source.lastName}}</span>
+              has requested to stay with you from {{request.arrivalDate}} To {{request.leavingDate}}
             </div>
-            <div class="request-msg">{{request.info.message}}</div>
+            <div class="request-msg">{{request.description}}</div>
           </div>
           <div class="answer-btns">
             <el-button type="success" @click="acceptRequest(request)">Accept</el-button>
@@ -36,33 +36,22 @@
 export default {
   data() {
     return {
-      showAnimation: false
+      requests: [],
     };
   },
-  created() { },
   computed: {
-    user() {
+    getLoggedUser() {
       return this.$store.getters.loggedUser;
-    }
+    },
   },
   methods: {
     async acceptRequest(request) {
-      await this.$store.dispatch({ type: "removeRequest", request });
-      setTimeout(() => {
-        let { _id } = request;
-        this.$store.commit({ type: "removeRequest", _id });
-      }, 1000);
-      await this.$store.dispatch({ type: "bookGuest", request });
-      console.log("Successfuly Regisered The Guest!");
-      await this.$store.dispatch({ type: "bookHost", request });
-      console.log("Successfuly Regisered The Host!");
+      await this.$store.dispatch({ type: 'acceptRequest', request: request, targetId: this.getLoggedUser._id });
+      let response = this.$store.getters.emptyResponse;
+      await this.$store.dispatch({ type: 'sendResponse', response: response, targetId: request.source.id });
     },
     async declineRequest(request) {
-      await this.$store.dispatch({ type: "removeRequest", request });
-      setTimeout(() => {
-        let { _id } = request;
-        this.$store.commit({ type: "removeRequest", _id });
-      }, 1000);
+      await this.$store.dispatch({ type: 'declineRequest', request: request, targetId: this.getLoggedUser._id });
     }
   }
 };
@@ -87,10 +76,10 @@ h2 {
       flex-grow: 1;
       margin-right: 20px;
       .nav-item {
+        margin-bottom: 20px;
         max-width: 150px;
         padding: 10px;
         background-color: #fff;
-        margin-bottom: 20px;
         border-radius: 10px;
         text-align: left;
         transition: 0.3s;

@@ -1,5 +1,6 @@
 <template>
   <section class="why-join" id="whyjoin">
+    <hr class="style-one">
     <h1>Why Join?</h1>
     <div class="cards-container flex justify-center">
       <b-card
@@ -35,6 +36,7 @@
         <b-card-text class="small text-muted">- Robbert, Brad, and Kids (Hosting in Amsterdam)</b-card-text>
       </b-card>
     </div>
+    <hr class="style-one">
   </section>
 </template>
 
@@ -49,11 +51,15 @@ export default {
 .why-join {
   padding: 50px 0;
   margin: 50px 0;
-  // background-color: rgb(104, 96, 96);
-  background-image: url(https://images.pexels.com/photos/45848/kumamoto-japan-aso-cloud-45848.jpeg?cs=srgb&dl=clouds-light-mountains-45848.jpg&fm=jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  hr.style-one {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  }
   h1 {
     margin-bottom: 20px;
   }
