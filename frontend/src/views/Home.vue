@@ -43,19 +43,19 @@ export default {
     let arr = [
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3193"
+        userId: "5ca34f72854aef61a09c0d4c"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3192"
+        userId: "5ca34f72854aef61a09c0d4d"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3195"
+        userId: "5ca34f72854aef61a09c0d4f"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a31a0"
+        userId: "5ca34f72854aef61a09c0d5a"
       })
     ];
   },
