@@ -20,14 +20,14 @@
 </template>
 
 <script>
-import UserPreviewGuest from './UserPreviewGuest.vue';
-import '../filters.js';
-
+import UserPreviewGuest from "./UserPreviewGuest.vue";
+import "../filters.js";
 
 export default {
   components: {
     UserPreviewGuest
   },
+  
   computed: {
     currUser() {
       return this.$store.getters.currUser;
@@ -36,8 +36,9 @@ export default {
       return this.$store.getters.loggedUser;
     }
   }
-}
+};
 </script>
+
 <style scoped lang="scss">
 h2 {
   text-align: center;

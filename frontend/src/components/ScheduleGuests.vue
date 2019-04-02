@@ -12,6 +12,8 @@
       >
         <user-preview-guest :profile="currGuest" :idx="idx+1"></user-preview-guest>
       </router-link>
+      <button @click="addDatesToCal">Test</button>
+      <v-calendar :attributes="attrs"></v-calendar>
     </div>
     <!-- TODO: Guest Capacity -->
     <!-- <h4>Capacity: {{loggedUser.placeDetails.guestCapacity}}</h4> -->
@@ -27,12 +29,41 @@ export default {
   components: {
     UserPreviewGuest
   },
+  data() {
+    return {
+      attrs: [
+        {
+          key: "today",
+          highlight: {
+            backgroundColor: "#ff8080"
+            // Other properties are available too, like `height` & `borderRadius`
+          },
+          contentStyle: {
+            color: "#fafafa"
+          },
+          popover: {
+            label: "You just hovered over today's date!"
+          },
+          dates: [
+            // { start: this.currUser.guests[0].sender.startDate, end: this.currUser.guests[0].sender.startDate},
+            { start: new Date(2019, 3, 1), end: new Date(2019, 3, 5) },
+            { start: new Date(2019, 4, 15), span: 5 } // Span is number of days
+          ],
+        }
+      ]
+    };
+  },
   computed: {
     currUser() {
       return this.$store.getters.currUser;
     },
     loggedUser() {
       return this.$store.getters.loggedUser;
+    }
+  },
+  methods: {
+    addDatesToCal() {
+      this.attrs[0].dates.push({start: this.currUser.guests[0].sender.startDate, end: this.currUser.guests[0].sender.startDate})
     }
   }
 }
