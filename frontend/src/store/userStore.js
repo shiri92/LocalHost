@@ -10,7 +10,6 @@ export default {
     currUser: null,
     currUsers: [],
     homeUsers: [],
-    currRequests: [],
   },
   getters: {
     currUsers(state) {
@@ -50,9 +49,6 @@ export default {
         }
       }
     },
-    currRequests(state) {
-      return state.currRequests;
-    }
   },
 
   mutations: {
@@ -172,6 +168,9 @@ export default {
       request.leavingDate = utilService.getTimeStamp(request.leavingDate);
       let res = await userService.sendRequest(request, targetId);
       context.state.currSocket.emit('sendRequest', targetId, res);
+    },
+    async cancelRequest(context, { request, targetId }) {
+      // TODO
     },
     async acceptRequest(context, { request, targetId }) {
       await userService.acceptRequest(request, targetId);
