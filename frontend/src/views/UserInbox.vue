@@ -48,6 +48,8 @@ export default {
     async acceptRequest(request) {
       await this.$store.dispatch({ type: 'acceptRequest', request: request, targetId: this.getLoggedUser._id });
       let response = this.$store.getters.emptyResponse;
+      response.arrivalDate = request.arrivalDate;
+      response.leavingDate = request.leavingDate;
       await this.$store.dispatch({ type: 'sendResponse', response: response, targetId: request.source.id });
     },
     async declineRequest(request) {

@@ -70,7 +70,6 @@ li {
         border-radius: 5px 5px 0px 0px;
       }
       .main {
-        border-bottom: 1px solid #ddd;
         padding: 0 10px;
         .user {
           display: flex;
