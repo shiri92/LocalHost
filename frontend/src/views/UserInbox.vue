@@ -6,7 +6,7 @@
         <div class="nav-item">Requests</div>
         <div class="nav-item">Calendar</div>
       </nav>
-      <div class="main-content" v-if="false">
+      <div class="main-content" v-if="getLoggedUser">
         <h3 v-if="getLoggedUser.pendingRequests.length===0">Your Inbox Is Empty...</h3>
         <div
           v-else
@@ -33,8 +33,9 @@
 </template>
 
 <script>
+// import globeLoader from '../components/globeLoader.js';
 export default {
-  // import globeLoader from 
+
   data() {
     return {
       requests: [],
