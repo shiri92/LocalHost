@@ -6,19 +6,19 @@ var axios = Axios.create({ withCredentials: true }); // save the session cookies
 const BASE_API = process.env.NODE_ENV !== "development" ? "/user" : "//localhost:3003/user";
 
 
-// Logged User Check (Session Only)
+// LOGCHECK User
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
   return res.data;
 }
 
-// Login User
+// LOGIN User
 async function login(credentials) {
   let res = await axios.put(`${BASE_API}/login`, credentials);
   return res.data;
 }
 
-// Logout User
+// LOGOUT User
 async function logout() {
   await axios.put(`${BASE_API}/logout`);
 }
@@ -65,18 +65,18 @@ async function sendResponse(response, targetId) {
   return res.data;
 }
 
-// ADD User Review
+// ADD Review
 async function postReview(review, targetId) {
   let res = await axios.put(`${BASE_API}/${targetId}/review`, review);
   return res.data;
 }
 
-// DELETE User Review
+// DELETE Review
 async function unpostReview(currUserId, reviewId) {
   await axios.delete(`${BASE_API}/${currUserId}/review/${reviewId}`);
 }
 
-// EDIT User Review
+// EDIT Review
 async function editReview(currUserId, review) {
   await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
 }
@@ -87,9 +87,8 @@ async function update(user) {
   return res.data;
 }
 
-// UPDATE Profile Image Url
+// UPDATE Portrait URL
 async function updatePortrait(imgUrl, userId) {
-  console.log('here', imgUrl, userId);
   await axios.put(`${BASE_API}/${userId}/img`, { imgUrl });
 }
 

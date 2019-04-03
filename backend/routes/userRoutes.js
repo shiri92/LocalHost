@@ -5,7 +5,7 @@ const userService = require("../services/userService.js");
 const BASE = "/user";
 
 function addRoutes(app) {
-  // Logged User Check (Session Only)
+  // LOGCHECK User
   app.put(`${BASE}/checkLogged`, async (req, res) => {
     if (req.session.user) {
       let user = await userService.getById(req.session.user._id);
@@ -14,7 +14,7 @@ function addRoutes(app) {
     return res.json();
   });
 
-  // Login User
+  // LOGIN User
   app.put(`${BASE}/login`, async (req, res) => {
     const credentials = req.body;
     let user = await userService.login(credentials);
@@ -23,7 +23,7 @@ function addRoutes(app) {
     res.json(user);
   });
 
-  // Logout User (Session Only)
+  // LOGOUT User
   app.put(`${BASE}/logout`, (req, res) => {
     req.session.destroy();
     return res.json();
@@ -43,7 +43,7 @@ function addRoutes(app) {
     return res.json(user);
   });
 
-  // ADD User, GET User + id
+  // ADD User, GET User With _id
   app.post(BASE, async (req, res) => {
     const credentials = req.body;
     let user = await userService.add(credentials);
@@ -74,7 +74,7 @@ function addRoutes(app) {
     return res.json(result);
   });
 
-  // ADD User Review
+  // ADD Review
   app.put(`${BASE}/:id/review`, async (req, res) => {
     const review = req.body;
     const { id } = req.params;
@@ -90,20 +90,11 @@ function addRoutes(app) {
     return res.end();
   });
 
-
-  // DELETE User Review
+  // DELETE Review
   app.delete(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
     const currUserId = req.params.currUserId;
     const reviewId = req.params.reviewId;
     await userService.deleteReview(currUserId, reviewId);
-    return res.end();
-  });
-
-  // UPDATE User Review
-  app.put(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
-    const currUserId = req.params.currUserId;
-    const review = req.body;
-    await userService.updateReview(currUserId, review);
     return res.end();
   });
 
@@ -114,7 +105,15 @@ function addRoutes(app) {
     return res.json();
   });
 
-  // UPDATE Profile Img
+  // UPDATE Review
+  app.put(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
+    const currUserId = req.params.currUserId;
+    const review = req.body;
+    await userService.updateReview(currUserId, review);
+    return res.end();
+  });
+
+  // UPDATE Portrait URL
   app.put(`${BASE}/:id/img`, async (req, res) => {
     let { id } = req.params;
     let { imgUrl } = req.body;

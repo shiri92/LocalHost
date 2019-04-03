@@ -55,7 +55,14 @@ export default {
     }
   },
   created() {
-    this.review = this.currReviewToEdit ? this.currReviewToEdit : this.$store.getters.emptyReview;
+    if (this.currReviewToEdit) {
+      this.review = this.currReviewToEdit
+    }
+    else {
+      this.review = JSON.parse(JSON.stringify(this.$store.getters.emptyReview));
+    }
+
+
   },
   computed: {
     currUser() {
@@ -94,7 +101,8 @@ export default {
         if (!this.currReviewToEdit) {
           this.review.createdAt = Date.now();
           await this.$store.dispatch({ type: 'postReview', review: this.review, targetId: this.currUser._id });
-          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Review');
+          this.$emit('resetCurrReview')
+          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Revixew');
           return;
         }
         //TODO IF USER UPDATES REVIEW ADD THE UPDATED TIME

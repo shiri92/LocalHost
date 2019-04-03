@@ -46,7 +46,7 @@ async function addMany(users) {
   return res;
 }
 
-// Login User
+// LOGIN User
 async function login(credentials) {
   let db = await mongoService.connect();
   let res = await db.collection(USERS_COLLECTION).findOne(credentials);
@@ -137,7 +137,7 @@ async function addAcceptedResponse(targetId, response) {
   return response;
 }
 
-// ADD User Review
+// ADD Review
 async function addReview(targetId, review) {
   review._id = new ObjectId();
   review.source.id = new ObjectId(review.source.id)
@@ -161,7 +161,7 @@ async function deletePendingRequest(targetId, requestId) {
   );
 }
 
-// DELETE User Review
+// DELETE Review
 async function deleteReview(currUserId, reviewId) {
   let db = await mongoService.connect();
   await db
@@ -172,7 +172,7 @@ async function deleteReview(currUserId, reviewId) {
     );
 }
 
-// UPDATE User Review
+// UPDATE Review
 async function updateReview(currUserId, review) {
   review._id = new ObjectId(review._id);
   let db = await mongoService.connect();
@@ -193,7 +193,7 @@ async function update(user) {
   return user;
 }
 
-// UPDATE Profile Image Url
+// UPDATE Portrait URL
 async function updateUserImg(imgUrl, userId) {
   let db = await mongoService.connect();
   await db
