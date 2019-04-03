@@ -38,11 +38,8 @@
             <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
               <button class="btn">Edit My Profile</button>
             </router-link>
-            <router-link :to="'/userProfile/' + currUser._id + '/inbox'">
-              <button class="btn">My Inbox</button>
-            </router-link>
-            <router-link :to="'/userProfile/' + currUser._id + '/scheduleManager'">
-              <button class="btn">Personal Manager</button>
+            <router-link :to="'/userProfile/' + currUser._id + '/manager'">
+              <button class="btn">Manager</button>
             </router-link>
           </div>
         </div>
