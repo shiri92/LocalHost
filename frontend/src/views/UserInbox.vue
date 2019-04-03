@@ -33,7 +33,9 @@
 </template>
 
 <script>
+// import globeLoader from '../components/globeLoader.js';
 export default {
+
   data() {
     return {
       requests: [],

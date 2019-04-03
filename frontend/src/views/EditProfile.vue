@@ -198,16 +198,11 @@ export default {
       this.user.placeDetails.mapAddress = ev.formatted_address;
     },
     async updateImg(ev) {
-      let { userId } = this.$route.params;
-      let imgUrl = await this.$store.dispatch({
-        type: "uploadProfileImg",
-        imgFile: ev.target.files[0]
-      });
-      await this.$store.dispatch({
-        type: "updateLoggedUserImg",
-        imgUrl: imgUrl,
-        userId
-      });
+      let targetId = this.$route.params.userId;
+      let imgFile = ev.target.files[0];
+      let imgName = `${this.getLoggedUser.firstName}-${this.getLoggedUser.lastName}`.toLowerCase();
+      let imgPath = `profile-imgs/${imgName}/${imgName}`
+      await this.$store.dispatch({ type: 'updatePortrait', imgFile, imgPath, targetId });
     },
     async onSave() {
       if (this.user.isHosting) {

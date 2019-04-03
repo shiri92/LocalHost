@@ -6,10 +6,12 @@ const BASE = '/cloud';
 
 function addRoutes(app) {
 
-    // Upload Img
-    app.post(BASE, (req, res) => {
+    // UPLOAD IMG
+    app.post(`${BASE}`, async (req, res) => {
+        const { imgPath } = req.query;
         const { file } = req.files;
-        cloudService.uploadImg(file).then(imgUrl => res.json(imgUrl))
+        let imgUrl = await cloudService.uploadImg(file, imgPath);
+        return res.json(imgUrl);
     });
 
 }

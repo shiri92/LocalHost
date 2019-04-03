@@ -35,7 +35,7 @@
       <label>Your Review:</label>
       <textarea v-model="review.description" cols="30" rows="8" required></textarea>
       <div class="btn-container flex justify-center">
-        <button class="btn btn-send" @click="setReview">Send Review</button>
+        <button class="btn btn-send" @click="postReview">Send Review</button>
       </div>
     </div>
   </section>
@@ -46,34 +46,23 @@ import RateStars from '../components/RateStars'
 export default {
   name: 'review-form',
   props: ['currReviewToEdit'],
+  components: {
+    RateStars
+  },
   data() {
     return {
-      review: {
-        getAsAHost: false,
-        getAsAGuest: false,
-        sender: { id: '', firstName: '', lastName: '', imgUrl: '', country: '', city: '' },
-        recipient: { id: '', firstName: '', lastName: '' },
-        createdAt: Date.now(),
-        rating: 0,
-        description: '',
-        isClicked: false
-      }
+      review: null,
     }
   },
   created() {
     if (this.currReviewToEdit) {
       this.review = this.currReviewToEdit
-    } else {
-      this.review.sender.id = this.loggedUser._id;
-      this.review.sender.firstName = this.loggedUser.firstName;
-      this.review.sender.lastName = this.loggedUser.lastName;
-      this.review.sender.country = this.loggedUser.country;
-      this.review.sender.city = this.loggedUser.city;
-      this.review.sender.imgUrl = this.loggedUser.imgUrl;
-      this.review.recipient.firstName = this.currUser.firstName;
-      this.review.recipient.lastName = this.currUser.lastName;
-      this.review.recipient.id = this.currUser._id;
     }
+    else {
+      this.review = JSON.parse(JSON.stringify(this.$store.getters.emptyReview));
+    }
+
+
   },
   computed: {
     currUser() {
@@ -81,61 +70,60 @@ export default {
     },
     loggedUser() {
       return this.$store.getters.loggedUser
+    },
+    isValid() {
+      return (this.review.getAsAHost || this.review.getAsAGuest) &&
+        this.review.description &&
+        this.review.rating
     }
   },
   methods: {
+    setRate(num) {
+      this.review.rating = num;
+    },
     checkHost() {
       this.$refs.inputGuest.checked = false;
       this.review.getAsAHost = true;
       this.review.getAsAGuest = false;
-    },
-    setRate(num) {
-      this.review.rating = num;
     },
     checkGuest() {
       this.$refs.inputHost.checked = false;
       this.review.getAsAHost = false;
       this.review.getAsAGuest = true;
     },
-    setReview() {
+    async postReview() {
       if (!this.loggedUser) {
-        const Toast = this.$swal.mixin({
-          toast: true,
-          position: "bottom-start",
-          showConfirmButton: false,
-          timer: 3000
-        });
-
-        Toast.fire({
-          type: "info",
-          title: `Please Sign In To Add Review...`
-        });
+        this.popToast('info', 'bottom-start', 3000, 'Please Sign In To Add Review...');
         return;
       }
-      if ((this.review.getAsAHost || this.review.getAsAGuest) && this.review.description && this.review.rating) {
+      if (this.isValid) {
         this.$emit('closeReviewForm');
         if (!this.currReviewToEdit) {
-          this.$store.dispatch({ type: 'addReview', review: this.review })
-            .then(() => {
-              const Toast = this.$swal.mixin({
-                toast: true,
-                position: 'bottom-start',
-                showConfirmButton: false,
-                timer: 3000
-              });
-
-              Toast.fire({ type: 'success', title: `You Have Added New Review` })
-            })
+          this.review.createdAt = Date.now();
+          await this.$store.dispatch({ type: 'postReview', review: this.review, targetId: this.currUser._id });
+          this.$emit('resetCurrReview')
+          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Revixew');
+          return;
         }
-        else {
-          this.$store.dispatch({ type: 'updateReview', currUserId: this.currUser._id, review: this.review });
-        }
+        //TODO IF USER UPDATES REVIEW ADD THE UPDATED TIME
+        this.$store.dispatch({ type: 'editReview', currUserId: this.currUser._id, review: this.review });
+        this.popToast('success', 'bottom-start', 3000, 'You Have Updated Successfuly The Review');
       }
     },
+    popToast(type, position, timer, title) {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer
+      });
+
+      Toast.fire({
+        type: type,
+        title: title
+      });
+    }
   },
-  components: {
-    RateStars
-  }
 }
 </script>
 

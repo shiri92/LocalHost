@@ -1,7 +1,8 @@
 /* ----- DEPEND -----*/
 import userService from "../services/userService.js";
 import socketService from "../services/socketService.js";
-import utilService from "../services/utilService.js";
+import utilService from '../services/utilService.js';
+import cloudService from '../services/cloudService.js';
 
 export default {
   state: {
@@ -47,6 +48,22 @@ export default {
           address: state.loggedUser.address,
           placeDetails: state.loggedUser.placeDetails
         }
+      }
+    },
+    emptyReview(state) {
+      return {
+        isClicked: false,
+        getAsAHost: false,
+        getAsAGuest: false,
+        rating: 0,
+        description: '',
+        source: {
+          id: state.loggedUser._id,
+          firstName: state.loggedUser.firstName,
+          lastName: state.loggedUser.lastName,
+          imgUrl: state.loggedUser.imgUrl,
+          address: state.loggedUser.address,
+        }
       };
     }
   },
@@ -54,9 +71,6 @@ export default {
   mutations: {
     setLoggedUser(state, { user }) {
       state.loggedUser = user;
-    },
-    logout(state) {
-      state.loggedUser = null;
     },
     setCurrUsers(state, { users }) {
       state.currUsers = users;
@@ -67,10 +81,7 @@ export default {
     setHomeUser(state, { user }) {
       if (state.homeUsers.length < 4) state.homeUsers.push(user);
     },
-    setCurrUserImg(state, { imgUrl }) {
-      state.currUser.imgUrl = imgUrl;
-    },
-    setLoggedUserImg(state, { imgUrl }) {
+    setPortrait(state, { imgUrl }) {
       state.loggedUser.imgUrl = imgUrl;
     },
     addPendingRequest(state, { request }) {
@@ -91,11 +102,13 @@ export default {
       );
       state.loggedUser.pendingRequests.splice(idx, 1);
     },
-    removeReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(
-        review => reviewId === review._id
-      );
+    deleteReview(state, { reviewId }) {
+      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
       state.currUser.references.splice(idx, 1);
+    },
+    updateReview(state, { review }) {
+      let idx = state.currUser.references.findIndex(currReview => review._id === currReview._id);
+      state.currUser.references.splice(idx, 1, review);
     },
     updateLoggedUser(state, { user }) {
       let idx = state.currUsers.findIndex(
@@ -116,10 +129,18 @@ export default {
           this.commit({ type: "addAcceptedResponse", response });
           // TODO: show swal '~user Approved Your Request, check host details to know more... (link)'
         });
-        state.currSocket.on("sendReview", review => {
-          // if user on the profile of the one got reviewd
-          if (state.currUser._id === review.recipient.id)
-            this.commit({ type: "addReview", review });
+        state.currSocket.on("postReview", (review, targetId) => {
+          // if the logged user watches the reviewd user page.
+          if (state.currUser._id === targetId) this.commit({ type: "addReview", review });
+          // TODO: show swal 'You Got New Review On Your Profile'
+        });
+        state.currSocket.on("unpostReview", (reviewId, targetId) => {
+          // if the logged user watches the reviewd user page.
+          if (state.currUser._id === targetId) this.commit({ type: "deleteReview", reviewId });
+        });
+        state.currSocket.on("editReview", (review, targetId) => {
+          // if the logged user watches the reviewd user page.
+          if (state.currUser._id === targetId) this.commit({ type: "updateReview", review });
         });
       }
     }
@@ -143,7 +164,7 @@ export default {
     },
     async logout(context) {
       await userService.logout();
-      context.commit({ type: "logout" });
+      context.state.loggedUser = null;
       context.state.currSocket.disconnect();
       context.state.currSocket = null;
     },
@@ -167,10 +188,6 @@ export default {
     async loadHomeUser(context, { userId }) {
       let user = await userService.getById(userId);
       context.commit({ type: "setHomeUser", user });
-    },
-    async updateLoggedUserImg(context, { imgUrl, userId }) {
-      await userService.updateUserImg(imgUrl, userId);
-      context.commit({ type: "setLoggedUserImg", imgUrl });
     },
     async sendRequest(context, { request, targetId }) {
       request.arrivalDate = utilService.getTimeStamp(request.arrivalDate);
@@ -204,30 +221,28 @@ export default {
     },
     async sendResponse(context, { response, targetId }) {
       let res = await userService.sendResponse(response, targetId);
-      context.state.currSocket.emit("sendResponse", targetId, res);
+      context.state.currSocket.emit('sendResponse', targetId, res);
     },
-    async addReview(context, { review }) {
-      let res = await userService.addReview(review);
-      let { _id } = context.state.currUser;
-      context.state.currSocket.emit("sendReview", res, _id);
-      // context.commit({ type: "addReview", res });
-      // TODO: show sweet alert...
+    async postReview(context, { review, targetId }) {
+      let res = await userService.postReview(review, targetId);
+      context.state.currSocket.emit("postReview", res, targetId);
     },
-    async removeReview(context, { currUserId, reviewId }) {
-      await userService.removeReview(currUserId, reviewId);
-      context.commit({ type: "removeReview", reviewId });
-      // TODO: show sweet alert...
+    async unpostReview(context, { currUserId, reviewId }) {
+      await userService.unpostReview(currUserId, reviewId);
+      context.state.currSocket.emit("unpostReview", reviewId, currUserId);
     },
-    async updateReview(context, { currUserId, review }) {
-      await userService.updateReview(currUserId, review);
-    },
-    async updateUserImg(context, { imgUrl, userId }) {
-      await userService.updateUserImg(imgUrl, userId);
-      context.commit({ type: "setLoggedUserImg", imgUrl });
+    async editReview(context, { currUserId, review }) {
+      await userService.editReview(currUserId, review);
+      context.state.currSocket.emit("editReview", review, currUserId);
     },
     async updateLoggedUser(context, { user }) {
       await userService.update(user);
       context.commit({ type: "updateLoggedUser", user });
-    }
+    },
+    async updatePortrait(context, { imgFile, imgPath, targetId }) {
+      let imgUrl = await cloudService.uploadPortrait(imgFile, imgPath);
+      await userService.updatePortrait(imgUrl, targetId);
+      context.commit({ type: 'setPortrait', imgUrl });
+    },
   }
 };
