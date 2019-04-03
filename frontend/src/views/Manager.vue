@@ -3,14 +3,14 @@
     <div class="bg-container">
       <div class="nav-container">
         <div class="nav" v-if="getCurrUser">
-          <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleGuests'">
+          <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerGuests'">
             <div class="nav-item">Guests</div>
           </router-link>
-          <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleHosts'">
+          <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerHosts'">
             <div class="nav-item">Hosts</div>
           </router-link>
-          <router-link :to="'/userProfile/' + getCurrUser._id + '/scheduleManager/scheduleDetails'">
-            <div class="nav-item">Details</div>
+          <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerInbox'">
+            <div class="nav-item">Inbox</div>
           </router-link>
         </div>
       </div>
@@ -31,7 +31,7 @@ export default {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
     if (this.getCurrUser)
-      this.$router.push('/userProfile/' + this.getCurrUser._id + '/scheduleManager/scheduleGuests');
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerGuests');
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -46,7 +46,7 @@ export default {
   },
   watch: {
     getCurrUser(newVal, oldVal) {
-      this.$router.push('/userProfile/' + this.getCurrUser._id + '/scheduleManager/scheduleGuests');
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerGuests');
     }
   }
 }
