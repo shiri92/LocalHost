@@ -14,8 +14,8 @@ import VueCarousel from "vue-carousel";
 import VueScrollTo from "vue-scrollto";
 import VueSweetalert2 from "vue-sweetalert2";
 import * as VueGoogleMaps from "vue2-google-maps";
-import VCalendar from 'v-calendar';
-import 'v-calendar/lib/v-calendar.min.css';
+import VCalendar from "v-calendar";
+import "v-calendar/lib/v-calendar.min.css";
 // import './filters.js';
 
 // import 'custom.scss'
@@ -51,7 +51,7 @@ Vue.use(VueScrollTo, {
   y: true
 });
 Vue.use(VCalendar, {
-  firstDayOfWeek: 2,  // Monday
+  firstDayOfWeek: 2 // Monday
 });
 
 // Font Awesome

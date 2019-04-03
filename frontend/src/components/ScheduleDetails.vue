@@ -1,16 +1,11 @@
 <template>
-  <section class="schedule-details">
-    <google-map></google-map>
-  </section>
+  <section class="schedule-details"></section>
 </template>
 
 <script>
-import GoogleMap from './GoogleMap'
 export default {
   name: 'schedule-details',
-  components: {
-    GoogleMap
-  },
+
   data() {
     return {
 

@@ -1,6 +1,6 @@
 <template>
   <section class="schedule-hosts">
-    <h3>Coming Soon...</h3>
+    <google-map></google-map>
     <!-- <div class="flex-container clean-list" v-if="currUser">
       <h2 v-if="currUser.hosts.length===0">No Hosts Yet</h2>
       <router-link
@@ -22,11 +22,12 @@
 <script>
 import UserPreviewGuest from './UserPreviewGuest.vue';
 import '../filters.js';
-
+import GoogleMap from './GoogleMap'
 
 export default {
   components: {
-    UserPreviewGuest
+    UserPreviewGuest,
+    GoogleMap
   },
   computed: {
     currUser() {

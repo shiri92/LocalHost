@@ -56,14 +56,11 @@ export default new Router({
       path: "/userProfile/:userId/scheduleManager",
       name: "userScheduleManager",
       component: UserScheduleManager,
-      children:
-        [
-          { path: 'scheduleGuests', component: ShcheduleGuests },
-          { path: 'scheduleHosts', component: ShcheduleHosts },
-          { path: 'scheduleDetails', component: ShcheduleDetails },
-
-        ]
-    },
-
+      children: [
+        { path: "scheduleGuests", component: ShcheduleGuests },
+        { path: "scheduleHosts", component: ShcheduleHosts },
+        { path: "scheduleDetails", component: ShcheduleDetails }
+      ]
+    }
   ]
 });
