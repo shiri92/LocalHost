@@ -118,6 +118,12 @@ export default {
 
 @media (max-width: 768px) {
   .login {
+    width: 40%;
+  }
+}
+
+@media (max-width: 768px) {
+  .login {
     width: 50%;
     .content {
       padding: 30px 25px 0 25px;

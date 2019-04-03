@@ -7,12 +7,9 @@
     <hr>
     <div class="content flex flex-col">
       <el-form :inline="false" :model="info" class="demo-form-inline">
-        <label for="date">Choose dates:</label>
-        <v-date-picker mode="range" v-model="info" show-caps></v-date-picker>
         <b-form-group class="input" required>
-          Start Date:
-          <b-form-input type="date" v-model="info.arrivalDate" required/>End Date:
-          <b-form-input type="date" v-model="info.leavingDate" required/>
+          <label for="date">Choose dates:</label>
+          <v-date-picker mode="range" v-model="info.selectedDate" show-caps></v-date-picker>
         </b-form-group>
 
         <b-form-group class="input" required>
@@ -35,35 +32,56 @@
 </template>
 
 <script>
-import utilService from '@/services/utilService.js';
+import utilService from "@/services/utilService.js";
 export default {
   name: "guest-request",
   data() {
     return {
       info: {
-        arrivalDate: new Date(),
-        leavingDate: new Date(),
-        description: "",
-      },
+        selectedDate: {
+          start: Date.now(),
+          end: Date.now() + 60 * 60 * 72 * 1000
+        },
+        description: ""
+      }
     };
   },
   methods: {
     async onSend() {
       if (!this.getLoggedUser) {
-        this.popToast('info', 'bottom-start', 3000, `Please Sign In To Continue...`)
+        this.popToast(
+          "info",
+          "bottom-start",
+          3000,
+          `Please Sign In To Continue...`
+        );
         return;
       }
       if (!this.isFormValid) {
-        this.popToast('info', 'bottom-start', 3000, `Please Complete All Fields To Continue...`)
+        this.popToast(
+          "info",
+          "bottom-start",
+          3000,
+          `Please Complete All Fields To Continue...`
+        );
         return;
       }
       let request = this.$store.getters.emptyRequest;
-      request.arrivalDate = this.info.arrivalDate;
-      request.leavingDate = this.info.leavingDate;
+      request.arrivalDate = this.info.selectedDate.start;
+      request.leavingDate = this.info.selectedDate.end;
       request.description = this.info.description;
-      this.$emit('hideRequestForm');
-      await this.$store.dispatch({ type: 'sendRequest', request: request, targetId: this.getCurrUser._id });
-      this.popToast('success', 'bottom-start', 3000, `The Request Was Sent Successfully`);
+      this.$emit("hideRequestForm");
+      await this.$store.dispatch({
+        type: "sendRequest",
+        request: request,
+        targetId: this.getCurrUser._id
+      });
+      this.popToast(
+        "success",
+        "bottom-start",
+        3000,
+        `The Request Was Sent Successfully`
+      );
     },
     popToast(type, position, timer, title) {
       const Toast = this.$swal.mixin({
@@ -87,8 +105,12 @@ export default {
       return this.$store.getters.currUser;
     },
     isFormValid() {
-      return this.info.arrivalDate && this.info.leavingDate && this.info.description;
-    },
+      return (
+        this.info.selectedDate.start &&
+        this.info.selectedDate.end &&
+        this.info.description
+      );
+    }
   }
 };
 </script>
