@@ -17,6 +17,7 @@
     </carousel>
     <div class="profile-container flex justify-center">
       <div class="side-profile">
+        <!-- <transition name="fade"></transition> -->
         <div
           class="profile-img"
           :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"

@@ -21,6 +21,19 @@
               <option :value="false">Not Accepting Guests</option>
             </select>
           </div>
+
+          <div v-if="user.isHosting">
+            <div class="form-item flex space-between">
+              <label>Street Name and House Number:&nbsp;</label>
+              <gmap-autocomplete @place_changed="setFullAddres" class="form-input"></gmap-autocomplete>
+            </div>
+
+            <div class="form-item flex space-between">
+              <label>One Line Description:&nbsp;</label>
+              <input class="form-input" v-model="user.lineDescription">
+            </div>
+          </div>
+
           <hr>
           <div>
             <div class="form-item flex space-between">
@@ -181,6 +194,9 @@ export default {
         this.user.address = { city: currCity, country: currCountry };
       }
     },
+    setFullAddres(ev) {
+      this.user.placeDetails.mapAddress = ev.formatted_address;
+    },
     async updateImg(ev) {
       let targetId = this.$route.params.userId;
       let imgFile = ev.target.files[0];
@@ -188,9 +204,16 @@ export default {
       let imgPath = `profile-imgs/${imgName}/${imgName}`
       await this.$store.dispatch({ type: 'updatePortrait', imgFile, imgPath, targetId });
     },
-    onSave() {
-      this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
-        .then(() => this.$router.push('/userProfile/' + this.user._id))
+    async onSave() {
+      if (this.user.isHosting) {
+        if (this.user.placeDetails.mapAddress && this.user.lineDescription) {
+          await this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
+          this.$router.push('/userProfile/' + this.user._id)
+        }
+      } else {
+        await this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
+        this.$router.push('/userProfile/' + this.user._id)
+      }
     },
   },
 };

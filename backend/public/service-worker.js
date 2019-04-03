@@ -11,13 +11,13 @@
  * See https://goo.gl/2aRDsh
  */
 
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
-
 importScripts(
-  "/precache-manifest.747caa19b87b0edbb11c33833ee48ab6.js"
+  "https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "frontend"});
+importScripts("/precache-manifest.747caa19b87b0edbb11c33833ee48ab6.js");
+
+workbox.core.setCacheNameDetails({ prefix: "LocalHost" });
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to

@@ -10,7 +10,7 @@ export default {
     loggedUser: null,
     currUser: null,
     currUsers: [],
-    homeUsers: [],
+    homeUsers: []
   },
   getters: {
     currUsers(state) {
@@ -33,9 +33,9 @@ export default {
           firstName: state.loggedUser.firstName,
           lastName: state.loggedUser.lastName,
           imgUrl: state.loggedUser.imgUrl,
-          address: state.loggedUser.address,
+          address: state.loggedUser.address
         }
-      }
+      };
     },
     emptyResponse(state) {
       return {
@@ -46,7 +46,7 @@ export default {
           lastName: state.loggedUser.lastName,
           imgUrl: state.loggedUser.imgUrl,
           address: state.loggedUser.address,
-          placeDetails: state.loggedUser.placeDetails,
+          placeDetails: state.loggedUser.placeDetails
         }
       }
     },
@@ -97,7 +97,9 @@ export default {
       state.currUser.references.push(review);
     },
     deletePendingRequest(state, { requestId }) {
-      let idx = state.loggedUser.pendingRequests.findIndex(request => request._id === requestId);
+      let idx = state.loggedUser.pendingRequests.findIndex(
+        request => request._id === requestId
+      );
       state.loggedUser.pendingRequests.splice(idx, 1);
     },
     deleteReview(state, { reviewId }) {
@@ -109,7 +111,9 @@ export default {
       state.currUser.references.splice(idx, 1, review);
     },
     updateLoggedUser(state, { user }) {
-      let idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
+      let idx = state.currUsers.findIndex(
+        currUser => currUser._id === user._id
+      );
       state.currUsers.splice(idx, 1, user);
     },
     initCurrSocket(state, { user }) {
@@ -145,16 +149,16 @@ export default {
     async checkLogged(context) {
       let user = await userService.checkLogged();
       if (user) {
-        context.commit({ type: 'setLoggedUser', user });
-        context.commit({ type: 'initCurrSocket', user });
+        context.commit({ type: "setLoggedUser", user });
+        context.commit({ type: "initCurrSocket", user });
       }
       return user;
     },
     async login(context, { credentials }) {
       let user = await userService.login(credentials);
       if (user) {
-        context.commit({ type: 'setLoggedUser', user });
-        context.commit({ type: 'initCurrSocket', user });
+        context.commit({ type: "setLoggedUser", user });
+        context.commit({ type: "initCurrSocket", user });
       }
       return user;
     },
@@ -168,7 +172,10 @@ export default {
       let user = await userService.add(credentials);
       let { email } = user;
       let { password } = user;
-      await context.dispatch({ type: "login", credentials: { email, password } });
+      await context.dispatch({
+        type: "login",
+        credentials: { email, password }
+      });
     },
     async loadUsers(context, { city, country }) {
       let users = await userService.query(city, country);
@@ -186,7 +193,7 @@ export default {
       request.arrivalDate = utilService.getTimeStamp(request.arrivalDate);
       request.leavingDate = utilService.getTimeStamp(request.leavingDate);
       let res = await userService.sendRequest(request, targetId);
-      context.state.currSocket.emit('sendRequest', targetId, res);
+      context.state.currSocket.emit("sendRequest", targetId, res);
     },
     async cancelRequest(context, { request, targetId }) {
       // TODO
@@ -195,15 +202,21 @@ export default {
       await userService.acceptRequest(request, targetId);
       request.isAccepted = true; // fire the fade animation
       setTimeout(() => {
-        context.commit({ type: 'deletePendingRequest', requestId: request._id });
-        context.commit({ type: 'addAcceptedRequest', request });
+        context.commit({
+          type: "deletePendingRequest",
+          requestId: request._id
+        });
+        context.commit({ type: "addAcceptedRequest", request });
       }, 1000);
     },
     async declineRequest(context, { request, targetId }) {
       await userService.declineRequest(request._id, targetId);
       request.isAccepted = true; // fire the fade animation
       setTimeout(() => {
-        context.commit({ type: 'deletePendingRequest', requestId: request._id });
+        context.commit({
+          type: "deletePendingRequest",
+          requestId: request._id
+        });
       }, 1000);
     },
     async sendResponse(context, { response, targetId }) {

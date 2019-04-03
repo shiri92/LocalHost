@@ -1,43 +1,100 @@
 <template>
   <section class="schedule-hosts">
-    <h3>Coming Soon...</h3>
-    <!-- <div class="flex-container clean-list" v-if="currUser">
-      <h2 v-if="currUser.hosts.length===0">No Hosts Yet</h2>
-      <router-link
-        v-else
-        class="guest-list-item"
-        :key="currHost._id"
-        v-for="(currHost, idx) in currUser.hosts"
-        :to="'/userProfile/' + currHost.recipient.id"
-      >
-        <user-preview-guest :profile="currHost.recipient" :idx="idx+1"></user-preview-guest>
-    </router-link>-->
-    <!-- {{currUser}} -->
-    <!-- </div> -->
-    <!-- TODO: Guest Capacity -->
-    <!-- <h4>Capacity: {{loggedUser.placeDetails.guestCapacity}}</h4> -->
+    <h3>THIS MONTH</h3>
+    <google-map></google-map>
+    <div class="flex-container clean-list" v-if="getLoggedUser">
+      <h2 v-if="getLoggedUser.acceptedResponses.length===0">No Hosts Yet</h2>
+      <div v-else class="info-container flex flex-row justify-center">
+        <div class="list-container flex flex-col">
+          <router-link
+            style="margin: 2px"
+            class="guest-list-item"
+            :key="currResponse._id"
+            v-for="(currResponse, idx) in getLoggedUser.acceptedResponses"
+            :to="'/userProfile/' + currResponse.source.id"
+          >
+            <user-preview-guest :response="currResponse" :idx="idx+1"></user-preview-guest>
+          </router-link>
+        </div>
+        <div class="calendar-wrapper">
+          <v-calendar :attributes="attrs" class="calendar"></v-calendar>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
 <script>
 import UserPreviewGuest from './UserPreviewGuest.vue';
 import '../filters.js';
-
+import GoogleMap from './GoogleMap'
 
 export default {
   components: {
-    UserPreviewGuest
+    UserPreviewGuest,
+    GoogleMap
+  },
+  data() {
+    return {
+      cmpChange: false,
+      keyId: 1,
+      attrs: []
+    }
   },
   computed: {
-    currUser() {
+    getCurrUser() {
       return this.$store.getters.currUser;
     },
-    loggedUser() {
+    getLoggedUser() {
       return this.$store.getters.loggedUser;
+    },
+    watchFunc() {
+      return `${this.getCurrUser}|${this.cmpChange}`;
     }
+  },
+  methods: {
+    addDatesToCal() {
+      if (!this.getCurrUser) return;
+      this.getCurrUser.acceptedRequests.forEach(req => {
+        this.attrs.push({
+          key: this.keyId++,
+          highlight: {
+            backgroundColor: "#ff8080"
+            // Other properties are available too, like `height` & `borderRadius`
+          },
+          contentStyle: {
+            color: "#fafafa"
+          },
+          popover: {
+            label: `${req.source.firstName} ${
+              req.source.lastName
+              } staying over`,
+            // hideIndicator: true,
+            img: `${req.source.imgUrl}`
+          },
+          dates: [{ start: req.arrivalDate, end: req.leavingDate }]
+        });
+      });
+      this.attrs[0].dates.push({
+        start: this.getCurrUser.acceptedRequests[0].arrivalDate,
+        end: this.getCurrUser.acceptedRequests[0].leavingDate
+      });
+    },
+  },
+  mounted() {
+    this.cmpChange = true;
+  },
+  destroyed() {
+    this.cmpChange = false;
+  },
+  watch: {
+    watchFunc() {
+      this.addDatesToCal();
+    },
   }
-}
+};
 </script>
+
 <style scoped lang="scss">
 h2 {
   text-align: center;
@@ -68,5 +125,36 @@ h3 {
   }
   // .flex-container > *:not(:last-child) {
   // }
+
+  .info-container {
+    width: 100%;
+  }
+  .calendar-wrapper {
+    // flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 30px;
+    .calendar {
+      width: 100%;
+      max-width: 700px;
+      min-width: 600px;
+    }
+  }
+  .list-container {
+    overflow: auto;
+    height: 275px;
+  }
+  .list-container::-webkit-scrollbar {
+    width: 0.25em;
+  }
+
+  .list-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(75, 21, 173, 0.3);
+  }
+
+  .list-container::-webkit-scrollbar-thumb {
+    background-color: rgb(24, 1, 1);
+  }
 }
 </style>

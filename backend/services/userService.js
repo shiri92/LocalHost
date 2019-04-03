@@ -153,12 +153,14 @@ async function addReview(targetId, review) {
 
 // DELETE Pending Request
 async function deletePendingRequest(targetId, requestId) {
-  console.log(targetId, requestId, 'hereee');
+  console.log(targetId, requestId, "hereee");
   let db = await mongoService.connect();
-  return await db.collection(USERS_COLLECTION).updateOne(
-    { _id: new ObjectId(targetId) },
-    { $pull: { pendingRequests: { _id: new ObjectId(requestId) } } }
-  );
+  return await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(targetId) },
+      { $pull: { pendingRequests: { _id: new ObjectId(requestId) } } }
+    );
 }
 
 // DELETE Review
@@ -200,7 +202,6 @@ async function updateUserImg(imgUrl, userId) {
     .collection(USERS_COLLECTION)
     .updateOne({ _id: new ObjectId(userId) }, { $set: { imgUrl: imgUrl } });
 }
-
 
 // Create User
 function _createUser(
@@ -244,7 +245,8 @@ function _createUser(
       isSmokingAllowed: false,
       isDisabledAccessible: false,
       pets: 0,
-      children: 0
+      children: 0,
+      mapAddress: ""
     },
     /* ----- Social Details -----*/
     pictures: pictures ? pictures : [],

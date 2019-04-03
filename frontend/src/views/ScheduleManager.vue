@@ -66,7 +66,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 40vh;
+  height: 30vh;
   background-image: url("../../public/img/schedule-manager.jpg");
   background-size: cover;
   background-position: center center;
