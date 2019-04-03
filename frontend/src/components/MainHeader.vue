@@ -27,15 +27,27 @@
 </template>
 
 <script>
+// import eventBus from '../services/eventbus-service.js';
+
 export default {
   name: "main-header",
   data() {
     return {
       currPageCity: "",
-      currPageCountry: ""
+      currPageCountry: "",
+      // currCityImg: 'https://res.cloudinary.com/dcl4oabi3/image/upload/v1553254624/bg-imgs/main-header.jpg'
     };
   },
   created() {
+    // eventBus.$on('setCityImg', (cityImg) => {
+    //   if (this.$route.path !== "/") {
+    //     this.currCityImg = cityImg;
+    //     console.log(this.currCityImg)
+    //   }
+    //   console.log(this.currCityImg);
+    //   // this.currCityImg = cityImg;
+    // });
+
     let cutString = this.$route.path.substring(1, this.$route.path.length);
 
     let idxSlash = cutString.indexOf("/");
@@ -63,7 +75,7 @@ export default {
         );
       }
     }
-  }
+  },
 };
 </script>
 

@@ -94,7 +94,7 @@ export default {
 
 .main-container {
   margin-top: 70px;
-  background-color: #e6e6e6;
+  // background-color: #e6e6e6;
 }
 </style>
 

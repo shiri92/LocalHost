@@ -1,6 +1,7 @@
 <template>
   <section class="schedule-hosts">
     <h3>THIS MONTH</h3>
+    <google-map></google-map>
     <div class="flex-container clean-list" v-if="getLoggedUser">
       <h2 v-if="getLoggedUser.acceptedResponses.length===0">No Hosts Yet</h2>
       <div v-else class="info-container flex flex-row justify-center">
@@ -24,12 +25,14 @@
 </template>
 
 <script>
-import UserPreviewGuest from "./UserPreviewGuest.vue";
-import "../filters.js";
+import UserPreviewGuest from './UserPreviewGuest.vue';
+import '../filters.js';
+import GoogleMap from './GoogleMap'
 
 export default {
   components: {
-    UserPreviewGuest
+    UserPreviewGuest,
+    GoogleMap
   },
   data() {
     return {
@@ -65,7 +68,7 @@ export default {
           popover: {
             label: `${req.source.firstName} ${
               req.source.lastName
-            } staying over`,
+              } staying over`,
             // hideIndicator: true,
             img: `${req.source.imgUrl}`
           },

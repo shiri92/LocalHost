@@ -67,7 +67,7 @@ export default {
           popover: {
             label: `${req.source.firstName} ${
               req.source.lastName
-            } staying over`,
+              } staying over`,
             // hideIndicator: true,
             img: `${req.source.imgUrl}`
           },
@@ -79,7 +79,7 @@ export default {
         end: this.getCurrUser.acceptedRequests[0].leavingDate
       });
     },
-    
+
   },
   mounted() {
     this.cmpChange = true;

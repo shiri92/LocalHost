@@ -11,14 +11,14 @@
     <city-search></city-search>
 
     <div class="cities-gallery grid">
-      <div
-        v-for="dest in topDests"
-        :key="dest._id"
-        :class="'img-container' + ' ' + dest.name"
-        :style="'background-image: url(' + dest.imgUrl + ')'"
-      >
-        <div class="city-name" @click="moveToUsers(dest)">{{dest.name}}</div>
-        <div class="overlay">Something</div>
+      <div v-for="dest in topDests" :key="dest._id" :class="'img-container' + ' ' + dest.name">
+        <div
+          class="city-name"
+          :style="'background-image: url(' + dest.imgUrl + ')'"
+          @click="moveToUsers(dest)"
+        >
+          <div class="city-name-title">{{dest.name}}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -76,6 +76,10 @@ export default {
     getUsers() {
       return this.$store.getters.currUsers;
     },
+    getNumOfUsers() {
+      var num = Math.floor(Math.random() * Math.floor(10000));
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
   },
   components: {
     MainHeader,
@@ -93,6 +97,7 @@ export default {
   text-align: center;
   .user-list-title {
     margin-top: 50px;
+    margin-bottom: 50px;
   }
   h1 {
     margin-bottom: 40px;
@@ -108,18 +113,29 @@ export default {
   margin-top: 40px;
   .img-container {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     cursor: pointer;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-    transition: 0.5s ease;
-    &:hover {
-      opacity: 0.8;
-      .overlay {
-        opacity: 1;
+    overflow: hidden;
+    .city-name {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      width: 100%;
+      height: 100%;
+      transition: all 0.5s;
+      position: relative;
+      &:hover {
+        transform: scale(1.2);
+      }
+      .city-name-title {
+        font-size: 2rem;
+        color: white;
+        font-weight: bold;
+        text-shadow: 0px 3px 15px rgba(0, 0, 0, 1);
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
       }
     }
   }
@@ -178,20 +194,6 @@ export default {
   //   background-color: #1dbf73;
   // }
 }
-.overlay {
-  position: absolute;
-  bottom: 0;
-  background: rgb(0, 0, 0);
-  background: rgba(0, 0, 0, 0.9);
-  color: #f1f1f1;
-  width: 100%;
-  transition: 0.5s ease;
-  opacity: 0;
-  color: white;
-  font-size: 20px;
-  padding: 10px;
-  text-align: center;
-}
 
 @media (max-width: 1200px) {
   .cities-gallery {
@@ -248,17 +250,5 @@ export default {
       grid-column: span 1;
     }
   }
-}
-
-.city-name {
-  font-size: 2rem;
-  color: white;
-  font-weight: bold;
-  text-shadow: 0px 3px 15px rgba(0, 0, 0, 1);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>
