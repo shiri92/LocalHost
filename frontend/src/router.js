@@ -57,7 +57,11 @@ export default new Router({
       name: "userScheduleManager",
       component: UserScheduleManager,
       children: [
-        { path: "scheduleGuests", component: ShcheduleGuests },
+        {
+          path: "scheduleGuests",
+          name: "scheduleGuests",
+          component: ShcheduleGuests
+        },
         { path: "scheduleHosts", component: ShcheduleHosts },
         { path: "scheduleDetails", component: ShcheduleDetails }
       ]
