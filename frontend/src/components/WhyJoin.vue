@@ -54,7 +54,7 @@ export default {
   background-repeat: no-repeat;
   background-position: center center;
   h1 {
-    margin-top: 40px;
+    margin-top: 60px;
     margin-bottom: 40px;
     font-family: hensa-regular;
     font-size: 3rem;
