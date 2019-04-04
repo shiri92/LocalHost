@@ -1,10 +1,9 @@
 <template>
   <section class="schedule-hosts">
-    <h3>THIS MONTH</h3>
-    <google-map></google-map>
+    <!-- <h3>THIS MONTH</h3> -->
     <div class="flex-container clean-list" v-if="getLoggedUser">
       <h2 v-if="getLoggedUser.acceptedResponses.length===0">No Hosts Yet</h2>
-      <div v-else class="info-container flex flex-row justify-center">
+      <div v-else class="page-container flex flex-row">
         <div class="list-container flex flex-col">
           <router-link
             style="margin: 2px"
@@ -13,11 +12,14 @@
             v-for="(currResponse, idx) in getLoggedUser.acceptedResponses"
             :to="'/userProfile/' + currResponse.source.id"
           >
-            <user-preview-guest :response="currResponse" :idx="idx+1"></user-preview-guest>
+            <user-preview-host :response="currResponse" :idx="idx+1"></user-preview-host>
           </router-link>
         </div>
-        <div class="calendar-wrapper">
-          <v-calendar :attributes="attrs" class="calendar"></v-calendar>
+        <div class="info-container flex flex-col">
+          <google-map></google-map>
+          <div class="calendar-wrapper">
+            <v-calendar :attributes="attrs" class="calendar"></v-calendar>
+          </div>
         </div>
       </div>
     </div>
@@ -25,13 +27,13 @@
 </template>
 
 <script>
-import UserPreviewGuest from './UserPreviewGuest.vue';
-import '../filters.js';
-import GoogleMap from './GoogleMap'
+import UserPreviewHost from "./UserPreviewHost.vue";
+import "../filters.js";
+import GoogleMap from "./GoogleMap";
 
 export default {
   components: {
-    UserPreviewGuest,
+    UserPreviewHost,
     GoogleMap
   },
   data() {
@@ -39,7 +41,7 @@ export default {
       cmpChange: false,
       keyId: 1,
       attrs: []
-    }
+    };
   },
   computed: {
     getCurrUser() {
@@ -55,7 +57,7 @@ export default {
   methods: {
     addDatesToCal() {
       if (!this.getCurrUser) return;
-      this.getCurrUser.acceptedRequests.forEach(req => {
+      this.getCurrUser.acceptedResponses.forEach(req => {
         this.attrs.push({
           key: this.keyId++,
           highlight: {
@@ -66,20 +68,15 @@ export default {
             color: "#fafafa"
           },
           popover: {
-            label: `${req.source.firstName} ${
+            label: `Staying with ${req.source.firstName} ${
               req.source.lastName
-              } staying over`,
-            // hideIndicator: true,
+            }`,
             img: `${req.source.imgUrl}`
           },
           dates: [{ start: req.arrivalDate, end: req.leavingDate }]
         });
       });
-      this.attrs[0].dates.push({
-        start: this.getCurrUser.acceptedRequests[0].arrivalDate,
-        end: this.getCurrUser.acceptedRequests[0].leavingDate
-      });
-    },
+    }
   },
   mounted() {
     this.cmpChange = true;
@@ -90,7 +87,7 @@ export default {
   watch: {
     watchFunc() {
       this.addDatesToCal();
-    },
+    }
   }
 };
 </script>
@@ -125,25 +122,31 @@ h3 {
   }
   // .flex-container > *:not(:last-child) {
   // }
-
+  .page-container {
+    width: 100%;
+    max-width: 1200px;
+  }
   .info-container {
     width: 100%;
+    padding-left: 10px;
+    flex-grow: 1;
   }
   .calendar-wrapper {
-    // flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 0 30px;
+    margin-top: 10px;
+    z-index: 0;
     .calendar {
       width: 100%;
-      max-width: 700px;
-      min-width: 600px;
+      // max-width: 500px;
+      min-width: 250px;
     }
   }
   .list-container {
     overflow: auto;
-    height: 275px;
+    min-width: 360px;
+    // height: 275px;
   }
   .list-container::-webkit-scrollbar {
     width: 0.25em;
