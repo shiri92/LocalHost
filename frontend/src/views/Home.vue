@@ -95,12 +95,11 @@ export default {
   margin-top: -70px;
   padding-bottom: 50px;
   text-align: center;
-  .user-list-title {
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
   h1 {
+    font-family: hensa-regular;
+    font-size: 3rem;
     margin-bottom: 40px;
+    margin-top: 40px;
   }
 }
 

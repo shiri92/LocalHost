@@ -9,7 +9,7 @@
 
       <div class="buttons-container">
         <div v-if="!getLoggedUser" class="join-container">
-          <span class="welcome">Welcome guest!</span>
+          <span class="welcome">Welcome Guest!</span>
           <button class="btn" @click="signUp">Join</button>
           <button class="btn btn-empty" @click="loginFormOn">Sign In</button>
         </div>
@@ -17,7 +17,11 @@
           <span class="welcome">
             <!--{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}-->
           </span>
-          <img class="user-img" @click="toggleUserWindow" :style="'background-image: url(' + getLoggedUser.imgUrl +')'">
+          <img
+            class="user-img"
+            @click="toggleUserWindow"
+            :style="'background-image: url(' + getLoggedUser.imgUrl +')'"
+          >
         </div>
       </div>
 
