@@ -4,13 +4,25 @@
       <div class="nav-container">
         <div class="nav" v-if="getCurrUser">
           <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerGuests'">
-            <div class="nav-item">Guests</div>
+            <div
+              class="nav-item"
+              :class="{isSelected: navItemSelected.guests}"
+              @click="whoSelected(true, false, false)"
+            >Guests</div>
           </router-link>
           <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerHosts'">
-            <div class="nav-item">Hosts</div>
+            <div
+              class="nav-item"
+              :class="{isSelected: navItemSelected.hosts}"
+              @click="whoSelected(false, true, false)"
+            >Hosts</div>
           </router-link>
           <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerInbox'">
-            <div class="nav-item">Inbox</div>
+            <div
+              class="nav-item"
+              :class="{isSelected: navItemSelected.inbox}"
+              @click="whoSelected(false, false, true)"
+            >Inbox</div>
           </router-link>
         </div>
       </div>
@@ -23,8 +35,11 @@
 export default {
   data() {
     return {
-      activeIndex: '1',
-      activeIndex2: '1'
+      navItemSelected: {
+        guests: true,
+        hosts: false,
+        inbox: false,
+      }
     };
   },
   created() {
@@ -37,7 +52,11 @@ export default {
     handleSelect(key, keyPath) {
       console.log(key, keyPath);
     },
-
+    whoSelected(guests, hosts, inbox) {
+      this.navItemSelected.guests = guests;
+      this.navItemSelected.hosts = hosts;
+      this.navItemSelected.inbox = inbox;
+    }
   },
   computed: {
     getCurrUser() {
@@ -60,22 +79,19 @@ export default {
 }
 .view {
   flex-grow: 1;
-  // height: 300px;
 }
 .bg-container {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  height: 30vh;
+  height: 25vh;
   background-image: url("../../public/img/schedule-manager.jpg");
   background-size: cover;
   background-position: center center;
   .nav-container {
     display: flex;
     align-items: center;
-    // height: 30%;
-    // padding: 10px;
-    margin-bottom: 5px;
+    // margin-bottom: 5px;
     background-color: rgb(66, 66, 66);
     opacity: 0.9;
     .nav {
@@ -94,6 +110,9 @@ export default {
         }
       }
     }
+  }
+  .isSelected {
+    background-color: rgb(94, 94, 94);
   }
 }
 </style>

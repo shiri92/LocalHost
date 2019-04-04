@@ -1,19 +1,19 @@
 <template>
   <div class="google-map">
-    <div>
+    <!-- <div>
       <h2>Search and add a pin</h2>
       <label>
         <gmap-autocomplete @place_changed="addMarker"></gmap-autocomplete>
       </label>
       <br>
     </div>
-    <br>
+    <br> -->
     <GmapMap
       ref="mapRef"
       :center="center"
       :zoom="15"
       map-type-id="terrain"
-      style="width: 600px; height: 400px"
+      style="width: 100%; height: 275px"
     >
       <GmapMarker
         :key="index"
