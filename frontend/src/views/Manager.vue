@@ -36,9 +36,9 @@ export default {
   data() {
     return {
       navItemSelected: {
-        guests: true,
+        guests: false,
         hosts: false,
-        inbox: false,
+        inbox: true,
       }
     };
   },

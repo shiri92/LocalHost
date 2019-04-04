@@ -7,7 +7,7 @@
       </label>
       <br>
     </div>
-    <br> -->
+    <br>-->
     <GmapMap
       ref="mapRef"
       :center="center"
