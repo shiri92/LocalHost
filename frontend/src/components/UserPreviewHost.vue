@@ -20,10 +20,10 @@
                 <!-- <span>{{ 1553967058 | time }}</span> -->
               </span>
               <span class="date">
-                <span>Arrival Date: {{response.arrivalDate}}</span>
+                <span>Arrival Date: {{response.arrivalDate | moment("calendar")}}</span>
               </span>
               <span class="date">
-                <span>Leaving Date: {{response.leavingDate}}</span>
+                <span>Leaving Date: {{response.leavingDate | moment("calendar")}}</span>
               </span>
             </div>
           </div>
