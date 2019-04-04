@@ -1,8 +1,8 @@
 <template>
   <section class="schedule-guests">
-    <h3>THIS MONTH</h3>
+    <!-- <h3>THIS MONTH</h3> -->
     <div class="flex-container clean-list" v-if="getLoggedUser">
-      <h2 v-if="getLoggedUser.acceptedRequests.length===0">No Guests Yet</h2>
+      <h2 v-if="getLoggedUser.acceptedRequests.length === 0">No Guests Yet</h2>
       <div v-else class="info-container flex flex-row justify-center">
         <div class="list-container flex flex-col">
           <router-link
@@ -74,10 +74,6 @@ export default {
           dates: [{ start: req.arrivalDate, end: req.leavingDate }]
         });
       });
-      this.attrs[0].dates.push({
-        start: this.getCurrUser.acceptedRequests[0].arrivalDate,
-        end: this.getCurrUser.acceptedRequests[0].leavingDate
-      });
     },
 
   },
@@ -122,26 +118,27 @@ h3 {
     min-width: 300px;
     margin-bottom: 20px;
   }
-  // .flex-container > *:not(:last-child) {
-  // }
 
   .info-container {
     width: 100%;
+    max-width: 1000px;
   }
   .calendar-wrapper {
-    // flex-grow: 1;
+    width: 100%;
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 0 30px;
+    padding-left: 10px;
+    z-index: 0;
     .calendar {
       width: 100%;
-      max-width: 700px;
-      min-width: 600px;
+      min-width: 250px;
     }
   }
   .list-container {
     overflow: auto;
+    min-width: 360px;
     height: 275px;
   }
   .list-container::-webkit-scrollbar {
@@ -153,7 +150,7 @@ h3 {
   }
 
   .list-container::-webkit-scrollbar-thumb {
-    background-color: rgb(24, 1, 1);
+    background-color: rgb(109, 108, 108);
   }
 }
 </style>

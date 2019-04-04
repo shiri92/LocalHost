@@ -29,6 +29,8 @@ export default {
     emptyRequest(state) {
       return {
         isAccepted: false,
+        isOpen: false,
+        createdAt: Date.now(),
         source: {
           id: state.loggedUser._id,
           firstName: state.loggedUser.firstName,
@@ -49,7 +51,7 @@ export default {
           address: state.loggedUser.address,
           placeDetails: state.loggedUser.placeDetails
         }
-      }
+      };
     },
     emptyReview(state) {
       return {
@@ -57,13 +59,13 @@ export default {
         getAsAHost: false,
         getAsAGuest: false,
         rating: 0,
-        description: '',
+        description: "",
         source: {
           id: state.loggedUser._id,
           firstName: state.loggedUser.firstName,
           lastName: state.loggedUser.lastName,
           imgUrl: state.loggedUser.imgUrl,
-          address: state.loggedUser.address,
+          address: state.loggedUser.address
         }
       };
     }
@@ -102,11 +104,15 @@ export default {
       state.loggedUser.pendingRequests.splice(idx, 1);
     },
     deleteReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
+      let idx = state.currUser.references.findIndex(
+        review => reviewId === review._id
+      );
       state.currUser.references.splice(idx, 1);
     },
     updateReview(state, { review }) {
-      let idx = state.currUser.references.findIndex(currReview => review._id === currReview._id);
+      let idx = state.currUser.references.findIndex(
+        currReview => review._id === currReview._id
+      );
       state.currUser.references.splice(idx, 1, review);
     },
     updateLoggedUser(state, { user }) {
@@ -126,12 +132,11 @@ export default {
           this.commit({ type: "addAcceptedResponse", response });
           eventBus.$emit('popToast', 'info', 'bottom-start', 5000, `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your manager inbox...`);
         }); // TODO - Add Link To Manager => hosts
+
         state.currSocket.on("postReview", (review, targetId) => {
           if (state.currUser._id === targetId) this.commit({ type: "addReview", review });
           if (state.loggedUser._id === targetId) eventBus.$emit('popToast', 'info', 'bottom-start', 5000, 'You got a new reference! for more check out your profile...');
         });  // TODO - Add Link To Profile => hosts
-
-
 
         state.currSocket.on("unpostReview", (reviewId, targetId) => {
           if (state.currUser._id === targetId) this.commit({ type: "deleteReview", reviewId });
@@ -218,7 +223,7 @@ export default {
     },
     async sendResponse(context, { response, targetId }) {
       let res = await userService.sendResponse(response, targetId);
-      context.state.currSocket.emit('sendResponse', targetId, res);
+      context.state.currSocket.emit("sendResponse", targetId, res);
     },
     async postReview(context, { review, targetId }) {
       let res = await userService.postReview(review, targetId);
@@ -239,7 +244,7 @@ export default {
     async updatePortrait(context, { imgFile, imgPath, targetId }) {
       let imgUrl = await cloudService.uploadPortrait(imgFile, imgPath);
       await userService.updatePortrait(imgUrl, targetId);
-      context.commit({ type: 'setPortrait', imgUrl });
-    },
+      context.commit({ type: "setPortrait", imgUrl });
+    }
   }
 };
