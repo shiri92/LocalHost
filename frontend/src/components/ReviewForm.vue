@@ -5,76 +5,76 @@
       <span @click="$emit('closeReviewForm')">&times;</span>
     </div>
     <hr>
-    <div class="content flex flex-col">
+    <form class="content flex flex-col">
       <label for>{{currUser.firstName}} was your:</label>
       <div class="checkbox-container flex">
-        <div>
+        <label>
           <input
             class="checkbox"
             type="checkbox"
             ref="inputHost"
+            name="status"
             @change="checkHost"
             value="Host"
             v-model="review.getAsAHost"
             required
           >Host
-        </div>
-        <div>
+        </label>
+        <label>
           <input
             class="checkbox"
             type="checkbox"
             ref="inputGuest"
+            name="status"
             @change="checkGuest"
             value="Guest"
             v-model="review.getAsAGuest"
-            required
           >Guest
-        </div>
+        </label>
       </div>
       <rate-stars @rate="setRate"></rate-stars>
       <label>Your Review:</label>
-      <textarea v-model="review.description" cols="30" rows="8" required></textarea>
+      <textarea v-model="review.description" cols="30" rows="8" name="desc" required></textarea>
       <div class="btn-container flex justify-center">
         <button class="btn btn-send" @click="postReview">Send Review</button>
       </div>
-    </div>
+    </form>
   </section>
 </template>
 
 <script>
-import RateStars from '../components/RateStars'
+import RateStars from "../components/RateStars";
 export default {
-  name: 'review-form',
-  props: ['currReviewToEdit'],
+  name: "review-form",
+  props: ["currReviewToEdit"],
   components: {
     RateStars
   },
   data() {
     return {
-      review: null,
-    }
+      review: null
+    };
   },
   created() {
     if (this.currReviewToEdit) {
-      this.review = this.currReviewToEdit
-    }
-    else {
+      this.review = this.currReviewToEdit;
+    } else {
       this.review = JSON.parse(JSON.stringify(this.$store.getters.emptyReview));
     }
-
-
   },
   computed: {
     currUser() {
       return this.$store.getters.currUser;
     },
     loggedUser() {
-      return this.$store.getters.loggedUser
+      return this.$store.getters.loggedUser;
     },
     isValid() {
-      return (this.review.getAsAHost || this.review.getAsAGuest) &&
+      return (
+        (this.review.getAsAHost || this.review.getAsAGuest) &&
         this.review.description &&
         this.review.rating
+      );
     }
   },
   methods: {
@@ -82,32 +82,59 @@ export default {
       this.review.rating = num;
     },
     checkHost() {
-      this.$refs.inputGuest.checked = false;
-      this.review.getAsAHost = true;
-      this.review.getAsAGuest = false;
+      if (this.review.getAsAHost) {
+        this.$refs.inputGuest.checked = false;
+      } else {
+        this.$refs.inputHost.checked = false;
+      }
     },
     checkGuest() {
-      this.$refs.inputHost.checked = false;
-      this.review.getAsAHost = false;
-      this.review.getAsAGuest = true;
+      if (this.review.getAsAGuest) {
+        this.$refs.inputHost.checked = false;
+      } else {
+        this.$refs.inputGuest.checked = false;
+      }
     },
     async postReview() {
       if (!this.loggedUser) {
-        this.popToast('info', 'bottom-start', 3000, 'Please Sign In To Add Review...');
+        this.popToast(
+          "info",
+          "bottom-start",
+          3000,
+          "Please Sign In To Add Review..."
+        );
         return;
       }
       if (this.isValid) {
-        this.$emit('closeReviewForm');
+        this.$emit("closeReviewForm");
         if (!this.currReviewToEdit) {
           this.review.createdAt = Date.now();
-          await this.$store.dispatch({ type: 'postReview', review: this.review, targetId: this.currUser._id });
-          this.$emit('resetCurrReview')
-          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Revixew');
+          await this.$store.dispatch({
+            type: "postReview",
+            review: this.review,
+            targetId: this.currUser._id
+          });
+          this.$emit("resetCurrReview");
+          this.popToast(
+            "success",
+            "bottom-start",
+            3000,
+            "You Have Added New Revixew"
+          );
           return;
         }
         //TODO IF USER UPDATES REVIEW ADD THE UPDATED TIME
-        this.$store.dispatch({ type: 'editReview', currUserId: this.currUser._id, review: this.review });
-        this.popToast('success', 'bottom-start', 3000, 'You Have Updated Successfuly The Review');
+        this.$store.dispatch({
+          type: "editReview",
+          currUserId: this.currUser._id,
+          review: this.review
+        });
+        this.popToast(
+          "success",
+          "bottom-start",
+          3000,
+          "You Have Updated Successfuly The Review"
+        );
       }
     },
     popToast(type, position, timer, title) {
@@ -123,8 +150,8 @@ export default {
         title: title
       });
     }
-  },
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>

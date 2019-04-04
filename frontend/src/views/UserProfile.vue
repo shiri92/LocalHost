@@ -97,6 +97,7 @@ export default {
   data() {
     return {
       isNavInDisplay: false,
+      modalOpen: false,
       showRequestForm: false,
       window: {
         width: 0,

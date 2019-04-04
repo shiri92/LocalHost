@@ -116,7 +116,7 @@ export default {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 968px) {
   .login {
     width: 40%;
   }
