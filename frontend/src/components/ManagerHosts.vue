@@ -1,8 +1,12 @@
 <template>
   <section class="schedule-hosts">
-    <!-- <h3>THIS MONTH</h3> -->
     <div class="flex-container clean-list" v-if="getLoggedUser">
-      <h2 v-if="getLoggedUser.acceptedResponses.length===0">No Hosts Yet</h2>
+      <div
+        class="empty flex justify-center align-center"
+        v-if="getLoggedUser.acceptedResponses.length===0"
+      >
+        <h3>No Hosts Yet...</h3>
+      </div>
       <div v-else class="page-container flex flex-row">
         <div class="list-container flex flex-col">
           <router-link
@@ -96,13 +100,6 @@ export default {
 h2 {
   text-align: center;
 }
-h3 {
-  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
-    0 5px 15px 0 rgba(0, 0, 0, 0.08);
-  text-align: center;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
 .schedule-hosts {
   display: flex;
   flex-direction: column;
@@ -114,6 +111,19 @@ h3 {
     flex-wrap: wrap;
     flex-grow: 1;
     padding: 10px;
+    .empty {
+      background-image: url("../../public/img/bg-imgs/inbox.svg");
+      background-size: cover;
+      position: relative;
+      width: 500px;
+      height: 500px;
+      h3 {
+        margin-top: 250px;
+        font-size: 2rem;
+        color: white;
+        font-family: lato-reg;
+      }
+    }
   }
 
   .flex-container > * {

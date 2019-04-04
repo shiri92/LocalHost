@@ -1,9 +1,13 @@
 <template>
   <section class="user-inbox">
-    <h2>INBOX</h2>
-    <div class="inbox-container flex flex-row">
-      <div class="main-content" v-if="getLoggedUser">
-        <h3 v-if="getLoggedUser.pendingRequests.length===0">Your Inbox Is Empty...</h3>
+    <div class="inbox-container flex">
+      <div class="main-content flex" v-if="getLoggedUser">
+        <div
+          class="empty flex justify-center align-center"
+          v-if="getLoggedUser.pendingRequests.length===0"
+        >
+          <h3>Your Inbox Is Empty...</h3>
+        </div>
         <div
           class="card"
           v-else
@@ -86,9 +90,24 @@ export default {
 <style lang="scss" scoped>
 .user-inbox {
   max-width: 1400px;
+  min-width: 500px;
   margin: 0 auto;
   .inbox-container {
     .main-content {
+      flex-direction: column-reverse;
+      .empty {
+        background-image: url("../../public/img/bg-imgs/inbox.svg");
+        background-size: cover;
+        position: relative;
+        width: 500px;
+        height: 500px;
+        h3 {
+          margin-top: 250px;
+          font-size: 2rem;
+          color: white;
+          font-family: lato-reg;
+        }
+      }
       .card {
         max-width: 980px;
         margin: 30px 0;
@@ -100,6 +119,11 @@ export default {
           padding: 20px 20px 0 20px;
           margin-bottom: 20px;
           cursor: pointer;
+          transition: 0.3s;
+          &:hover {
+            color: black;
+            font-weight: bold;
+          }
         }
         .arrow {
           width: 15px;
@@ -110,10 +134,12 @@ export default {
           .name {
             font-size: 1.15rem;
             font-weight: bold;
+            margin-bottom: 10px;
           }
           .date {
             font-weight: bold;
             color: #757575;
+            margin-bottom: 5px;
           }
           .msg {
             max-width: 600px;
@@ -139,6 +165,11 @@ export default {
             cursor: pointer;
             height: 100%;
             padding: 20px 10px;
+            transition: 0.5s;
+            &:hover {
+              background-color: #b4b1b1;
+              box-shadow: 2px 2px 9px rgb(144, 143, 143);
+            }
           }
         }
       }
