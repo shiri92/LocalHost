@@ -4,13 +4,25 @@
       <div class="nav-container">
         <div class="nav" v-if="getCurrUser">
           <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerGuests'">
-            <div class="nav-item" :class="{isSelected: navItemSelected.guests}" @click="whoSelected(true, false, false)">Guests</div>
+            <div
+              class="nav-item"
+              :class="{isSelected: navItemSelected.guests}"
+              @click="whoSelected(true, false, false)"
+            >Guests</div>
           </router-link>
           <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerHosts'">
-            <div class="nav-item" :class="{isSelected: navItemSelected.hosts}" @click="whoSelected(false, true, false)">Hosts</div>
+            <div
+              class="nav-item"
+              :class="{isSelected: navItemSelected.hosts}"
+              @click="whoSelected(false, true, false)"
+            >Hosts</div>
           </router-link>
           <router-link :to="'/userProfile/' + getCurrUser._id + '/manager/managerInbox'">
-            <div class="nav-item" :class="{isSelected: navItemSelected.inbox}" @click="whoSelected(false, false, true)">Inbox</div>
+            <div
+              class="nav-item"
+              :class="{isSelected: navItemSelected.inbox}"
+              @click="whoSelected(false, false, true)"
+            >Inbox</div>
           </router-link>
         </div>
       </div>
@@ -34,7 +46,7 @@ export default {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
     if (this.getCurrUser)
-      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerGuests');
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerInbox');
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -52,9 +64,9 @@ export default {
     }
   },
   watch: {
-    // getCurrUser(newVal, oldVal) {
-    //   this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerGuests');
-    // }
+    getCurrUser(newVal, oldVal) {
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerInbox');
+    }
   }
 }
 </script>
@@ -93,7 +105,7 @@ export default {
         border-radius: 10px;
         padding: 10px 50px 10px 50px;
         transition: 1s;
-        &:hover{
+        &:hover {
           background-color: rgb(94, 94, 94);
         }
       }

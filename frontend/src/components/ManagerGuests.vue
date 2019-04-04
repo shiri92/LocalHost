@@ -118,28 +118,27 @@ h3 {
     min-width: 300px;
     margin-bottom: 20px;
   }
-  // .flex-container > *:not(:last-child) {
-  // }
 
   .info-container {
     width: 100%;
+    max-width: 1000px;
   }
   .calendar-wrapper {
+    width: 100%;
     flex-grow: 1;
-    max-width: 700px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 0 30px;
+    padding-left: 10px;
     z-index: 0;
     .calendar {
       width: 100%;
-      max-width: 700px;
-      min-width: 300px;
+      min-width: 250px;
     }
   }
   .list-container {
     overflow: auto;
+    min-width: 360px;
     height: 275px;
   }
   .list-container::-webkit-scrollbar {
@@ -151,7 +150,7 @@ h3 {
   }
 
   .list-container::-webkit-scrollbar-thumb {
-    background-color: rgb(24, 1, 1);
+    background-color: rgb(109, 108, 108);
   }
 }
 </style>

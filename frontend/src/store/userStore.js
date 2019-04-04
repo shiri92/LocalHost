@@ -1,8 +1,8 @@
 /* ----- DEPEND -----*/
 import userService from "../services/userService.js";
 import socketService from "../services/socketService.js";
-import utilService from '../services/utilService.js';
-import cloudService from '../services/cloudService.js';
+import utilService from "../services/utilService.js";
+import cloudService from "../services/cloudService.js";
 
 export default {
   state: {
@@ -28,6 +28,8 @@ export default {
     emptyRequest(state) {
       return {
         isAccepted: false,
+        isOpen: false,
+        createdAt: Date.now(),
         source: {
           id: state.loggedUser._id,
           firstName: state.loggedUser.firstName,
@@ -48,7 +50,7 @@ export default {
           address: state.loggedUser.address,
           placeDetails: state.loggedUser.placeDetails
         }
-      }
+      };
     },
     emptyReview(state) {
       return {
@@ -56,13 +58,13 @@ export default {
         getAsAHost: false,
         getAsAGuest: false,
         rating: 0,
-        description: '',
+        description: "",
         source: {
           id: state.loggedUser._id,
           firstName: state.loggedUser.firstName,
           lastName: state.loggedUser.lastName,
           imgUrl: state.loggedUser.imgUrl,
-          address: state.loggedUser.address,
+          address: state.loggedUser.address
         }
       };
     }
@@ -103,11 +105,15 @@ export default {
       state.loggedUser.pendingRequests.splice(idx, 1);
     },
     deleteReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
+      let idx = state.currUser.references.findIndex(
+        review => reviewId === review._id
+      );
       state.currUser.references.splice(idx, 1);
     },
     updateReview(state, { review }) {
-      let idx = state.currUser.references.findIndex(currReview => review._id === currReview._id);
+      let idx = state.currUser.references.findIndex(
+        currReview => review._id === currReview._id
+      );
       state.currUser.references.splice(idx, 1, review);
     },
     updateLoggedUser(state, { user }) {
@@ -131,16 +137,19 @@ export default {
         });
         state.currSocket.on("postReview", (review, targetId) => {
           // if the logged user watches the reviewd user page.
-          if (state.currUser._id === targetId) this.commit({ type: "addReview", review });
+          if (state.currUser._id === targetId)
+            this.commit({ type: "addReview", review });
           // TODO: show swal 'You Got New Review On Your Profile'
         });
         state.currSocket.on("unpostReview", (reviewId, targetId) => {
           // if the logged user watches the reviewd user page.
-          if (state.currUser._id === targetId) this.commit({ type: "deleteReview", reviewId });
+          if (state.currUser._id === targetId)
+            this.commit({ type: "deleteReview", reviewId });
         });
         state.currSocket.on("editReview", (review, targetId) => {
           // if the logged user watches the reviewd user page.
-          if (state.currUser._id === targetId) this.commit({ type: "updateReview", review });
+          if (state.currUser._id === targetId)
+            this.commit({ type: "updateReview", review });
         });
       }
     }
@@ -221,7 +230,7 @@ export default {
     },
     async sendResponse(context, { response, targetId }) {
       let res = await userService.sendResponse(response, targetId);
-      context.state.currSocket.emit('sendResponse', targetId, res);
+      context.state.currSocket.emit("sendResponse", targetId, res);
     },
     async postReview(context, { review, targetId }) {
       let res = await userService.postReview(review, targetId);
@@ -242,7 +251,7 @@ export default {
     async updatePortrait(context, { imgFile, imgPath, targetId }) {
       let imgUrl = await cloudService.uploadPortrait(imgFile, imgPath);
       await userService.updatePortrait(imgUrl, targetId);
-      context.commit({ type: 'setPortrait', imgUrl });
-    },
+      context.commit({ type: "setPortrait", imgUrl });
+    }
   }
 };

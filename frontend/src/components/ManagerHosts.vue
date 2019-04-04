@@ -16,10 +16,10 @@
           </router-link>
         </div>
         <div class="info-container flex flex-col">
-          <google-map></google-map>
           <div class="calendar-wrapper">
             <v-calendar :attributes="attrs" class="calendar"></v-calendar>
           </div>
+          <google-map></google-map>
         </div>
       </div>
     </div>
@@ -70,7 +70,7 @@ export default {
           popover: {
             label: `Staying with ${req.source.firstName} ${
               req.source.lastName
-            }`,
+              }`,
             img: `${req.source.imgUrl}`
           },
           dates: [{ start: req.arrivalDate, end: req.leavingDate }]
@@ -120,11 +120,10 @@ h3 {
     min-width: 300px;
     margin-bottom: 20px;
   }
-  // .flex-container > *:not(:last-child) {
-  // }
+
   .page-container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1000px;
   }
   .info-container {
     width: 100%;
@@ -135,18 +134,17 @@ h3 {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    margin-top: 10px;
+    margin-bottom: 10px;
     z-index: 0;
     .calendar {
       width: 100%;
-      // max-width: 500px;
       min-width: 250px;
     }
   }
   .list-container {
     overflow: auto;
     min-width: 360px;
-    // height: 275px;
+    height: 275px;
   }
   .list-container::-webkit-scrollbar {
     width: 0.25em;
@@ -157,7 +155,7 @@ h3 {
   }
 
   .list-container::-webkit-scrollbar-thumb {
-    background-color: rgb(24, 1, 1);
+    background-color: rgb(109, 108, 108);
   }
 }
 </style>

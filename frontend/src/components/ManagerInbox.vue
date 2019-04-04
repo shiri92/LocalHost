@@ -2,29 +2,42 @@
   <section class="user-inbox">
     <h2>INBOX</h2>
     <div class="inbox-container flex flex-row">
-      <nav>
-        <div class="nav-item">Requests</div>
-        <div class="nav-item">Calendar</div>
-      </nav>
       <div class="main-content" v-if="getLoggedUser">
         <h3 v-if="getLoggedUser.pendingRequests.length===0">Your Inbox Is Empty...</h3>
         <div
+          class="card"
           v-else
           v-for="(request, idx) in getLoggedUser.pendingRequests"
           :key="idx"
-          class="request flex flex-row space-between align-center"
           :class="{'animation':request.isAccepted, 'fadeOutLeft':request.isAccepted}"
         >
-          <div class="user-info">
-            <div class="request-info">
-              <span>{{request.source.firstName}} {{request.source.lastName}}</span>
-              has requested to stay with you from {{request.arrivalDate}} To {{request.leavingDate}}
-            </div>
-            <div class="request-msg">{{request.description}}</div>
+          <div @click="request.isOpen = !request.isOpen" class="top flex align-center">
+            <img
+              src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1554330254/fav-icons/request.png"
+              style="width:20px; height:20px"
+            >
+            &nbsp;
+            <div style="color: #3256bf">Messages&nbsp;</div>
+            <div>&#183; {{request.createdAt | moment("from", "now")}}</div>&nbsp;
+            <!-- <div>&#183; {{Date.now() | moment("from", "now")}}</div>&nbsp; -->
+            <font-awesome-icon v-if="!request.isOpen" icon="sort-down"/>
+            <font-awesome-icon v-if="request.isOpen" icon="sort-up"/>
           </div>
-          <div class="answer-btns">
-            <el-button type="success" @click="acceptRequest(request)">Accept</el-button>
-            <el-button type="danger" @click="declineRequest(request)">Decline</el-button>
+          <div class="content flex space-between">
+            <div>
+              <h4>{{request.source.firstName}} {{request.source.lastName}}</h4>
+              <h5>has requested to stay with you from {{request.arrivalDate | moment("calendar")}} To {{request.leavingDate | moment("calendar")}}</h5>
+              <div class="msg">{{request.description}}</div>
+            </div>
+            <img
+              @click="$router.push('/userProfile/' + request.source.id)"
+              class="user-img"
+              :style="'background-image: url(' + request.source.imgUrl +')'"
+            >
+          </div>
+          <div v-if="request.isOpen" class="btns flex">
+            <div @click="acceptRequest(request)">Accept</div>
+            <div @click="declineRequest(request)">Decline</div>
           </div>
         </div>
       </div>
@@ -62,60 +75,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h2 {
-  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
-    0 5px 15px 0 rgba(0, 0, 0, 0.08);
-  text-align: center;
-}
 .user-inbox {
-  flex-grow: 1;
-  background: linear-gradient(#2193b0, #6dd5ed);
-
-  padding: 20px;
-  background-size: cover;
-  background-repeat: no-repeat;
+  max-width: 1400px;
+  margin: 0 auto;
   .inbox-container {
-    margin-top: 20px;
-    nav {
-      flex-grow: 1;
-      margin-right: 20px;
-      .nav-item {
-        margin-bottom: 20px;
-        max-width: 150px;
-        padding: 10px;
-        background-color: #fff;
-        border-radius: 10px;
-        text-align: left;
-        transition: 0.3s;
-        &:hover {
-          background-color: rgb(131, 131, 131);
-        }
-      }
-    }
     .main-content {
-      flex-grow: 1;
-      .request {
-        font-weight: bold;
-        background-color: rgb(43, 43, 43);
-        width: 100%;
-        border-bottom: 2px solid rgba(0, 0, 0, 0.15);
-        padding: 20px;
-        border-radius: 5px;
-        margin-bottom: 5px;
+      .card {
+        max-width: 980px;
+        margin: 30px 0;
+        border-radius: 3px;
+        box-shadow: 1px 1px 4px rgb(110, 109, 109);
         animation-duration: 1s;
         opacity: 0.9;
-        .request-info {
-          padding-left: 10px;
-          padding-right: 10px;
-          padding-top: 5px;
-          padding-bottom: 5px;
-          background-color: #fff;
-          // color: rgb(98, 162, 192);
-          margin-bottom: 10px;
+        .top {
+          padding: 20px 20px 0 20px;
+          margin-bottom: 20px;
+          cursor: pointer;
         }
-        .request-msg {
-          padding: 10px;
-          background-color: #fff;
+        .content {
+          padding: 0 20px 20px 20px;
+          .msg {
+            max-width: 600px;
+          }
+          .user-img {
+            margin-left: 70px;
+            cursor: pointer;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+          }
+        }
+        .btns {
+          background-color: rgb(209, 207, 207);
+          color: #3256bf;
+          padding: 0 20px 0 20px;
+          div {
+            margin-left: 30px;
+            cursor: pointer;
+            height: 100%;
+            padding: 20px 10px;
+          }
         }
       }
     }
