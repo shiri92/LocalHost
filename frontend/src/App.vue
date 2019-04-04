@@ -16,6 +16,7 @@
 import MainNav from "@/components/MainNav";
 import logIn from '@/components/Login';
 import MainFooter from "@/components/MainFooter";
+import eventBus from '@/services/eventbus-service';
 
 export default {
   data() {
@@ -25,6 +26,7 @@ export default {
       showLoginForm: false,
     }
   },
+
   components: {
     MainNav,
     logIn,
@@ -34,6 +36,7 @@ export default {
     this.currPage = this.$route.path;
     // if (!this.getLoggedUser)
     this.$store.dispatch({ type: 'checkLogged' })
+    eventBus.$on('popToast', (...args) => this.popToast(...args));
   },
   computed: {
     getLoggedUser() {
@@ -48,6 +51,19 @@ export default {
     showLogin() {
       this.showLoginForm = true;
       this.isBackDark = true;
+    },
+    popToast(type, position, timer, title) {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer
+      });
+
+      Toast.fire({
+        type: type,
+        title: title
+      });
     }
   },
   watch: {

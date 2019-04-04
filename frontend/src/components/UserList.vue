@@ -2,6 +2,7 @@
   <section class="list-container flex justify-center flex-col align-center">
     <div class="profile-list" v-if="users">
       <router-link
+        data-aos="zoom-in"
         class="profile-list-item"
         :key="currProfile._id"
         v-for="(currProfile, idx) in users"
@@ -16,11 +17,10 @@
 
 <script>
 import UserPreview from "./UserPreview.vue";
-
 export default {
   name: "user-list",
   components: {
-    UserPreview
+    UserPreview,
   },
   props: ["users"]
 };

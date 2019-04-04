@@ -1,8 +1,9 @@
 /* ----- DEPEND -----*/
 import userService from "../services/userService.js";
 import socketService from "../services/socketService.js";
-import utilService from "../services/utilService.js";
-import cloudService from "../services/cloudService.js";
+import utilService from '../services/utilService.js';
+import cloudService from '../services/cloudService.js';
+import eventBus from '../services/eventbus-service.js';
 
 export default {
   state: {
@@ -99,9 +100,7 @@ export default {
       state.currUser.references.push(review);
     },
     deletePendingRequest(state, { requestId }) {
-      let idx = state.loggedUser.pendingRequests.findIndex(
-        request => request._id === requestId
-      );
+      let idx = state.loggedUser.pendingRequests.findIndex(request => request._id === requestId);
       state.loggedUser.pendingRequests.splice(idx, 1);
     },
     deleteReview(state, { reviewId }) {
@@ -117,9 +116,7 @@ export default {
       state.currUser.references.splice(idx, 1, review);
     },
     updateLoggedUser(state, { user }) {
-      let idx = state.currUsers.findIndex(
-        currUser => currUser._id === user._id
-      );
+      let idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
       state.currUsers.splice(idx, 1, user);
     },
     initCurrSocket(state, { user }) {
@@ -129,27 +126,23 @@ export default {
 
         state.currSocket.on("sendRequest", request => {
           this.commit({ type: "addPendingRequest", request });
-          // TODO: show swal 'You Got New Request Check Inobx...!'
+          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, 'You got a new request! for more check out your manager inbox...');
         });
         state.currSocket.on("sendResponse", response => {
           this.commit({ type: "addAcceptedResponse", response });
-          // TODO: show swal '~user Approved Your Request, check host details to know more... (link)'
-        });
+          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your manager inbox...`);
+        }); // TODO - Add Link To Manager => hosts
+
         state.currSocket.on("postReview", (review, targetId) => {
-          // if the logged user watches the reviewd user page.
-          if (state.currUser._id === targetId)
-            this.commit({ type: "addReview", review });
-          // TODO: show swal 'You Got New Review On Your Profile'
-        });
+          if (state.currUser._id === targetId) this.commit({ type: "addReview", review });
+          if (state.loggedUser._id === targetId) eventBus.$emit('popToast', 'info', 'bottom-start', 5000, 'You got a new reference! for more check out your profile...');
+        });  // TODO - Add Link To Profile => hosts
+
         state.currSocket.on("unpostReview", (reviewId, targetId) => {
-          // if the logged user watches the reviewd user page.
-          if (state.currUser._id === targetId)
-            this.commit({ type: "deleteReview", reviewId });
+          if (state.currUser._id === targetId) this.commit({ type: "deleteReview", reviewId });
         });
         state.currSocket.on("editReview", (review, targetId) => {
-          // if the logged user watches the reviewd user page.
-          if (state.currUser._id === targetId)
-            this.commit({ type: "updateReview", review });
+          if (state.currUser._id === targetId) this.commit({ type: "updateReview", review });
         });
       }
     }

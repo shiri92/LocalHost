@@ -19,14 +19,23 @@
             &nbsp;
             <div style="color: #3256bf">Messages&nbsp;</div>
             <div>&#183; {{request.createdAt | moment("from", "now")}}</div>&nbsp;
-            <!-- <div>&#183; {{Date.now() | moment("from", "now")}}</div>&nbsp; -->
-            <font-awesome-icon v-if="!request.isOpen" icon="sort-down"/>
-            <font-awesome-icon v-if="request.isOpen" icon="sort-up"/>
+            <img
+              class="arrow"
+              v-if="!request.isOpen"
+              src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1554383713/fav-icons/sort-down.png"
+            >
+            <img
+              class="arrow"
+              v-if="request.isOpen"
+              src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1554383713/fav-icons/sort-up.png"
+            >
           </div>
           <div class="content flex space-between">
             <div>
-              <h4>{{request.source.firstName}} {{request.source.lastName}}</h4>
-              <h5>has requested to stay with you from {{request.arrivalDate | moment("calendar")}} To {{request.leavingDate | moment("calendar")}}</h5>
+              <div class="name">{{request.source.firstName}} {{request.source.lastName}}</div>
+              <div
+                class="date"
+              >Has requested to stay with you from {{request.arrivalDate | moment("calendar")}} To {{request.leavingDate | moment("calendar")}}</div>
               <div class="msg">{{request.description}}</div>
             </div>
             <img
@@ -36,8 +45,8 @@
             >
           </div>
           <div v-if="request.isOpen" class="btns flex">
-            <div @click="acceptRequest(request)">Accept</div>
-            <div @click="declineRequest(request)">Decline</div>
+            <div @click="acceptRequest(request)">ACCEPT</div>
+            <div @click="declineRequest(request)">DECLINE</div>
           </div>
         </div>
       </div>
@@ -46,7 +55,7 @@
 </template>
 
 <script>
-// import globeLoader from '../components/globeLoader.js';
+
 export default {
 
   data() {
@@ -92,10 +101,23 @@ export default {
           margin-bottom: 20px;
           cursor: pointer;
         }
+        .arrow {
+          width: 15px;
+          height: 15px;
+        }
         .content {
           padding: 0 20px 20px 20px;
+          .name {
+            font-size: 1.15rem;
+            font-weight: bold;
+          }
+          .date {
+            font-weight: bold;
+            color: #757575;
+          }
           .msg {
             max-width: 600px;
+            color: #757575;
           }
           .user-img {
             margin-left: 70px;
@@ -108,11 +130,12 @@ export default {
           }
         }
         .btns {
-          background-color: rgb(209, 207, 207);
+          background-color: #eeeeee;
           color: #3256bf;
           padding: 0 20px 0 20px;
           div {
             margin-left: 30px;
+            font-weight: bold;
             cursor: pointer;
             height: 100%;
             padding: 20px 10px;

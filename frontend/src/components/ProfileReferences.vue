@@ -32,7 +32,12 @@
 
       <!-- CONTENT STARTS HERE -->
       <div v-if="isFromGuestsClicked" class="references-container flex">
-        <div class="reference flex flex-col" v-for="(reference, idx) in revFromGuests" :key="idx">
+        <div
+          data-aos="zoom-out-right"
+          class="reference flex flex-col"
+          v-for="(reference, idx) in revFromGuests"
+          :key="idx"
+        >
           <hr style="margin-top: 0">
           <div
             class="edit-delete-container flex"
@@ -81,8 +86,14 @@
           </div>
         </div>
       </div>
+
       <div v-if="isFromHostsClicked" class="references-container flex">
-        <div class="reference flex flex-col" v-for="(reference, idx) in revFromHosts" :key="idx">
+        <div
+          data-aos="zoom-out-right"
+          class="reference flex flex-col"
+          v-for="(reference, idx) in revFromHosts"
+          :key="idx"
+        >
           <hr style="margin-top: 0">
           <div
             class="edit-delete-container flex"
@@ -114,7 +125,7 @@
                   <h5
                     @click="$router.push('/userProfile/' + reference.source.id)"
                   >{{reference.source.firstName}} {{reference.source.lastName}}</h5>
-                  <div>{{reference.source.address}}</div>
+                  <!-- <div>{{reference.source.address}}</div> -->
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
                 <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
