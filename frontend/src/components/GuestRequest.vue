@@ -33,6 +33,7 @@
 
 <script>
 import utilService from "@/services/utilService.js";
+import eventBus from "@/services/eventbus-service.js";
 export default {
   name: "guest-request",
   data() {
@@ -49,53 +50,21 @@ export default {
   methods: {
     async onSend() {
       if (!this.getLoggedUser) {
-        this.popToast(
-          "info",
-          "bottom-start",
-          3000,
-          `Please Sign In To Continue...`
-        );
+        eventBus.$emit('popToast', 'info', 'bottom-start', 3000, 'Please sign in to continue...');
         return;
       }
       if (!this.isFormValid) {
-        this.popToast(
-          "info",
-          "bottom-start",
-          3000,
-          `Please Complete All Fields To Continue...`
-        );
+        eventBus.$emit('popToast', 'info', 'bottom-start', 3000, `Please complete all fields to continue...`);
         return;
       }
       let request = this.$store.getters.emptyRequest;
       request.arrivalDate = this.info.selectedDate.start;
       request.leavingDate = this.info.selectedDate.end;
       request.description = this.info.description;
-      this.$emit("hideRequestForm");
-      await this.$store.dispatch({
-        type: "sendRequest",
-        request: request,
-        targetId: this.getCurrUser._id
-      });
-      this.popToast(
-        "success",
-        "bottom-start",
-        3000,
-        `The Request Was Sent Successfully`
-      );
+      this.$emit('hideRequestForm');
+      await this.$store.dispatch({ type: "sendRequest", request: request, targetId: this.getCurrUser._id });
+      eventBus.$emit('popToast', 'info', 'bottom-start', 3000, `Your request was sent!`);
     },
-    popToast(type, position, timer, title) {
-      const Toast = this.$swal.mixin({
-        toast: true,
-        position: position,
-        showConfirmButton: false,
-        timer: timer
-      });
-
-      Toast.fire({
-        type: type,
-        title: title
-      });
-    }
   },
   computed: {
     getLoggedUser() {
