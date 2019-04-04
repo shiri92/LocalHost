@@ -59,7 +59,12 @@
             </div>
           </nav>
           <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
-          <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
+          <profile-myHome
+            v-if="currUser.isHosting"
+            class="detail-section"
+            :pref="currUser.placeDetails"
+            id="home"
+          ></profile-myHome>
           <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
           <profile-references
             class="detail-section"

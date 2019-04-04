@@ -140,7 +140,7 @@ async function addAcceptedResponse(targetId, response) {
 // ADD Review
 async function addReview(targetId, review) {
   review._id = new ObjectId();
-  review.source.id = new ObjectId(review.source.id)
+  review.source.id = new ObjectId(review.source.id);
   let db = await mongoService.connect();
   await db
     .collection(USERS_COLLECTION)
@@ -618,6 +618,20 @@ function _createUsers() {
       { day: 17, month: 10, year: 1992 },
       { city: "Rome", country: "Italy" },
       "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718289/profile-imgs/lucy-arnolds/lucy-arnolds.png",
+      [],
+      "Know the BEST Tapas place in the city!"
+    )
+  );
+  users.push(
+    _createUser(
+      "jessicat@gmail.com",
+      "1111",
+      "Jessica",
+      "Tavares",
+      "Female",
+      { day: 13, month: 10, year: 1988 },
+      { city: "Rome", country: "Italy" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554372982/profile-imgs/jessica-tavares/jessica-tavares.jpg",
       [],
       "Know the BEST Tapas place in the city!"
     )

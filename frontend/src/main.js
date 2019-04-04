@@ -16,7 +16,7 @@ import VueSweetalert2 from "vue-sweetalert2";
 import * as VueGoogleMaps from "vue2-google-maps";
 import VCalendar from "v-calendar";
 import "v-calendar/lib/v-calendar.min.css";
-// import './filters.js';
+// import "./filters.js";
 
 // import 'custom.scss'
 
@@ -61,6 +61,7 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { faCouch } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { faSortUp } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faVenusMars } from "@fortawesome/free-solid-svg-icons";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -79,6 +80,7 @@ library.add(faCoffee, faJs, faVuejs);
 library.add(faCouch);
 library.add(faEnvelope);
 library.add(faSortDown);
+library.add(faSortUp);
 library.add(faComment);
 library.add(faVenusMars);
 library.add(faWindowClose);

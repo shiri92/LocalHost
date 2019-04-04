@@ -1,6 +1,6 @@
 {
-  "name": "frontend",
-  "short_name": "frontend",
+  "name": "LocalHost",
+  "short_name": "LocalHost",
   "icons": [
     {
       "src": "./img/logo/logo-icon.png",

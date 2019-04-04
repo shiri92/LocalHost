@@ -47,6 +47,7 @@ li {
     border-radius: 5px;
     box-shadow: 2px 5px 10px #ccc;
     background: white;
+    height: 335px;
     .user {
       margin-bottom: 10px;
       .avatar {
@@ -87,15 +88,15 @@ li {
 //   position: relative;
 //   z-index: 1;
 // }
-.user:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-image: url("http://remtsoy.com/experiments/user_card/img/food.png");
-  opacity: 0.7;
-  filter: alpha(opacity=30);
-}
+// .user:before {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   height: 100%;
+//   width: 100%;
+//   background-image: url("http://remtsoy.com/experiments/user_card/img/food.png");
+//   opacity: 0.7;
+//   filter: alpha(opacity=30);
+// }
 </style>

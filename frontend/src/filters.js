@@ -1,6 +1,6 @@
-// Vue.filter('time', (timestamp) => {
-//     return moment(timestamp).fromNow();
-// })
+// Vue.filter("time", timestamp => {
+//   return moment(timestamp).fromNow();
+// });
 
 // Vue.filter('capitalize', (value) => {
 //     if (!value) return ''

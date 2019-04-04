@@ -31,7 +31,7 @@ export default {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
     if (this.getCurrUser)
-      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerGuests');
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerInbox');
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -46,7 +46,7 @@ export default {
   },
   watch: {
     getCurrUser(newVal, oldVal) {
-      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerGuests');
+      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerInbox');
     }
   }
 }
