@@ -1,5 +1,5 @@
 <template>
-  <section class="schedule-manager">
+  <section class="schedule-manager" data-aos="fade-down" data-aos-duration="1000">
     <div class="bg-container">
       <div class="nav-container">
         <div class="nav" v-if="getCurrUser">

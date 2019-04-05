@@ -7,6 +7,8 @@
     <hr>
     <div class="content flex flex-col">
       <el-form :inline="false" :model="credentials" class="demo-form-inline flex flex-col">
+        <div class="wrong-cred" v-if="wrongCred">* Wrong username and/or password</div>
+        <br v-if="wrongCred">
         <b-form-group class="input" required>
           <font-awesome-icon class="input-icon" icon="user"/>
           <b-form-input
@@ -46,6 +48,7 @@ export default {
   name: "log-in",
   data() {
     return {
+      wrongCred: false,
       credentials: {
         email: "",
         password: ""
@@ -54,22 +57,29 @@ export default {
   },
   methods: {
     tryLogin() {
-      if (!this.checkForm) return;
+      if (!this.checkForm()) return;
       this.$store
         .dispatch({ type: "login", credentials: this.credentials })
         .then(user => {
+          console.log("user:", user);
           if (user) {
             const Toast = this.$swal.mixin({
               toast: true,
-              position: 'bottom-start',
+              position: "bottom-start",
               showConfirmButton: false,
               timer: 3000
             });
-
-            Toast.fire({ type: 'success', title: `Welcome ${user.firstName} ${user.lastName}!` })
+            Toast.fire({
+              type: "success",
+              title: `Welcome ${user.firstName} ${user.lastName}!`
+            });
           }
           this.$router.push(this.$route.path);
           this.$emit("loginOff");
+        })
+        .catch(err => {
+          console.log("err: ", err);
+          this.wrongCred = true;
         });
     },
     checkForm: function (e) {
@@ -113,15 +123,17 @@ export default {
   }
   .content {
     padding: 30px 30px 0 30px;
+    .wrong-cred {
+      color: red;
+      font-size: 0.9rem;
+    }
   }
 }
-
 @media (max-width: 968px) {
   .login {
     width: 40%;
   }
 }
-
 @media (max-width: 768px) {
   .login {
     width: 50%;
@@ -130,23 +142,19 @@ export default {
     }
   }
 }
-
 @media (max-width: 568px) {
   .login {
     width: 80%;
   }
 }
-
 @media (max-width: 400px) {
   .login {
     width: 90%;
   }
 }
-
 hr {
   margin: 0;
 }
-
 .input {
   margin: 0 30px 30px 30px;
   position: relative;
@@ -169,8 +177,10 @@ hr {
   p {
     text-align: center;
     .signup-btn {
-      color: blue;
-      text-decoration: underline;
+      color: #3366bb;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }

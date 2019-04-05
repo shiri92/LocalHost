@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" data-aos="fade" data-aos-duration="1200">
     <main-header></main-header>
 
     <h1 class="user-list-title">Meet Some Of Our Top Hosts</h1>
@@ -10,7 +10,7 @@
     <h1>Top Destinations</h1>
     <city-search></city-search>
 
-    <div class="cities-gallery grid">
+    <div class="cities-gallery grid" data-aos="fade-up" data-aos-duration="1200">
       <div v-for="dest in topDests" :key="dest._id" :class="'img-container' + ' ' + dest.name">
         <div
           class="city-name"
@@ -29,7 +29,6 @@ import MainHeader from "@/components/MainHeader";
 import CitySearch from "../components/CitySearch";
 import WhyJoin from "../components/WhyJoin";
 import UserList from "../components/UserList";
-
 export default {
   name: "home",
   data() {
@@ -102,7 +101,6 @@ export default {
     margin-top: 40px;
   }
 }
-
 .cities-gallery {
   max-width: 1200px;
   margin: 0 auto;
@@ -146,66 +144,54 @@ export default {
     grid-column: span 1;
     grid-row: span 2;
   }
-
   .Paris {
     grid-column: span 2;
     grid-row: span 1;
   }
-
   .Buenos {
     grid-column: span 1;
     grid-row: span 1;
   }
-
   .Rome {
     grid-column: span 1;
     grid-row: span 1;
   }
-
   .Tokyo {
     grid-column: span 1;
     grid-row: span 1;
   }
-
   .Berlin {
     grid-column: span 1;
     grid-row: span 2;
   }
-
   .Barcelona {
     grid-column: span 1;
     grid-row: span 2;
   }
-
   .New {
     grid-column: span 2;
     grid-row: span 1;
   }
-
   .Rio {
     grid-column: span 2;
     grid-row: span 1;
   }
-
   // .img-container:last-child {
   //   grid-column: span 1;
   //   grid-row: span 1;
   //   background-color: #1dbf73;
   // }
 }
-
 @media (max-width: 1200px) {
   .cities-gallery {
     max-width: 980px;
   }
 }
-
 @media (max-width: 1050px) {
   .cities-gallery {
-    max-width: 750px;
+    max-width: 96%;
   }
 }
-
 @media (max-width: 768px) {
   .cities-gallery {
     max-width: 750px;
@@ -228,7 +214,6 @@ export default {
     }
   }
 }
-
 @media (max-width: 568px) {
   .cities-gallery {
     grid-template-columns: 1fr;
