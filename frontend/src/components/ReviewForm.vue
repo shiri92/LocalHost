@@ -5,16 +5,15 @@
       <span @click="$emit('closeReviewForm')">&times;</span>
     </div>
     <hr>
-    <form class="content flex flex-col">
+    <form class="content flex flex-col" @submit.prevent="postReview">
       <label for>{{currUser.firstName}} was your:</label>
       <div class="checkbox-container flex">
         <label>
           <input
             class="checkbox"
-            type="checkbox"
+            type="radio"
             ref="inputHost"
-            name="status"
-            @change="checkHost"
+            name="status"           
             value="Host"
             v-model="review.getAsAHost"
             required
@@ -23,20 +22,19 @@
         <label>
           <input
             class="checkbox"
-            type="checkbox"
+            type="radio"
             ref="inputGuest"
-            name="status"
-            @change="checkGuest"
+            name="status"           
             value="Guest"
             v-model="review.getAsAGuest"
           >Guest
         </label>
       </div>
-      <rate-stars @rate="setRate"></rate-stars>
+      <rate-stars @rate="setRate" required></rate-stars>
       <label>Your Review:</label>
       <textarea v-model="review.description" cols="30" rows="8" name="desc" required></textarea>
       <div class="btn-container flex justify-center">
-        <button class="btn btn-send" @click="postReview">Send Review</button>
+        <button class="btn btn-send" type="submit">Send Review</button>
       </div>
     </form>
   </section>
@@ -70,10 +68,12 @@ export default {
       return this.$store.getters.loggedUser;
     },
     isValid() {
+      console.log(this.review.rating);
+      
       return (
         (this.review.getAsAHost || this.review.getAsAGuest) &&
         this.review.description &&
-        this.review.rating
+        (this.review.rating !== 0)
       );
     }
   },
@@ -82,18 +82,18 @@ export default {
       this.review.rating = num;
     },
     checkHost() {
-      if (this.review.getAsAHost) {
-        this.$refs.inputGuest.checked = false;
-      } else {
-        this.$refs.inputHost.checked = false;
-      }
+      // if (this.review.getAsAHost) {
+      //   this.$refs.inputGuest.checked = false;
+      // } else {
+      //   this.$refs.inputHost.checked = false;
+      // }
     },
     checkGuest() {
-      if (this.review.getAsAGuest) {
-        this.$refs.inputHost.checked = false;
-      } else {
-        this.$refs.inputGuest.checked = false;
-      }
+      // if (this.review.getAsAGuest) {
+      //   this.$refs.inputHost.checked = false;
+      // } else {
+      //   this.$refs.inputGuest.checked = false;
+      // }
     },
     async postReview() {
       if (!this.loggedUser) {
@@ -119,7 +119,7 @@ export default {
             "success",
             "bottom-start",
             3000,
-            "You Have Added New Revixew"
+            "You Have Added New Review"
           );
           return;
         }
