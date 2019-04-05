@@ -35,7 +35,6 @@ export default {
   created() {
     this.currPage = this.$route.path;
     // if (!this.getLoggedUser)
-    console.log('hey');
     this.$store.dispatch({ type: 'checkLogged' })
     eventBus.$on('popToast', (...args) => this.popToast(...args));
   },

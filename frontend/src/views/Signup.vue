@@ -34,39 +34,44 @@
           <button class="btn signup-btn" style="margin-top: 12px;" @click="next">Next Step</button>
         </b-form>
 
-        <b-form v-if="active === 1" class="flex flex-col">
+        <b-form v-if="active === 1" class="flex flex-col" @submit.prevent="next">
           <div class="bday-container">
+            <b-form-group>
             <label>Birthday:</label>
             <div class="selects-container flex space-between">
-              <el-select
-                class="bday-selsct"
+              <b-form-select
+                class="bday-select"
                 v-model="form.birthdate.day"
                 placeholder="Day"
                 required
               >
-                <el-option v-for="num in 31" :key="num" :value="num">{{num}}</el-option>
-              </el-select>
-              <el-select class="bday-selsct" v-model="form.birthdate.month" placeholder="Month">
-                <el-option v-for="num in 12" :key="num" :value="num">{{num}}</el-option>
-              </el-select>
-              <el-select class="bday-selsct" v-model="form.birthdate.year" placeholder="Year">
-                <el-option v-for="num in 100" :key="num" :value="num + 1920">{{num + 1920}}</el-option>
-              </el-select>
+                <option value="">--Choose Day--</option>
+                <option v-for="num in 31" :key="num" :value="num">{{num}}</option>
+              </b-form-select>
+              <b-form-select class="bday-select" v-model="form.birthdate.month" placeholder="Month" required>
+                <option value="">--Choose Month--</option>
+                <option v-for="num in 12" :key="num" :value="num">{{num}}</option>
+              </b-form-select>
+              <b-form-select class="bday-select" v-model="form.birthdate.year" placeholder="Year" required>
+                <option value="">--Choose Year--</option>
+                <option v-for="num in 100" :key="num" :value="num + 1920">{{num + 1920}}</option>
+              </b-form-select>
             </div>
+            </b-form-group>
           </div>
 
           <label>Gender:</label>
-          <el-select class="gender-select" v-model="form.gender" placeholder="Gender" required>
-            <el-option value>Select Gender</el-option>
-            <el-option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</el-option>
-          </el-select>
+          <b-form-select class="gender-select" v-model="form.gender" placeholder="Gender" required>
+            <option value="">Select Gender</option>
+            <option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</option>
+          </b-form-select>
 
           <label>Location:</label>
-          <gmap-autocomplete @place_changed="setAddres" class="google-search"></gmap-autocomplete>
+          <gmap-autocomplete @place_changed="setAddres" class="google-search" required></gmap-autocomplete>
 
           <div class="btns-container flex">
             <button class="btn signup-btn" style="margin-top: 12px;" @click="stepBack">Previous Step</button>
-            <button class="btn signup-btn" style="margin-top: 12px;" @click="next">Sign Up</button>
+            <button class="btn signup-btn" style="margin-top: 12px;" type="submit">Sign Up</button>
           </div>
         </b-form>
       </div>
@@ -96,8 +101,9 @@ export default {
 
   methods: {
     async next() {
-      if (!this.checkForm()) return;
-      if (this.active === 1) {
+      if (this.active === 0) {
+        if (!this.checkForm()) return;
+      } else if (this.active === 1) {
         if (!this.checkForm2()) return;
         await this.$store.dispatch({ type: "signup", credentials: this.form })
         this.$router.push("/userProfile/" + this.getLoggedUser._id);
@@ -275,7 +281,7 @@ form {
   margin: 5px;
 }
 
-.bday-selsct {
+.bday-select {
   width: 30%;
 }
 </style>
