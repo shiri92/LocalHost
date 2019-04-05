@@ -55,7 +55,6 @@ export default {
 .why-join {
   // padding: 50px 0;
   // margin: 50px 0;
-
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -75,7 +74,6 @@ export default {
     }
   }
 }
-
 @media (max-width: 1050px) {
   .why-join {
     // padding: 50px 0;
@@ -87,7 +85,6 @@ export default {
     }
   }
 }
-
 @media (max-width: 768px) {
   .why-join {
     // padding: 50px 0;
@@ -98,5 +95,3 @@ export default {
   }
 }
 </style>
-
-

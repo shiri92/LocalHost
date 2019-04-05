@@ -62,7 +62,6 @@ export default {
         .dispatch({ type: "login", credentials: this.credentials })
         .then(user => {
           console.log("user:", user);
-
           if (user) {
             const Toast = this.$swal.mixin({
               toast: true,
@@ -70,7 +69,6 @@ export default {
               showConfirmButton: false,
               timer: 3000
             });
-
             Toast.fire({
               type: "success",
               title: `Welcome ${user.firstName} ${user.lastName}!`
@@ -131,13 +129,11 @@ export default {
     }
   }
 }
-
 @media (max-width: 968px) {
   .login {
     width: 40%;
   }
 }
-
 @media (max-width: 768px) {
   .login {
     width: 50%;
@@ -146,23 +142,19 @@ export default {
     }
   }
 }
-
 @media (max-width: 568px) {
   .login {
     width: 80%;
   }
 }
-
 @media (max-width: 400px) {
   .login {
     width: 90%;
   }
 }
-
 hr {
   margin: 0;
 }
-
 .input {
   margin: 0 30px 30px 30px;
   position: relative;

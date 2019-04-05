@@ -37,32 +37,42 @@
         <b-form v-if="active === 1" class="flex flex-col" @submit.prevent="next">
           <div class="bday-container">
             <b-form-group>
-            <label>Birthday:</label>
-            <div class="selects-container flex space-between">
-              <b-form-select
-                class="bday-select"
-                v-model="form.birthdate.day"
-                placeholder="Day"
-                required
-              >
-                <option value="">--Choose Day--</option>
-                <option v-for="num in 31" :key="num" :value="num">{{num}}</option>
-              </b-form-select>
-              <b-form-select class="bday-select" v-model="form.birthdate.month" placeholder="Month" required>
-                <option value="">--Choose Month--</option>
-                <option v-for="num in 12" :key="num" :value="num">{{num}}</option>
-              </b-form-select>
-              <b-form-select class="bday-select" v-model="form.birthdate.year" placeholder="Year" required>
-                <option value="">--Choose Year--</option>
-                <option v-for="num in 100" :key="num" :value="num + 1920">{{num + 1920}}</option>
-              </b-form-select>
-            </div>
+              <label>Birthday:</label>
+              <div class="selects-container flex space-between">
+                <b-form-select
+                  class="bday-select"
+                  v-model="form.birthdate.day"
+                  placeholder="Day"
+                  required
+                >
+                  <option value>--Choose Day--</option>
+                  <option v-for="num in 31" :key="num" :value="num">{{num}}</option>
+                </b-form-select>
+                <b-form-select
+                  class="bday-select"
+                  v-model="form.birthdate.month"
+                  placeholder="Month"
+                  required
+                >
+                  <option value>--Choose Month--</option>
+                  <option v-for="num in 12" :key="num" :value="num">{{num}}</option>
+                </b-form-select>
+                <b-form-select
+                  class="bday-select"
+                  v-model="form.birthdate.year"
+                  placeholder="Year"
+                  required
+                >
+                  <option value>--Choose Year--</option>
+                  <option v-for="num in 100" :key="num" :value="num + 1920">{{num + 1920}}</option>
+                </b-form-select>
+              </div>
             </b-form-group>
           </div>
 
           <label>Gender:</label>
           <b-form-select class="gender-select" v-model="form.gender" placeholder="Gender" required>
-            <option value="">Select Gender</option>
+            <option value>Select Gender</option>
             <option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</option>
           </b-form-select>
 
@@ -98,7 +108,6 @@ export default {
       searchWord: ""
     };
   },
-
   methods: {
     async next() {
       if (this.active === 0) {
@@ -145,7 +154,6 @@ export default {
       showConfirmButton: false,
       timer: timer
     });
-
     Toast.fire({
       type: type,
       title: title
@@ -190,7 +198,6 @@ export default {
     color: white;
   }
 }
-
 @media (max-width: 700px) {
   .signup {
     padding-top: 10px;
@@ -203,7 +210,6 @@ export default {
     cursor: pointer;
   }
 }
-
 form {
   max-width: 60%;
   margin: 0 auto;
@@ -216,7 +222,6 @@ form {
   background-color: #fff;
   opacity: 0.9;
 }
-
 .google-search {
   padding-right: 30px;
   border-radius: 4px;
@@ -232,14 +237,12 @@ form {
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   width: 100%;
 }
-
 @media (max-width: 900px) {
   form {
     padding: 80px;
     max-width: 70%;
   }
 }
-
 @media (max-width: 700px) {
   form {
     max-width: 90%;
@@ -250,28 +253,23 @@ form {
     flex-direction: column;
   }
 }
-
 @media (max-width: 360px) {
   .form-group {
     margin-bottom: 0.3rem;
   }
 }
-
 .small-input {
   width: 45%;
 }
-
 @media (max-width: 700px) {
   .small-input {
     width: 100%;
   }
 }
-
 .bday-container,
 .gender-select {
   margin-bottom: 15px;
 }
-
 .btns-container {
   align-self: center;
 }
@@ -280,7 +278,6 @@ form {
   align-self: center;
   margin: 5px;
 }
-
 .bday-select {
   width: 30%;
 }

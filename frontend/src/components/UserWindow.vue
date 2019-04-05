@@ -1,5 +1,9 @@
 <template>
-  <section class="user-window flex flex-col align-center" data-aos="fade-down" data-aos-duration="1200">
+  <section
+    class="user-window flex flex-col align-center"
+    data-aos="fade-down"
+    data-aos-duration="1200"
+  >
     <div class="top flex">
       <img class="user-img" :style="'background-image: url(' + getLoggedUser.imgUrl +')'">
       <div class="details">
@@ -53,17 +57,14 @@ export default {
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.4);
   z-index: 1;
 }
-
 @media (max-width: 568px) {
   .user-window {
     right: 2px;
   }
 }
-
 .top {
   margin: 20px;
 }
-
 .name {
   font-weight: bold;
 }
@@ -73,18 +74,15 @@ export default {
   border-radius: 50%;
   background-size: cover;
 }
-
 .bottom {
   width: 100%;
   background-color: rgb(207, 204, 204);
   border: 1px solid rgb(185, 183, 183);
 }
-
 .details {
   margin-left: 20px;
   text-align: left;
 }
-
 .logout-btn,
 .profile-btn,
 .inbox-btn {
@@ -98,5 +96,3 @@ export default {
   font-size: 14px;
 }
 </style>
-
-

@@ -1,5 +1,10 @@
 <template>
-  <section class="edit-section flex justify-center" data-aos="fade-up-left" data-aos-duration="1200" v-if="user">
+  <section
+    class="edit-section flex justify-center"
+    data-aos="fade-up-left"
+    data-aos-duration="1200"
+    v-if="user"
+  >
     <div class="side-profile">
       <img class="profile-img" :src="getLoggedUser.imgUrl" alt>
       <div class="profile-name">{{user.firstName}} {{user.lastName}}</div>
@@ -157,7 +162,6 @@
 
 <script>
 var langs = require("langs");
-
 export default {
   name: "edit-profile",
   data() {
@@ -274,7 +278,6 @@ export default {
       // outline: 1px dotted #000;
     }
   }
-
   .edit-form {
     flex-grow: 1;
     margin: 5px 15px;

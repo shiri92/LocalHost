@@ -115,10 +115,6 @@ export default {
       );
       state.currUser.references.splice(idx, 1, review);
     },
-    updateLoggedUser(state, { user }) {
-      let idx = state.currUsers.findIndex(currUser => currUser._id === user._id);
-      state.currUsers.splice(idx, 1, user);
-    },
     initCurrSocket(state, { user }) {
       if (user) {
         let { _id } = user;
@@ -239,7 +235,7 @@ export default {
     },
     async updateLoggedUser(context, { user }) {
       await userService.update(user);
-      context.commit({ type: "updateLoggedUser", user });
+      context.commit({ type: "setLoggedUser", user });
     },
     async updatePortrait(context, { imgFile, imgPath, targetId }) {
       let imgUrl = await cloudService.uploadPortrait(imgFile, imgPath);
