@@ -1,51 +1,55 @@
 <template>
   <section class="rate-stars">
     <form class="flex align-center">
-      Rate:
+      <span style="color: red">*</span>&nbsp;Rate:
       <fieldset class="rating">
-        <input type="radio" id="star5" value="5" v-model.number="review.rate" @input="setRate">
+        <input type="radio" id="star5" name="star" value="5" v-model.number="review.rate" @input="setRate" required>
         <label class="full" for="star5"></label>
         <input
           type="radio"
           id="star4half"
+          name="star"
           value="4.5"
           v-model.number="review.rate"
           @input="setRate"
         >
         <label class="half" for="star4half"></label>
-        <input type="radio" id="star4" value="4" v-model.number="review.rate" @input="setRate">
+        <input type="radio" id="star4"  name="star" value="4" v-model.number="review.rate" @input="setRate">
         <label class="full" for="star4"></label>
         <input
           type="radio"
           id="star3half"
+          name="star"
           value="3.5"
           v-model.number="review.rate"
           @input="setRate"
         >
         <label class="half" for="star3half"></label>
-        <input type="radio" id="star3" value="3" v-model.number="review.rate" @input="setRate">
+        <input type="radio" id="star3" name="star" value="3" v-model.number="review.rate" @input="setRate">
         <label class="full" for="star3"></label>
         <input
           type="radio"
           id="star2half"
+          name="star"
           value="2.5"
           v-model.number="review.rate"
           @input="setRate"
         >
         <label class="half" for="star2half"></label>
-        <input type="radio" id="star2" value="2" v-model.number="review.rate" @input="setRate">
+        <input type="radio" id="star2" name="star" value="2" v-model.number="review.rate" @input="setRate">
         <label class="full" for="star2"></label>
         <input
           type="radio"
           id="star1half"
+          name="star"
           value="1.5"
           v-model.number="review.rate"
           @input="setRate"
         >
         <label class="half" for="star1half"></label>
-        <input type="radio" id="star1" value="1" v-model.number="review.rate" @input="setRate">
+        <input type="radio" id="star1" name="star" value="1" v-model.number="review.rate" @input="setRate">
         <label class="full" for="star1"></label>
-        <input type="radio" id="starhalf" value="0.5" v-model.number="review.rate" @input="setRate">
+        <input type="radio" id="starhalf" name="star" value="0.5" v-model.number="review.rate" @input="setRate">
         <label class="half" for="starhalf"></label>
       </fieldset>
     </form>
