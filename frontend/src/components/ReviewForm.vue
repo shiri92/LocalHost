@@ -13,7 +13,7 @@
             class="checkbox"
             type="radio"
             ref="inputHost"
-            name="status"           
+            name="status"
             value="Host"
             v-model="review.getAsAHost"
             required
@@ -24,7 +24,7 @@
             class="checkbox"
             type="radio"
             ref="inputGuest"
-            name="status"           
+            name="status"
             value="Guest"
             v-model="review.getAsAGuest"
           >Guest
@@ -69,7 +69,7 @@ export default {
     },
     isValid() {
       console.log(this.review.rating);
-      
+
       return (
         (this.review.getAsAHost || this.review.getAsAGuest) &&
         this.review.description &&
@@ -109,18 +109,9 @@ export default {
         this.$emit("closeReviewForm");
         if (!this.currReviewToEdit) {
           this.review.createdAt = Date.now();
-          await this.$store.dispatch({
-            type: "postReview",
-            review: this.review,
-            targetId: this.currUser._id
-          });
-          this.$emit("resetCurrReview");
-          this.popToast(
-            "success",
-            "bottom-start",
-            3000,
-            "You Have Added New Review"
-          );
+          await this.$store.dispatch({ type: 'postReview', review: this.review, targetId: this.currUser._id });
+          this.$emit('resetCurrReview')
+          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Review');
           return;
         }
         //TODO IF USER UPDATES REVIEW ADD THE UPDATED TIME
