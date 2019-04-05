@@ -41,3 +41,56 @@ a:-webkit-any-link {
   background-color: #3fca89;
   color: #fff;
 }
+
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes zoomInOut {
+  from {transform: scale(0.9)}
+  to {transform: scale(1);}
+}
+
+@keyframes fade {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+.scene_element {
+  animation-duration: 1s;
+  transition-timing-function: linear;
+  animation-delay: .1s;
+  animation-fill-mode: both;
+}
+.scene_element--fadeinright {
+  animation-name: fadeInRight;
+}
+.scene_element--fadeinup {
+  animation-name: fadeInUp;
+}
+.scene_element--zoominout {
+  animation-name: zoomInOut;
+}
+.scene_element--fade {
+  animation-name: fade;
+}

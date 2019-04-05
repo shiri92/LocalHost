@@ -161,7 +161,7 @@ export default {
 }
 
 /* ANIMATE */
-@-webkit-keyframes moveEarth {
+@keyframes moveEarth {
   from {
     left: 100%;
   }

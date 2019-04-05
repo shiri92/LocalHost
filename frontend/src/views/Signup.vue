@@ -1,5 +1,5 @@
 <template>
-  <section class="signup flex flex-col">
+  <section class="signup flex flex-col" data-aos="flip-down" data-aos-duration="1200">
     <div class="logo">
       <router-link to="/">
         <img src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553958499/logo/logo.png" alt>
@@ -34,39 +34,54 @@
           <button class="btn signup-btn" style="margin-top: 12px;" @click="next">Next Step</button>
         </b-form>
 
-        <b-form v-if="active === 1" class="flex flex-col">
+        <b-form v-if="active === 1" class="flex flex-col" @submit.prevent="next">
           <div class="bday-container">
-            <label>Birthday:</label>
-            <div class="selects-container flex space-between">
-              <el-select
-                class="bday-selsct"
-                v-model="form.birthdate.day"
-                placeholder="Day"
-                required
-              >
-                <el-option v-for="num in 31" :key="num" :value="num">{{num}}</el-option>
-              </el-select>
-              <el-select class="bday-selsct" v-model="form.birthdate.month" placeholder="Month">
-                <el-option v-for="num in 12" :key="num" :value="num">{{num}}</el-option>
-              </el-select>
-              <el-select class="bday-selsct" v-model="form.birthdate.year" placeholder="Year">
-                <el-option v-for="num in 100" :key="num" :value="num + 1920">{{num + 1920}}</el-option>
-              </el-select>
-            </div>
+            <b-form-group>
+              <label>Birthday:</label>
+              <div class="selects-container flex space-between">
+                <b-form-select
+                  class="bday-select"
+                  v-model="form.birthdate.day"
+                  placeholder="Day"
+                  required
+                >
+                  <option value>--Choose Day--</option>
+                  <option v-for="num in 31" :key="num" :value="num">{{num}}</option>
+                </b-form-select>
+                <b-form-select
+                  class="bday-select"
+                  v-model="form.birthdate.month"
+                  placeholder="Month"
+                  required
+                >
+                  <option value>--Choose Month--</option>
+                  <option v-for="num in 12" :key="num" :value="num">{{num}}</option>
+                </b-form-select>
+                <b-form-select
+                  class="bday-select"
+                  v-model="form.birthdate.year"
+                  placeholder="Year"
+                  required
+                >
+                  <option value>--Choose Year--</option>
+                  <option v-for="num in 100" :key="num" :value="num + 1920">{{num + 1920}}</option>
+                </b-form-select>
+              </div>
+            </b-form-group>
           </div>
 
           <label>Gender:</label>
-          <el-select class="gender-select" v-model="form.gender" placeholder="Gender" required>
-            <el-option value>Select Gender</el-option>
-            <el-option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</el-option>
-          </el-select>
+          <b-form-select class="gender-select" v-model="form.gender" placeholder="Gender" required>
+            <option value>Select Gender</option>
+            <option v-for="gender in genders" :key="gender" :value="gender">{{gender}}</option>
+          </b-form-select>
 
           <label>Location:</label>
-          <gmap-autocomplete @place_changed="setAddres" class="google-search"></gmap-autocomplete>
+          <gmap-autocomplete @place_changed="setAddres" class="google-search" required></gmap-autocomplete>
 
           <div class="btns-container flex">
             <button class="btn signup-btn" style="margin-top: 12px;" @click="stepBack">Previous Step</button>
-            <button class="btn signup-btn" style="margin-top: 12px;" @click="next">Sign Up</button>
+            <button class="btn signup-btn" style="margin-top: 12px;" type="submit">Sign Up</button>
           </div>
         </b-form>
       </div>
@@ -93,11 +108,11 @@ export default {
       searchWord: ""
     };
   },
-
   methods: {
     async next() {
-      if (!this.checkForm()) return;
-      if (this.active === 1) {
+      if (this.active === 0) {
+        if (!this.checkForm()) return;
+      } else if (this.active === 1) {
         if (!this.checkForm2()) return;
         await this.$store.dispatch({ type: "signup", credentials: this.form })
         this.$router.push("/userProfile/" + this.getLoggedUser._id);
@@ -139,7 +154,6 @@ export default {
       showConfirmButton: false,
       timer: timer
     });
-
     Toast.fire({
       type: type,
       title: title
@@ -184,7 +198,6 @@ export default {
     color: white;
   }
 }
-
 @media (max-width: 700px) {
   .signup {
     padding-top: 10px;
@@ -197,7 +210,6 @@ export default {
     cursor: pointer;
   }
 }
-
 form {
   max-width: 60%;
   margin: 0 auto;
@@ -210,7 +222,6 @@ form {
   background-color: #fff;
   opacity: 0.9;
 }
-
 .google-search {
   padding-right: 30px;
   border-radius: 4px;
@@ -226,14 +237,12 @@ form {
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
   width: 100%;
 }
-
 @media (max-width: 900px) {
   form {
     padding: 80px;
     max-width: 70%;
   }
 }
-
 @media (max-width: 700px) {
   form {
     max-width: 90%;
@@ -244,28 +253,23 @@ form {
     flex-direction: column;
   }
 }
-
 @media (max-width: 360px) {
   .form-group {
     margin-bottom: 0.3rem;
   }
 }
-
 .small-input {
   width: 45%;
 }
-
 @media (max-width: 700px) {
   .small-input {
     width: 100%;
   }
 }
-
 .bday-container,
 .gender-select {
   margin-bottom: 15px;
 }
-
 .btns-container {
   align-self: center;
 }
@@ -274,8 +278,7 @@ form {
   align-self: center;
   margin: 5px;
 }
-
-.bday-selsct {
+.bday-select {
   width: 30%;
 }
 </style>

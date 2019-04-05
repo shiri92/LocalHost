@@ -1,5 +1,5 @@
 <template>
-  <section class="profile-container flex flex-col justify-center" v-if="currUser">
+  <section class="profile-container flex flex-col justify-center scene_element scene_element--fade" v-if="currUser">
     <carousel
       class="carousel flex justify-center"
       :per-page="3"
@@ -17,7 +17,6 @@
     </carousel>
     <div class="profile-container flex justify-center">
       <div class="side-profile">
-        <!-- <transition name="fade"></transition> -->
         <div
           class="profile-img"
           :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"
@@ -91,12 +90,12 @@ import ProfilePictures from "../components/ProfilePictures.vue";
 import ProfileReferences from "../components/ProfileReferences.vue";
 import GuestRequest from "../components/GuestRequest.vue";
 import { Carousel, Slide } from "vue-carousel";
-
 export default {
   name: "user-profile",
   data() {
     return {
       isNavInDisplay: false,
+      modalOpen: false,
       showRequestForm: false,
       window: {
         width: 0,
@@ -107,9 +106,8 @@ export default {
   created() {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
-
     var vm = this;
-    var val = window.addEventListener("scroll", function (e) {
+    var val = window.addEventListener("scroll", function(e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 310) {
         vm.narrowNav(true);
@@ -117,7 +115,6 @@ export default {
       }
       vm.narrowNav(false);
     });
-
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
@@ -168,6 +165,7 @@ export default {
 <style lang="scss" scoped>
 .profile-container {
   position: relative;
+  background-color: #f1efea;
 }
 @media (max-width: 768px) {
   .profile-container {
@@ -185,7 +183,6 @@ export default {
     background-position: center center;
   }
 }
-
 .side-profile {
   width: 30vw;
   max-width: 320px;
@@ -223,7 +220,6 @@ export default {
     font-size: 20px;
   }
 }
-
 @media (max-width: 768px) {
   .side-profile {
     max-width: unset;
@@ -233,7 +229,6 @@ export default {
     position: unset;
   }
 }
-
 .main-desc {
   flex-grow: 1;
   margin: 5px 0px 5px 15px;
@@ -278,7 +273,6 @@ export default {
     margin: 5px 15px;
   }
 }
-
 .mobile {
   display: none;
 }
