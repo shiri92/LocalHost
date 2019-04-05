@@ -1,5 +1,6 @@
 <template>
-  <section class="users flex flex-col">
+  <globe-loader v-if="showAnimation"></globe-loader>
+  <section v-else class="users flex flex-col">
     <main-header></main-header>
     <div class="main-title">Hosts In The Area</div>
     <div class="users-container">
@@ -11,17 +12,26 @@
 <script>
 import UserList from '../components/UserList.vue';
 import MainHeader from '@/components/MainHeader'
-
+import GlobeLoader from '../components/GlobeLoader'
 export default {
   name: 'Users',
   components: {
     UserList,
-    MainHeader
+    MainHeader,
+    GlobeLoader
   },
-  created() {
+  data() {
+    return {
+      showAnimation: true,
+    }
+  },
+  async created() {
     let { city } = this.$route.params;
     let { country } = this.$route.params;
-    this.$store.dispatch('loadUsers', { city: city, country: country })
+    await this.$store.dispatch('loadUsers', { city: city, country: country })
+    setTimeout(() => {
+      this.showAnimation = false;
+    }, 1100);
   },
   computed: {
     getUsers() {
@@ -38,7 +48,7 @@ export default {
     font-size: 2rem;
     font-weight: bold;
     align-self: center;
-    margin-top: 50px;
+    margin: 50px;
   }
 }
 </style>

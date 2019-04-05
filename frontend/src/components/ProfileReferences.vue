@@ -30,12 +30,18 @@
         ></review-form>
       </div>
 
+      <!-- CONTENT STARTS HERE -->
       <div v-if="isFromGuestsClicked" class="references-container flex">
-        <div class="reference flex flex-col" v-for="(reference, idx) in revFromGuests" :key="idx">
+        <div
+          data-aos="zoom-out-right"
+          class="reference flex flex-col"
+          v-for="(reference, idx) in revFromGuests"
+          :key="idx"
+        >
           <hr style="margin-top: 0">
           <div
             class="edit-delete-container flex"
-            v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
+            v-if="(loggedUser) && (loggedUser._id === reference.source.id)"
           >
             <img
               class="btn-edit"
@@ -45,7 +51,7 @@
             >
             <img
               class="delete-review"
-              @click="removeReview(reference._id, user._id)"
+              @click="unpostReview(reference._id, user._id)"
               src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/trash.png"
               title="
             remove"
@@ -54,16 +60,16 @@
           <div class="review-container">
             <div class="given-details flex align-center">
               <div
-                @click="$router.push('/userProfile/' + reference.sender.id)"
+                @click="$router.push('/userProfile/' + reference.source.id)"
                 class="profile-img"
-                :style="'background-image: url(' + reference.sender.imgUrl + ')'"
+                :style="'background-image: url(' + reference.source.imgUrl + ')'"
               ></div>
               <div class="dry-details flex space-between">
                 <div>
                   <h5
-                    @click="$router.push('/userProfile/' + reference.sender.id)"
-                  >{{reference.sender.firstName}} {{reference.sender.lastName}}</h5>
-                  <div>{{reference.sender.address}}</div>
+                    @click="$router.push('/userProfile/' + reference.source.id)"
+                  >{{reference.source.firstName}} {{reference.source.lastName}}</h5>
+                  <!-- <div>{{reference.source.address}}</div> -->
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
                 <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
@@ -82,11 +88,16 @@
       </div>
 
       <div v-if="isFromHostsClicked" class="references-container flex">
-        <div class="reference flex flex-col" v-for="(reference, idx) in revFromHosts" :key="idx">
+        <div
+          data-aos="zoom-out-right"
+          class="reference flex flex-col"
+          v-for="(reference, idx) in revFromHosts"
+          :key="idx"
+        >
           <hr style="margin-top: 0">
           <div
             class="edit-delete-container flex"
-            v-if="(loggedUser) && (loggedUser._id === reference.sender.id)"
+            v-if="(loggedUser) && (loggedUser._id === reference.source.id)"
           >
             <img
               class="btn-edit"
@@ -96,7 +107,7 @@
             >
             <img
               class="delete-review"
-              @click="removeReview(reference._id, user._id)"
+              @click="unpostReview(reference._id, user._id)"
               src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553852904/fav-icons/trash.png"
               title="
             remove"
@@ -105,16 +116,16 @@
           <div class="review-container">
             <div class="given-details flex align-center">
               <div
-                @click="$router.push('/userProfile/' + reference.sender.id)"
+                @click="$router.push('/userProfile/' + reference.source.id)"
                 class="profile-img"
-                :style="'background-image: url(' + reference.sender.imgUrl + ')'"
+                :style="'background-image: url(' + reference.source.imgUrl + ')'"
               ></div>
               <div class="dry-details flex space-between">
                 <div>
                   <h5
-                    @click="$router.push('/userProfile/' + reference.sender.id)"
-                  >{{reference.sender.firstName}} {{reference.sender.lastName}}</h5>
-                  <div>{{reference.sender.address}}</div>
+                    @click="$router.push('/userProfile/' + reference.source.id)"
+                  >{{reference.source.firstName}} {{reference.source.lastName}}</h5>
+                  <!-- <div>{{reference.source.address}}</div> -->
                   <stars-toshow :value="reference.rating" :disabled="true"></stars-toshow>
                 </div>
                 <div class="created-at">{{reference.createdAt | moment("calendar")}}</div>
@@ -143,6 +154,7 @@ export default {
   props: ["user", "loggedUser"],
   data() {
     return {
+      show: false,
       isFromGuestsClicked: true,
       isFromHostsClicked: false,
       isReviewFormOpen: false,
@@ -179,9 +191,10 @@ export default {
       this.isFromHostsClicked = true;
       this.isFromGuestsClicked = false;
     },
-    removeReview(reviewId, currUserId) {
+    async unpostReview(reviewId, currUserId) {
       if (confirm("Are you sure you want to remove this review?")) {
-        this.$store.dispatch({ type: "removeReview", currUserId, reviewId });
+        await this.$store.dispatch({ type: "unpostReview", currUserId, reviewId });
+        this.popToast('success', 'bottom-start', 3000, 'You Have Successfuly Removed The Review');
       }
     },
     readMore(reference) {
@@ -199,6 +212,19 @@ export default {
     reviewFormOff() {
       this.isReviewFormOpen = false;
     },
+    popToast(type, position, timer, title) {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer
+      });
+
+      Toast.fire({
+        type: type,
+        title: title
+      });
+    }
   }
 };
 </script>

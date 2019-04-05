@@ -16,6 +16,7 @@
 import MainNav from "@/components/MainNav";
 import logIn from '@/components/Login';
 import MainFooter from "@/components/MainFooter";
+import eventBus from '@/services/eventbus-service';
 
 export default {
   data() {
@@ -25,6 +26,7 @@ export default {
       showLoginForm: false,
     }
   },
+
   components: {
     MainNav,
     logIn,
@@ -32,19 +34,14 @@ export default {
   },
   created() {
     this.currPage = this.$route.path;
+    // if (!this.getLoggedUser)
     this.$store.dispatch({ type: 'checkLogged' })
-      .then(user => {
-        // if (user) {
-        //   const Toast = this.$swal.mixin({
-        //     toast: true,
-        //     position: 'bottom-start',
-        //     showConfirmButton: false,
-        //     timer: 3000
-        //   });
-
-        //   Toast.fire({ type: 'success', title: `Welcome ${user.firstName} ${user.lastName}!` })
-        // }
-      });
+    eventBus.$on('popToast', (...args) => this.popToast(...args));
+  },
+  computed: {
+    getLoggedUser() {
+      return this.$store.getters.loggedUser;
+    }
   },
   methods: {
     loginFormOff() {
@@ -54,6 +51,19 @@ export default {
     showLogin() {
       this.showLoginForm = true;
       this.isBackDark = true;
+    },
+    popToast(type, position, timer, title) {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer
+      });
+
+      Toast.fire({
+        type: type,
+        title: title
+      });
     }
   },
   watch: {
@@ -100,7 +110,7 @@ export default {
 
 .main-container {
   margin-top: 70px;
-  background-color: #e6e6e6;
+  // background-color: #e6e6e6;
 }
 </style>
 

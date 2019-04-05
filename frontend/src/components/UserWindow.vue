@@ -1,11 +1,11 @@
 <template>
   <section class="user-window flex flex-col align-center">
     <div class="top flex">
-      <img class="user-img" :src="getLoggedUser.imgUrl">
+      <img class="user-img" :style="'background-image: url(' + getLoggedUser.imgUrl +')'">
       <div class="details">
         <div class="name">{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}</div>
         <div>{{getLoggedUser.email}}</div>
-        <button @click="goToInbox" class="btn inbox-btn">Inbox</button>
+        <button @click="goToManager" class="btn inbox-btn">Manager</button>
       </div>
     </div>
     <div class="bottom flex space-between">
@@ -36,9 +36,9 @@ export default {
       this.$router.push("/userProfile/" + this.getLoggedUser._id);
       this.$emit("closeWindow");
     },
-    goToInbox() {
+    goToManager() {
       this.$emit("closeWindow");
-      this.$router.push("/userProfile/" + this.getLoggedUser._id + "/inbox");
+      this.$router.push("/userProfile/" + this.getLoggedUser._id + "/manager");
     }
   }
 };
@@ -71,6 +71,7 @@ export default {
   width: 100px;
   height: 100px;
   border-radius: 50%;
+  background-size: cover;
 }
 
 .bottom {

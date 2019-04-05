@@ -3,7 +3,9 @@
     <div class="side-profile">
       <img class="profile-img" :src="getLoggedUser.imgUrl" alt>
       <div class="profile-name">{{user.firstName}} {{user.lastName}}</div>
-      <div class="profile-loc">{{user.address.city}}, {{user.address.country}}</div>
+      <div
+        class="profile-loc"
+      >{{(user.address.city) ? user.address.city + ',' : ''}} {{user.address.country}}</div>
       <hr>
       <input name="file" id="file" class="input-file" type="file" @change="updateImg">
       <label for="file">Upload Picture</label>
@@ -19,22 +21,23 @@
               <option :value="false">Not Accepting Guests</option>
             </select>
           </div>
+
+          <div v-if="user.isHosting">
+            <div class="form-item flex space-between">
+              <label>Street Name and House Number:&nbsp;</label>
+              <gmap-autocomplete @place_changed="setFullAddres" class="form-input"></gmap-autocomplete>
+            </div>
+
+            <div class="form-item flex space-between">
+              <label>One Line Description:&nbsp;</label>
+              <input class="form-input" v-model="user.lineDescription">
+            </div>
+          </div>
+
           <hr>
           <div>
             <div class="form-item flex space-between">
               <label for="language">Language/s:&nbsp;</label>
-              <!-- <div v-if="user.languages">
-                {{user.languages}}
-                <span class="remove-lang">&times;</span>
-              </div>-->
-
-              <!-- <input
-                class="form-input"
-                type="text"
-                placeholder="Enter languages"
-                v-model="user.languages"
-              >-->
-
               <input class="form-input" v-model="user.languages" list="languages" name="language">
               <datalist id="languages" multiple size="5">
                 <option
@@ -101,7 +104,12 @@
             </label>
             <ul class="clean-list">
               <li>
-                <input type="checkbox" value="pet" v-model="user.placeDetails.isPetFriendly"> Pet Friendly
+                <input
+                  type="checkbox"
+                  value="pet"
+                  :checked="user.placeDetails.isPetFriendly"
+                  v-model="user.placeDetails.isPetFriendly"
+                > Pet Friendly
               </li>
               <li>
                 <input type="checkbox" value="kids" v-model="user.placeDetails.isKidFriendly"> Kid Friendly
@@ -125,7 +133,7 @@
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
-              <option value="lot">More than 3</option>
+              <option value="More Than 3">More than 3</option>
             </select>
           </div>
           <div class="form-item flex space-between">
@@ -135,7 +143,7 @@
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
-              <option value="lot">More than 3</option>
+              <option value="More Than 3">More than 3</option>
             </select>
           </div>
         </div>
@@ -176,34 +184,37 @@ export default {
     setAddres(ev) {
       let str = ev.formatted_address;
       let idx = str.indexOf(',');
-      let currCity = str.substr(0, idx);
-      let currCountry = str.substr(idx + 2, str.length - 1);
-      this.user.address = { city: currCity, country: currCountry };
+      if (idx !== -1) {
+        let currCity = str.substr(0, idx);
+        let currCountry = str.substr(idx + 2, str.length - 1);
+        this.user.address = { city: currCity, country: currCountry };
+      } else {
+        let currCity = '';
+        let currCountry = str;
+        this.user.address = { city: currCity, country: currCountry };
+      }
+    },
+    setFullAddres(ev) {
+      this.user.placeDetails.mapAddress = ev.formatted_address;
     },
     async updateImg(ev) {
-      let { userId } = this.$route.params;
-      let imgUrl = await this.$store.dispatch({
-        type: "uploadProfileImg",
-        imgFile: ev.target.files[0]
-      });
-      await this.$store.dispatch({
-        type: "updateLoggedUserImg",
-        imgUrl: imgUrl,
-        userId
-      });
+      let targetId = this.$route.params.userId;
+      let imgFile = ev.target.files[0];
+      let imgName = `${this.getLoggedUser.firstName}-${this.getLoggedUser.lastName}`.toLowerCase();
+      let imgPath = `profile-imgs/${imgName}/${imgName}`
+      await this.$store.dispatch({ type: 'updatePortrait', imgFile, imgPath, targetId });
     },
-    onSave() {
-      // if (this.user.languages === ['']) {
-      //   this.user.languages = [];
-      // } else {
-      //   this.user.languages = this.user.languages.split(', ');
-      // }
-      this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
-        .then(() => this.$router.push('/userProfile/' + this.user._id))
+    async onSave() {
+      if (this.user.isHosting) {
+        if (this.user.placeDetails.mapAddress && this.user.lineDescription) {
+          await this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
+          this.$router.push('/userProfile/' + this.user._id)
+        }
+      } else {
+        await this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
+        this.$router.push('/userProfile/' + this.user._id)
+      }
     },
-    // setLang() {
-
-    // }
   },
 };
 </script>
@@ -261,7 +272,6 @@ export default {
       // box-shadow: inset 0 0px 20px rgb(151, 226, 240),
       //   0 0px 5px rgb(151, 226, 240);
       // outline: 1px dotted #000;
-      // outline: -webkit-focus-ring-color auto 5px;
     }
   }
 

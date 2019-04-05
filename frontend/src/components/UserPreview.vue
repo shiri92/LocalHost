@@ -1,20 +1,18 @@
 <template>
   <li>
-    <div class="card-container flex space-between flex-col">
-      <div class="card">
-        <div class="hero"></div>
-        <div class="main">
-          <div class="user">
-            <div class="avatar" :style="'background-image: url(' + profile.imgUrl + ')'"></div>
-            <div class="user-details">
-              <h3>{{profile.firstName}} {{profile.lastName}}</h3>
-              <span class="location">
-                <font-awesome-icon icon="map-marker-alt"/>
-                <span>&nbsp;{{profile.address.city}}, {{profile.address.country}}</span>
-              </span>
-              <stars-toshow :value="rateAverage" :disabled="true"></stars-toshow>
-            </div>
+    <div class="card">
+      <div class="user">
+        <div class="avatar" :style="'background-image: url(' + profile.imgUrl + ')'"></div>
+        <div class="user-details">
+          <h3>{{profile.firstName}} {{profile.lastName}}</h3>
+          <hr>
+          <div class="location">
+            <font-awesome-icon icon="map-marker-alt"/>
+            <span>&nbsp;{{profile.address.city}}, {{profile.address.country}}</span>
           </div>
+          <stars-toshow :value="rateAverage" :disabled="true"></stars-toshow>
+          <div class="personal-description">{{profile.lineDescription}}</div>
+          <div>Click for more information...</div>
         </div>
       </div>
     </div>
@@ -44,48 +42,67 @@ export default {
 
 <style lang="scss" scoped>
 li {
-  .card-container {
-    .card {
-      border-radius: 5px;
-      box-shadow: 2px 5px 10px #ccc;
-      background: white;
-      .hero {
-        height: 100px;
-        background: url("https://images.unsplash.com/photo-1425321395722-b1dd54a97cf3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=6bb26c224def312127d93e664ec5d03d");
+  margin: 20px;
+  transition: all 0.3s ease;
+  &:hover {
+    // box-shadow: 0 0 10px rgba(77, 100, 204, 0.5);
+    transform: translate(0, -15px);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+  }
+  .card {
+    border-radius: 5px;
+    box-shadow: 2px 5px 10px #ccc;
+    background: white;
+    height: 335px;
+    .user {
+      margin-bottom: 10px;
+      .avatar {
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        border: 3px solid #fff;
+        position: absolute;
         background-size: cover;
-        border-radius: 5px 5px 0px 0px;
+        background-repeat: no-repeat;
+        top: -60px;
+        left: 60px;
+        margin-top: 10px;
       }
-      .main {
-        border-bottom: 1px solid #ddd;
-        padding: 0 10px;
-        .user {
-          display: flex;
-          margin-bottom: 5px;
-          .avatar {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: 3px solid #fff;
-            position: relative;
-            background-size: cover;
-            background-repeat: no-repeat;
-            top: -50px;
-          }
-          .user-details {
-            margin: 10px 0 0 10px;
-            h3 {
-              margin: 0;
-              font-size: 1.17em;
-              font-weight: bold;
-            }
-            .location {
-              color: #444;
-              font-size: 0.9em;
-            }
-          }
+      .user-details {
+        margin: 90px 20px 10px 30px;
+        h3 {
+          margin-bottom: 10px;
+          font-size: 1.2em;
+          font-weight: bold;
+        }
+        .location {
+          color: #444;
+          font-size: 0.9em;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+        .personal-description {
+          margin-bottom: 10px;
+          font-weight: bold;
         }
       }
     }
   }
 }
+// .wrapper {
+//   background: linear-gradient(left bottom, #62075c 0, #c30eb8 100%);
+//   position: relative;
+//   z-index: 1;
+// }
+// .user:before {
+//   content: "";
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   height: 100%;
+//   width: 100%;
+//   background-image: url("http://remtsoy.com/experiments/user_card/img/food.png");
+//   opacity: 0.7;
+//   filter: alpha(opacity=30);
+// }
 </style>

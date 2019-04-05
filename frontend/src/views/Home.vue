@@ -11,13 +11,14 @@
     <city-search></city-search>
 
     <div class="cities-gallery grid">
-      <div
-        v-for="dest in topDests"
-        :key="dest._id"
-        :class="'img-container' + ' ' + dest.name"
-        :style="'background-image: url(' + dest.imgUrl + ')'"
-      >
-        <div class="city-name" @click="moveToUsers(dest)">{{dest.name}}</div>
+      <div v-for="dest in topDests" :key="dest._id" :class="'img-container' + ' ' + dest.name">
+        <div
+          class="city-name"
+          :style="'background-image: url(' + dest.imgUrl + ')'"
+          @click="moveToUsers(dest)"
+        >
+          <div class="city-name-title">{{dest.name}}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -33,27 +34,28 @@ export default {
   name: "home",
   data() {
     return {
-      users: null
+      users: null,
     };
   },
   created() {
     this.$store.dispatch({ type: "loadTopDests" });
+    this.$store.dispatch({ type: "loadUsers" });
     let arr = [
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3193"
+        userId: "5ca62433a82d87eeccaae69f"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3192"
+        userId: "5ca62433a82d87eeccaae6ad"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a3195"
+        userId: "5ca62433a82d87eeccaae6a2"
       }),
       this.$store.dispatch({
         type: "loadHomeUser",
-        userId: "5c9bf92867d3be5ab05a31a0"
+        userId: "5ca62433a82d87eeccaae6a0"
       })
     ];
   },
@@ -62,7 +64,7 @@ export default {
       let destCountry = dest.country;
       let destCity = dest.name;
       this.$router.push("/users/" + destCountry + "&" + destCity);
-    }
+    },
   },
   computed: {
     topDests() {
@@ -70,6 +72,13 @@ export default {
     },
     homeUsers() {
       return this.$store.getters.homeUsers;
+    },
+    getUsers() {
+      return this.$store.getters.currUsers;
+    },
+    getNumOfUsers() {
+      var num = Math.floor(Math.random() * Math.floor(10000));
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
   },
   components: {
@@ -86,11 +95,11 @@ export default {
   margin-top: -70px;
   padding-bottom: 50px;
   text-align: center;
-  .user-list-title {
-    margin-top: 50px;
-  }
   h1 {
+    font-family: hensa-regular;
+    font-size: 3rem;
     margin-bottom: 40px;
+    margin-top: 40px;
   }
 }
 
@@ -102,13 +111,32 @@ export default {
   grid-gap: 20px;
   margin-top: 40px;
   .img-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    position: relative;
     cursor: pointer;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
+    overflow: hidden;
+    .city-name {
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center center;
+      width: 100%;
+      height: 100%;
+      transition: all 0.5s;
+      position: relative;
+      &:hover {
+        transform: scale(1.2);
+      }
+      .city-name-title {
+        font-size: 2rem;
+        color: white;
+        font-weight: bold;
+        text-shadow: 0px 3px 15px rgba(0, 0, 0, 1);
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+      }
+    }
   }
   .Bangkok {
     grid-column: span 1;
@@ -221,17 +249,5 @@ export default {
       grid-column: span 1;
     }
   }
-}
-
-.city-name {
-  font-size: 2rem;
-  color: white;
-  font-weight: bold;
-  text-shadow: 0px 3px 15px rgba(0, 0, 0, 1);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 </style>

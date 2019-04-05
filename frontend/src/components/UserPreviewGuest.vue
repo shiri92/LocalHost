@@ -4,26 +4,18 @@
       <div class="card">
         <div class="main">
           <div class="user">
-            <div class="avatar" :style="'background-image: url(' + profile.sender.imgUrl + ')'"></div>
+            <div class="avatar" :style="'background-image: url(' + request.source.imgUrl + ')'"></div>
             <div class="user-details">
-              <h3>{{profile.sender.firstName}} {{profile.sender.lastName}}</h3>
+              <h3>{{request.source.firstName}} {{request.source.lastName}}</h3>
               <span class="location">
-                <span>{{profile.sender.address.city}}, {{profile.sender.address.country}}</span>
-              </span>
-
-              <span class="date">
-                <!-- // TODO SHIRI: GET THE startDate and endDate 'Sunday, 1 April, 2019' -->
-                <!-- // THE DATE COMES FROM THE REQUEST FORM IN STRING FORMAT ex.: 1-1-2019 -->
-
-                <!-- <span>Arrival Date: {{profile.sender.startDate | moment("calendar")}}</span> -->
-                <!-- <span>Arrival Date: {{getDateFormatted}}</span> -->
-                <!-- <span>{{ 1553967058 | time }}</span> -->
+                <font-awesome-icon icon="map-marker-alt"/>&nbsp;
+                <span>{{request.source.address.city}}, {{request.source.address.country}}</span>
               </span>
               <span class="date">
-                <span>Arrival Date: {{profile.sender.endDate}}</span>
+                <span>Arrival Date: {{request.arrivalDate | moment("calendar")}}</span>
               </span>
               <span class="date">
-                <span>Leaving Date: {{profile.sender.endDate}}</span>
+                <span>Leaving Date: {{request.leavingDate | moment("calendar")}}</span>
               </span>
             </div>
           </div>
@@ -36,31 +28,15 @@
 <script>
 import StarsToshow from "../components/RateStarsToShow";
 export default {
-  props: ["profile"],
+  props: ['request'],
   components: {
     StarsToshow
   },
   computed: {
-    rateAverage() {
-      let sum = 0;
-      let divider = this.profile.references.length;
-      return this.profile.references.reduce((acc, review) => {
-        sum += +review.rating;
-        acc = sum / divider;
-        return acc;
-      }, 0);
-    },
     getDateFormatted() {
       return moment.locale("12-25-1995");
     }
   },
-  filters: {
-    time(timestamp) {
-      // return moment(date).format('MMMM Do YYYY, h:mm:ss a');
-      // return moment(timestamp).fromNow();
-    }
-  }
-
 };
 </script>
 
@@ -70,8 +46,7 @@ li {
     .card {
       padding: 10px;
       border-radius: 5px;
-      box-shadow: 2px 5px 10px #ccc;
-      background: rgb(79, 92, 92);
+      background-color: #eeeeee;
       .hero {
         height: 100px;
         background: url("https://images.unsplash.com/photo-1425321395722-b1dd54a97cf3?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1600&h=900&fit=crop&ixid=eyJhcHBfaWQiOjF9&s=6bb26c224def312127d93e664ec5d03d");
@@ -79,7 +54,6 @@ li {
         border-radius: 5px 5px 0px 0px;
       }
       .main {
-        border-bottom: 1px solid #ddd;
         padding: 0 10px;
         .user {
           display: flex;
@@ -103,16 +77,15 @@ li {
               margin: 0;
               font-size: 1.17em;
               font-weight: bold;
-              color: rgb(128, 194, 209);
             }
             .location {
               font-weight: bold;
-              color: rgb(179, 128, 121);
+              color: #757575;
               font-size: 0.9em;
             }
             .date {
               font-weight: bold;
-              color: gold;
+              color: #3256bf;
               font-size: 0.9em;
             }
           }

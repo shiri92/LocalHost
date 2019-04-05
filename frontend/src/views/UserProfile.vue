@@ -17,17 +17,20 @@
     </carousel>
     <div class="profile-container flex justify-center">
       <div class="side-profile">
+        <!-- <transition name="fade"></transition> -->
         <div
           class="profile-img"
           :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"
         ></div>
         <div class="profile-name">{{currUser.firstName}} {{currUser.lastName}}</div>
-        <div class="profile-loc">{{currUser.address.city}}, {{currUser.address.country}}</div>
+        <div
+          class="profile-loc"
+        >{{(currUser.address.city) ? currUser.address.city + ',' : ''}} {{currUser.address.country}}</div>
         <hr>
         <div class="flex justify-center align-center flex-col">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-            <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
+            <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
               <font-awesome-icon icon="couch"/>&nbsp;Send Request!
             </button>
           </div>
@@ -35,16 +38,12 @@
             <router-link :to="'/userProfile/' + currUser._id + '/edit'" :key="currUser._id">
               <button class="btn">Edit My Profile</button>
             </router-link>
-            <router-link :to="'/userProfile/' + currUser._id + '/inbox'">
-              <button class="btn">My Inbox</button>
-            </router-link>
-            <router-link :to="'/userProfile/' + currUser._id + '/scheduleManager'">
-              <button class="btn">Personal Manager</button>
+            <router-link :to="'/userProfile/' + currUser._id + '/manager'">
+              <button class="btn">Manager</button>
             </router-link>
           </div>
         </div>
       </div>
-
       <div class="main-desc">
         <div class="cmps" id="cmps">
           <nav class="main-desc-nav">
@@ -60,7 +59,12 @@
             </div>
           </nav>
           <profile-about class="detail-section" :user="currUser" id="about"></profile-about>
-          <profile-myHome class="detail-section" :pref="currUser.placeDetails" id="home"></profile-myHome>
+          <profile-myHome
+            v-if="currUser.isHosting"
+            class="detail-section"
+            :pref="currUser.placeDetails"
+            id="home"
+          ></profile-myHome>
           <profile-pictures class="detail-section" :user="currUser" id="pics"></profile-pictures>
           <profile-references
             class="detail-section"
@@ -69,15 +73,11 @@
             id="references"
           ></profile-references>
         </div>
-        <guest-request
-          @requestOff="requestFormOff"
-          v-if="showRequestForm"
-          @sendRequest="sendRequest"
-        ></guest-request>
+        <guest-request v-if="showRequestForm" @hideRequestForm="hideRequestForm"></guest-request>
       </div>
     </div>
     <div class="mobile" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-      <button v-if="currUser.isHosting" @click="requestFormOn" class="btn">
+      <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
         <font-awesome-icon icon="couch"/>&nbsp;Send Request!
       </button>
     </div>
@@ -97,6 +97,7 @@ export default {
   data() {
     return {
       isNavInDisplay: false,
+      modalOpen: false,
       showRequestForm: false,
       window: {
         width: 0,
@@ -113,9 +114,9 @@ export default {
       var scrollPos = window.scrollY;
       if (scrollPos > 310) {
         vm.narrowNav(true);
-      } else {
-        vm.narrowNav(false);
+        return;
       }
+      vm.narrowNav(false);
     });
 
     window.addEventListener("resize", this.handleResize);
@@ -133,13 +134,10 @@ export default {
     narrowNav(state) {
       this.isNavInDisplay = state;
     },
-    sendRequest() {
-      this.requestFormOff();
-    },
-    requestFormOn() {
+    revealRequestForm() {
       this.showRequestForm = true;
     },
-    requestFormOff() {
+    hideRequestForm() {
       this.showRequestForm = false;
     },
     handleResize() {

@@ -5,74 +5,59 @@
       <span @click="$emit('closeReviewForm')">&times;</span>
     </div>
     <hr>
-    <div class="content flex flex-col">
+    <form class="content flex flex-col" @submit.prevent="postReview">
       <label for>{{currUser.firstName}} was your:</label>
       <div class="checkbox-container flex">
-        <div>
+        <label>
           <input
             class="checkbox"
-            type="checkbox"
+            type="radio"
             ref="inputHost"
-            @change="checkHost"
+            name="status"
             value="Host"
             v-model="review.getAsAHost"
             required
           >Host
-        </div>
-        <div>
+        </label>
+        <label>
           <input
             class="checkbox"
-            type="checkbox"
+            type="radio"
             ref="inputGuest"
-            @change="checkGuest"
+            name="status"
             value="Guest"
             v-model="review.getAsAGuest"
-            required
           >Guest
-        </div>
+        </label>
       </div>
-      <rate-stars @rate="setRate"></rate-stars>
+      <rate-stars @rate="setRate" required></rate-stars>
       <label>Your Review:</label>
-      <textarea v-model="review.description" cols="30" rows="8" required></textarea>
+      <textarea v-model="review.description" cols="30" rows="8" name="desc" required></textarea>
       <div class="btn-container flex justify-center">
-        <button class="btn btn-send" @click="setReview">Send Review</button>
+        <button class="btn btn-send" type="submit">Send Review</button>
       </div>
-    </div>
+    </form>
   </section>
 </template>
 
 <script>
-import RateStars from '../components/RateStars'
+import RateStars from "../components/RateStars";
 export default {
-  name: 'review-form',
-  props: ['currReviewToEdit'],
+  name: "review-form",
+  props: ["currReviewToEdit"],
+  components: {
+    RateStars
+  },
   data() {
     return {
-      review: {
-        getAsAHost: false,
-        getAsAGuest: false,
-        sender: { id: '', firstName: '', lastName: '', imgUrl: '', country: '', city: '' },
-        recipient: { id: '', firstName: '', lastName: '' },
-        createdAt: Date.now(),
-        rating: 0,
-        description: '',
-        isClicked: false
-      }
-    }
+      review: null
+    };
   },
   created() {
     if (this.currReviewToEdit) {
-      this.review = this.currReviewToEdit
+      this.review = this.currReviewToEdit;
     } else {
-      this.review.sender.id = this.loggedUser._id;
-      this.review.sender.firstName = this.loggedUser.firstName;
-      this.review.sender.lastName = this.loggedUser.lastName;
-      this.review.sender.country = this.loggedUser.country;
-      this.review.sender.city = this.loggedUser.city;
-      this.review.sender.imgUrl = this.loggedUser.imgUrl;
-      this.review.recipient.firstName = this.currUser.firstName;
-      this.review.recipient.lastName = this.currUser.lastName;
-      this.review.recipient.id = this.currUser._id;
+      this.review = JSON.parse(JSON.stringify(this.$store.getters.emptyReview));
     }
   },
   computed: {
@@ -80,63 +65,84 @@ export default {
       return this.$store.getters.currUser;
     },
     loggedUser() {
-      return this.$store.getters.loggedUser
+      return this.$store.getters.loggedUser;
+    },
+    isValid() {
+      console.log(this.review.rating);
+
+      return (
+        (this.review.getAsAHost || this.review.getAsAGuest) &&
+        this.review.description &&
+        (this.review.rating !== 0)
+      );
     }
   },
   methods: {
-    checkHost() {
-      this.$refs.inputGuest.checked = false;
-      this.review.getAsAHost = true;
-      this.review.getAsAGuest = false;
-    },
     setRate(num) {
       this.review.rating = num;
     },
-    checkGuest() {
-      this.$refs.inputHost.checked = false;
-      this.review.getAsAHost = false;
-      this.review.getAsAGuest = true;
+    checkHost() {
+      // if (this.review.getAsAHost) {
+      //   this.$refs.inputGuest.checked = false;
+      // } else {
+      //   this.$refs.inputHost.checked = false;
+      // }
     },
-    setReview() {
+    checkGuest() {
+      // if (this.review.getAsAGuest) {
+      //   this.$refs.inputHost.checked = false;
+      // } else {
+      //   this.$refs.inputGuest.checked = false;
+      // }
+    },
+    async postReview() {
       if (!this.loggedUser) {
-        const Toast = this.$swal.mixin({
-          toast: true,
-          position: "bottom-start",
-          showConfirmButton: false,
-          timer: 3000
-        });
-
-        Toast.fire({
-          type: "info",
-          title: `Please Sign In To Add Review...`
-        });
+        this.popToast(
+          "info",
+          "bottom-start",
+          3000,
+          "Please Sign In To Add Review..."
+        );
         return;
       }
-      if ((this.review.getAsAHost || this.review.getAsAGuest) && this.review.description && this.review.rating) {
-        this.$emit('closeReviewForm');
+      if (this.isValid) {
+        this.$emit("closeReviewForm");
         if (!this.currReviewToEdit) {
-          this.$store.dispatch({ type: 'addReview', review: this.review })
-            .then(() => {
-              const Toast = this.$swal.mixin({
-                toast: true,
-                position: 'bottom-start',
-                showConfirmButton: false,
-                timer: 3000
-              });
-
-              Toast.fire({ type: 'success', title: `You Have Added New Review` })
-            })
+          this.review.createdAt = Date.now();
+          await this.$store.dispatch({ type: 'postReview', review: this.review, targetId: this.currUser._id });
+          this.$emit('resetCurrReview')
+          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Review');
+          return;
         }
-        else {
-          this.$store.dispatch({ type: 'updateReview', currUserId: this.currUser._id, review: this.review });
-        }
+        //TODO IF USER UPDATES REVIEW ADD THE UPDATED TIME
+        this.$store.dispatch({
+          type: "editReview",
+          currUserId: this.currUser._id,
+          review: this.review
+        });
+        this.popToast(
+          "success",
+          "bottom-start",
+          3000,
+          "You Have Updated Successfuly The Review"
+        );
       }
     },
-  },
-  components: {
-    RateStars
+    popToast(type, position, timer, title) {
+      const Toast = this.$swal.mixin({
+        toast: true,
+        position: position,
+        showConfirmButton: false,
+        timer: timer
+      });
+
+      Toast.fire({
+        type: type,
+        title: title
+      });
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

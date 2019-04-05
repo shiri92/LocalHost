@@ -8,6 +8,7 @@
 </template>
 
 <script>
+// import eventBus from '../services/eventbus-service.js';
 export default {
   name: 'CitySearch',
   props: {
@@ -15,6 +16,7 @@ export default {
   data() {
     return {
       searchWord: '',
+      cityImg: null
     }
   },
   computed: {
@@ -24,18 +26,15 @@ export default {
   },
   methods: {
     chooseCity(ev) {
+      this.cityImg = ev.photos[0].getUrl({ 'maxWidth': 100, 'maxHeight': 100 });
       let inputRes = JSON.parse(JSON.stringify(ev.formatted_address));
       let idx = inputRes.indexOf(',');
       let currCity = inputRes.substr(0, idx)
       let currCountry = inputRes.substr(idx + 2, inputRes.length)
       this.$router.push(`/users/${currCountry}&${currCity}`);
+      // eventBus.$emit('setCityImg', this.cityImg);
     }
   },
-  computed: {
-    getCities() {
-      return this.$store.getters.cities;
-    }
-  }
 }
 </script>
 

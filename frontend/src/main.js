@@ -10,13 +10,14 @@ import "element-ui/lib/theme-chalk/index.css";
 import BootstrapVue from "bootstrap-vue";
 import AnimateCSS from "animate.css";
 import VueCarousel from "vue-carousel";
-// import VueBootstrap from 'bootstrap-vue';
 import VueScrollTo from "vue-scrollto";
 import VueSweetalert2 from "vue-sweetalert2";
 import * as VueGoogleMaps from "vue2-google-maps";
-// import './filters.js';
+import VCalendar from "v-calendar";
+import "v-calendar/lib/v-calendar.min.css";
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
-// import 'custom.scss'
 
 const options = {
   confirmButtonColor: "#41b882",
@@ -48,6 +49,9 @@ Vue.use(VueScrollTo, {
   x: false,
   y: true
 });
+Vue.use(VCalendar, {
+  firstDayOfWeek: 2 // Monday
+});
 
 // Font Awesome
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -56,6 +60,7 @@ import { faCoffee } from "@fortawesome/free-solid-svg-icons";
 import { faCouch } from "@fortawesome/free-solid-svg-icons";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { faSortUp } from "@fortawesome/free-solid-svg-icons";
 import { faComment } from "@fortawesome/free-solid-svg-icons";
 import { faVenusMars } from "@fortawesome/free-solid-svg-icons";
 import { faWindowClose } from "@fortawesome/free-solid-svg-icons";
@@ -74,6 +79,7 @@ library.add(faCoffee, faJs, faVuejs);
 library.add(faCouch);
 library.add(faEnvelope);
 library.add(faSortDown);
+library.add(faSortUp);
 library.add(faComment);
 library.add(faVenusMars);
 library.add(faWindowClose);
@@ -97,8 +103,12 @@ Vue.use(VueCarousel);
 Vue.config.productionTip = false;
 
 new Vue({
+  created() {
+    AOS.init()
+  },
   router,
   store,
   css,
   render: h => h(App)
 }).$mount("#app");
+

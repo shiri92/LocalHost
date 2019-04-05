@@ -9,7 +9,7 @@
 
       <div class="buttons-container">
         <div v-if="!getLoggedUser" class="join-container">
-          <span class="welcome">Welcome guest!</span>
+          <span class="welcome">Welcome Guest!</span>
           <button class="btn" @click="signUp">Join</button>
           <button class="btn btn-empty" @click="loginFormOn">Sign In</button>
         </div>
@@ -17,7 +17,11 @@
           <span class="welcome">
             <!--{{getLoggedUser.firstName}} {{getLoggedUser.lastName}}-->
           </span>
-          <img class="user-img" @click="toggleUserWindow" :src="getLoggedUser.imgUrl">
+          <img
+            class="user-img"
+            @click="toggleUserWindow"
+            :style="'background-image: url(' + getLoggedUser.imgUrl +')'"
+          >
         </div>
       </div>
 
@@ -116,15 +120,10 @@ export default {
         width: 40px;
         height: 40px;
         border-radius: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
       }
     }
   }
-  // a {
-  //   font-weight: bold;
-  //   color: #2c3e50;
-  //   &.router-link-exact-active {
-  //     color: #7ebf50;
-  //   }
-  // }
 }
 </style>

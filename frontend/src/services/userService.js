@@ -1,37 +1,26 @@
 /* ----- DEPEND -----*/
-import socketService from './socketService';
 import Axios from 'axios';
 var axios = Axios.create({ withCredentials: true }); // save the session cookies
 
 /* ----- CONST -----*/
-const BASE_API =
-  process.env.NODE_ENV !== "development" ? "/user" : "//localhost:3003/user";
+const BASE_API = process.env.NODE_ENV !== "development" ? "/user" : "//localhost:3003/user";
 
 
-// Logged User Check (Session Only)
+// LOGCHECK User
 async function checkLogged() {
   let res = await axios.put(`${BASE_API}/checkLogged`);
-  // if (res.data) {
-  //   let { _id } = res.data;
-  //   socketService.connect(_id);
-  // }
   return res.data;
 }
 
-// Login User
+// LOGIN User
 async function login(credentials) {
   let res = await axios.put(`${BASE_API}/login`, credentials);
-  // if (res.data) {
-  //   let { _id } = res.data;
-  //   socketService.connect(_id);
-  // }
   return res.data;
 }
 
-// Logout User
+// LOGOUT User
 async function logout() {
   await axios.put(`${BASE_API}/logout`);
-  // socketService.disconnect();
 }
 
 // GET Users By Address
@@ -53,31 +42,42 @@ async function add(credentials) {
   return res.data;
 }
 
-// ADD User Request
-async function addRequest(request) {
-  let res = await axios.put(`${BASE_API}/request`, request);
-  // socketService.sendRequest(res.data.recipient.id);
+// Send Pending Request
+async function sendRequest(request, targetId) {
+  let res = await axios.put(`${BASE_API}/${targetId}/pendingRequest`, request);
   return res.data;
 }
 
-// DELETE User Request
-async function removeRequest(recipientId, requestId) {
-  await axios.delete(`${BASE_API}/${recipientId}/request/${requestId}`);
+// Accept Pending Request
+async function acceptRequest(request, targetId) {
+  await axios.delete(`${BASE_API}/${targetId}/pendingRequest/${request._id}`);
+  await axios.put(`${BASE_API}/${targetId}/acceptedRequest`, request);
 }
 
-// ADD User Review
-async function addReview(review) {
-  let res = await axios.put(`${BASE_API}/review`, review);
+// Decline Pending Request
+async function declineRequest(requestId, targetId) {
+  await axios.delete(`${BASE_API}/${targetId}/pendingRequest/${requestId}`);
+}
+
+// Send Response
+async function sendResponse(response, targetId) {
+  let res = await axios.put(`${BASE_API}/${targetId}/acceptedResponse`, response);
   return res.data;
 }
 
-// DELETE User Review
-async function removeReview(currUserId, reviewId) {
+// ADD Review
+async function postReview(review, targetId) {
+  let res = await axios.put(`${BASE_API}/${targetId}/review`, review);
+  return res.data;
+}
+
+// DELETE Review
+async function unpostReview(currUserId, reviewId) {
   await axios.delete(`${BASE_API}/${currUserId}/review/${reviewId}`);
 }
 
-// EDIT User Review
-async function updateReview(currUserId, review) {
+// EDIT Review
+async function editReview(currUserId, review) {
   await axios.put(`${BASE_API}/${currUserId}/review/${review._id}`, review);
 }
 
@@ -87,21 +87,11 @@ async function update(user) {
   return res.data;
 }
 
-// UPDATE Profile Image Url
-async function updateUserImg(imgUrl, userId) {
+// UPDATE Portrait URL
+async function updatePortrait(imgUrl, userId) {
   await axios.put(`${BASE_API}/${userId}/img`, { imgUrl });
 }
 
-// (UPDATE HOST USER) Book Guest
-async function bookGuest(sender, recipient) {
-  const { id } = recipient;
-  await axios.put(`${BASE_API}/${id}/bookGuest`, { sender });
-}
-// (UPDATE GUEST USER) Book Host
-async function bookHost(sender, recipient) {
-  const { id } = sender;
-  await axios.put(`${BASE_API}/${id}/bookHost`, { recipient });
-}
 
 export default {
   checkLogged,
@@ -110,13 +100,13 @@ export default {
   query,
   getById,
   add,
-  addRequest,
-  addReview,
-  bookGuest,
-  bookHost,
-  removeReview,
-  updateReview,
-  removeRequest,
+  sendRequest,
+  postReview,
+  unpostReview,
+  editReview,
   update,
-  updateUserImg
+  updatePortrait,
+  acceptRequest,
+  declineRequest,
+  sendResponse
 };

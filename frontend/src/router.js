@@ -6,11 +6,11 @@ import Users from "./views/Users.vue";
 import Signup from "./views/Signup.vue";
 import UserProfile from "./views/UserProfile.vue";
 import EditProfile from "./views/EditProfile.vue";
-import UserInbox from "./views/UserInbox.vue";
-import UserScheduleManager from "./views/ScheduleManager.vue";
-import ShcheduleGuests from "./components/ScheduleGuests.vue";
-import ShcheduleHosts from "./components/ScheduleHosts.vue";
-import ShcheduleDetails from "./components/ScheduleDetails.vue";
+// import UserInbox from "./views/UserInbox.vue";
+import Manager from "./views/Manager.vue";
+import ManagerGuests from "./components/ManagerGuests.vue";
+import ManagerHosts from "./components/ManagerHosts.vue";
+import ManagerInbox from "./components/ManagerInbox.vue";
 
 Vue.use(Router);
 
@@ -47,23 +47,24 @@ export default new Router({
       name: "editProfile",
       component: EditProfile
     },
+    // {
+    //   path: "/userProfile/:userId/inbox",
+    //   name: "userInbox",
+    //   component: UserInbox
+    // },
     {
-      path: "/userProfile/:userId/inbox",
-      name: "userInbox",
-      component: UserInbox
-    },
-    {
-      path: "/userProfile/:userId/scheduleManager",
-      name: "userScheduleManager",
-      component: UserScheduleManager,
-      children:
-        [
-          { path: 'scheduleGuests', component: ShcheduleGuests },
-          { path: 'scheduleHosts', component: ShcheduleHosts },
-          { path: 'scheduleDetails', component: ShcheduleDetails },
-
-        ]
-    },
-
+      path: "/userProfile/:userId/manager",
+      name: "manager",
+      component: Manager,
+      children: [
+        {
+          path: "managerGuests",
+          name: "managerGuests",
+          component: ManagerGuests
+        },
+        { path: "managerHosts", component: ManagerHosts },
+        { path: "managerInbox", component: ManagerInbox }
+      ]
+    }
   ]
 });

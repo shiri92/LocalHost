@@ -1,6 +1,5 @@
 <template>
   <section class="why-join" id="whyjoin">
-    <hr class="style-one">
     <h1>Why Join?</h1>
     <div class="cards-container flex justify-center">
       <b-card
@@ -36,7 +35,6 @@
         <b-card-text class="small text-muted">- Robbert, Brad, and Kids (Hosting in Amsterdam)</b-card-text>
       </b-card>
     </div>
-    <hr class="style-one">
   </section>
 </template>
 
@@ -49,19 +47,17 @@ export default {
 
 <style lang="scss" scoped>
 .why-join {
-  padding: 50px 0;
-  margin: 50px 0;
+  // padding: 50px 0;
+  // margin: 50px 0;
+
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  hr.style-one {
-    border: 0;
-    height: 1px;
-    background: #333;
-    background-image: linear-gradient(to right, #ccc, #333, #ccc);
-  }
   h1 {
-    margin-bottom: 20px;
+    margin-top: 60px;
+    margin-bottom: 40px;
+    font-family: hensa-regular;
+    font-size: 3rem;
   }
   .cards-container {
     max-width: 80%;
@@ -76,7 +72,7 @@ export default {
 
 @media (max-width: 1050px) {
   .why-join {
-    padding: 50px 0;
+    // padding: 50px 0;
     .cards-container {
       max-width: 100%;
       .card {
@@ -88,7 +84,7 @@ export default {
 
 @media (max-width: 768px) {
   .why-join {
-    padding: 50px 0;
+    // padding: 50px 0;
     .cards-container {
       flex-direction: column;
       max-width: 100%;
