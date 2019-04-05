@@ -195,7 +195,7 @@ export default {
       }
     },
     setFullAddres(ev) {
-      this.user.placeDetails.mapAddress = ev.formatted_address;
+      this.user.placeDetails.mapAddress = ev;
     },
     async updateImg(ev) {
       let targetId = this.$route.params.userId;

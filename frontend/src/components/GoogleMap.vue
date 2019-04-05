@@ -1,19 +1,11 @@
 <template>
   <div class="google-map">
-    <!-- <div>
-      <h2>Search and add a pin</h2>
-      <label>
-        <gmap-autocomplete @place_changed="addMarker"></gmap-autocomplete>
-      </label>
-      <br>
-    </div>
-    <br>-->
     <GmapMap
       ref="mapRef"
       :center="center"
-      :zoom="15"
+      :zoom="4.5"
       map-type-id="terrain"
-      style="width: 100%; height: 275px"
+      style="width: 100%; height: 500px"
     >
       <GmapMarker
         :key="index"
@@ -23,7 +15,6 @@
         :draggable="true"
         @click="setCenter(m.position)"
       />
-      <!-- @click="center=m.position" -->
     </GmapMap>
   </div>
 </template>
@@ -31,37 +22,35 @@
 <script>
 export default {
   name: "GoogleMap",
+  props: ['responses'],
   data() {
     return {
-      center: { lat: 32.088007, lng: 34.8031678 },
-      markers: [
-        { position: { lat: 32.088007, lng: 34.8031678 } },
-      ],
+      center: {},
+      markers: [],
       places: [],
       currentPlace: null
     };
   },
-
   mounted() {
     this.geolocate();
   },
-
+  created() {
+    let places = this.responses.map(response => {
+      return response.source.placeDetails.mapAddress;
+    })
+    this.addMarkers(places);
+  },
   methods: {
-    // setPlace(place) {
-    //   this.currentPlace = place;
-    // },
-    addMarker(place) {
-      this.currentPlace = place;
-      if (this.currentPlace) {
+    addMarkers(locations) {
+      locations.forEach(location => {
         const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
+          lat: location.geometry.location.lat,
+          lng: location.geometry.location.lng
         };
         this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
-        this.center = marker;
-        this.currentPlace = null;
-      }
+        this.places.push(location);
+      });
+      this.center = this.markers[0].position;
     },
     geolocate() {
       navigator.geolocation.getCurrentPosition(position => {

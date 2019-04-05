@@ -23,7 +23,7 @@
           <div class="calendar-wrapper">
             <v-calendar :attributes="attrs" class="calendar"></v-calendar>
           </div>
-          <google-map></google-map>
+          <google-map :responses="getLoggedUser.acceptedResponses"></google-map>
         </div>
       </div>
     </div>
