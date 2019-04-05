@@ -102,7 +102,7 @@ export default {
           this.review.createdAt = Date.now();
           await this.$store.dispatch({ type: 'postReview', review: this.review, targetId: this.currUser._id });
           this.$emit('resetCurrReview')
-          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Revixew');
+          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Review');
           return;
         }
         //TODO IF USER UPDATES REVIEW ADD THE UPDATED TIME
