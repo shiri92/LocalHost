@@ -43,6 +43,12 @@ export default {
 <style lang="scss" scoped>
 li {
   margin: 20px;
+  transition: all 0.3s ease;
+  &:hover {
+    // box-shadow: 0 0 10px rgba(77, 100, 204, 0.5);
+    transform: translate(0, -15px);
+    box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
+  }
   .card {
     border-radius: 5px;
     box-shadow: 2px 5px 10px #ccc;
