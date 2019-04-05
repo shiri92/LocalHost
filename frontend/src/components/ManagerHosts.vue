@@ -1,5 +1,5 @@
 <template>
-  <section class="schedule-hosts" >
+  <section class="schedule-hosts">
     <div class="flex-container clean-list" v-if="getLoggedUser">
       <div
         class="empty flex justify-center align-center"
@@ -7,7 +7,12 @@
       >
         <h3>No Hosts Yet...</h3>
       </div>
-      <div v-else class="page-container flex flex-row" data-aos="fade-right" data-aos-duration="1200">
+      <div
+        v-else
+        class="page-container flex flex-row"
+        data-aos="fade-right"
+        data-aos-duration="1200"
+      >
         <div class="list-container flex flex-col">
           <router-link
             style="margin: 2px"
@@ -19,11 +24,15 @@
             <user-preview-host :response="currResponse" :idx="idx+1"></user-preview-host>
           </router-link>
         </div>
-        <div class="info-container flex flex-col" >
+        <div class="info-container flex flex-col">
           <div class="calendar-wrapper" data-aos="fade-left" data-aos-duration="1500">
             <v-calendar :attributes="attrs" class="calendar"></v-calendar>
           </div>
-          <google-map data-aos="fade-left" data-aos-duration="1500"></google-map>
+          <google-map
+            :responses="getLoggedUser.acceptedResponses"
+            data-aos="fade-left"
+            data-aos-duration="1500"
+          ></google-map>
         </div>
       </div>
     </div>

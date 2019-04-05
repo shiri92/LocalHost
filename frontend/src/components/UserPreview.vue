@@ -45,7 +45,6 @@ li {
   margin: 20px;
   transition: all 0.3s ease;
   &:hover {
-    // box-shadow: 0 0 10px rgba(77, 100, 204, 0.5);
     transform: translate(0, -15px);
     box-shadow: 0 12px 16px rgba(0, 0, 0, 0.2);
   }
