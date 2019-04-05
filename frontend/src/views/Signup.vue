@@ -1,5 +1,5 @@
 <template>
-  <section class="signup flex flex-col">
+  <section class="signup flex flex-col" data-aos="flip-down" data-aos-duration="1200">
     <div class="logo">
       <router-link to="/">
         <img src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553958499/logo/logo.png" alt>

@@ -1,6 +1,6 @@
 <template>
   <globe-loader v-if="showAnimation"></globe-loader>
-  <section v-else class="users flex flex-col">
+  <section v-else class="users flex flex-col" data-aos="fade-up" data-aos-duration="1000">
     <main-header></main-header>
     <div class="main-title">Hosts In The Area</div>
     <div class="users-container">
