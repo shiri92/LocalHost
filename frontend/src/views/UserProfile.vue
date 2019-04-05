@@ -1,10 +1,5 @@
 <template>
-  <section
-    class="profile-container flex flex-col justify-center"
-    data-aos="zoom-in"
-    data-aos-duration="1000"
-    v-if="currUser"
-  >
+  <section class="profile-container flex flex-col justify-center scene_element scene_element--fade" v-if="currUser">
     <carousel
       class="carousel flex justify-center"
       :per-page="3"
@@ -112,7 +107,7 @@ export default {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
     var vm = this;
-    var val = window.addEventListener("scroll", function (e) {
+    var val = window.addEventListener("scroll", function(e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 310) {
         vm.narrowNav(true);
