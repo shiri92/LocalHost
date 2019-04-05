@@ -67,26 +67,19 @@ a:-webkit-any-link {
 }
 
 @keyframes zoomInOut {
-  0% {
-    transform: scale(0.8,0.8);
-  }
-  25% {
-    transform: scale(0.85,0.85);
-  }
-  50% {
-    transform: scale(0.9,0.9);
-  }
-  75% {
-    transform: scale(0.95,0.95);
-  }
-  100% {
-    transform: scale(1,1);
-  }
+  from {transform: scale(0.9)}
+  to {transform: scale(1);}
+}
+
+@keyframes fade {
+  from {opacity: 0;}
+  to {opacity: 1;}
 }
 
 .scene_element {
   animation-duration: 1s;
-  transition-timing-function: ease-in;
+  transition-timing-function: linear;
+  animation-delay: .1s;
   animation-fill-mode: both;
 }
 .scene_element--fadeinright {
@@ -97,4 +90,7 @@ a:-webkit-any-link {
 }
 .scene_element--zoominout {
   animation-name: zoomInOut;
+}
+.scene_element--fade {
+  animation-name: fade;
 }

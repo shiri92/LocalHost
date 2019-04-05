@@ -10,6 +10,7 @@
         </div>
         <div
           class="card"
+          data-aos="fade-up" data-aos-duration="1200"
           v-else
           v-for="(request, idx) in getLoggedUser.pendingRequests"
           :key="idx"
@@ -110,7 +111,7 @@ export default {
       }
       .card {
         max-width: 980px;
-        margin: 30px 0;
+        margin: 30px 0 0;
         border-radius: 3px;
         box-shadow: 1px 1px 4px rgb(110, 109, 109);
         animation-duration: 1s;

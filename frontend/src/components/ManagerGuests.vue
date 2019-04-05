@@ -8,7 +8,7 @@
         <h3>No Guests Yet...</h3>
       </div>
       <div v-else class="info-container flex flex-row justify-center">
-        <div class="list-container flex flex-col">
+        <div class="list-container flex flex-col" data-aos="fade-right" data-aos-duration="1200">
           <router-link
             style="margin: 2px"
             class="guest-list-item"
@@ -19,7 +19,7 @@
             <user-preview-guest :request="currRequest" :idx="idx+1"></user-preview-guest>
           </router-link>
         </div>
-        <div class="calendar-wrapper">
+        <div class="calendar-wrapper" data-aos="fade-left" data-aos-duration="1200">
           <v-calendar :attributes="attrs" class="calendar"></v-calendar>
         </div>
       </div>
