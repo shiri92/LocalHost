@@ -37,6 +37,7 @@ export default {
     // if (!this.getLoggedUser)
     this.$store.dispatch({ type: 'checkLogged' })
     eventBus.$on('popToast', (...args) => this.popToast(...args));
+    console.log('hey');
   },
   computed: {
     getLoggedUser() {
