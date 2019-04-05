@@ -30,7 +30,7 @@ FillDB();
 
 // Fill Mongo Data Base (will be on mongo service)
 async function FillDB() {
-  console.log('here');
+  console.log('here!!');
   let db = await mongoService.connect();
   let res = await db
     .collection(USERS_COLLECTION)
