@@ -51,7 +51,12 @@
 
             <div class="form-item flex space-between">
               <label>Address:&nbsp;</label>
-              <gmap-autocomplete @place_changed="setAddres" class="form-input"></gmap-autocomplete>
+              <gmap-autocomplete
+                :defaultValue="getAddress"
+                ref="autocomplete"
+                @place_changed="setAddres"
+                class="form-input"
+              ></gmap-autocomplete>
             </div>
 
             <div class="form-item flex space-between">
@@ -170,9 +175,18 @@ export default {
     this.languages = langs.all();
     this.user = JSON.parse(JSON.stringify(this.getLoggedUser));
   },
+  mounted() {
+    // if (this.getLoggedUser);
+    // this.$refs.autocomplete.$el.value = this.getAddress;
+  },
   computed: {
     getLoggedUser() {
       return this.$store.getters.loggedUser;
+    },
+    getAddress() {
+      let city = this.getLoggedUser.address.city;
+      let country = this.getLoggedUser.address.country;
+      return `${city}, ${country}`;
     }
   },
   watch: {
@@ -183,12 +197,15 @@ export default {
   methods: {
     setAddres(ev) {
       let str = ev.formatted_address;
+      console.log(ev.formatted_address);
       let idx = str.indexOf(',');
       if (idx !== -1) {
         let currCity = str.substr(0, idx);
         let currCountry = str.substr(idx + 2, str.length - 1);
         this.user.address = { city: currCity, country: currCountry };
-      } else {
+        // this.$refs.autocomplete.$el.value = `${currCity}, ${currCountry}`;
+      }
+      else {
         let currCity = '';
         let currCountry = str;
         this.user.address = { city: currCity, country: currCountry };
@@ -205,18 +222,15 @@ export default {
       await this.$store.dispatch({ type: 'updatePortrait', imgFile, imgPath, targetId });
     },
     async onSave() {
-      if (this.user.isHosting) {
-        if (this.user.placeDetails.mapAddress && this.user.lineDescription) {
-          await this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
-          this.$router.push('/userProfile/' + this.user._id)
-        }
-      } else {
-        await this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
-        this.$router.push('/userProfile/' + this.user._id)
-      }
-    },
-  },
-};
+      if (this.user.isHosting)
+        if (!this.user.placeDetails.mapAddress && this.user.lineDescription)
+          return;
+      await this.$store.dispatch({ type: 'updateLoggedUser', user: this.user })
+      this.$router.push('/userProfile/' + this.user._id)
+
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
