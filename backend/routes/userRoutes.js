@@ -5,16 +5,15 @@ const userService = require("../services/userService.js");
 const BASE = "/user";
 
 function addRoutes(app) {
-  // LOGCHECK User
+  // Logged User Check (Session Only)
   app.put(`${BASE}/checkLogged`, async (req, res) => {
     if (req.session.user) {
       let user = await userService.getById(req.session.user._id);
       return res.json(user);
-    }
-    return res.json();
+    } else return res.json();
   });
 
-  // LOGIN User
+  // Login User
   app.put(`${BASE}/login`, async (req, res) => {
     const credentials = req.body;
     let user = await userService.login(credentials);
@@ -23,7 +22,7 @@ function addRoutes(app) {
     res.json(user);
   });
 
-  // LOGOUT User
+  // Logout User (Session Only)
   app.put(`${BASE}/logout`, (req, res) => {
     req.session.destroy();
     return res.json();
@@ -43,77 +42,59 @@ function addRoutes(app) {
     return res.json(user);
   });
 
-  // ADD User, GET User With _id
+  // ADD User, Return User With Id
   app.post(BASE, async (req, res) => {
     const credentials = req.body;
     let user = await userService.add(credentials);
     return res.json(user);
   });
 
-  // ADD Pending Request
-  app.put(`${BASE}/:id/pendingRequest`, async (req, res) => {
+  // ADD User Request
+  app.put(`${BASE}/request`, async (req, res) => {
     const request = req.body;
-    const { id } = req.params;
-    let result = await userService.addPendingRequest(id, request);
+    let result = await userService.addRequest(request);
     return res.json(result);
   });
 
-  // ADD Accepted Request
-  app.put(`${BASE}/:id/acceptedRequest`, async (req, res) => {
-    const request = req.body;
-    const { id } = req.params;
-    await userService.addAcceptedRequest(id, request);
-    return res.json();
-  });
-
-  // ADD Accepted Response
-  app.put(`${BASE}/:id/acceptedResponse`, async (req, res) => {
-    const response = req.body;
-    const { id } = req.params;
-    let result = await userService.addAcceptedResponse(id, response);
-    return res.json(result);
-  });
-
-  // ADD Review
-  app.put(`${BASE}/:id/review`, async (req, res) => {
+  //ADD User Review
+  app.put(`${BASE}/review`, async (req, res) => {
     const review = req.body;
-    const { id } = req.params;
-    let result = await userService.addReview(id, review);
+    let result = await userService.addReview(review);
     return res.json(result);
   });
 
-  // DELETE Pending Request
-  app.delete(`${BASE}/:id/pendingRequest/:requestId`, async (req, res) => {
-    const targetId = req.params.id;
-    const requestId = req.params.requestId;
-    await userService.deletePendingRequest(targetId, requestId);
-    return res.end();
-  });
-
-  // DELETE Review
+  // DELETE User Review
   app.delete(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
     const currUserId = req.params.currUserId;
     const reviewId = req.params.reviewId;
-    await userService.deleteReview(currUserId, reviewId);
-    return res.end();
+    await userService.removeReview(currUserId, reviewId);
+    return res.end(`Review ${reviewId} Deleted`);
+  });
+
+  // UPDATE User Review
+  app.put(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
+    const currUserId = req.params.currUserId;
+    const reviewId = req.params.reviewId;
+    const review = req.body;
+    await userService.updateReview(currUserId, review);
+    return res.end(`Review ${reviewId} Updated`);
+  });
+
+  // DELETE Guest Request
+  app.delete(`${BASE}/:currUserId/request/:requestId`, async (req, res) => {
+    const currUserId = req.params.currUserId;
+    const requestId = req.params.requestId;
+    await userService.removeRequest(currUserId, requestId);
+    return res.end(`Request ${requestId} Deleted`);
   });
 
   // UPDATE User
-  app.put(`${BASE}/:id`, async (req, res) => {
+  app.put(`${BASE}/:id`, (req, res) => {
     const user = req.body;
-    await userService.update(user);
-    return res.json();
+    userService.update(user).then(() => res.json());
   });
 
-  // UPDATE Review
-  app.put(`${BASE}/:currUserId/review/:reviewId`, async (req, res) => {
-    const currUserId = req.params.currUserId;
-    const review = req.body;
-    await userService.updateReview(currUserId, review);
-    return res.end();
-  });
-
-  // UPDATE Portrait URL
+  // UPDATE Profile Image, return ImgUrl
   app.put(`${BASE}/:id/img`, async (req, res) => {
     let { id } = req.params;
     let { imgUrl } = req.body;
@@ -121,6 +102,21 @@ function addRoutes(app) {
     return res.json();
   });
 
+  // (UPDATE HOST USER) Book Guest
+  app.put(`${BASE}/:id/bookGuest`, async (req, res) => {
+    const { id } = req.params;
+    const sender = req.body;
+    await userService.bookGuest(id, sender);
+    return res.json();
+  });
+
+  // (UPDATE GUEST USER) Book Host
+  app.put(`${BASE}/:id/bookHost`, async (req, res) => {
+    const { id } = req.params;
+    const recipient = req.body;
+    await userService.bookHost(id, recipient);
+    return res.json();
+  });
 }
 
 module.exports = addRoutes;

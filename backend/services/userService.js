@@ -15,15 +15,15 @@ module.exports = {
   query,
   getById,
   add,
-  addPendingRequest,
-  addAcceptedRequest,
-  addAcceptedResponse,
+  addRequest,
   addReview,
-  deleteReview,
+  removeReview,
   updateReview,
+  removeRequest,
   updateUserImg,
-  update,
-  deletePendingRequest
+  bookGuest,
+  bookHost,
+  update
 };
 
 FillDB();
@@ -37,7 +37,6 @@ async function FillDB() {
     .toArray();
   if (res.length === 0) addMany(_createUsers());
 }
-
 // Fill Mongo Data Base (will be on mongo service)
 async function addMany(users) {
   let db = await mongoService.connect();
@@ -46,7 +45,7 @@ async function addMany(users) {
   return res;
 }
 
-// LOGIN User
+// Login User
 async function login(credentials) {
   let db = await mongoService.connect();
   let res = await db.collection(USERS_COLLECTION).findOne(credentials);
@@ -94,77 +93,34 @@ async function add(credentials) {
   return credentials;
 }
 
-// ADD Pending Request
-async function addPendingRequest(targetId, request) {
+// ADD User Request
+async function addRequest(request) {
   request._id = new ObjectId();
-  request.source.id = new ObjectId(request.source.id);
-
   let db = await mongoService.connect();
   await db
     .collection(USERS_COLLECTION)
     .updateOne(
-      { _id: new ObjectId(targetId) },
-      { $push: { pendingRequests: request } }
+      { _id: new ObjectId(request.recipient.id) },
+      { $push: { requests: request } }
     );
   return request;
 }
 
-// ADD Accepted Request
-async function addAcceptedRequest(targetId, request) {
-  request._id = new ObjectId(request._id);
-  request.source.id = new ObjectId(request.source.id);
-
+// ADD User Review
+async function addReview(review) {
+  review._id = ObjectId();
   let db = await mongoService.connect();
   await db
     .collection(USERS_COLLECTION)
     .updateOne(
-      { _id: new ObjectId(targetId) },
-      { $push: { acceptedRequests: request } }
-    );
-}
-
-// ADD Accepted Response
-async function addAcceptedResponse(targetId, response) {
-  response._id = new ObjectId(response._id);
-  response.source.id = new ObjectId(response.source.id);
-  let db = await mongoService.connect();
-  await db
-    .collection(USERS_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(targetId) },
-      { $push: { acceptedResponses: response } }
-    );
-  return response;
-}
-
-// ADD Review
-async function addReview(targetId, review) {
-  review._id = new ObjectId();
-  review.source.id = new ObjectId(review.source.id);
-  let db = await mongoService.connect();
-  await db
-    .collection(USERS_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(targetId) },
+      { _id: new ObjectId(review.recipient.id) },
       { $push: { references: review } }
     );
   return review;
 }
 
-// DELETE Pending Request
-async function deletePendingRequest(targetId, requestId) {
-  console.log(targetId, requestId, "hereee");
-  let db = await mongoService.connect();
-  return await db
-    .collection(USERS_COLLECTION)
-    .updateOne(
-      { _id: new ObjectId(targetId) },
-      { $pull: { pendingRequests: { _id: new ObjectId(requestId) } } }
-    );
-}
-
-// DELETE Review
-async function deleteReview(currUserId, reviewId) {
+// DELETE User Review
+async function removeReview(currUserId, reviewId) {
   let db = await mongoService.connect();
   await db
     .collection(USERS_COLLECTION)
@@ -174,17 +130,28 @@ async function deleteReview(currUserId, reviewId) {
     );
 }
 
-// UPDATE Review
+// UPDATE User Review
 async function updateReview(currUserId, review) {
-  review._id = new ObjectId(review._id);
   let db = await mongoService.connect();
   await db.collection(USERS_COLLECTION).updateOne(
     {
       _id: new ObjectId(currUserId),
-      references: { $elemMatch: { _id: review._id } }
+      references: { $elemMatch: { _id: new ObjectId(review._id) } }
     },
     { $set: { "references.$": review } }
   );
+  return review;
+}
+
+// DELETE User Request
+async function removeRequest(currUserId, requestId) {
+  let db = await mongoService.connect();
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(currUserId) },
+      { $pull: { requests: { _id: new ObjectId(requestId) } } }
+    );
 }
 
 // UPDATE User
@@ -195,12 +162,34 @@ async function update(user) {
   return user;
 }
 
-// UPDATE Portrait URL
+// UPDATE Profile Image Url
 async function updateUserImg(imgUrl, userId) {
   let db = await mongoService.connect();
   await db
     .collection(USERS_COLLECTION)
     .updateOne({ _id: new ObjectId(userId) }, { $set: { imgUrl: imgUrl } });
+}
+
+// (UPDATE HOST USER) Book Guest
+async function bookGuest(hostId, newGuest) {
+  let db = await mongoService.connect();
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(hostId) },
+      { $addToSet: { guests: newGuest } }
+    );
+}
+
+// (UPDATE GUEST USER) Book Host
+async function bookHost(guestId, newHost) {
+  let db = await mongoService.connect();
+  await db
+    .collection(USERS_COLLECTION)
+    .updateOne(
+      { _id: new ObjectId(guestId) },
+      { $addToSet: { hosts: newHost } }
+    );
 }
 
 // Create User
@@ -212,9 +201,7 @@ function _createUser(
   gender,
   birthdate,
   address,
-  imgurl,
-  pictures,
-  lineDescription
+  imgurl
 ) {
   return {
     /* ----- Personal Details -----*/
@@ -233,9 +220,9 @@ function _createUser(
     /* ----- Surfing Details -----*/
     isHosting: false,
     isSurfing: false,
-    pendingRequests: [],
-    acceptedRequests: [],
-    acceptedResponses: [],
+    guests: [],
+    hosts: [],
+    requests: [],
     messages: [],
     placeDetails: {
       guestCapacity: 0,
@@ -245,17 +232,15 @@ function _createUser(
       isSmokingAllowed: false,
       isDisabledAccessible: false,
       pets: 0,
-      children: 0,
-      mapAddress: ""
+      children: 0
     },
     /* ----- Social Details -----*/
-    pictures: pictures ? pictures : [],
-    references: [],
-    lineDescription: lineDescription ? lineDescription : ""
+    pictures: [],
+    references: []
   };
 }
 
-// CREATE Users
+// Generate Users Sample
 function _createUsers() {
   let users = [];
   users.push(
@@ -266,10 +251,7 @@ function _createUsers() {
       "Saar",
       "Male",
       { day: 24, month: 09, year: 1997 },
-      { city: "Berlin", country: "Germany" },
-      "",
-      [],
-      "Lives walking distance from the center."
+      { city: "Berlin", country: "Germany" }
     )
   );
   users.push(
@@ -280,10 +262,7 @@ function _createUsers() {
       "Ron",
       "Female",
       { day: 09, month: 11, year: 1992 },
-      { city: "Barcelona", country: "Spain" },
-      "",
-      [],
-      "Love museums and go to the beach."
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -294,10 +273,7 @@ function _createUsers() {
       "Ratzon",
       "Male",
       { day: 19, month: 02, year: 1993 },
-      { city: "Barcelona", country: "Spain" },
-      "",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "Barcelona", country: "Spain" }
     )
   );
   users.push(
@@ -309,16 +285,7 @@ function _createUsers() {
       "Female",
       { day: 08, month: 09, year: 1990 },
       { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612551/profile-imgs/jessica-turner/jessica-turner.jpg",
-      [
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025049/profile-imgs/jessica-turner/jessica6.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025049/profile-imgs/jessica-turner/jessica5.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025049/profile-imgs/jessica-turner/jessica4.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025048/profile-imgs/jessica-turner/jessica3.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718120/profile-imgs/jessica-turner/jessica2.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718120/profile-imgs/jessica-turner/jessica1.jpg"
-      ],
-      "I'm a Tour guide in 'La Sagrada Familia'."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612551/profile-imgs/jessica-turner/jessica-turner.jpg"
     )
   );
   users.push(
@@ -330,16 +297,7 @@ function _createUsers() {
       "Female",
       { day: 30, month: 10, year: 1992 },
       { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612506/profile-imgs/riley-county/riley-county.jpg",
-      [
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612536/profile-imgs/riley-county/riley6.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612521/profile-imgs/riley-county/riley1.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612512/profile-imgs/riley-county/riley3.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612508/profile-imgs/riley-county/riley4.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612508/profile-imgs/riley-county/riley2.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612507/profile-imgs/riley-county/riley5.jpg"
-      ],
-      "Like walking in the observation park."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612506/profile-imgs/riley-county/riley-county.jpg"
     )
   );
   users.push(
@@ -351,9 +309,7 @@ function _createUsers() {
       "Female",
       { day: 11, month: 07, year: 1994 },
       { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717922/profile-imgs/chloe-edwards/chloe-edwards.jpg",
-      [],
-      "Go to baking department every Saturday."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717922/profile-imgs/chloe-edwards/chloe-edwards.jpg"
     )
   );
   users.push(
@@ -365,16 +321,7 @@ function _createUsers() {
       "Male",
       { day: 14, month: 06, year: 1988 },
       { city: "Rome", country: "Italy" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718495/profile-imgs/rob-nelson/rob-nelson.jpg",
-      [
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025793/profile-imgs/rob-nelson/rob5.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025790/profile-imgs/rob-nelson/rob6.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025790/profile-imgs/rob-nelson/rob3.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025788/profile-imgs/rob-nelson/rob2.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025787/profile-imgs/rob-nelson/rob1.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025787/profile-imgs/rob-nelson/rob4.jpg"
-      ],
-      "Making the perfect home made pasta."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718495/profile-imgs/rob-nelson/rob-nelson.jpg"
     )
   );
   users.push(
@@ -386,9 +333,7 @@ function _createUsers() {
       "Male",
       { day: 05, month: 02, year: 1980 },
       { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718458/profile-imgs/rickey-powell/rickey-powell.jpg",
-      [],
-      "Living only 5 minutes walking from the 'Eiffel Tower'."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718458/profile-imgs/rickey-powell/rickey-powell.jpg"
     )
   );
   users.push(
@@ -400,9 +345,7 @@ function _createUsers() {
       "Male",
       { day: 08, month: 09, year: 1985 },
       { city: "Rome", country: "Italy" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718169/profile-imgs/kory-turner/kory-turner.jpg",
-      [],
-      "Living in the hot center."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718169/profile-imgs/kory-turner/kory-turner.jpg"
     )
   );
   users.push(
@@ -414,9 +357,7 @@ function _createUsers() {
       "Male",
       { day: 12, month: 09, year: 1989 },
       { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718146/profile-imgs/karl-smith/karl-smith.jpg",
-      [],
-      "Surf it's my favorite thing in the world."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718146/profile-imgs/karl-smith/karl-smith.jpg"
     )
   );
   users.push(
@@ -428,9 +369,7 @@ function _createUsers() {
       "Female",
       { day: 18, month: 09, year: 1980 },
       { city: "Berlin", country: "Germany" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718438/profile-imgs/penelope-harrison/penelope-harrison.jpg",
-      [],
-      "Living near a craft beer place."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718438/profile-imgs/penelope-harrison/penelope-harrison.jpg"
     )
   );
   users.push(
@@ -442,9 +381,7 @@ function _createUsers() {
       "Female",
       { day: 19, month: 10, year: 1980 },
       { city: "Berlin", country: "Germany" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718390/profile-imgs/nora-gray/nora-gray.jpg",
-      [],
-      "The best place if you like schnitzel."
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718390/profile-imgs/nora-gray/nora-gray.jpg"
     )
   );
   users.push(
@@ -456,9 +393,7 @@ function _createUsers() {
       "Male",
       { day: 15, month: 07, year: 1985 },
       { city: "Rome", country: "Italy" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718410/profile-imgs/oscar-brooks/oscar-brooks.jpg",
-      [],
-      ""
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718410/profile-imgs/oscar-brooks/oscar-brooks.jpg"
     )
   );
   users.push(
@@ -470,9 +405,7 @@ function _createUsers() {
       "Female",
       { day: 09, month: 05, year: 1982 },
       { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717869/profile-imgs/audrey-collins/audrey-collins.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717869/profile-imgs/audrey-collins/audrey-collins.jpg"
     )
   );
   users.push(
@@ -483,10 +416,8 @@ function _createUsers() {
       "Rice",
       "Male",
       { day: 09, month: 09, year: 1975 },
-      { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718539/profile-imgs/walton-rice/walton-rice.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "Madrid", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718539/profile-imgs/walton-rice/walton-rice.jpg"
     )
   );
   users.push(
@@ -497,10 +428,8 @@ function _createUsers() {
       "Hayes",
       "Male",
       { day: 21, month: 09, year: 1988 },
-      { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718305/profile-imgs/neil-hayes/neil-hayes.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "Madrid", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718305/profile-imgs/neil-hayes/neil-hayes.jpg"
     )
   );
   users.push(
@@ -511,10 +440,8 @@ function _createUsers() {
       "Shaw",
       "Male",
       { day: 23, month: 01, year: 1989 },
-      { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718198/profile-imgs/larry-shaw/larry-shaw.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "Madrid", country: "Spain" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718198/profile-imgs/larry-shaw/larry-shaw.jpg"
     )
   );
   users.push(
@@ -525,17 +452,8 @@ function _createUsers() {
       "Page",
       "Male",
       { day: 30, month: 02, year: 1993 },
-      { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718217/profile-imgs/louis-page/louis-page.jpg",
-      [
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025266/profile-imgs/louis-page/louis5.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025266/profile-imgs/louis-page/louis6.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025266/profile-imgs/louis-page/louis3.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025265/profile-imgs/louis-page/louis4.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025265/profile-imgs/louis-page/louis1.jpg",
-        "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554025265/profile-imgs/louis-page/louis2.jpg"
-      ],
-      "Know the BEST Tapas place in the city!"
+      { city: "New York", country: "NY, USA" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718217/profile-imgs/louis-page/louis-page.jpg"
     )
   );
   users.push(
@@ -546,10 +464,8 @@ function _createUsers() {
       "Lee",
       "Female",
       { day: 25, month: 02, year: 1994 },
-      { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718516/profile-imgs/robie-lee/robie-lee.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "New York", country: "NY, USA" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718516/profile-imgs/robie-lee/robie-lee.jpg"
     )
   );
   users.push(
@@ -560,10 +476,8 @@ function _createUsers() {
       "Fisher",
       "Female",
       { day: 27, month: 03, year: 1990 },
-      { city: "Barcelona", country: "Spain" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718067/profile-imgs/claire-fisher/claire-fisher.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "New York", country: "NY, USA" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718067/profile-imgs/claire-fisher/claire-fisher.jpg"
     )
   );
   users.push(
@@ -574,10 +488,8 @@ function _createUsers() {
       "Reed",
       "Female",
       { day: 16, month: 11, year: 1992 },
-      { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717888/profile-imgs/aurora-reed/aurora-reed.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "New York", country: "NY, USA" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553717888/profile-imgs/aurora-reed/aurora-reed.jpg"
     )
   );
   users.push(
@@ -588,10 +500,8 @@ function _createUsers() {
       "Howard",
       "Female",
       { day: 07, month: 12, year: 1981 },
-      { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612474/profile-imgs/anna-howard/anna-howard.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "London", country: "England" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553612474/profile-imgs/anna-howard/anna-howard.jpg"
     )
   );
   users.push(
@@ -602,10 +512,8 @@ function _createUsers() {
       "Jackson",
       "Male",
       { day: 13, month: 10, year: 1991 },
-      { city: "Paris", country: "France" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718246/profile-imgs/loyd-jackson/loyd-jackson.png",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "London", country: "England" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718246/profile-imgs/loyd-jackson/loyd-jackson.png"
     )
   );
   users.push(
@@ -616,24 +524,8 @@ function _createUsers() {
       "Arnolds",
       "Male",
       { day: 17, month: 10, year: 1992 },
-      { city: "Rome", country: "Italy" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718289/profile-imgs/lucy-arnolds/lucy-arnolds.png",
-      [],
-      "Know the BEST Tapas place in the city!"
-    )
-  );
-  users.push(
-    _createUser(
-      "jessicat@gmail.com",
-      "1111",
-      "Jessica",
-      "Tavares",
-      "Female",
-      { day: 13, month: 10, year: 1988 },
-      { city: "Rome", country: "Italy" },
-      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1554372982/profile-imgs/jessica-tavares/jessica-tavares.jpg",
-      [],
-      "Know the BEST Tapas place in the city!"
+      { city: "London", country: "England" },
+      "https://res.cloudinary.com/dcl4oabi3/image/upload/v1553718289/profile-imgs/lucy-arnolds/lucy-arnolds.png"
     )
   );
 

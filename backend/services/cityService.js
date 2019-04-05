@@ -4,13 +4,22 @@ const ObjectId = require("mongodb").ObjectId;
 
 /* ----- CONST -----*/
 const CITIES_COLLECTION = "cities";
+// const TOP_DESTS_COLLECTION = "topDests";
 
 FillDB();
 
 async function FillDB() {
   let db = await mongoService.connect();
-  let cities = await db.collection(CITIES_COLLECTION).find({}).toArray();
+  let cities = await db
+    .collection(CITIES_COLLECTION)
+    .find({})
+    .toArray();
+  // let topDests = await db
+  //   .collection(TOP_DESTS_COLLECTION)
+  //   .find({})
+  //   .toArray();
   if (cities.length === 0) addMany(citiesDB, CITIES_COLLECTION);
+  // if (topDests.length === 0) addMany(topDestsDB, TOP_DESTS_COLLECTION);
 }
 
 async function addMany(arr, key) {

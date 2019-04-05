@@ -28,12 +28,6 @@ function connectToMongo() {
         })
 }
 
-async function getCollection(COLLECTION_KEY) {
-    let db = await mongoService.connect();
-    return db.collection(COLLECTION_KEY)
-}
-
 module.exports = {
-    connect: connectToMongo,
-    collection: getCollection
+    connect: connectToMongo
 }

@@ -19,26 +19,15 @@ function addRoutes(io) {
             }
         });
 
-        socket.on('sendRequest', (targetId, request) => {
+        socket.on('sendRequest', (request) => {
+            let targetId = request.recipient.id;
             let targetSocket = findSocketByUserId(targetId);
-            if (targetSocket) targetSocket.emit('sendRequest', request);
+            if (targetSocket) {
+                targetSocket.emit('sendRequest', request);
+            }
         });
-
-        socket.on('sendResponse', (targetId, response) => {
-            let targetSocket = findSocketByUserId(targetId);
-            if (targetSocket) targetSocket.emit('sendResponse', response);
-        });
-
-        socket.on('postReview', (review, targetId) => {
-            io.sockets.emit('postReview', review, targetId);
-        });
-
-        socket.on('unpostReview', (reviewId, targetId) => {
-            io.sockets.emit('unpostReview', reviewId, targetId);
-        });
-
-        socket.on('editReview', (review, targetId) => {
-            io.sockets.emit('editReview', review, targetId);
+        socket.on('sendReview', (review) => {
+            io.sockets.emit('sendReview', review);
         });
 
     });

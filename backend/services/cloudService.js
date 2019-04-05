@@ -2,21 +2,29 @@
 /* ----- DEPEND -----*/
 const cloudinary = require('cloudinary');
 
-cloudinary.config({
-    cloud_name: 'dcl4oabi3',
-    api_key: '835468792983949',
-    api_secret: 'djgVO14O1DSteDPTimrKaq7E1Bo'
-});
+/* ----- CONST -----*/
+const CLOUD_NAME = 'dcl4oabi3';
+// const UPLOAD_PRESET = 'jhqr9o4c';
+const API_KEY = '835468792983949'
+const API_SECRET = 'djgVO14O1DSteDPTimrKaq7E1Bo'
 
-function uploadImg(imgFile, imgPath) {
+cloudinary.config(
+    {
+        cloud_name: CLOUD_NAME,
+        api_key: API_KEY,
+        api_secret: API_SECRET
+    });
+
+function uploadImg(imgFile) {
     return new Promise((resolve, reject) => {
-        cloudinary.v2.uploader.upload_stream({
-            public_id: imgPath,
-            resource_type: 'image'
-        },
+        cloudinary.v2.uploader.upload_stream(
+            {
+                // public_id: "my_picture",
+                resource_type: 'image'
+            },
             (error, result) => resolve(result.secure_url))
             .end(imgFile.data)
-    });
+    })
 }
 
 function loadImg(imgUrl) {
