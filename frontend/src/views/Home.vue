@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home" data-aos="fade" data-aos-duration="1200">
     <main-header></main-header>
 
     <h1 class="user-list-title">Meet Some Of Our Top Hosts</h1>
@@ -10,7 +10,7 @@
     <h1>Top Destinations</h1>
     <city-search></city-search>
 
-    <div class="cities-gallery grid">
+    <div class="cities-gallery grid" data-aos="fade-up" data-aos-duration="1200">
       <div v-for="dest in topDests" :key="dest._id" :class="'img-container' + ' ' + dest.name">
         <div
           class="city-name"
@@ -202,7 +202,7 @@ export default {
 
 @media (max-width: 1050px) {
   .cities-gallery {
-    max-width: 750px;
+    max-width: 96%;
   }
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="profile-container flex flex-col justify-center" v-if="currUser">
+  <section class="profile-container flex flex-col justify-center " data-aos="zoom-in" data-aos-duration="1000" v-if="currUser">
     <carousel
       class="carousel flex justify-center"
       :per-page="3"
@@ -17,7 +17,6 @@
     </carousel>
     <div class="profile-container flex justify-center">
       <div class="side-profile">
-        <!-- <transition name="fade"></transition> -->
         <div
           class="profile-img"
           :style="'background-image: url(' + currUser.imgUrl + '); text-align: center;'"
@@ -110,7 +109,7 @@ export default {
     this.$store.dispatch({ type: "loadUser", userId });
 
     var vm = this;
-    var val = window.addEventListener("scroll", function (e) {
+    var val = window.addEventListener("scroll", function(e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 310) {
         vm.narrowNav(true);
@@ -169,6 +168,7 @@ export default {
 <style lang="scss" scoped>
 .profile-container {
   position: relative;
+  background-color: #f1efea;
 }
 @media (max-width: 768px) {
   .profile-container {

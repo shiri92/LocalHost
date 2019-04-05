@@ -4,6 +4,8 @@
     <div class="cards-container flex justify-center">
       <b-card
         class="card"
+        data-aos="fade-up-right"
+        data-aos-duration="1200"
         title="Community"
         img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566197/bg-imgs/why-join-1.jpg"
         img-alt="Image"
@@ -15,6 +17,8 @@
 
       <b-card
         class="card"
+        data-aos="fade-up"
+        data-aos-duration="1200"
         title="Guesting"
         img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566200/bg-imgs/why-join-2.jpg"
         img-alt="Image"
@@ -26,6 +30,8 @@
 
       <b-card
         class="card"
+        data-aos="fade-up-left"
+        data-aos-duration="1200"
         title="Hosting"
         img-src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553566198/bg-imgs/why-join-3.jpg"
         img-alt="Image"

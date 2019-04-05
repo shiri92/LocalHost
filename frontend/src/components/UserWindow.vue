@@ -1,5 +1,5 @@
 <template>
-  <section class="user-window flex flex-col align-center">
+  <section class="user-window flex flex-col align-center" data-aos="fade-down" data-aos-duration="1200">
     <div class="top flex">
       <img class="user-img" :style="'background-image: url(' + getLoggedUser.imgUrl +')'">
       <div class="details">
