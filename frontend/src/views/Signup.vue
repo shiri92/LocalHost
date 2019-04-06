@@ -90,6 +90,7 @@
 </template>
 
 <script>
+import eventBus from '../services/eventbus-service.js';
 export default {
   name: "sign-up",
   data() {
@@ -116,7 +117,7 @@ export default {
         if (!this.checkForm2()) return;
         await this.$store.dispatch({ type: "signup", credentials: this.form })
         this.$router.push("/userProfile/" + this.getLoggedUser._id);
-        this.popToast('success', 'bottom-start', 3000, 'You Have Successfully Signed Up! ')
+        eventBus.$emit('popToast', 'success', 'bottom-start', 3000, 'You have successfully signed up!');
       }
       if (this.active++ > 1) this.active = 0;
     },
@@ -146,18 +147,6 @@ export default {
         this.form.address
       );
     }
-  },
-  popToast(type, position, timer, title) {
-    const Toast = this.$swal.mixin({
-      toast: true,
-      position: position,
-      showConfirmButton: false,
-      timer: timer
-    });
-    Toast.fire({
-      type: type,
-      title: title
-    });
   },
   computed: {
     getLoggedUser() {

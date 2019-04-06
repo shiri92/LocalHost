@@ -122,17 +122,26 @@ export default {
 
         state.currSocket.on("sendRequest", request => {
           this.commit({ type: "addPendingRequest", request });
-          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, 'You got a new request! for more check out your manager inbox...');
+          let msg = 'You got a new request! for more check out your manager inbox...';
+          let link = '/userProfile/' + state.loggedUser._id + '/manager/managerInbox';
+          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
         });
+
         state.currSocket.on("sendResponse", response => {
           this.commit({ type: "addAcceptedResponse", response });
-          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your manager inbox...`);
-        }); // TODO - Add Link To Manager => hosts
+          let msg = `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your hosts manager...`;
+          let link = '/userProfile/' + state.loggedUser._id + '/manager/managerHosts'
+          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
+        });
 
         state.currSocket.on("postReview", (review, targetId) => {
           if (state.currUser._id === targetId) this.commit({ type: "addReview", review });
-          if (state.loggedUser._id === targetId) eventBus.$emit('popToast', 'info', 'bottom-start', 5000, 'You got a new reference! for more check out your profile...');
-        });  // TODO - Add Link To Profile => hosts
+          if (state.loggedUser._id === targetId) {
+            let msg = 'You got a new reference! for more check out your profile...';
+            let link = '/userProfile/' + state.loggedUser._id;
+            eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
+          }
+        });
 
         state.currSocket.on("unpostReview", (reviewId, targetId) => {
           if (state.currUser._id === targetId) this.commit({ type: "deleteReview", reviewId });

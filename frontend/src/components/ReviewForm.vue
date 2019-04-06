@@ -42,6 +42,7 @@
 
 <script>
 import RateStars from "../components/RateStars";
+import eventBus from '../services/eventbus-service.js';
 export default {
   name: "review-form",
   props: ["currReviewToEdit"],
@@ -97,12 +98,7 @@ export default {
     },
     async postReview() {
       if (!this.loggedUser) {
-        this.popToast(
-          "info",
-          "bottom-start",
-          3000,
-          "Please Sign In To Add Review..."
-        );
+        eventBus.$emit('popToast', 'info', 'bottom-start', 3000, 'Please sign in to add a review...');
         return;
       }
       if (this.isValid) {
@@ -111,35 +107,13 @@ export default {
           this.review.createdAt = Date.now();
           await this.$store.dispatch({ type: 'postReview', review: this.review, targetId: this.currUser._id });
           this.$emit('resetCurrReview')
-          this.popToast('success', 'bottom-start', 3000, 'You Have Added New Review');
+          eventBus.$emit('popToast', 'success', 'bottom-start', 3000, 'You have added a new review');
           return;
         }
         //TODO IF USER UPDATES REVIEW ADD THE UPDATED TIME
-        this.$store.dispatch({
-          type: "editReview",
-          currUserId: this.currUser._id,
-          review: this.review
-        });
-        this.popToast(
-          "success",
-          "bottom-start",
-          3000,
-          "You Have Updated Successfuly The Review"
-        );
+        this.$store.dispatch({ type: "editReview", currUserId: this.currUser._id, review: this.review });
+        eventBus.$emit('popToast', 'success', 'bottom-start', 3000, 'You have updated the review');
       }
-    },
-    popToast(type, position, timer, title) {
-      const Toast = this.$swal.mixin({
-        toast: true,
-        position: position,
-        showConfirmButton: false,
-        timer: timer
-      });
-
-      Toast.fire({
-        type: type,
-        title: title
-      });
     }
   }
 };

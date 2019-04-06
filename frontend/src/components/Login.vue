@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import eventBus from '../services/eventbus-service.js';
 export default {
   name: "log-in",
   data() {
@@ -63,18 +64,9 @@ export default {
         .then(user => {
           console.log("user:", user);
           if (user) {
-            const Toast = this.$swal.mixin({
-              toast: true,
-              position: "bottom-start",
-              showConfirmButton: false,
-              timer: 3000
-            });
-            Toast.fire({
-              type: "success",
-              title: `Welcome ${user.firstName} ${user.lastName}!`
-            });
+            eventBus.$emit('popToast', 'success', 'bottom-start', 3000, `Welcome ${user.firstName} ${user.lastName}!`);
           }
-          this.$router.push(this.$route.path);
+          // this.$router.push(this.$route.path);
           this.$emit("loginOff");
         })
         .catch(err => {

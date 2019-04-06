@@ -37,7 +37,6 @@ export default {
     // if (!this.getLoggedUser)
     this.$store.dispatch({ type: 'checkLogged' })
     eventBus.$on('popToast', (...args) => this.popToast(...args));
-    console.log('hey!!!');
   },
   computed: {
     getLoggedUser() {
@@ -53,12 +52,19 @@ export default {
       this.showLoginForm = true;
       this.isBackDark = true;
     },
-    popToast(type, position, timer, title) {
+    popToast(type, position, timer, title, link) {
       const Toast = this.$swal.mixin({
         toast: true,
         position: position,
         showConfirmButton: false,
-        timer: timer
+        timer: timer,
+        onClose: () => {
+          console.log(title);
+          if (link) {
+            this.$router.push(link);
+          }
+
+        }
       });
 
       Toast.fire({

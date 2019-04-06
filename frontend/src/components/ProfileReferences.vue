@@ -149,6 +149,7 @@
 <script>
 import StarsToshow from "../../src/components/RateStarsToShow";
 import ReviewForm from "../components/ReviewForm.vue";
+import eventBus from '../services/eventbus-service.js';
 
 export default {
   props: ["user", "loggedUser"],
@@ -194,7 +195,7 @@ export default {
     async unpostReview(reviewId, currUserId) {
       if (confirm("Are you sure you want to remove this review?")) {
         await this.$store.dispatch({ type: "unpostReview", currUserId, reviewId });
-        this.popToast('success', 'bottom-start', 3000, 'You Have Successfuly Removed The Review');
+        eventBus.$emit('popToast', 'success', 'bottom-start', 3000, 'You have successfuly removed the review');
       }
     },
     readMore(reference) {
@@ -212,19 +213,6 @@ export default {
     reviewFormOff() {
       this.isReviewFormOpen = false;
     },
-    popToast(type, position, timer, title) {
-      const Toast = this.$swal.mixin({
-        toast: true,
-        position: position,
-        showConfirmButton: false,
-        timer: timer
-      });
-
-      Toast.fire({
-        type: type,
-        title: title
-      });
-    }
   }
 };
 </script>
