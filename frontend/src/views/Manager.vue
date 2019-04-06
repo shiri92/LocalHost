@@ -45,8 +45,7 @@ export default {
   created() {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
-    if (this.getCurrUser)
-      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerInbox');
+    if (this.getCurrUser) this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerInbox');
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -91,14 +90,12 @@ export default {
   .nav-container {
     display: flex;
     align-items: center;
-    // margin-bottom: 5px;
     background-color: rgb(66, 66, 66);
     opacity: 0.9;
     .nav {
       display: flex;
       justify-content: space-between;
       width: 70%;
-      // padding: 10px;
       margin: 0 auto;
       color: white;
       .nav-item {

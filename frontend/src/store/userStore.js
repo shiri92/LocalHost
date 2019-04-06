@@ -126,7 +126,7 @@ export default {
         state.currSocket.on("sendResponse", response => {
           this.commit({ type: "addAcceptedResponse", response });
           let msg = `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your hosts manager...`;
-          let link = '/userProfile/' + state.loggedUser._id + '/manager/managerHosts'
+          let link = '/userProfile/' + state.loggedUser._id + '/manager/managerHosts';
           eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
         });
 
@@ -187,6 +187,7 @@ export default {
     async loadUser(context, { userId }) {
       let user = await userService.getById(userId);
       context.commit({ type: "setCurrUser", user });
+      return user;
     },
     async loadHomeUser(context, { userId }) {
       let user = await userService.getById(userId);

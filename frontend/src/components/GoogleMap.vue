@@ -13,8 +13,8 @@
         :position="m.position"
         :clickable="true"
         :draggable="true"
-        @click="setCenter(m.position)"
       />
+      <!-- @click="setCenter(m.position)" -->
     </GmapMap>
   </div>
 </template>
@@ -28,11 +28,10 @@ export default {
       center: {},
       markers: [],
       places: [],
-      currentPlace: null
     };
   },
   mounted() {
-    this.geolocate();
+    // this.geolocate();
   },
   created() {
     let places = this.responses.map(response => {
@@ -52,14 +51,14 @@ export default {
       });
       this.center = this.markers[0].position;
     },
-    geolocate() {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-      });
-    },
+    // geolocate() {
+    //   navigator.geolocation.getCurrentPosition(position => {
+    //     this.center = {
+    //       lat: position.coords.latitude,
+    //       lng: position.coords.longitude
+    //     };
+    //   });
+    // },
     // setCenter(pos) {
     //   this.$refs.mapRef.$mapPromise.then(map => {
     //     map.panTo(pos);

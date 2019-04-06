@@ -32,11 +32,11 @@
         <div class="flex justify-center align-center flex-col">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-            <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
-              <div v-if="!isSentRequest">
+            <button v-if="currUser.isHosting" class="btn">
+              <div v-if="!isSentRequest" @click="revealRequestForm">
                 <font-awesome-icon icon="couch"/>&nbsp;Send Request!
               </div>
-              <div v-else>
+              <div v-else @click="cancelRequest">
                 <font-awesome-icon icon="couch"/>&nbsp;Cancel Request
               </div>
             </button>
@@ -115,10 +115,8 @@ export default {
   created() {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId })
-      .then(() => {
-        let arr = this.currUser.pendingRequests;
-        let exist = arr.find(user => user.source.id === this.loggedUser._id);
-        if (exist) this.isSentRequest = true;
+      .then(user => {
+
       });
     var vm = this;
     var val = window.addEventListener("scroll", function (e) {
@@ -138,6 +136,8 @@ export default {
     },
     loggedUser() {
       return this.$store.getters.loggedUser;
+    },
+    isSendingRequest() {
     }
   },
   methods: {
@@ -153,6 +153,9 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
+    },
+    cancelRequest() {
+
     }
   },
   destroyed() {
@@ -162,9 +165,14 @@ export default {
     "$route.params.userId"(userId) {
       console.log('here');
       this.$store.dispatch({ type: "loadUser", userId })
-        .then(() => {
-
-        });
+    },
+    loggedUser(newVal, oldVal) {
+      let arr = this.currUser.pendingRequests;
+      let exist = arr.find(request => request.source.id === newVal._id);
+      if (exist)
+        this.isSentRequest = true;
+      else
+        this.isSentRequest = false;
     }
   },
   components: {
