@@ -74,7 +74,7 @@ export default {
           this.wrongCred = true;
         });
     },
-    checkForm: function (e) {
+    checkForm: function(e) {
       if (this.credentials.email && this.credentials.password) {
         return true;
       }
@@ -169,7 +169,7 @@ hr {
   p {
     text-align: center;
     .signup-btn {
-      color: #3366bb;
+      color: #3366BB;
       &:hover {
         text-decoration: underline;
       }

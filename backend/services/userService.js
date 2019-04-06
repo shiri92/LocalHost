@@ -247,7 +247,7 @@ function _createUser(
       isDisabledAccessible: false,
       pets: 0,
       children: 0,
-      mapAddress: ""
+      mapAddress: {}
     },
     /* ----- Social Details -----*/
     pictures: pictures ? pictures : [],

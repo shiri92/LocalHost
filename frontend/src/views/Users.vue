@@ -12,7 +12,7 @@
 <script>
 import UserList from '../components/UserList.vue';
 import MainHeader from '@/components/MainHeader'
-import GlobeLoader from '../components/GlobeLoader.vue';
+import GlobeLoader from '../components/GlobeLoader';
 export default {
   name: 'Users',
   components: {
