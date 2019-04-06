@@ -163,7 +163,7 @@ h2 {
   .list-container {
     overflow: auto;
     min-width: 360px;
-    height: 560px;
+    height: 786px;
   }
   .list-container::-webkit-scrollbar {
     width: 0.25em;

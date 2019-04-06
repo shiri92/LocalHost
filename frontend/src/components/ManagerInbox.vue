@@ -10,8 +10,8 @@
         </div>
         <div
           class="card"
-          data-aos="fade-up" data-aos-duration="1200"
-          v-else
+          data-aos="fade-up"
+          data-aos-duration="1200"
           v-for="(request, idx) in getLoggedUser.pendingRequests"
           :key="idx"
           :class="{'animation':request.isAccepted, 'fadeOutLeft':request.isAccepted}"
@@ -54,41 +54,63 @@
             <div @click="declineRequest(request)">DECLINE</div>
           </div>
         </div>
+        <div class="ads">
+          <img class="ad" src="../../public/img/misterBit.png" alt>
+          <img class="ad" src="../../public/img/misterBit2.png" alt>
+        </div>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-
 export default {
-
   data() {
     return {
-      requests: [],
+      requests: []
     };
   },
   computed: {
     getLoggedUser() {
       return this.$store.getters.loggedUser;
-    },
+    }
   },
   methods: {
     async acceptRequest(request) {
-      await this.$store.dispatch({ type: 'acceptRequest', request: request, targetId: this.getLoggedUser._id });
+      await this.$store.dispatch({
+        type: "acceptRequest",
+        request: request,
+        targetId: this.getLoggedUser._id
+      });
       let response = this.$store.getters.emptyResponse;
       response.arrivalDate = request.arrivalDate;
       response.leavingDate = request.leavingDate;
-      await this.$store.dispatch({ type: 'sendResponse', response: response, targetId: request.source.id });
+      await this.$store.dispatch({
+        type: "sendResponse",
+        response: response,
+        targetId: request.source.id
+      });
     },
     async declineRequest(request) {
-      await this.$store.dispatch({ type: 'declineRequest', request: request, targetId: this.getLoggedUser._id });
+      await this.$store.dispatch({
+        type: "declineRequest",
+        request: request,
+        targetId: this.getLoggedUser._id
+      });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+.ads {
+  max-width: 980px;
+  .ad {
+    height: 275px;
+    width: 50%;
+    // margin: 30px 0 0 30px;
+  }
+}
 .user-inbox {
   max-width: 1400px;
   min-width: 500px;
@@ -111,7 +133,7 @@ export default {
       }
       .card {
         max-width: 980px;
-        margin: 30px 0 0;
+        margin: 30px 10px 0;
         border-radius: 3px;
         box-shadow: 1px 1px 4px rgb(110, 109, 109);
         animation-duration: 1s;

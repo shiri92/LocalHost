@@ -28,11 +28,10 @@ export default {
       center: {},
       markers: [],
       places: [],
-      currentPlace: null
     };
   },
   mounted() {
-    this.geolocate();
+    // this.geolocate();
   },
   created() {
     let places = this.responses.map(response => {
@@ -51,6 +50,8 @@ export default {
         this.places.push(location);
       });
       this.center = this.markers[0].position;
+      console.log('center: ', this.center);
+      
     },
     geolocate() {
       navigator.geolocation.getCurrentPosition(position => {
@@ -58,6 +59,7 @@ export default {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
+        console.log('location center: ', this.center);        
       });
     },
     setCenter(pos) {
