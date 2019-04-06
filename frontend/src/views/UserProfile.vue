@@ -1,5 +1,8 @@
 <template>
-  <section class="profile-container flex flex-col justify-center scene_element scene_element--fade" v-if="currUser">
+  <section
+    class="profile-container flex flex-col justify-center scene_element scene_element--fade"
+    v-if="currUser"
+  >
     <carousel
       class="carousel flex justify-center"
       :per-page="3"
@@ -30,7 +33,12 @@
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
             <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
-              <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+              <div v-if="!isSentRequest">
+                <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+              </div>
+              <div v-else>
+                <font-awesome-icon icon="couch"/>&nbsp;Cancel Request
+              </div>
             </button>
           </div>
           <div v-else class="flex flex-col">
@@ -94,6 +102,7 @@ export default {
   name: "user-profile",
   data() {
     return {
+      isSentRequest: false,
       isNavInDisplay: false,
       modalOpen: false,
       showRequestForm: false,
@@ -105,9 +114,14 @@ export default {
   },
   created() {
     let userId = this.$route.params.userId;
-    this.$store.dispatch({ type: "loadUser", userId });
+    this.$store.dispatch({ type: "loadUser", userId })
+      .then(() => {
+        let arr = this.currUser.pendingRequests;
+        let exist = arr.find(user => user.source.id === this.loggedUser._id);
+        if (exist) this.isSentRequest = true;
+      });
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 310) {
         vm.narrowNav(true);
@@ -146,7 +160,11 @@ export default {
   },
   watch: {
     "$route.params.userId"(userId) {
-      this.$store.dispatch({ type: "loadUser", userId });
+      console.log('here');
+      this.$store.dispatch({ type: "loadUser", userId })
+        .then(() => {
+
+        });
     }
   },
   components: {

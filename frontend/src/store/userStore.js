@@ -104,15 +104,11 @@ export default {
       state.loggedUser.pendingRequests.splice(idx, 1);
     },
     deleteReview(state, { reviewId }) {
-      let idx = state.currUser.references.findIndex(
-        review => reviewId === review._id
-      );
+      let idx = state.currUser.references.findIndex(review => reviewId === review._id);
       state.currUser.references.splice(idx, 1);
     },
     updateReview(state, { review }) {
-      let idx = state.currUser.references.findIndex(
-        currReview => review._id === currReview._id
-      );
+      let idx = state.currUser.references.findIndex(currReview => review._id === currReview._id);
       state.currUser.references.splice(idx, 1, review);
     },
     initCurrSocket(state, { user }) {

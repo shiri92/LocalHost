@@ -60,11 +60,11 @@ export default {
         };
       });
     },
-    setCenter(pos) {
-      this.$refs.mapRef.$mapPromise.then(map => {
-        map.panTo(pos);
-      });
-    },
+    // setCenter(pos) {
+    //   this.$refs.mapRef.$mapPromise.then(map => {
+    //     map.panTo(pos);
+    //   });
+    // },
   }
 };
 </script>
