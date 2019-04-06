@@ -5,8 +5,8 @@
     :class="{'users-head': $route.path !== '/'}"
   >
     <div class="header-title" v-if="$route.path === '/'">
-      <h1 class="big-title-home">Find a Place To Stay On Your Trip</h1>
-      <h2 class="small-title-home">The Ultimate Travel Experience!</h2>
+      <h1 class="big-title-home" style="color:white">Find a Place To Stay On Your Trip</h1>
+      <h2 class="small-title-home" style="color:white">The Ultimate Travel Experience!</h2>
       <button class="btn" type="success" @click="$router.push('/signup')" round>Join</button>
     </div>
     <img
@@ -19,9 +19,7 @@
 
     <div class="users-title" v-if="$route.path !== '/'">
       <h2 style="font-size: 4vw">{{currPageCountry}}</h2>
-      <h1
-        style="font-size: 8.5vw; margin-bottom: 60px; font-family: 'BebasNeueRegular';"
-      >{{currPageCity}}</h1>
+      <h1 style="font-size: 8.5vw; margin-bottom: 60px;">{{currPageCity}}</h1>
     </div>
   </section>
 </template>
@@ -95,14 +93,17 @@ export default {
 
 .users-title {
   text-align: center;
-}
 
-h1 {
-  color: white;
-}
+  h1 {
+    color: white;
+    font-family: lylas-reg;
+    // font-family: 'BebasNeueRegular'
+  }
 
-h2 {
-  color: white;
+  h2 {
+    color: white;
+    font-family: soon-reg;
+  }
 }
 
 .btn {
@@ -173,6 +174,7 @@ h2 {
 @media (max-width: 400px) {
   .main-header {
     background-position: top center;
+    color: white;
     .big-title-home {
       font-size: 1.3rem;
     }
