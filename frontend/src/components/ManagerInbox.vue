@@ -39,9 +39,9 @@
           <div class="content flex space-between">
             <div>
               <div class="name">{{request.source.firstName}} {{request.source.lastName}}</div>
-              <div
+              <p
                 class="date"
-              >Has requested to stay with you from {{request.arrivalDate | moment("calendar")}} To {{request.leavingDate | moment("calendar")}}</div>
+              >Has requested to stay with you from {{request.arrivalDate | moment("calendar")}} To {{request.leavingDate | moment("calendar")}}</p>
               <div class="msg">{{request.description}}</div>
             </div>
             <img
@@ -54,10 +54,6 @@
             <div @click="acceptRequest(request)">ACCEPT</div>
             <div @click="declineRequest(request)">DECLINE</div>
           </div>
-        </div>
-        <div class="ads">
-          <img class="ad" src="../../public/img/misterBit.png" alt>
-          <img class="ad" src="../../public/img/misterBit2.png" alt>
         </div>
       </div>
     </div>
@@ -104,14 +100,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.ads {
-  max-width: 980px;
-  .ad {
-    height: 275px;
-    width: 50%;
-    // margin: 30px 0 0 30px;
-  }
-}
 .user-inbox {
   max-width: 1400px;
   min-width: 500px;
@@ -176,10 +164,16 @@ export default {
             margin-left: 70px;
             cursor: pointer;
             width: 80px;
+            min-width: 80px;
             height: 80px;
             border-radius: 50%;
             background-size: cover;
             background-repeat: no-repeat;
+          }
+          @media (max-width: 600px) {
+            .user-img {
+              margin-left: 10px;
+            }
           }
         }
         .btns {
