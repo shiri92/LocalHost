@@ -51,5 +51,10 @@ export default {
     align-self: center;
     margin: 50px;
   }
+  @media (max-width: 568px) {
+    .main-title {
+      margin: 0;
+    }
+  }
 }
 </style>
