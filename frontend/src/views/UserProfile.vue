@@ -75,8 +75,8 @@
         <guest-request v-if="showRequestForm" @hideRequestForm="hideRequestForm"></guest-request>
       </div>
     </div>
-    <div class="mobile" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-      <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
+    <div class="mobile" v-if="((!loggedUser) || (loggedUser._id !== currUser._id)) && currUser.isHosting">
+      <button @click="revealRequestForm" class="btn">
         <font-awesome-icon icon="couch"/>&nbsp;Send Request!
       </button>
     </div>

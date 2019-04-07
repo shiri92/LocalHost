@@ -44,8 +44,9 @@ export default {
 <style lang="scss" scoped>
 .users {
   .main-title {
+    font-family: hensa-regular;
     padding: 10px;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: bold;
     align-self: center;
     margin: 50px;

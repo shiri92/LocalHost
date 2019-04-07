@@ -13,8 +13,8 @@
         :position="m.position"
         :clickable="true"
         :draggable="true"
-        @click="setCenter(m.position)"
       />
+      <!-- @click="setCenter(m.position)" -->
     </GmapMap>
   </div>
 </template>
@@ -53,20 +53,19 @@ export default {
       console.log('center: ', this.center);
       
     },
-    geolocate() {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.center = {
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        };
-        console.log('location center: ', this.center);        
-      });
-    },
-    setCenter(pos) {
-      this.$refs.mapRef.$mapPromise.then(map => {
-        map.panTo(pos);
-      });
-    },
+    // geolocate() {
+    //   navigator.geolocation.getCurrentPosition(position => {
+    //     this.center = {
+    //       lat: position.coords.latitude,
+    //       lng: position.coords.longitude
+    //     };
+    //   });
+    // },
+    // setCenter(pos) {
+    //   this.$refs.mapRef.$mapPromise.then(map => {
+    //     map.panTo(pos);
+    //   });
+    // },
   }
 };
 </script>
