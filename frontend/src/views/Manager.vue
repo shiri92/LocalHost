@@ -32,20 +32,23 @@
 </template>
 
 <script>
+import eventBus from '../services/eventbus-service.js';
 export default {
   data() {
     return {
       navItemSelected: {
         guests: false,
         hosts: false,
-        inbox: true,
+        inbox: false,
       }
     };
   },
   created() {
     let userId = this.$route.params.userId;
     this.$store.dispatch({ type: "loadUser", userId });
-    if (this.getCurrUser) this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerInbox');
+    eventBus.$on('selectHosts', () => this.whoSelected(false, true, false));
+    eventBus.$on('selectGuests', () => this.whoSelected(true, false, false));
+    eventBus.$on('selectInbox', () => this.whoSelected(false, false, true));
   },
   methods: {
     handleSelect(key, keyPath) {
@@ -55,16 +58,11 @@ export default {
       this.navItemSelected.guests = guests;
       this.navItemSelected.hosts = hosts;
       this.navItemSelected.inbox = inbox;
-    }
+    },
   },
   computed: {
     getCurrUser() {
       return this.$store.getters.currUser;
-    }
-  },
-  watch: {
-    getCurrUser(newVal, oldVal) {
-      this.$router.push('/userProfile/' + this.getCurrUser._id + '/manager/managerInbox');
     }
   }
 }

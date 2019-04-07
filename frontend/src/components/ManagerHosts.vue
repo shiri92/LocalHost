@@ -43,6 +43,7 @@
 import UserPreviewHost from "./UserPreviewHost.vue";
 import "../filters.js";
 import GoogleMap from "./GoogleMap";
+import eventBus from '../services/eventbus-service.js';
 
 export default {
   components: {
@@ -55,6 +56,9 @@ export default {
       keyId: 1,
       attrs: []
     };
+  },
+  created() {
+    eventBus.$emit('selectHosts')
   },
   computed: {
     getCurrUser() {

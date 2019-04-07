@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import eventBus from '../services/eventbus-service.js';
 export default {
   data() {
     return {
@@ -75,6 +76,9 @@ export default {
     getLoggedUser() {
       return this.$store.getters.loggedUser;
     }
+  },
+  created() {
+    eventBus.$emit('selectInbox')
   },
   methods: {
     async acceptRequest(request) {

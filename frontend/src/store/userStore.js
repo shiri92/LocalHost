@@ -119,11 +119,12 @@ export default {
         state.currSocket.on("sendRequest", request => {
           this.commit({ type: "addPendingRequest", request });
           let msg = 'You got a new request! for more check out your manager inbox...';
-          let link = '/userProfile/' + state.loggedUser._id + '/manager/managerInbox';
-          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
+          // let link = '/userProfile/' + state.loggedUser._id + '/manager/managerInbox';
+          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg);
         });
 
         state.currSocket.on("sendResponse", response => {
+          console.log('here');
           this.commit({ type: "addAcceptedResponse", response });
           let msg = `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your hosts manager...`;
           let link = '/userProfile/' + state.loggedUser._id + '/manager/managerHosts';

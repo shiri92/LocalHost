@@ -58,18 +58,16 @@ export default {
         position: position,
         showConfirmButton: false,
         timer: timer,
+        background: `#414244`,
+        className: "swal-back",
         onClose: () => {
-          console.log(title);
-          if (link) {
-            this.$router.push(link);
-          }
-
+          if (link) { this.$router.push(link); }
         }
       });
 
       Toast.fire({
         type: type,
-        title: title
+        title: `<span style="color:#fff;">${title}</span>`,
       });
     }
   },
@@ -89,6 +87,9 @@ export default {
   color: #2c3e50;
   min-height: 100vh;
   position: relative;
+}
+.swal2-header {
+  color: #fff;
 }
 
 .screen {
