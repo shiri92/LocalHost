@@ -42,7 +42,7 @@ export default {
     },
     goToManager() {
       this.$emit("closeWindow");
-      this.$router.push("/userProfile/" + this.getLoggedUser._id + "/manager");
+      this.$router.push("/userProfile/" + this.getLoggedUser._id + '/manager/managerInbox');
     }
   }
 };

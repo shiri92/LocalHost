@@ -33,11 +33,11 @@
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
             <button v-if="currUser.isHosting" class="btn">
-              <div v-if="!isSentRequest" @click="revealRequestForm">
-                <font-awesome-icon icon="couch"/>&nbsp;Send Request!
-              </div>
-              <div v-else @click="cancelRequest">
+              <!-- <div v-if="isSentRequest" @click="cancelRequest">
                 <font-awesome-icon icon="couch"/>&nbsp;Cancel Request
+              </div>-->
+              <div @click="revealRequestForm">
+                <font-awesome-icon icon="couch"/>&nbsp;Send Request!
               </div>
             </button>
           </div>
