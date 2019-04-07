@@ -1,5 +1,5 @@
 <template>
-  <section class="globe">
+  <section class="globe scene_element scene_element--fade">
     <div id="earth">
       <div class="halfShadow"></div>
       <div id="lands">

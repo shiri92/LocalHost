@@ -112,41 +112,39 @@ export default {
       state.currUser.references.splice(idx, 1, review);
     },
     initCurrSocket(state, { user }) {
-      if (user) {
-        let { _id } = user;
-        state.currSocket = socketService.connect(_id);
+      console.log('Init Socket Test');
+      let { _id } = user;
+      state.currSocket = socketService.connect(_id);
 
-        state.currSocket.on("sendRequest", request => {
-          this.commit({ type: "addPendingRequest", request });
-          let msg = 'You got a new request! for more check out your manager inbox...';
-          // let link = '/userProfile/' + state.loggedUser._id + '/manager/managerInbox';
-          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg);
-        });
+      state.currSocket.on("sendRequest", request => {
+        this.commit({ type: "addPendingRequest", request });
+        let msg = 'You got a new request! for more check out your manager inbox...';
+        let link = '/userProfile/' + state.loggedUser._id + '/manager/managerInbox';
+        eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
+      });
 
-        state.currSocket.on("sendResponse", response => {
-          console.log('here');
-          this.commit({ type: "addAcceptedResponse", response });
-          let msg = `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your hosts manager...`;
-          let link = '/userProfile/' + state.loggedUser._id + '/manager/managerHosts';
+      state.currSocket.on("sendResponse", response => {
+        this.commit({ type: "addAcceptedResponse", response });
+        let msg = `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your hosts manager...`;
+        let link = '/userProfile/' + state.loggedUser._id + '/manager/managerHosts';
+        eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
+      });
+
+      state.currSocket.on("postReview", (review, targetId) => {
+        if (state.currUser._id === targetId) this.commit({ type: "addReview", review });
+        if (state.loggedUser._id === targetId) {
+          let msg = 'You got a new reference! for more check out your profile...';
+          let link = '/userProfile/' + state.loggedUser._id;
           eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
-        });
+        }
+      });
 
-        state.currSocket.on("postReview", (review, targetId) => {
-          if (state.currUser._id === targetId) this.commit({ type: "addReview", review });
-          if (state.loggedUser._id === targetId) {
-            let msg = 'You got a new reference! for more check out your profile...';
-            let link = '/userProfile/' + state.loggedUser._id;
-            eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
-          }
-        });
-
-        state.currSocket.on("unpostReview", (reviewId, targetId) => {
-          if (state.currUser._id === targetId) this.commit({ type: "deleteReview", reviewId });
-        });
-        state.currSocket.on("editReview", (review, targetId) => {
-          if (state.currUser._id === targetId) this.commit({ type: "updateReview", review });
-        });
-      }
+      state.currSocket.on("unpostReview", (reviewId, targetId) => {
+        if (state.currUser._id === targetId) this.commit({ type: "deleteReview", reviewId });
+      });
+      state.currSocket.on("editReview", (review, targetId) => {
+        if (state.currUser._id === targetId) this.commit({ type: "updateReview", review });
+      });
     }
   },
   actions: {

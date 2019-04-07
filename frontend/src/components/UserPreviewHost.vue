@@ -29,7 +29,7 @@
 <script>
 import StarsToshow from "../components/RateStarsToShow";
 export default {
-  props: ['response'],
+  props: ["response"],
   components: {
     StarsToshow
   },
@@ -37,7 +37,7 @@ export default {
     getDateFormatted() {
       return moment.locale("12-25-1995");
     }
-  },
+  }
 };
 </script>
 
@@ -90,6 +90,11 @@ li {
               font-size: 0.9em;
             }
           }
+        }
+      }
+      @media (max-width: 600px) {
+        .main {
+          padding: 0;
         }
       }
     }

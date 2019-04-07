@@ -7,7 +7,7 @@
       >
         <h3>No Guests Yet...</h3>
       </div>
-      <div v-else class="info-container flex flex-row justify-center">
+      <div v-else class="info-container flex justify-center">
         <div class="list-container flex flex-col" data-aos="fade-right" data-aos-duration="1200">
           <router-link
             style="margin: 2px"
@@ -19,7 +19,7 @@
             <user-preview-guest :request="currRequest" :idx="idx+1"></user-preview-guest>
           </router-link>
         </div>
-        <div class="calendar-wrapper" data-aos="fade-left" data-aos-duration="1200">
+        <div class="calendar-wrapper" data-aos="fade-up" data-aos-duration="1200">
           <v-calendar :attributes="attrs" class="calendar"></v-calendar>
         </div>
       </div>
@@ -67,7 +67,6 @@ export default {
           key: this.keyId++,
           highlight: {
             backgroundColor: "#ff8080"
-            // Other properties are available too, like `height` & `borderRadius`
           },
           contentStyle: {
             color: "#fafafa"
@@ -76,8 +75,6 @@ export default {
             label: `${req.source.firstName} ${
               req.source.lastName
               } staying over`,
-            // hideIndicator: true,
-            img: `${req.source.imgUrl}`
           },
           dates: [{ start: req.arrivalDate, end: req.leavingDate }]
         });
@@ -111,7 +108,6 @@ h3 {
   display: flex;
   flex-direction: column;
   padding: 10px;
-
   .flex-container {
     justify-content: space-around;
     display: flex;
@@ -132,15 +128,26 @@ h3 {
       }
     }
   }
+  @media (max-width: 568px) {
+    .flex-container {
+      padding: 2px;
+    }
+  }
 
   .flex-container > * {
-    min-width: 300px;
+    min-width: 280px;
     margin-bottom: 20px;
   }
 
   .info-container {
     width: 100%;
     max-width: 1000px;
+    flex-direction: row;
+  }
+  @media (max-width: 760px) {
+    .info-container {
+      flex-direction: column;
+    }
   }
   .calendar-wrapper {
     width: 100%;
@@ -155,10 +162,22 @@ h3 {
       min-width: 250px;
     }
   }
+  @media (max-width: 760px) {
+    .calendar-wrapper {
+      padding-left: 0;
+    }
+  }
   .list-container {
     overflow: auto;
     min-width: 360px;
     height: 275px;
+  }
+  @media (max-width: 760px) {
+    .list-container {
+      overflow: unset;
+      height: auto;
+      min-width: unset;
+    }
   }
   .list-container::-webkit-scrollbar {
     width: 0.25em;
@@ -170,6 +189,11 @@ h3 {
 
   .list-container::-webkit-scrollbar-thumb {
     background-color: rgb(109, 108, 108);
+  }
+}
+@media (max-width: 568px) {
+  .schedule-guests {
+    padding: 0;
   }
 }
 </style>

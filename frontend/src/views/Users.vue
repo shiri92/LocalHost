@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import UserList from '../components/UserList.vue';
+import UserList from '@/components/UserList.vue';
 import MainHeader from '@/components/MainHeader'
-import GlobeLoader from '../components/GlobeLoader';
+import GlobeLoader from '@/components/GlobeLoader';
 export default {
   name: 'Users',
   components: {
@@ -50,6 +50,11 @@ export default {
     font-weight: bold;
     align-self: center;
     margin: 50px;
+  }
+  @media (max-width: 568px) {
+    .main-title {
+      margin: 0;
+    }
   }
 }
 </style>

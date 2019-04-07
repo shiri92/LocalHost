@@ -25,8 +25,8 @@ function addRoutes(io) {
         });
 
         socket.on('sendResponse', (targetId, response) => {
+            console.log(connectedUsers);
             let targetSocket = findSocketByUserId(targetId);
-            console.log(targetSocket);
             if (targetSocket) {
                 targetSocket.emit('sendResponse', response);
             }

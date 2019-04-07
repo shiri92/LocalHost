@@ -61,6 +61,7 @@ export default {
         background: `#414244`,
         className: "swal-back",
         onClose: () => {
+          console.log(link);
           if (link) { this.$router.push(link); }
         }
       });

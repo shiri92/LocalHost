@@ -91,6 +91,16 @@ li {
           }
         }
       }
+      @media (max-width: 600px) {
+        .main {
+          padding: 0;
+        }
+      }
+    }
+    @media (max-width: 400px) {
+      .card {
+        width: 100%;
+      }
     }
   }
 }
