@@ -59,16 +59,17 @@ export default {
         showConfirmButton: false,
         timer: timer,
         background: `#414244`,
-        onClose: () => {
-          console.log(link);
-          if (link) { this.$router.push(link); }
-        }
       });
 
       Toast.fire({
         type: type,
         title: `<span style="color:#fff;">${title}</span>`,
-      });
+        allowOutsideClick: true
+      })
+        .then((result) => {
+          if (link) this.$router.push(link);
+        });
+
     }
   },
   watch: {

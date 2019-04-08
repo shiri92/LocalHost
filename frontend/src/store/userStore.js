@@ -120,14 +120,14 @@ export default {
         this.commit({ type: "addPendingRequest", request });
         let msg = 'You got a new request! for more check out your manager inbox...';
         let link = '/userProfile/' + state.loggedUser._id + '/manager/managerInbox';
-        eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
+        eventBus.$emit('popToast', 'info', 'bottom-start', 6000, msg, link);
       });
 
       state.currSocket.on("sendResponse", response => {
         this.commit({ type: "addAcceptedResponse", response });
         let msg = `${response.source.firstName} ${response.source.lastName} approved your request! for more check out your hosts manager...`;
         let link = '/userProfile/' + state.loggedUser._id + '/manager/managerHosts';
-        eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
+        eventBus.$emit('popToast', 'info', 'bottom-start', 6000, msg, link);
       });
 
       state.currSocket.on("postReview", (review, targetId) => {
@@ -135,7 +135,7 @@ export default {
         if (state.loggedUser._id === targetId) {
           let msg = 'You got a new reference! for more check out your profile...';
           let link = '/userProfile/' + state.loggedUser._id;
-          eventBus.$emit('popToast', 'info', 'bottom-start', 5000, msg, link);
+          eventBus.$emit('popToast', 'info', 'bottom-start', 6000, msg, link);
         }
       });
 
