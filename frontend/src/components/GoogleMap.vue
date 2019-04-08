@@ -50,6 +50,8 @@ export default {
         this.places.push(location);
       });
       this.center = this.markers[0].position;
+      console.log('center: ', this.center);
+      
     },
     // geolocate() {
     //   navigator.geolocation.getCurrentPosition(position => {

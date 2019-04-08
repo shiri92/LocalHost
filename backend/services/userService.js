@@ -30,7 +30,6 @@ FillDB();
 
 // Fill Mongo Data Base (will be on mongo service)
 async function FillDB() {
-  console.log('here!!');
   let db = await mongoService.connect();
   let res = await db
     .collection(USERS_COLLECTION)
@@ -76,7 +75,6 @@ async function getById(id) {
 
 // ADD User
 async function add(credentials) {
-  console.log(credentials);
   let db = await mongoService.connect();
   let res = await db
     .collection(USERS_COLLECTION)
@@ -154,7 +152,6 @@ async function addReview(targetId, review) {
 
 // DELETE Pending Request
 async function deletePendingRequest(targetId, requestId) {
-  console.log(targetId, requestId, "hereee");
   let db = await mongoService.connect();
   return await db
     .collection(USERS_COLLECTION)

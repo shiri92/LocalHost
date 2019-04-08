@@ -7,12 +7,7 @@
       >
         <h3>No Hosts Yet...</h3>
       </div>
-      <div
-        v-else
-        class="page-container flex flex-row"
-        data-aos="fade-right"
-        data-aos-duration="1200"
-      >
+      <div v-else class="page-container flex" data-aos="fade-right" data-aos-duration="1200">
         <div class="list-container flex flex-col">
           <router-link
             style="margin: 2px"
@@ -25,12 +20,12 @@
           </router-link>
         </div>
         <div class="info-container flex flex-col">
-          <div class="calendar-wrapper" data-aos="fade-left" data-aos-duration="1500">
+          <div class="calendar-wrapper" data-aos="fade-up" data-aos-duration="1500">
             <v-calendar :attributes="attrs" class="calendar"></v-calendar>
           </div>
           <google-map
             :responses="getLoggedUser.acceptedResponses"
-            data-aos="fade-left"
+            data-aos="fade-up"
             data-aos-duration="1500"
           ></google-map>
         </div>
@@ -43,6 +38,7 @@
 import UserPreviewHost from "./UserPreviewHost.vue";
 import "../filters.js";
 import GoogleMap from "./GoogleMap";
+import eventBus from '../services/eventbus-service.js';
 
 export default {
   components: {
@@ -55,6 +51,9 @@ export default {
       keyId: 1,
       attrs: []
     };
+  },
+  created() {
+    eventBus.$emit('selectHosts')
   },
   computed: {
     getCurrUser() {
@@ -75,7 +74,6 @@ export default {
           key: this.keyId++,
           highlight: {
             backgroundColor: "#ff8080"
-            // Other properties are available too, like `height` & `borderRadius`
           },
           contentStyle: {
             color: "#fafafa"
@@ -83,8 +81,7 @@ export default {
           popover: {
             label: `Staying with ${req.source.firstName} ${
               req.source.lastName
-              }`,
-            img: `${req.source.imgUrl}`
+            }`,
           },
           dates: [{ start: req.arrivalDate, end: req.leavingDate }]
         });
@@ -134,20 +131,34 @@ h2 {
       }
     }
   }
+  @media (max-width: 568px) {
+    .flex-container {
+      padding: 2px;
+    }
+  }
 
   .flex-container > * {
-    min-width: 300px;
+    min-width: 280px;
     margin-bottom: 20px;
   }
 
   .page-container {
     width: 100%;
     max-width: 1000px;
+    flex-direction: flex-row;
   }
   .info-container {
     width: 100%;
     padding-left: 10px;
     flex-grow: 1;
+  }
+  @media (max-width: 760px) {
+    .page-container {
+      flex-direction: column;
+    }
+    .info-container {
+      padding-left: 0;
+    }
   }
   .calendar-wrapper {
     display: flex;
@@ -165,6 +176,13 @@ h2 {
     min-width: 360px;
     height: 784px;
   }
+  @media (max-width: 760px) {
+    .list-container {
+      overflow: unset;
+      height: auto;
+      min-width: unset;
+    }
+  }
   .list-container::-webkit-scrollbar {
     width: 0.25em;
   }
@@ -175,6 +193,11 @@ h2 {
 
   .list-container::-webkit-scrollbar-thumb {
     background-color: rgb(109, 108, 108);
+  }
+}
+@media (max-width: 568px) {
+  .schedule-hosts {
+    padding: 0;
   }
 }
 </style>

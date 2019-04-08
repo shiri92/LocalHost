@@ -1,5 +1,8 @@
 <template>
-  <section class="profile-container flex flex-col justify-center scene_element scene_element--fade" v-if="currUser">
+  <section
+    class="profile-container flex flex-col justify-center scene_element scene_element--fade"
+    v-if="currUser"
+  >
     <carousel
       class="carousel flex justify-center"
       :per-page="3"
@@ -29,8 +32,13 @@
         <div class="flex justify-center align-center flex-col">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-            <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
-              <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+            <button v-if="currUser.isHosting" class="btn">
+              <!-- <div v-if="isSentRequest" @click="cancelRequest">
+                <font-awesome-icon icon="couch"/>&nbsp;Cancel Request
+              </div>-->
+              <div @click="revealRequestForm">
+                <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+              </div>
             </button>
           </div>
           <div v-else class="flex flex-col">
@@ -75,8 +83,8 @@
         <guest-request v-if="showRequestForm" @hideRequestForm="hideRequestForm"></guest-request>
       </div>
     </div>
-    <div class="mobile" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
-      <button v-if="currUser.isHosting" @click="revealRequestForm" class="btn">
+    <div class="mobile" v-if="((!loggedUser) || (loggedUser._id !== currUser._id)) && currUser.isHosting">
+      <button @click="revealRequestForm" class="btn">
         <font-awesome-icon icon="couch"/>&nbsp;Send Request!
       </button>
     </div>
@@ -94,6 +102,7 @@ export default {
   name: "user-profile",
   data() {
     return {
+      isSentRequest: false,
       isNavInDisplay: false,
       modalOpen: false,
       showRequestForm: false,
@@ -105,9 +114,12 @@ export default {
   },
   created() {
     let userId = this.$route.params.userId;
-    this.$store.dispatch({ type: "loadUser", userId });
+    this.$store.dispatch({ type: "loadUser", userId })
+      .then(user => {
+
+      });
     var vm = this;
-    var val = window.addEventListener("scroll", function(e) {
+    var val = window.addEventListener("scroll", function (e) {
       var scrollPos = window.scrollY;
       if (scrollPos > 310) {
         vm.narrowNav(true);
@@ -124,6 +136,8 @@ export default {
     },
     loggedUser() {
       return this.$store.getters.loggedUser;
+    },
+    isSendingRequest() {
     }
   },
   methods: {
@@ -139,6 +153,9 @@ export default {
     handleResize() {
       this.window.width = window.innerWidth;
       this.window.height = window.innerHeight;
+    },
+    cancelRequest() {
+
     }
   },
   destroyed() {
@@ -146,7 +163,16 @@ export default {
   },
   watch: {
     "$route.params.userId"(userId) {
-      this.$store.dispatch({ type: "loadUser", userId });
+      console.log('here');
+      this.$store.dispatch({ type: "loadUser", userId })
+    },
+    loggedUser(newVal, oldVal) {
+      let arr = this.currUser.pendingRequests;
+      let exist = arr.find(request => request.source.id === newVal._id);
+      if (exist)
+        this.isSentRequest = true;
+      else
+        this.isSentRequest = false;
     }
   },
   components: {

@@ -39,9 +39,9 @@
           <div class="content flex space-between">
             <div>
               <div class="name">{{request.source.firstName}} {{request.source.lastName}}</div>
-              <div
+              <p
                 class="date"
-              >Has requested to stay with you from {{request.arrivalDate | moment("calendar")}} To {{request.leavingDate | moment("calendar")}}</div>
+              >Has requested to stay with you from {{request.arrivalDate | moment("calendar")}} To {{request.leavingDate | moment("calendar")}}</p>
               <div class="msg">{{request.description}}</div>
             </div>
             <img
@@ -61,29 +61,43 @@
 </template>
 
 <script>
-
+import eventBus from '../services/eventbus-service.js';
 export default {
-
   data() {
     return {
-      requests: [],
+      requests: []
     };
   },
   computed: {
     getLoggedUser() {
       return this.$store.getters.loggedUser;
-    },
+    }
+  },
+  created() {
+    eventBus.$emit('selectInbox')
   },
   methods: {
     async acceptRequest(request) {
-      await this.$store.dispatch({ type: 'acceptRequest', request: request, targetId: this.getLoggedUser._id });
+      await this.$store.dispatch({
+        type: "acceptRequest",
+        request: request,
+        targetId: this.getLoggedUser._id
+      });
       let response = this.$store.getters.emptyResponse;
       response.arrivalDate = request.arrivalDate;
       response.leavingDate = request.leavingDate;
-      await this.$store.dispatch({ type: 'sendResponse', response: response, targetId: request.source.id });
+      await this.$store.dispatch({
+        type: "sendResponse",
+        response: response,
+        targetId: request.source.id
+      });
     },
     async declineRequest(request) {
-      await this.$store.dispatch({ type: 'declineRequest', request: request, targetId: this.getLoggedUser._id });
+      await this.$store.dispatch({
+        type: "declineRequest",
+        request: request,
+        targetId: this.getLoggedUser._id
+      });
     }
   }
 };
@@ -112,7 +126,7 @@ export default {
       }
       .card {
         max-width: 980px;
-        margin: 30px 0 0;
+        margin: 30px 10px 0;
         border-radius: 3px;
         box-shadow: 1px 1px 4px rgb(110, 109, 109);
         animation-duration: 1s;
@@ -154,10 +168,16 @@ export default {
             margin-left: 70px;
             cursor: pointer;
             width: 80px;
+            min-width: 80px;
             height: 80px;
             border-radius: 50%;
             background-size: cover;
             background-repeat: no-repeat;
+          }
+          @media (max-width: 600px) {
+            .user-img {
+              margin-left: 10px;
+            }
           }
         }
         .btns {
