@@ -1,8 +1,7 @@
 <template>
   <section v-if="showNav" class="main-footer">
-    <router-link to="/about">About</router-link>
+    <router-link to="/about">ABOUT</router-link>
     <div>CONNECT WITH US</div>
-    <!-- <i class="fab fa-facebook"></i> -->
     <div>© 1999 - 2019 LocalHost International, Inc.</div>
   </section>
 </template>
@@ -29,7 +28,7 @@ export default {
 .main-footer {
   color: white;
   padding: 10px;
-  background-color: #363c41;
+  background-color: #7d7f81;
   text-align: center;
   div {
     .fab {
