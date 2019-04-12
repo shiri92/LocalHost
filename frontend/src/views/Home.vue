@@ -33,7 +33,7 @@ export default {
   name: "home",
   data() {
     return {
-      users: null,
+      users: null
     };
   },
   created() {
@@ -63,7 +63,7 @@ export default {
       let destCountry = dest.country;
       let destCity = dest.name;
       this.$router.push("/users/" + destCountry + "&" + destCity);
-    },
+    }
   },
   computed: {
     topDests() {

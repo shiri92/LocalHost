@@ -20,12 +20,17 @@ function addRoutes(io) {
         });
 
         socket.on('sendRequest', (targetId, request) => {
+            console.log('request');
+            console.log(connectedUsers);
+            console.log(targetId);
             let targetSocket = findSocketByUserId(targetId);
             if (targetSocket) targetSocket.emit('sendRequest', request);
         });
 
         socket.on('sendResponse', (targetId, response) => {
+            console.log('response');
             console.log(connectedUsers);
+            console.log(targetId);
             let targetSocket = findSocketByUserId(targetId);
             if (targetSocket) {
                 targetSocket.emit('sendResponse', response);
