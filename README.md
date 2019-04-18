@@ -1,4 +1,4 @@
-# LocalHost
+# Local Host
 
 This is the final project of the bootcamp made by us.  
 LocalHost is an app that help you find a place to stay during your trip around the world,  
