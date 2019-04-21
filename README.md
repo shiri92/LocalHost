@@ -6,5 +6,7 @@ Really simple to use - you can be guest or host, share information about your ow
 Giving you a unique opportunity to meet new people, and overall improves your travelling exprience.    
 The concept is totally free, simillar to the famous website https://www.couchsurfing.com/
 
-App On Heroku: https://localhost1-project.herokuapp.com/#/
+App On Heroku: https://localhost-proj.herokuapp.com/#/
+
+![localhost-favicon](https://user-images.githubusercontent.com/44683662/56475373-e7965200-648f-11e9-9f48-4ce110efc98a.png)
 
