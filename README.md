@@ -2,7 +2,7 @@
 
 This is our final project for the Coding-Academy made with Vue.js & Vuex.    
 LocalHost is an app that helps you find the right place to stay on your travels around the world.      
-Really simple to use - you can be a guest or a host, share information about your own location and more. 
+Really simple to use - you can be a guest or a host, share information about your own location and more.   
 Provides you with a unique opportunity to meet new people, and overall improves your travel experience.    
 
 App On Heroku: https://localhost-proj.herokuapp.com/#/
