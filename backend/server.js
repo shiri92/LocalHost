@@ -10,42 +10,40 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 
-/* ----- ROUTES -----*/
 const addUserRoutes = require("./routes/userRoutes");
 const addCityRoutes = require("./routes/cityRoutes");
 const addCloudRoutes = require("./routes/cloudRoutes");
 const addSocketRoutes = require("./routes/socketRoutes");
 
-/* ----- SERVER -----*/
+/* ----- ENABLE APP ON LOCAL MACHINE SERVER -----*/
+app.use(cors({
+  origin: ["http://localhost:8080"],
+  credentials: true /* enable set cookie*/
+}));
 
-/* ----- ENABLE APP ON LOCALHOST SERVER -----*/
-app.use(
-  cors({
-    origin: ["http://localhost:8080"],
-    credentials: true /* enable set cookie*/
-  })
-);
-
-/* ----- ENABLE APP ON WEBHOST SERVER -----*/
+/* ----- ENABLE APP ON WEBHOST SERVER (HEROKU) -----*/
 app.use(express.static("public"));
 
-app.use(
-  session({
-    secret: "this is a secret",
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }
-  })
-);
+/* ----- USE SESSION -----*/
+app.use(session({
+  secret: "this is a secret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
+/* ----- USE PARSERS -----*/
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(fileUpload());
 
+/* ----- USE ROUTES -----*/
 addUserRoutes(app);
 addCityRoutes(app);
 addCloudRoutes(app);
 addSocketRoutes(io);
 
+/* ----- DEFAULT ROUTE RESPONSE -----*/
 app.get("/", (req, res) => res.send("Hello From Server"));
 
 /* ----- SERVER PORT -----*/

@@ -5,15 +5,15 @@ function addRoutes(io) {
     io.on('connection', (socket) => {
         let { userId } = socket.handshake.query;
         socket.userId = userId;
-        let isExist = connectedUsers.find(s => s.userId === userId);
-        if (!isExist) {
+        let targetSocket = findSocketByUserId(userId)
+        if (!targetSocket) {
             connectedUsers.push(socket);
             console.log(`${socket.userId} connected!`);
         }
 
         socket.on('disconnect', () => {
-            let isExist = connectedUsers.find(s => s.userId === userId);
-            if (isExist) {
+            let targetSocket = findSocketByUserId(userId)
+            if (targetSocket) {
                 connectedUsers = connectedUsers.filter(s => s.userId !== s.userId)
                 console.log(`${socket.userId} disconnected!`);
             }

@@ -8,13 +8,13 @@
       style="width: 100%; height: 500px"
     >
       <GmapMarker
+        v-for="(marker, index) in markers"
         :key="index"
-        v-for="(m, index) in markers"
-        :position="m.position"
+        :position="marker"
         :clickable="true"
-        :draggable="true"
+        :draggable="false"
+        @click="panLocation(marker)"
       />
-      <!-- @click="setCenter(m.position)" -->
     </GmapMap>
   </div>
 </template>
@@ -27,51 +27,34 @@ export default {
     return {
       center: {},
       markers: [],
-      places: [],
     };
   },
-  mounted() {
-    // this.geolocate();
-  },
   created() {
-    let places = this.responses.map(response => {
-      return response.source.placeDetails.mapAddress;
-    })
-    this.addMarkers(places);
+    let places = this.responses.map(response => response.source.placeDetails.mapAddress);
+    this.markers = places.map(place => ({
+      lat: place.geometry.location.lat,
+      lng: place.geometry.location.lng
+    }));
+    this.setCenter(this.markers[0]);
+    // this.panCurrLocation();
   },
   methods: {
-    addMarkers(locations) {
-      locations.forEach(location => {
-        const marker = {
-          lat: location.geometry.location.lat,
-          lng: location.geometry.location.lng
-        };
-        this.markers.push({ position: marker });
-        this.places.push(location);
-      });
-      this.center = this.markers[0].position;
-      console.log('center: ', this.center);
-      
+    setCenter(pos) {
+      this.center = pos;
     },
-    // geolocate() {
-    //   navigator.geolocation.getCurrentPosition(position => {
-    //     this.center = {
-    //       lat: position.coords.latitude,
-    //       lng: position.coords.longitude
-    //     };
-    //   });
-    // },
-    // setCenter(pos) {
-    //   this.$refs.mapRef.$mapPromise.then(map => {
-    //     map.panTo(pos);
-    //   });
-    // },
+
+    async panLocation(pos) {
+      const map = await this.$refs.mapRef.$mapPromise;
+      map.panTo(pos);
+    },
+
+    panCurrLocation() {
+      navigator.geolocation.getCurrentPosition(position =>
+        this.panLocation({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }));
+    },
   }
 };
 </script>
-
-<style scoped lang="scss">
-.google-map {
-  background-color: white;
-}
-</style>

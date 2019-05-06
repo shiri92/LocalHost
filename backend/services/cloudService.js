@@ -1,11 +1,12 @@
 
 /* ----- DEPEND -----*/
 const cloudinary = require('cloudinary');
+const KEYS = require('../config_keys');
 
 cloudinary.config({
-    cloud_name: 'dcl4oabi3',
-    api_key: '835468792983949',
-    api_secret: 'djgVO14O1DSteDPTimrKaq7E1Bo'
+    cloud_name: KEYS.CLOUDINARY.CLOUD_NAME,
+    api_key: KEYS.CLOUDINARY.API_KEY,
+    api_secret: KEYS.CLOUDINARY.API_SECRET
 });
 
 function uploadImg(imgFile, imgPath) {
