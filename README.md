@@ -1,6 +1,5 @@
 # Local Host
 
-This is our final project for the Coding-Academy made with Vue.js & Vuex.    
 LocalHost is end-to-end application that helps you find the right place to stay on your travels around the world.      
 Really simple to use - you can be a guest or a host, share information about your own location and more.   
 Provides you with a unique opportunity to meet new people, and overall improves your travel experience.    
