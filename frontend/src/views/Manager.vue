@@ -31,7 +31,7 @@
   </section>
 </template>
 
-<script>
+<script></script>
 import eventBus from '../services/eventbus-service.js';
 export default {
   data() {

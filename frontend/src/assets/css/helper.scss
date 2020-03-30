@@ -48,7 +48,7 @@
 
 .justify-start {
     /* justify-content: flex-start; */
-    justify-self: flex-start
+    justify-self: flex-start;
 }
 
 .wrap {
@@ -59,7 +59,6 @@
     justify-content: center;
 }
 
-
 /* Lists */
 
 .clean-list {
@@ -68,49 +67,48 @@
     padding: 0;
 }
 
-
 /* Fonts */
 
- @font-face {
-    font-family: roboto-reg;
-    src: url('../fonts/Roboto-Regular.ttf');
-}
+// @font-face {
+//     font-family: roboto-reg;
+//     src: url("../fonts/Roboto-Regular.ttf");
+// }
+
+// @font-face {
+//     font-family: concert-one-reg;
+//     src: url("../fonts/ConcertOne-Regular.ttf");
+// }
+
+// @font-face {
+//     font-family: inconsolata-Regular;
+//     src: url("../fonts/Inconsolata-Regular.ttf");
+// }
+
+// @font-face {
+//     font-family: indieFlower-Regular;
+//     src: url("../fonts/IndieFlower-Regular.ttf");
+// }
+
+// @font-face {
+//     font-family: monaco-regular;
+//     src: url("../fonts/Monaco-Regular.ttf");
+// }
 
 @font-face {
     font-family: lato-reg;
-    src: url('../fonts/Lato-Regular.ttf')
-}
-
-@font-face {
-    font-family: concert-one-reg;
-    src: url('../fonts/ConcertOne-Regular.ttf');
-}
-
-@font-face {
-    font-family: inconsolata-Regular;
-    src: url('../fonts/Inconsolata-Regular.ttf');
-}
-
-@font-face {
-    font-family: indieFlower-Regular;
-    src: url('../fonts/IndieFlower-Regular.ttf');
-}
-
-@font-face {
-    font-family: monaco-regular;
-    src: url('../fonts/Monaco-Regular.ttf');
+    src: url("../fonts/Lato-Regular.ttf");
 }
 
 @font-face {
     font-family: hensa-regular;
-    src: url('../fonts/Hensa.otf');
+    src: url("../fonts/Hensa.otf");
 }
 
-@font-face{
+@font-face {
     font-family: lylas-reg;
-    src: url('../fonts/LoveYaLikeASister.ttf');
+    src: url("../fonts/LoveYaLikeASister.ttf");
 }
-@font-face{
+@font-face {
     font-family: soon-reg;
-    src: url('../fonts/ComingSoon-Regular.ttf');
+    src: url("../fonts/ComingSoon-Regular.ttf");
 }
