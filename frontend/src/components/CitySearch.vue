@@ -2,7 +2,7 @@
   <section class="city-search flex justify-center">
     <gmap-autocomplete @place_changed="chooseCity" class="google-search"></gmap-autocomplete>
     <button class="btn">
-      <font-awesome-icon icon="search"/>
+      <font-awesome-icon icon="search" />
     </button>
   </section>
 </template>

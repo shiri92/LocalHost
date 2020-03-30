@@ -15,7 +15,7 @@
       href="#"
       v-scroll-to="'#whyjoin'"
       src="https://res.cloudinary.com/dcl4oabi3/image/upload/v1553953172/fav-icons/arrow-down.png"
-    >
+    />
 
     <div class="users-title" v-if="$route.path !== '/'">
       <h2 style="font-size: 4vw">{{currPageCountry}}</h2>
@@ -40,9 +40,7 @@ export default {
     // eventBus.$on('setCityImg', (cityImg) => {
     //   if (this.$route.path !== "/") {
     //     this.currCityImg = cityImg;
-    //     console.log(this.currCityImg)
     //   }
-    //   console.log(this.currCityImg);
     //   // this.currCityImg = cityImg;
     // });
 

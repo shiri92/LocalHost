@@ -4,13 +4,13 @@
       <h1>Sign In</h1>
       <span @click="$emit('loginOff')">&times;</span>
     </div>
-    <hr>
+    <hr />
     <div class="content flex flex-col">
       <el-form :inline="false" :model="credentials" class="demo-form-inline flex flex-col">
         <div class="wrong-cred" v-if="wrongCred">* Wrong username and/or password</div>
-        <br v-if="wrongCred">
+        <br v-if="wrongCred" />
         <b-form-group class="input" required>
-          <font-awesome-icon class="input-icon" icon="user"/>
+          <font-awesome-icon class="input-icon" icon="user" />
           <b-form-input
             type="email"
             v-model="credentials.email"
@@ -20,7 +20,7 @@
         </b-form-group>
 
         <b-form-group class="input" required>
-          <font-awesome-icon class="input-icon" icon="lock"/>
+          <font-awesome-icon class="input-icon" icon="lock" />
           <b-form-input
             type="password"
             v-model="credentials.password"
@@ -62,7 +62,6 @@ export default {
       this.$store
         .dispatch({ type: "login", credentials: this.credentials })
         .then(user => {
-          console.log("user:", user);
           if (user) {
             eventBus.$emit('popToast', 'success', 'bottom-start', 3000, `Welcome ${user.firstName} ${user.lastName}!`);
           }

@@ -8,8 +8,14 @@ const BASE_API = process.env.NODE_ENV !== "development" ? "/user" : "//localhost
 
 // LOGCHECK User
 async function checkLogged() {
-  let res = await axios.put(`${BASE_API}/checkLogged`);
-  return res.data;
+  try {
+    let res = await axios.put(`${BASE_API}/checkLogged`);
+    return res.data;
+  }
+  catch {
+    return null;
+  }
+
 }
 
 // LOGIN User

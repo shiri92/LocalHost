@@ -28,7 +28,7 @@
         <div
           class="profile-loc"
         >{{(currUser.address.city) ? currUser.address.city + ',' : ''}} {{currUser.address.country}}</div>
-        <hr>
+        <hr />
         <div class="flex justify-center align-center flex-col">
           <div>{{(currUser.isHosting) ? "Accepting Guests" : "Not Accepting Guests"}}</div>
           <div class="flex flex-col" v-if="(!loggedUser) || (loggedUser._id !== currUser._id)">
@@ -37,7 +37,7 @@
                 <font-awesome-icon icon="couch"/>&nbsp;Cancel Request
               </div>-->
               <div @click="revealRequestForm">
-                <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+                <font-awesome-icon icon="couch" />&nbsp;Send Request!
               </div>
             </button>
           </div>
@@ -83,9 +83,12 @@
         <guest-request v-if="showRequestForm" @hideRequestForm="hideRequestForm"></guest-request>
       </div>
     </div>
-    <div class="mobile" v-if="((!loggedUser) || (loggedUser._id !== currUser._id)) && currUser.isHosting">
+    <div
+      class="mobile"
+      v-if="((!loggedUser) || (loggedUser._id !== currUser._id)) && currUser.isHosting"
+    >
       <button @click="revealRequestForm" class="btn">
-        <font-awesome-icon icon="couch"/>&nbsp;Send Request!
+        <font-awesome-icon icon="couch" />&nbsp;Send Request!
       </button>
     </div>
   </section>
@@ -163,7 +166,6 @@ export default {
   },
   watch: {
     "$route.params.userId"(userId) {
-      console.log('here');
       this.$store.dispatch({ type: "loadUser", userId })
     },
     loggedUser(newVal, oldVal) {

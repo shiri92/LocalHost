@@ -1,14 +1,13 @@
 <template>
   <div class="home" data-aos="fade" data-aos-duration="1200">
-    <main-header></main-header>
+    <main-header />
 
-    <h1 class="user-list-title">Meet Some Of Our Top Hosts</h1>
-    <user-list :users="homeUsers"></user-list>
-
-    <why-join></why-join>
+    <!-- <h1 class="user-list-title">Meet Some Of Our Top Hosts</h1> -->
+    <user-list :users="homeUsers" />>
+    <why-join />
 
     <h1>Top Destinations</h1>
-    <city-search></city-search>
+    <!-- <city-search></city-search> -->
 
     <div class="cities-gallery grid" data-aos="fade-up" data-aos-duration="1200">
       <div v-for="dest in topDests" :key="dest._id" :class="'img-container' + ' ' + dest.name">
@@ -25,10 +24,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 import MainHeader from "@/components/MainHeader";
-import CitySearch from "../components/CitySearch";
+// import CitySearch from "../components/CitySearch";
 import WhyJoin from "../components/WhyJoin";
 import UserList from "../components/UserList";
+
+
 export default {
   name: "home",
   data() {
@@ -38,25 +41,8 @@ export default {
   },
   created() {
     this.$store.dispatch({ type: "loadTopDests" });
-    this.$store.dispatch({ type: "loadUsers" });
-    let arr = [
-      this.$store.dispatch({
-        type: "loadHomeUser",
-        userId: "5ca62433a82d87eeccaae69f"
-      }),
-      this.$store.dispatch({
-        type: "loadHomeUser",
-        userId: "5ca62433a82d87eeccaae6ad"
-      }),
-      this.$store.dispatch({
-        type: "loadHomeUser",
-        userId: "5ca62433a82d87eeccaae6a2"
-      }),
-      this.$store.dispatch({
-        type: "loadHomeUser",
-        userId: "5ca62433a82d87eeccaae6a0"
-      })
-    ];
+    // const usersIds = ['5ca62433a82d87eeccaae69f', '5ca62433a82d87eeccaae6ad', '5ca62433a82d87eeccaae6a2']
+    // usersIds.map(userId => this.$store.dispatch({ type: "loadHomeUser", userId }))
   },
   methods: {
     moveToUsers(dest) {
@@ -66,23 +52,13 @@ export default {
     }
   },
   computed: {
-    topDests() {
-      return this.$store.getters.topDests;
-    },
-    homeUsers() {
-      return this.$store.getters.homeUsers;
-    },
-    getUsers() {
-      return this.$store.getters.currUsers;
-    },
-    getNumOfUsers() {
-      var num = Math.floor(Math.random() * Math.floor(10000));
-      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
+    ...mapGetters({
+      topDests: 'topDests',
+      homeUsers: 'homeUsers',
+    }),
   },
   components: {
     MainHeader,
-    CitySearch,
     WhyJoin,
     UserList
   }

@@ -112,7 +112,6 @@ export default {
       state.currUser.references.splice(idx, 1, review);
     },
     initCurrSocket(state, { user }) {
-      console.log('Init Socket Test');
       let { _id } = user;
       state.currSocket = socketService.connect(_id);
 
@@ -154,7 +153,6 @@ export default {
         context.commit({ type: "setLoggedUser", user });
         context.commit({ type: "initCurrSocket", user });
       }
-      return user;
     },
     async login(context, { credentials }) {
       let user = await userService.login(credentials);
