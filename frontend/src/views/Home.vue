@@ -3,7 +3,7 @@
     <main-header />
 
     <!-- <h1 class="user-list-title">Meet Some Of Our Top Hosts</h1> -->
-    <user-list :users="homeUsers" />>
+    <user-list :users="homeUsers" />
     <why-join />
 
     <h1>Top Destinations</h1>

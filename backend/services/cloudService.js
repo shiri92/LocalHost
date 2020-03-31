@@ -2,11 +2,14 @@
 /* ----- DEPEND -----*/
 const cloudinary = require('cloudinary');
 
+const cloud_name = process.env.CLOUDINARY_NAME;
+const api_key = process.env.CLOUDINARY_KEY;
+const api_secret = process.env.CLOUDINARY_SECRET;
 
 cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_NAME,
-    api_key: process.env.CLOUDINARY_KEY,
-    api_secret: process.env.CLOUDINARY_SECRET
+    cloud_name,
+    api_key,
+    api_secret
 });
 
 function uploadImg(imgFile, imgPath) {
