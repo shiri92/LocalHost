@@ -34,14 +34,8 @@ export default {
   },
   created() {
     this.currPage = this.$route.path;
-    // if (!this.getLoggedUser)
     this.$store.dispatch({ type: 'checkLogged' })
     eventBus.$on('popToast', (...args) => this.popToast(...args));
-  },
-  computed: {
-    getLoggedUser() {
-      return this.$store.getters.loggedUser;
-    }
   },
   methods: {
     loginFormOff() {

@@ -4,7 +4,7 @@
       <h1>Your review about {{currUser.firstName}}</h1>
       <span @click="$emit('closeReviewForm')">&times;</span>
     </div>
-    <hr>
+    <hr />
     <form class="content flex flex-col" @submit.prevent="postReview">
       <label for>{{currUser.firstName}} was your:</label>
       <div class="checkbox-container flex">
@@ -17,7 +17,7 @@
             value="Host"
             v-model="review.getAsAHost"
             required
-          >Host
+          />Host
         </label>
         <label>
           <input
@@ -27,7 +27,7 @@
             name="status"
             value="Guest"
             v-model="review.getAsAGuest"
-          >Guest
+          />Guest
         </label>
       </div>
       <rate-stars @rate="setRate" required></rate-stars>
@@ -69,7 +69,6 @@ export default {
       return this.$store.getters.loggedUser;
     },
     isValid() {
-      console.log(this.review.rating);
 
       return (
         (this.review.getAsAHost || this.review.getAsAGuest) &&

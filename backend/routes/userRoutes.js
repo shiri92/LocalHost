@@ -7,11 +7,12 @@ const BASE = "/user";
 function addRoutes(app) {
   // LOGCHECK User
   app.put(`${BASE}/checkLogged`, async (req, res) => {
+
     if (req.session.user) {
       let user = await userService.getById(req.session.user._id);
       return res.json(user);
     }
-    return res.json();
+    return res.end();
   });
 
   // LOGIN User

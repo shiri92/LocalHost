@@ -30,21 +30,17 @@ FillDB();
 
 // Fill Mongo Data Base (will be on mongo service)
 async function FillDB() {
-  let db = await mongoService.connect();
-  let res = await db
+  let connection = await mongoService.connect();
+  let users = await connection
     .collection(USERS_COLLECTION)
     .find({})
     .toArray();
-  if (res.length === 0) addMany(_createUsers());
+  if (!users.length) {
+    users = _createUsers();
+    connection.collection(USERS_COLLECTION).insertMany(users);
+  }
 }
 
-// Fill Mongo Data Base (will be on mongo service)
-async function addMany(users) {
-  let db = await mongoService.connect();
-  let res = await db.collection(USERS_COLLECTION).insert(users);
-  res._id = res.insertedId;
-  return res;
-}
 
 // LOGIN User
 async function login(credentials) {
@@ -66,11 +62,17 @@ async function query(currCountry, currCity) {
 // GET User By Id
 async function getById(id) {
   const _id = new ObjectId(id);
-  let db = await mongoService.connect();
-  let user = await db.collection(USERS_COLLECTION).findOne({ _id });
-  let img = await cloudService.loadImg(user.imgUrl);
-  user.img = img;
-  return user;
+  try {
+    let connection = await mongoService.connect();
+    let user = await connection.collection(USERS_COLLECTION).findOne({ _id })
+    let img = await cloudService.loadImg(user.imgUrl);
+    user.img = img;
+    return user;
+  }
+  catch{
+    return null;
+
+  }
 }
 
 // ADD User
