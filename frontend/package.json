@@ -8,23 +8,22 @@
         "test:unit": "vue-cli-service test:unit"
     },
     "dependencies": {
+        "axios": "^0.18.0",
+        "socket.io": "^2.2.0",
+        "font-awesome": "^4.7.0",
         "@fortawesome/fontawesome-svg-core": "^1.2.17",
         "@fortawesome/free-brands-svg-icons": "^5.8.1",
         "@fortawesome/free-solid-svg-icons": "^5.8.1",
         "@fortawesome/vue-fontawesome": "^0.1.6",
-        "animate.css": "^3.7.0",
-        "aos": "^2.3.4",
-        "axios": "^0.18.0",
         "bootstrap": "^4.3.1",
         "bootstrap-vue": "^2.0.0-rc.15",
-        "cloudinary": "^1.13.2",
         "element-ui": "^2.6.1",
-        "font-awesome": "^4.7.0",
+        "animate.css": "^3.7.0",
+        "aos": "^2.3.4",
         "langs": "^2.0.0",
         "register-service-worker": "^1.6.2",
-        "socket.io": "^2.2.0",
-        "v-calendar": "^0.9.7",
         "vue": "^2.6.10",
+        "vuex": "^3.0.1",
         "vue-airbnb-style-datepicker": "^2.6.1",
         "vue-carousel": "^0.18.0",
         "vue-google-autocomplete": "^1.1.0",
@@ -33,7 +32,7 @@
         "vue-scrollto": "^2.15.0",
         "vue-sweetalert2": "^1.6.4",
         "vue2-google-maps": "^0.10.6",
-        "vuex": "^3.0.1"
+        "v-calendar": "^0.9.7"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "^3.5.0",

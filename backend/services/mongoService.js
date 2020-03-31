@@ -1,14 +1,15 @@
 
 //DEPEND
-const KEYS = require('../config_keys');
 const mongodb = require('mongodb');
+
 
 var dbConn = null;
 
 function connect() {
     return new Promise(resolve => {
         if (dbConn) resolve(dbConn);
-        const url = `mongodb+srv://${KEYS.MONGO.USERNAME}:${KEYS.MONGO.PASSWORD}@cluster0-lartw.mongodb.net/test?retryWrites=true`;
+        const url = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0-lartw.mongodb.net/test?retryWrites=true`;
+        // const url = `mongodb+srv://${KEYS.MONGO.USERNAME}:${KEYS.MONGO.PASSWORD}@cluster0-lartw.mongodb.net/test?retryWrites=true`;
         const client = new mongodb.MongoClient(url, { useNewUrlParser: true })
 
         client.connect().then(client => {
